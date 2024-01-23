@@ -18,7 +18,7 @@ if ( ! defined('WPCACHEHOME') )
 	define( 'WPCACHEHOME', WP_CONTENT_DIR . "/plugins/wp-super-cache/" );
 
 $cache_compression = 1;
-$cache_enabled = false;
+$cache_enabled = true;
 $super_cache_enabled = true;
 $cache_max_time = 432000;
 //$use_flock = true; // Set it true or false if you know what to use
