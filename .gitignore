@@ -1,0 +1,16 @@
+/.idea
+.idea
+wp-config.php
+*.sql
+/wp-content/cache/*
+/wp-content/uploads/wpdiscuz/cache/*
+wp-content/plugins/database-cleaner/logs/*
+/wp-content/uploads/wc-logs/*
+/itsmeit.co.*
+wp-content/uploads/ithemes-security/logs/*
+wp-content/plugins/simply-static/static-files/*
+wp-content/wflogs/*
+wp-content/apk/*
+wp-content/ai1wm-backups/*
+files/*
+files/
