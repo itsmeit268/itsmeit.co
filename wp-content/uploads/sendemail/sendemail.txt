@@ -1,0 +1,74 @@
+sudo sendmailconfig
+[sudo] password for itsmeit:
+Configure sendmail with the existing /etc/mail/sendmail.conf? [Y] Y
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Writing configuration to /etc/mail/sendmail.conf.
+Writing /etc/cron.d/sendmail.
+Configure sendmail with the existing /etc/mail/sendmail.mc? [Y] Y
+Updating sendmail environment ...
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Writing configuration to /etc/mail/sendmail.conf.
+Writing /etc/cron.d/sendmail.
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Writing configuration to /etc/mail/sendmail.conf.
+Writing /etc/cron.d/sendmail.
+Could not open /etc/mail/databases(No such file or directory), creating it.
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Creating /etc/mail/databases...
+
+Checking filesystem, this may take some time - it will not hang!
+  ...   Done.
+
+Checking for installed MDAs...
+sasl2-bin not installed, not configuring sendmail support.
+
+To enable sendmail SASL2 support at a later date, invoke &quot;/usr/share/sendmail/update_auth&quot;
+
+
+Creating/Updating SSL(for TLS) information
+Creating /etc/mail/tls/starttls.m4...
+You already have sendmail certificates
+
+
+*** *** *** WARNING *** WARNING *** WARNING *** WARNING *** *** ***
+
+Everything you need to support STARTTLS (encrypted mail transmission
+and user authentication via certificates) is installed and configured
+but is *NOT* being used.
+
+To enable sendmail to use STARTTLS, you need to:
+1) Add this line to /etc/mail/sendmail.mc and optionally
+   to /etc/mail/submit.mc:
+  include(`/etc/mail/tls/starttls.m4&apos;)dnl
+2) Run sendmailconfig
+3) Restart sendmail
+
+Checking {sendmail,submit}.mc and related databases...
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Creating /etc/mail/databases...
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Creating /etc/mail/databases...
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Creating /etc/mail/Makefile...
+Reading configuration from /etc/mail/sendmail.conf.
+Validating configuration.
+Writing configuration to /etc/mail/sendmail.conf.
+Writing /etc/cron.d/sendmail.
+Disabling HOST statistics file(/var/lib/sendmail/host_status).
+Creating /etc/mail/sendmail.cf...
+Creating /etc/mail/submit.cf...
+Informational: confCR_FILE file empty: /etc/mail/relay-domains
+Informational: confCT_FILE file empty: /etc/mail/trusted-users
+Updating /etc/mail/access...
+Updating /etc/mail/aliases...
+WARNING: local host name (denda) is not qualified; see cf/README: WHO AM I?
+/etc/mail/aliases: 12 aliases, longest 10 bytes, 134 bytes total
+Reload the running sendmail now with the new configuration? [Y] Y
+Reloading sendmail ...
