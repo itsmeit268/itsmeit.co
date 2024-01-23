@@ -1,0 +1,227 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Email Notification on login\n"
+"POT-Creation-Date: 2018-11-18 15:43+0100\n"
+"PO-Revision-Date: 2022-05-16 15:47+0200\n"
+"Last-Translator: \n"
+"Language-Team: Ramon <marketing@apasionados.es>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: email-notification-on-login.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: email-notification-on-login-settings.php:6
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+"Du hast leider keine ausreichende Berechtigung für den Zugriff auf diese "
+"Seite."
+
+#: email-notification-on-login-settings.php:15
+#: email-notification-on-login.php:134
+msgid "Settings"
+msgstr "Einstellungen"
+
+#. Description of the plugin/theme
+#: email-notification-on-login-settings.php:17
+msgid ""
+"This plugin sends an email to the WordPress System email (Settings / "
+"General / Email Address) or any other configured email address each time "
+"somebody logs into WordPress. This is handy if there are not many logins "
+"each day or week to keep track of all of them and being able to detect non "
+"authorized logins."
+msgstr ""
+"Dieses Plugin sendet jedes Mal, wenn sich jemand bei WordPress anmeldet, "
+"eine E-Mail an die WordPress Administrator-E-Mail-Adresse (Einstellungen / "
+"Allgemein / Administrator-E-Mail-Adresse) oder an eine andere "
+"konfigurierte E-Mail-Adresse. So bekommt man einen Überblick über alle "
+"User die sich bei WordPress anmelden und man kann nicht autorisierte "
+"Anmeldungen erkennen. Ist besonders praktisch wenn es nicht viele "
+"Anmeldungen pro Tag oder Woche gibt."
+
+#: email-notification-on-login-settings.php:18
+msgid ""
+"Here you can configure the email address that will receive the login "
+"notifications."
+msgstr ""
+"Hier können Sie die E-Mail-Adresse konfigurieren, die die "
+"Anmeldebenachrichtigungen erhält."
+
+#: email-notification-on-login-settings.php:23
+msgid "Email to send notifications"
+msgstr "E-Mail zum Senden von Benachrichtigungen"
+
+#: email-notification-on-login-settings.php:25
+msgid "Email"
+msgstr "E-Mail"
+
+#: email-notification-on-login-settings.php:26
+msgid ""
+"The default email to send notifications is the WordPress System Email "
+"Address (Settings / General / Email Address)"
+msgstr ""
+"Die Standard-E-Mail-Adresse zum Senden von Benachrichtigungen ist die "
+"WordPress Administrator-E-Mail-Adresse (Einstellungen / Allgemein / "
+"Administrator-E-Mail-Adresse)"
+
+#: email-notification-on-login-settings.php:26
+msgid "In this installation the WordPress System Email is"
+msgstr "In diesem WordPress ist die Administrator-E-Mail-Adresse folgende"
+
+#: email-notification-on-login-settings.php:27
+msgid "ATTENTION"
+msgstr "ACHTUNG"
+
+#: email-notification-on-login-settings.php:27
+msgid ""
+"If the email address is not valid, the emails will be sent to the SYSTEM "
+"EMAIL."
+msgstr ""
+"Wenn die angegebene E-Mail-Adresse ungültig ist, werden die E-Mails an die "
+"ADMINISTRATOR-E-MAIL-ADRESSE gesendet."
+
+#: email-notification-on-login-settings.php:27
+msgid "Email looks ok"
+msgstr "E-Mail sieht ok aus"
+
+#: email-notification-on-login-settings.php:27
+msgid "Email doesn't look correct. Please check it."
+msgstr ""
+"E-Mail sieht nicht korrekt aus. Bitte überprüfen Sie die angegebene E-Mail-"
+"Adresse."
+
+#: email-notification-on-login-settings.php:32
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: email-notification-on-login-settings.php:42
+msgid "Do you like this Plugin?"
+msgstr "Gefällt Dir dieses Plugin?"
+
+#: email-notification-on-login-settings.php:44
+msgid ""
+"We also need volunteers to translate this and our other plugins into more "
+"languages."
+msgstr ""
+"Wir brauchen Freiwillige, um dieses und unsere anderen Plugins in weitere "
+"Sprachen zu übersetzen."
+
+#: email-notification-on-login-settings.php:45
+msgid "If you wish to help then use our"
+msgstr "Wenn Du helfen willst, benutze bitte unser"
+
+#: email-notification-on-login-settings.php:45
+msgid "contact form"
+msgstr "Kontaktformular"
+
+#: email-notification-on-login-settings.php:45
+msgid "or contact us on Twitter:"
+msgstr "oder kontaktiere uns auf Twitter:"
+
+#: email-notification-on-login-settings.php:46
+msgid "Developed with love by:"
+msgstr "Mit Liebe entwickelt von:"
+
+#: email-notification-on-login.php:76
+msgid "Country:"
+msgstr "Land:"
+
+#: email-notification-on-login.php:78
+msgid "Region:"
+msgstr "Bundesland:"
+
+#: email-notification-on-login.php:81
+msgid "Postal Code + City:"
+msgstr "PLZ + Ort:"
+
+#: email-notification-on-login.php:86
+msgid "Administrator"
+msgstr "Administrator"
+
+#: email-notification-on-login.php:89
+msgid "Editor"
+msgstr "Redakteur"
+
+#: email-notification-on-login.php:92
+msgid "Author"
+msgstr "Autor"
+
+#: email-notification-on-login.php:95
+msgid "Contributor"
+msgstr "Mitarbeiter"
+
+#: email-notification-on-login.php:98
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: email-notification-on-login.php:101
+msgid "Login on"
+msgstr "Anmeldung bei"
+
+#: email-notification-on-login.php:102
+msgid "A user logged in your WordPress website "
+msgstr "Ein User hat sich auf Deiner WordPress-Webseite angemeldet: "
+
+#: email-notification-on-login.php:102
+msgid "on"
+msgstr "-"
+
+#: email-notification-on-login.php:103
+msgid "User"
+msgstr "User"
+
+#: email-notification-on-login.php:103
+msgid "with user ID"
+msgstr "mit Benutzerkennung"
+
+#: email-notification-on-login.php:103
+msgid "User type"
+msgstr "Benutzertyp"
+
+#: email-notification-on-login.php:104
+msgid "Login from IP"
+msgstr "Anmeldung von IP"
+
+#: email-notification-on-login.php:106
+msgid "IP info"
+msgstr "IP-Information"
+
+#: email-notification-on-login.php:109
+msgid "Browser is:"
+msgstr "Browser ist:"
+
+#: email-notification-on-login.php:133
+msgid "Support"
+msgstr "Support"
+
+#: email-notification-on-login.php:151
+msgid "Could not activate plugin: PHP version error"
+msgstr "Plugin konnte nicht aktiviert werden: PHP-Versionsfehler"
+
+#: email-notification-on-login.php:151
+msgid "You are using PHP version"
+msgstr "Sie verwenden die PHP-Version"
+
+#: email-notification-on-login.php:151
+msgid "This plugin has been tested with PHP versions 5.5 and greater."
+msgstr "Dieses Plugin wurde mit PHP-Versionen 5.5 und höher getestet."
+
+#: email-notification-on-login.php:151
+msgid ""
+"WordPress itself <a href=\"https://wordpress.org/about/requirements/\" "
+"target=\"_blank\">recommends using PHP version 7 or greater</a>. Please "
+"upgrade your PHP version or contact your Server administrator."
+msgstr ""
+"WordPress selbst <a href=\"https://de.wordpress.org/about/requirements/\" "
+"target=\"_blank\">empfiehlt die Verwendung von PHP Version 7.4 oder höher</"
+"a>. Bitte aktualisieren Sie Ihre PHP-Version oder wenden Sie sich an Ihren "
+"Server-Administrator."

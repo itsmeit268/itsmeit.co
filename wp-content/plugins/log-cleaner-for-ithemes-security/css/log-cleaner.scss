@@ -1,0 +1,238 @@
+// Breakpoints
+@mixin breakpoint($point) {
+    @if $point == xs {
+        @media (min-width: 420px) { @content; }
+    } @else if $point == sm {
+        @media (min-width: 640px) { @content; }
+    } @else if $point == md {
+        @media (min-width: 960px)  { @content; }
+    } @else if $point == lg {
+        @media (min-width: 1024px)  { @content; }
+    } @else if $point == xl {
+        @media (min-width: 1600px)  { @content; }
+    }
+}
+
+// Clearfix
+@mixin clear {
+    &:before,
+    &:after {
+        display: table;
+        content: '';
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+.tools_page_log-cleaner {
+    #message {
+        width: calc(100% - 320px);
+        display: block;
+        box-sizing: border-box;
+
+        @media only screen and (max-width: 960px) {
+            width: 100%;
+        }
+    }
+
+    form {
+        p {
+            width: calc(100% - 320px);
+
+            @media only screen and (max-width: 960px) {
+                width: 100%;
+            }
+        }
+    }
+}
+.log-cleaner {
+
+    width: calc(100% - 320px);
+    box-sizing: border-box;
+
+    @media only screen and (max-width: 960px) {
+        width: 100%;
+    }
+
+    &.boxy {
+        padding: 25px;
+        background: #fff;
+        margin: 25px 0;
+        position: relative;
+    }
+
+    
+
+    
+
+    table {
+        width: 320px;
+        border: solid 1px #f1f1f1;
+        padding: 15px;
+
+        @media only screen and (max-width: 960px) {
+            width: 100%;
+        }
+
+        td {
+            padding: 3px 0;
+            vertical-align: top;
+            border-bottom: solid 1px #f1f1f1;
+        }
+
+        .no-border {
+            border: none;
+        }
+
+        input {
+            margin: 0 0 3px 0;
+        }
+    }
+
+    .total {
+       font-weight: bold;
+    }
+
+    .active {
+        background: #f1f1f1;
+    }
+
+    p {
+        margin: 0 0 20px 0;
+    }
+}
+
+.all-clear {
+    margin: 15px 0 0 0;
+    padding: 15px;
+    background: #fff;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.lc-table {
+
+    width: 170px;
+
+    td {
+        padding: 5px 0;
+    }
+
+    .lc-total td {
+        border-top: solid 1px #ccc;
+    }
+
+}
+
+.delete-logs-notice {
+    padding: 10px 15px;
+    background: #ea5c52;
+    color: #fff;
+    display: block;
+    box-sizing: border-box;
+
+    a {
+        color: #fff;
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 2px;
+        border: solid 1px #fff;
+        text-decoration: none;
+    }
+}
+
+.ithemes-log-cleaner {
+
+    padding: 0 30px 0 0;
+
+    @media only screen and (max-width: 960px) {
+        padding: 0;
+    }
+
+    .notice.is-dismissible {
+        width: calc(100% - 337px);
+        padding-right: 0;
+
+        @media only screen and (max-width: 960px) {
+            width: calc(100% - 15px);
+            padding-right: 0;
+        }
+    }
+
+    .promo {
+        width: 350px;
+        height: 100%;
+        background: #fff;
+        text-align: center;
+        position: fixed;
+        top: 35px;
+        right: 0;
+        padding: 25px;
+        box-sizing: border-box;
+    }
+    .promo .pos {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        padding: 25px;
+    }
+    .promo p {
+        margin: 20px 0 !important;
+    }
+    .promo .ra-logo {
+        display: block;
+        width: 100px;
+        height: auto;
+        margin: 0 auto 25px auto;
+    }
+    .promo .ra-description {
+        font-size: 16px !important;
+    }
+    .promo .ra-product-list {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+    .promo .ra-product-list li {
+        display: block;
+        margin: 5px;
+    }
+    .promo .ra-product-list li a {
+        display: inline-block;
+        padding: 7px 10px;
+        border: solid 1px #eee;
+        background: #f1f1f1;
+        display: inline-block;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        text-decoration: none;
+    }
+    .promo .ra-cta {
+        display: block;
+        padding: 15px;
+        text-align: center;
+        color: #fff;
+        background: #ff9800;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 10px 10px 30px 0 rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        margin: 25px auto;
+        font-weight: bold;
+        max-width: 220px;
+    }
+    .promo .ra-cta:hover {
+        color: #fff;
+    }
+
+}
+

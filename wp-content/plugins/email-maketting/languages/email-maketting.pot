@@ -1,0 +1,107 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Email Marketing\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-12 12:49+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Bui Van Loi <buivanloi.2010@gmail.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.4; wp-6.2\n"
+"X-Domain: email-maketting"
+
+#. Author URI of the plugin
+msgid "https://itsmeit.co/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://itsmeit.co/"
+msgstr ""
+
+#. Author of the plugin
+msgid "itsmeit <buivanloi.2010@gmail.com>"
+msgstr ""
+
+#. Name of the plugin
+msgid "Email Marketing"
+msgstr ""
+
+#. Description of the plugin
+msgid "Email Marketing is a tool that sends emails to customers when articles are updated or newly posted."
+msgstr ""
+
+msgid "Registration request sent successfully! A verification link has been sent to your email address."
+msgstr ""
+
+msgid "An error occurred, please try again later."
+msgstr ""
+
+msgid "Thank you for getting in touch. We have received your message and will respond to you as soon as possible."
+msgstr ""
+
+msgid "Authentication failed, please try again later."
+msgstr ""
+
+msgid "Verification unsuccessful. Please resubmit your registration."
+msgstr ""
+
+msgid "Email verification successful. Thank you for subscribing to our newsletter!"
+msgstr ""
+
+msgid "Verification unsuccessful. The link does not exist or has expired."
+msgstr ""
+
+msgid "This email is already subscribed to our newsletter, you do not need to register again."
+msgstr ""
+
+msgid "An error occurred, please try again another time."
+msgstr ""
+
+msgid "Invalid email address, please check again."
+msgstr ""
+
+msgid "You have subscribed to receive new posts from "
+msgstr ""
+
+msgid "Registration request sent successfully! A verification link has been sent to your email address."
+msgstr ""
+
+msgid "Subscribe to the newsletter from "
+msgstr ""
+
+msgid "You have unsubscribed from the newsletter."
+msgstr ""
+
+msgid "To get in touch with us, please fill in the information below:"
+msgstr ""
+
+msgid "Full Name"
+msgstr ""
+
+msgid "Your email.."
+msgstr ""
+
+msgid "Subject"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Your name.."
+msgstr ""
+
+msgid "Your name.."
+msgstr ""
+
+msgid "Thank you for reaching out. We have received your message and will respond to you as soon as possible."
+msgstr ""
+

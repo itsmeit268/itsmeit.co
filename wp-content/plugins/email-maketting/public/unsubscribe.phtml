@@ -1,0 +1,52 @@
+<?php
+get_header();
+if (!isset($_GET['mus_rq'])): ?>
+    <script>
+        window.location.href = '<?= get_bloginfo( 'url' )?>';
+    </script>
+<?php endif;?>
+
+<div class="unsubscribe-page">
+    <h1>Unsubscribe</h1>
+    <?php
+    if (isset($_GET['mus_rq']) && !empty($_GET['mus_rq'])) {
+
+        $email = base64_decode(urldecode($_GET['mus_rq']));
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'email_marketing';
+        $table_exits = $wpdb->get_var("SELECT 1 FROM $table_name LIMIT 1");
+
+        $query = $wpdb->prepare("SELECT * FROM $table_name WHERE email = %s AND allow = %d", $email, 1);
+        $result = $wpdb->get_row($query);
+
+        if ($result !== null && $table_exits ) {
+            ?>
+            <div class="unsubscribe-request">
+                <?= __('If you unsubscribe, you may miss out on a lot of useful information.')?>
+                <a style="color: blue;" class="reconsider" href="<?= get_bloginfo('url'); ?>"><?= __('Would you like to reconsider?')?></a>
+                <?= __('If you have made your decision, please click on') ?>
+                <a style="color: blue;" class="unsubscribe" href="javascript:void(0)" id="unsubscribe-sent" data-email="<?php echo esc_attr($email); ?>"><?= __('Unsubscribe')?></a>.
+                <?= __('After that, you will no longer receive email updates from us.')?>
+            </div>
+            <?php
+        } else {
+            ?>
+            <p class="unsubscribe-error">
+                <?= __('Email') ?>
+                <span style="color:#262f2c; font-weight: 600;"> <?= $email ?></span>
+                <?= __('does not exist, or has unsubscribed from the newsletter. You can re-register again.')?>
+            </p>
+            <div class="re-subscribe-form" style="max-width: 500px;text-align: left;margin-top: 15px;">
+                <?php include(plugin_dir_path(__FILE__) . 'template/subscribe_form.phtml' ); ?>
+            </div>
+            <?php
+        }
+    } else {
+        ?>
+        <p><?= __('No information requested, click here to return to the')?><a style="color: blue;" class="no-email-request" href="<?= get_bloginfo('url'); ?>"> <?= __('homepage')?></p>
+        <?php
+    }
+    ?>
+</div>
+<?php get_footer(); ?>

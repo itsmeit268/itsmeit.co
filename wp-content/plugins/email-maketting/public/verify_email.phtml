@@ -1,0 +1,16 @@
+<?php
+get_header();
+if (!isset($_GET['rqco']) || !isset($_GET['rqem'])) : ?>
+    <script>
+        window.location.href = '<?= get_bloginfo( 'url' )?>';
+    </script>
+<?php endif;?>
+
+<div class="subscribe-page">
+    <h1>Verify Email</h1>
+    <p class="verify-email"></p>
+    <div class="re_subscribe_form">
+        <?php include(plugin_dir_path(__FILE__) . 'template/subscribe_form.phtml'); ?>
+    </div>
+</div>
+<?php get_footer(); ?>

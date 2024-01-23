@@ -1,0 +1,231 @@
+<?php
+/** Don't load directly */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
+	function foxiz_register_term_series_settings( $configs ) {
+
+		$configs[] = [
+			'title'      => esc_html__( 'Foxiz Show Settings', 'foxiz' ),
+			'info'       => esc_html__( 'The settings will apply to this show only, and the ones below will take priority over other settings in the "Theme Options > Ruby Podcast > Show" settings', 'foxiz' ),
+			'taxonomies' => [ 'series' ],
+			'id'         => 'foxiz_category_meta',
+			'tabs'       => [
+				[
+					'title' => esc_html__( 'Entry Show', 'foxiz' ),
+					'id'    => 'entry-category',
+					'icon'  => 'dashicons-art',
+				],
+				[
+					'title' => esc_html__( 'Show Header', 'foxiz' ),
+					'id'    => 'category-header',
+					'icon'  => 'dashicons-editor-justify',
+				],
+				[
+					'title' => esc_html__( 'Podcast', 'foxiz' ),
+					'id'    => 'podcast',
+					'icon'  => 'dashicons-album',
+				],
+				[
+					'title' => esc_html__( 'Global Template', 'foxiz' ),
+					'id'    => 'global-template',
+					'icon'  => 'dashicons-admin-site',
+				],
+				[
+					'title' => esc_html__( 'Site Header', 'foxiz' ),
+					'id'    => 'site-header',
+					'icon'  => 'dashicons-heading',
+				],
+				[
+					'title' => esc_html__( 'Queries', 'foxiz' ),
+					'id'    => 'query',
+					'icon'  => 'dashicons-database',
+				],
+			],
+			'fields'     => [
+				[
+					'id'   => 'highlight_color',
+					'name' => esc_html__( 'Highlight Color', 'foxiz' ),
+					'desc' => esc_html__( 'Select a highlight color for the entry show.', 'foxiz' ),
+					'info' => esc_html__( 'This setting will apply to entry show in the the blog listing.', 'foxiz' ),
+					'tab'  => 'entry-category',
+					'type' => 'color',
+					'std'  => '',
+				],
+				[
+					'id'   => 'dark_highlight_color',
+					'name' => esc_html__( 'Dark Mode - Highlight Color', 'foxiz' ),
+					'desc' => esc_html__( 'Select a highlight color in dark mode.', 'foxiz' ),
+					'tab'  => 'entry-category',
+					'type' => 'color',
+					'std'  => '',
+				],
+				[
+					'id'   => 'color',
+					'name' => esc_html__( 'Accent Color', 'foxiz' ),
+					'desc' => esc_html__( 'Select an accent (text) color for the entry show.', 'foxiz' ),
+					'info' => esc_html__( 'This setting will apply to entry show text.', 'foxiz' ),
+					'tab'  => 'entry-category',
+					'type' => 'color',
+					'std'  => '',
+				],
+				[
+					'id'   => 'dark_color',
+					'name' => esc_html__( 'Dark Mode - Accent Color', 'foxiz' ),
+					'desc' => esc_html__( 'Select an accent (text) color in dark mode.', 'foxiz' ),
+					'tab'  => 'entry-category',
+					'type' => 'color',
+					'std'  => '',
+				],
+				[
+					'id'      => 'header_style',
+					'name'    => esc_html__( 'Site Header', 'foxiz' ),
+					'desc'    => esc_html__( 'Select a site header for this show.', 'foxiz' ),
+					'tab'     => 'site-header',
+					'type'    => 'select',
+					'options' => foxiz_config_header_style( true, true ),
+					'std'     => '0',
+				],
+				[
+					'id'          => 'header_template',
+					'name'        => esc_html__( 'Template Shortcode', 'foxiz' ),
+					'desc'        => esc_html__( 'Input a Ruby Template shortcode for displaying as the website header for this show.', 'foxiz' ),
+					'info'        => esc_html__( 'This setting will override on the "Header style" setting.', 'foxiz' ),
+					'tab'         => 'site-header',
+					'type'        => 'textarea',
+					'placeholder' => '[Ruby_E_Template id="1"]',
+					'rows'        => '2',
+					'std'         => '',
+				],
+				[
+					'id'      => 'category_header',
+					'name'    => esc_html__( 'Category Header', 'foxiz' ),
+					'desc'    => esc_html__( 'Select a category header style.', 'foxiz' ),
+					'tab'     => 'category-header',
+					'type'    => 'select',
+					'options' => foxiz_config_category_header( true ),
+					'std'     => '0',
+				],
+				[
+					'id'   => 'featured_image',
+					'name' => esc_html__( 'Featured Images', 'foxiz' ),
+					'desc' => esc_html__( 'Upload featured images for this show.', 'foxiz' ),
+					'info' => esc_html__( 'You can set 1 or 2 feature images for a show.', 'foxiz' ),
+					'tab'  => 'category-header',
+					'type' => 'image',
+				],
+				[
+					'id'      => 'pattern',
+					'name'    => esc_html__( 'Background Pattern', 'foxiz' ),
+					'desc'    => esc_html__( 'Select a pattern style for the header background.', 'foxiz' ),
+					'tab'     => 'category-header',
+					'type'    => 'select',
+					'options' => foxiz_config_archive_header_bg( true ),
+					'std'     => '0',
+				],
+				[
+					'id'      => 'breadcrumb',
+					'name'    => esc_html__( 'Breadcrumb', 'foxiz' ),
+					'desc'    => esc_html__( 'Enable or disable the breadcrumb in this show header.', 'foxiz' ),
+					'tab'     => 'category-header',
+					'type'    => 'select',
+					'options' => [
+						'0'  => esc_html__( '- Default -', 'foxiz' ),
+						'1'  => esc_html__( 'Use Global Setting', 'foxiz' ),
+						'-1' => esc_html__( 'Disable', 'foxiz' ),
+					],
+					'std'     => '0',
+				],
+				[
+					'id'   => 'featured_file',
+					'name' => esc_html__( 'Intro Podcast File', 'foxiz' ),
+					'desc' => esc_html__( 'Upload an intro podcast for this show.', 'foxiz' ),
+					'tab'  => 'podcast',
+					'type' => 'file',
+				],
+				[
+					'id'          => 'listen_on_apple',
+					'name'        => esc_html__( 'Listen on Apple Podcast', 'foxiz' ),
+					'desc'        => esc_html__( 'Add an Apple podcast link for this show.', 'foxiz' ),
+					'placeholder' => esc_html__( 'https://podcasts.apple.com...', 'foxiz' ),
+					'tab'         => 'podcast',
+					'type'        => 'text',
+				],
+				[
+					'id'          => 'listen_on_spotify',
+					'name'        => esc_html__( 'Listen on Spotify', 'foxiz' ),
+					'desc'        => esc_html__( 'Add a Spotify link for this show.', 'foxiz' ),
+					'placeholder' => esc_html__( 'https://open.spotify.com/...', 'foxiz' ),
+					'tab'         => 'podcast',
+					'type'        => 'text',
+				],
+				[
+					'id'          => 'listen_on_soundcloud',
+					'name'        => esc_html__( 'Listen on Soundcloud', 'foxiz' ),
+					'desc'        => esc_html__( 'Add a Soundcloud link for this show.', 'foxiz' ),
+					'placeholder' => esc_html__( 'https://soundcloud.com/...', 'foxiz' ),
+					'tab'         => 'podcast',
+					'type'        => 'text',
+				],
+				[
+					'id'          => 'listen_on_google',
+					'name'        => esc_html__( 'Listen on Google Podcast', 'foxiz' ),
+					'desc'        => esc_html__( 'Add a Google podcast link for this show.', 'foxiz' ),
+					'placeholder' => esc_html__( 'https://podcasts.google.com/...', 'foxiz' ),
+					'tab'         => 'podcast',
+					'type'        => 'text',
+				],
+				[
+					'id'          => 'template_global',
+					'name'        => esc_html__( 'Global WP Query Template Shortcode', 'foxiz' ),
+					'desc'        => esc_html__( 'Input a "Ruby Template" shortcode to make it as the main blog listing.', 'foxiz' ),
+					'info'        => esc_html__( 'Build the main blog listing by Ruby Template.', 'foxiz' ),
+					'tab'         => 'global-template',
+					'type'        => 'textarea',
+					'rows'        => '2',
+					'placeholder' => '[Ruby_E_Template id="1"]',
+					'std'         => '',
+				],
+				[
+					'id'      => 'posts_per_page',
+					'name'    => esc_html__( 'Posts per Page', 'foxiz' ),
+					'desc'    => esc_html__( 'Input posts per page for this show.', 'foxiz' ),
+					'info'    => esc_html__( 'This setting will also apply to the Global WP Query Template.', 'foxiz' ),
+					'tab'     => 'query',
+					'type'    => 'text',
+					'classes' => 'small',
+					'std'     => '',
+				],
+				[
+					'id'      => 'order_by',
+					'name'    => esc_html__( 'Order Episodes', 'foxiz' ),
+					'desc'    => esc_html__( 'Order by episode index for this show', 'foxiz' ),
+					'info'    => esc_html__( 'As default, the show will order episodes by publish date.', 'foxiz' ),
+					'tab'     => 'query',
+					'type'    => 'select',
+					'options' => [
+						'0'               => esc_html__( '- Default -', 'foxiz' ),
+						'post_index'      => esc_html__( 'Episode Index ASC', 'foxiz' ),
+						'post_index_desc' => esc_html__( 'Episode Index DECS', 'foxiz' ),
+					],
+					'std'     => '0',
+				],
+				[
+					'id'          => 'tag_not_in',
+					'name'        => esc_html__( 'Exclude Tags Slug', 'foxiz' ),
+					'desc'        => esc_html__( 'Remove episodes with this tag from the global blog query.', 'foxiz' ),
+					'info'        => esc_html__( 'Separated by commas. This setting will also apply the Global WP Query Template.', 'foxiz' ),
+					'tab'         => 'query',
+					'placeholder' => 'tag1,tag2,tag3',
+					'type'        => 'text',
+					'std'         => '',
+				],
+			],
+		];
+
+		return $configs;
+	}
+}
+
+add_filter( 'ruby_taxonomies', 'foxiz_register_term_series_settings', 11, 1 );

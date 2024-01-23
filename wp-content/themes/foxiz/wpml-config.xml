@@ -1,0 +1,18 @@
+<wpml-config>
+    <admin-texts>
+        <key name="foxiz_theme_options">
+            <key name="footer_copyright"/>
+        </key>
+    </admin-texts>
+    <custom-fields>
+        <custom-field action="copy-once">foxiz_total_word</custom-field>
+    </custom-fields>
+    <shortcodes>
+        <shortcode>
+            <tag>rb_related</tag>
+            <attributes>
+                <attribute>title</attribute>
+            </attributes>
+        </shortcode>
+    </shortcodes>
+</wpml-config>

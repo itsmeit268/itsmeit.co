@@ -1,0 +1,35 @@
+v2.3.3
+Fix: Updated to work with WordPress 5.5
+
+v2.3.2
+Fix: Compaitble with PHP 7.3
+
+v2.3.1
+Fix: The plugin is not compatible with the latest version of Yoast SEO which caused the plugin to stop working 
+
+v2.3.0
+NEW: Gutenberg editor support
+
+v2.2.0
+NEW: custom post types support 
+NEW: add tags now works with any post type 
+
+v2.1.0
+NEW: works for pages also
+
+v2.0.1 
+Fix: https support .
+
+v2.0.0 New version
+
+
+@12/10/2013 v1.0.5
+bug fix : checked items now get added as tags without problem
+bug fix : checked items now get watched as density without problem 
+
+@28/9/2013 v1.0.3
+bug fix : jquery.gcomplete problem of not returning the item after clicking it fixed .
+
+@3/9/2013 v1.0.1 -> v1.0.2
+bug fix : ajax url turned to wordpress friendly .
+bug fix : jquery.gcomplete conflict fixed by returning if no selctor result
