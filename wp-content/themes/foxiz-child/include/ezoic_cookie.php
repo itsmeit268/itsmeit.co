@@ -1,19 +1,12 @@
 <?php
 
-add_action('template_redirect', function () {
-    $IP = array('127.0.0.1', '127.0.1.1', 'localhost');
+add_action('init', function () {
     $cookieName = 'x-ez-wp-noads';
-
-    if (current_user_can('manage_options') ||
-        in_array($_SERVER['REMOTE_ADDR'], $IP)
-    ) {
-        // If the cookie doesn't exist create the cookie
-        // 0 means a cookie expires at the end of the session (when the browser closes)
+    if (!is_allow_show_ads()) {
         if (!isset($_COOKIE[$cookieName])) {
-            setcookie($cookieName, '1', 0);
+            setcookie('x-ez-wp-noads', '1', 0);
         }
     } else {
-        // If the cookie exists delete the cookie by setting the expire date-time to 1 in UNIX time
         if (isset($_COOKIE[$cookieName])) {
             setcookie($cookieName, '0', 1);
         }

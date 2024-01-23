@@ -1,8 +1,9 @@
 <?php
+
 /** Adsense sidebar */
 add_shortcode('ads_sidebar_top', 'ads_sidebar_top');
 function ads_sidebar_top(){
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - sidebar_top - sidebar -->
@@ -26,7 +27,7 @@ function ads_sidebar_top(){
 
 add_shortcode('post_side_bar_top', 'post_side_bar_top');
 function post_side_bar_top(){
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - post_side_bar_top - sidebar -->
@@ -51,7 +52,7 @@ function post_side_bar_top(){
 /** Adsense sidebar_bottom */
 add_shortcode('sidebar_bottom', 'sidebar_bottom');
 function sidebar_bottom(){
-    if (aicp_can_see_ads()) { // This part will show ads to your non-banned visitors
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - sidebar_bottom - sidebar_bottom -->
@@ -74,7 +75,7 @@ function sidebar_bottom(){
 
 add_shortcode('post_sidebar_bottom', 'post_sidebar_bottom');
 function post_sidebar_bottom(){
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
         <!-- Ezoic - post_sidebar - sidebar_bottom -->
@@ -98,7 +99,7 @@ function post_sidebar_bottom(){
 /** Adsense advertisement_top_left */
 add_shortcode('advertisement_top_left', 'advertisement_top_left');
 function advertisement_top_left(){
-    if (aicp_can_see_ads()) { // This part will show ads to your non-banned visitors
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp" style="max-width: 610px; max-height: 180px">
             <!-- Ezoic - advertisement_top_left - incontent_5 -->
@@ -121,7 +122,7 @@ function advertisement_top_left(){
 /** Adsense advertisement_after_more_latest_news */
 add_shortcode('advertisement_after_more_latest_news', 'advertisement_after_more_latest_news');
 function advertisement_after_more_latest_news() {
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - advertisement_after_more_latest_news - incontent_6 -->
@@ -146,7 +147,7 @@ function advertisement_after_more_latest_news() {
 /** Adsense advertisement_top_left */
 add_shortcode('advertisement_after_more_latest_news_2', 'advertisement_after_more_latest_news_2');
 function advertisement_after_more_latest_news_2(){
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - advertisement_after_more_latest_news_2 - incontent_7 -->
@@ -171,7 +172,7 @@ function advertisement_after_more_latest_news_2(){
 /** Adsense advertisement_after_more_latest_news_bottom width:1200px;height:90px */
 add_shortcode('advertisement_after_more_latest_news_bottom', 'advertisement_after_more_latest_news_bottom');
 function advertisement_after_more_latest_news_bottom(){
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - advertisement_after_more_latest_news_bottom - incontent_8 -->
@@ -196,7 +197,7 @@ function advertisement_after_more_latest_news_bottom(){
 /** Adsense advertisement_home_must_read_after width:1200px;height:90px */
 add_shortcode('advertisement_home_must_read_after', 'advertisement_home_must_read_after');
 function advertisement_home_must_read_after(){
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - advertisement_home_must_read_after - incontent_9 -->
@@ -221,7 +222,7 @@ function advertisement_home_must_read_after(){
 /** Adsense advertisement_home_more_latest_news width:1200px;height:120px */
 add_shortcode('advertisement_home_more_latest_news', 'advertisement_home_more_latest_news');
 function advertisement_home_more_latest_news(){
-    if (aicp_can_see_ads()) {
+    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - advertisement_home_more_latest_news - incontent_10 -->

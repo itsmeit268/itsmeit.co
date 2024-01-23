@@ -1,14 +1,10 @@
 <?php
 
-/**
- * Loại bỏ cache sitemap */
+/** Loai bo cache sitemap*/
 add_filter('rank_math/sitemap/enable_caching', '__return_false');
-
-/**
- * Filter to remove Rank Math data from the database
- */
 //add_filter( 'rank_math_clear_data_on_uninstall', '__return_true' );
 
+include_once get_theme_file_path('include/ezoic_cookie.php');
 include_once get_theme_file_path('include/robots.php');
 
 add_filter('wp_mail_from_name', 'change_wp_mail_from_name');
@@ -20,7 +16,7 @@ function change_wp_mail_from_name($original_email_from){
 if (!is_admin()) {
     include_once get_theme_file_path('include/custom_style.php');
     include_once get_theme_file_path('include/fe_hreflang.php');
-//    include_once get_theme_file_path('include/google_analytics.php');
+    include_once get_theme_file_path('include/google_analytics.php');
     include_once get_theme_file_path('include/optimization.php');
     include_once get_theme_file_path('include/post_ads_shortcode.php');
 } else {
@@ -28,8 +24,6 @@ if (!is_admin()) {
         unset($tests['hasContentAI']);
         return $tests;
     }, 10, 2);
-
-    include_once get_theme_file_path('include/be_hreflang.php');
 }
 
 add_action('init', 'redirect_user_not_admin');
