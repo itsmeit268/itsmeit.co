@@ -20,7 +20,7 @@ function change_wp_mail_from_name($original_email_from){
 if (!is_admin()) {
     include_once get_theme_file_path('include/custom_style.php');
     include_once get_theme_file_path('include/fe_hreflang.php');
-    include_once get_theme_file_path('include/google_analytics.php');
+//    include_once get_theme_file_path('include/google_analytics.php');
     include_once get_theme_file_path('include/optimization.php');
     include_once get_theme_file_path('include/post_ads_shortcode.php');
 } else {
