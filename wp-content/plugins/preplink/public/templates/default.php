@@ -220,12 +220,80 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                         </div>
                     <?php endif; ?>
 
-                    <?php if (!empty($prepLinkURL) || !empty($prepLinkText)) : ?>
+                    <?php if (!empty($prepLinkURL) || !empty($prepLinkText)) :
+                        $current_language = pll_current_language();
+                        ?>
                         <?php if (!empty($faqSetting['faq_enabled']) && $faqSetting['faq_enabled'] == 1 && !empty($faqSetting['faq_description'])) : ?>
+                            <?php if ($current_language === 'en') : ?>
                             <div class="faq-download">
                                 <h3 class="faq-title"><?= !empty($faqSetting['faq_title']) ? $faqSetting['faq_title'] : 'FAQ' ?></h3>
                                 <?= $faqSetting['faq_description']; ?>
                             </div>
+                            <?php else: ?>
+                            <div class="faq-download">
+                                <h3 class="faq-title">Các câu hỏi thường gặp?</h3>
+                                <!--Frequently Asked Questions-->
+                                <div class="accordion">
+                                    <div class="accordion-item">
+                                        <button id="accordion-button-3" aria-expanded="false">
+                                            <span class="accordion-title">Làm cách nào để tải xuống một tập tin?</span>
+                                            <span class="icon" aria-hidden="true"></span>
+                                        </button>
+                                        <div class="accordion-content">
+                                            <p>
+                                                Chúng tôi ngăn chặn BOT spam, bạn cần xác nhận rằng bạn không phải là robot để có được liên kết.
+                                                Sau khi xác nhận, bạn chỉ cần nhấp vào nút tải xuống và đợi vài giây để nó xuất hiện.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <button id="accordion-button-1" aria-expanded="false">
+                                            <span class="accordion-title">Làm cách nào để cài đặt?</span>
+                                            <span class="icon" aria-hidden="true"></span>
+                                        </button>
+                                        <div class="accordion-content">
+                                            <p>
+                                                Mỗi ứng dụng hoặc tệp cài đặt đều có phương pháp cụ thể riêng. Chúng tôi cung cấp hướng dẫn cài đặt cụ thể cho từng phiên bản trong bài viết.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <button id="accordion-button-2" aria-expanded="false">
+                                            <span class="accordion-title">Làm thế nào để lấy mật khẩu giải nén?</span>
+                                            <span class="icon" aria-hidden="true"></span>
+                                        </button>
+                                        <div class="accordion-content">
+                                            <p>
+                                                Chúng tôi đã bảo vệ tập tin bằng mật khẩu. Mật khẩu giải nén đã được đính kèm; vui lòng kiểm tra nó trong tệp zip.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <button id="accordion-button-4" aria-expanded="false">
+                                            <span class="accordion-title">File download có an toàn không?</span>
+                                            <span class="icon" aria-hidden="true"></span>
+                                        </button>
+                                        <div class="accordion-content">
+                                            <p>
+                                                Mỗi bài đăng trên nền tảng của chúng tôi đều bao gồm hình ảnh cài đặt và hướng dẫn sử dụng.
+                                                Tất cả các tệp đều trải qua quá trình kiểm tra kỹ lưỡng trên trang web trước khi được chia sẻ và được quét virus.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <button id="accordion-button-5" aria-expanded="false">
+                                            <span class="accordion-title">Báo cáo lỗi hoặc yêu cầu cập nhật?</span>
+                                            <span class="icon" aria-hidden="true"></span>
+                                        </button>
+                                        <div class="accordion-content">
+                                            <p>
+                                                Trong quá trình sử dụng nếu có vấn đề link tải hỏng, phiên bản cũ, yêu cầu cập nhật,… Bạn có thể gửi email cho chúng tôi trong phần liên hệ.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <?php if (aicp_can_see_ads() && isset($advertising['preplink_advertising_4']) && (int)$advertising['preplink_advertising_4'] == 1 && !empty($advertising['preplink_advertising_code_4']) && free_level() && is_allow_show_ads()): ?>
                             <div class="preplink-ads preplink-ads-4">
