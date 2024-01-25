@@ -12,5 +12,4 @@ wp-content/plugins/simply-static/static-files/*
 wp-content/wflogs/*
 wp-content/apk/*
 wp-content/ai1wm-backups/*
-files/*
-files/
+/files/*
