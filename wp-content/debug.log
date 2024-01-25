@@ -1,0 +1,121 @@
+[24-Jan-2024 09:33:34 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:33:34 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:33:34 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:33:34 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:33:34 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:33:34 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:33:41 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/formatting.php on line 4732
+[24-Jan-2024 09:33:55 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:33:55 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:33:55 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:33:55 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:33:55 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:33:55 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:01 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:34:01 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:34:01 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:01 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:34:01 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:34:01 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:07 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:34:07 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:34:07 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:07 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:34:07 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:34:07 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:11 UTC] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/email-notification-on-login/email-notification-on-login.php on line 19
+[24-Jan-2024 09:34:16 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:34:16 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:34:16 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:16 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:34:16 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:34:16 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:21 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:34:21 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:34:21 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:21 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:34:21 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:34:21 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:35 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:34:35 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:34:35 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:35 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:34:35 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:34:35 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:34:35 UTC] PHP Warning:  openssl_sign(): Supplied key param cannot be coerced into a private key in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/firebase/php-jwt/src/JWT.php on line 237
+[24-Jan-2024 09:34:35 UTC] PHP Fatal error:  Uncaught DomainException: OpenSSL unable to sign data in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/firebase/php-jwt/src/JWT.php:239
+Stack trace:
+#0 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/firebase/php-jwt/src/JWT.php(202): Firebase\JWT\JWT::sign()
+#1 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/OAuth2.php(470): Firebase\JWT\JWT::encode()
+#2 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/OAuth2.php(504): Google\Auth\OAuth2->toJwt()
+#3 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/OAuth2.php(544): Google\Auth\OAuth2->generateCredentialsRequest()
+#4 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/Credentials/ServiceAccountCredentials.php(205): Google\Auth\OAuth2->fetchAuthToken()
+#5 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/FetchAuthTokenCache.php(74): Google\Auth\Credentials\ServiceAccountCredentials->fetchAuthToken()
+#6 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/Middleware/AuthTokenMiddleware.php(122): Google\Auth\FetchAuthTokenCache->fetchAuthToken()
+#7 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/Middleware/AuthTokenMiddleware.php(102): Google\Auth\Middleware\AuthTokenMiddleware->fetchToken()
+#8 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/PrepareBodyMiddleware.php(64): Google\Auth\Middleware\AuthTokenMiddleware->Google\Auth\Middleware\{closure}()
+#9 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/Middleware.php(31): GuzzleHttp\PrepareBodyMiddleware->__invoke()
+#10 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/RedirectMiddleware.php(71): GuzzleHttp\Middleware::GuzzleHttp\{closure}()
+#11 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/Middleware.php(61): GuzzleHttp\RedirectMiddleware->__invoke()
+#12 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/HandlerStack.php(75): GuzzleHttp\Middleware::GuzzleHttp\{closure}()
+#13 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/Client.php(331): GuzzleHttp\HandlerStack->__invoke()
+#14 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/Client.php(107): GuzzleHttp\Client->transfer()
+#15 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/guzzlehttp/guzzle/src/Client.php(123): GuzzleHttp\Client->sendAsync()
+#16 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/auth/src/HttpHandler/Guzzle6HttpHandler.php(47): GuzzleHttp\Client->send()
+#17 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/apiclient/src/Http/REST.php(82): Google\Auth\HttpHandler\Guzzle6HttpHandler->__invoke()
+#18 [internal function]: Google\Http\REST::doExecute()
+#19 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/apiclient/src/Task/Runner.php(187): call_user_func_array()
+#20 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/apiclient/src/Http/REST.php(65): Google\Task\Runner->run()
+#21 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/apiclient/src/Client.php(920): Google\Http\REST::execute()
+#22 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/google/apiclient/src/Http/Batch.php(138): Google\Client->execute()
+#23 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/includes/class-instant-indexing.php(453): Google\Http\Batch->execute()
+#24 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/includes/class-instant-indexing.php(1096): RM_GIAPI->send_to_api()
+#25 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/class-wp-hook.php(326): RM_GIAPI->publish_post()
+#26 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters()
+#27 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/plugin.php(517): WP_Hook->do_action()
+#28 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/post.php(4749): do_action()
+#29 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/post.php(4862): wp_insert_post()
+#30 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(880): wp_update_post()
+#31 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/rest-api/class-wp-rest-server.php(1193): WP_REST_Posts_Controller->update_item()
+#32 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/rest-api/class-wp-rest-server.php(1041): WP_REST_Server->respond_to_request()
+#33 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/rest-api/class-wp-rest-server.php(431): WP_REST_Server->dispatch()
+#34 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/rest-api.php(424): WP_REST_Server->serve_request()
+#35 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/class-wp-hook.php(324): rest_api_loaded()
+#36 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters()
+#37 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/plugin.php(565): WP_Hook->do_action()
+#38 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/class-wp.php(418): do_action_ref_array()
+#39 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/class-wp.php(813): WP->parse_request()
+#40 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/functions.php(1336): WP->main()
+#41 /var/www/vhosts/itsmeit.co/httpdocs/wp-blog-header.php(16): wp()
+#42 /var/www/vhosts/itsmeit.co/httpdocs/index.php(17): require('...')
+#43 {main}
+  thrown in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/fast-indexing-api/vendor/firebase/php-jwt/src/JWT.php on line 239
+[24-Jan-2024 09:34:36 UTC] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/email-notification-on-login/email-notification-on-login.php on line 19
+[24-Jan-2024 09:34:40 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/formatting.php on line 4732
+[24-Jan-2024 09:34:54 UTC] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/email-notification-on-login/email-notification-on-login.php on line 19
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:35:09 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:35:12 UTC] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/email-notification-on-login/email-notification-on-login.php on line 19
+[24-Jan-2024 09:35:12 UTC] WordPress database error Table 'itsmeit.wp_pinterest_automatic' doesn't exist for query delete from wp_pinterest_automatic where date < '2024-01-17 09:35:12' made by do_action_ref_array('wp_pinterest_automatic_pin_hook'), WP_Hook->do_action, WP_Hook->apply_filters, wp_pinterest_automatic_pin_function_wrap, wp_pinterest_automatic_pin_function
+[24-Jan-2024 09:35:18 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:35:18 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:35:18 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:35:18 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:35:18 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:35:18 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:35:22 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1863
+[24-Jan-2024 09:35:22 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 796
+[24-Jan-2024 09:35:22 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
+[24-Jan-2024 09:35:22 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/paid-memberships-pro/includes/functions.php on line 1964
+[24-Jan-2024 09:35:22 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 1870
+[24-Jan-2024 09:35:22 UTC] PHP Warning:  Attempt to read property "ID" on null in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-approvals/pmpro-approvals.php on line 660
