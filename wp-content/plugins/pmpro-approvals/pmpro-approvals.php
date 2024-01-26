@@ -793,7 +793,7 @@ class PMPro_Approvals {
         //default to the current user
         if ( empty( $user_id ) ) {
             global $current_user;
-            $user_id = $current_user->ID;
+            $user_id = isset($current_user->ID) ? $current_user->ID : get_current_user_id();
         }
 
         //get approval for this user/level
