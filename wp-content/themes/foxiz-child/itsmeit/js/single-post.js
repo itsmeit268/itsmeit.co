@@ -127,7 +127,8 @@
                             'ミンハン2405',
                             'トゥイット.92',
                             'it\'s made',
-                            'duyanh'
+                            'duyanh',
+                            'loibv'
                         ].includes(displayName)
                     ) {
                         return;
