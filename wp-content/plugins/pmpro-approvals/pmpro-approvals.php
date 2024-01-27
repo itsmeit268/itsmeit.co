@@ -1860,7 +1860,7 @@ class PMPro_Approvals {
     public static function change_your_level_text( $translated_text, $text, $domain ) {
         global $current_user;
 
-        $approved = self::isApproved( $current_user->ID );
+        $approved = self::isApproved( isset($current_user->ID) ? $current_user->ID: get_current_user_id() );
 
         // Bail if the user is approved.
         if ( $approved ) {
