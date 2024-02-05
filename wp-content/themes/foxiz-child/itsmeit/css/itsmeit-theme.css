@@ -36,11 +36,14 @@ input#email-contact {
     padding: 0 !important
 }
 
-#wpdcom .wpd-auth .wpd-login, .footer-col .widget_nav_menu a span, .mobile-menu > li > a, .qlinks-heading, .wpd-sbs-title {
-    font-size: 16px !important
-}
-
-.mobile-menu .sub-menu a > span, .qlinks-content > ul > li > a, .single-updated-info > span.updated-date, a.loadmore-trigger > span, ul.copyright-menu > li > a {
+.mobile-menu .sub-menu a > span,
+.qlinks-content > ul > li > a,
+.single-updated-info > span.updated-date,
+a.loadmore-trigger > span,
+ul.copyright-menu > li > a,
+#wpdcom .wpd-auth .wpd-login,
+.footer-col .widget_nav_menu a span,
+.mobile-menu > li > a, .qlinks-heading, .wpd-sbs-title{
     font-size: 15px !important
 }
 
@@ -144,8 +147,6 @@ input#email-contact {
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 10px;
-    right: 10px;
     background-color: #fff;
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -180,6 +181,15 @@ input#email-contact {
     margin-left: 5px;
 }
 
+.footer-social-list > .language-selector > .dropdown-menu {
+    left: 0;
+    right: 0;
+}
+
+.search-header {
+    padding-bottom: 25px;
+}
+
 @media only screen  and (min-width : 1224px) {
     .social-follower {
         gap: var(--column-gap, 10px) !important;
@@ -187,6 +197,9 @@ input#email-contact {
 }
 
 @media only screen and (max-device-width: 480px) {
+    .bottom-footer-section {
+        max-width: 100%;
+    }
     .footer-social-list {
         max-width: 100%;
         margin-right: 5px;
