@@ -1239,6 +1239,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
 				"wpdiscuz_gravatar_user_id"    => $user["gravatarUserId"],
 				"wpdiscuz_gravatar_user_email" => $user["gravatarUserEmail"],
 				"wpdiscuz_current_user"        => $user["user"],
+                "wpdiscuz_comment"             => $comment
 			];
 			$user["avatar"]            = get_avatar( $user["gravatarArgs"]["wpdiscuz_gravatar_field"], $user["gravatarArgs"]["wpdiscuz_gravatar_size"], "", $user["authorName"], $user["gravatarArgs"] );
 		}

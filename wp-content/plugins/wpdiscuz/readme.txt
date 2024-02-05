@@ -3,7 +3,7 @@ Contributors: gVectors Team
 Tags: comment, comments, ajax comments, comment form, comment fields
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 7.6.14
+Stable tag: 7.6.15
 Requires PHP: 5.6 and higher
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -188,6 +188,12 @@ Nothing will be lost!  **Comments - wpDiscuz** will show all old comments.
 **IMPORTANT!**
 
 Please don't forget delete all caches and purge CDN after the update.
+
+= Comments - wpDiscuz v7.6.15 - 03.02.2024 =
+
+* Added: Inline Comment integration to Elementor rich editor
+* Added: wpDiscuz comments in Elementor builder
+* Added: [wpdiscuz_comments] shortcode
 
 = Comments - wpDiscuz v7.6.14 - 07.01.2024 =
 

@@ -2,7 +2,7 @@
 /*
  * Plugin Name: wpDiscuz
  * Description: #1 WordPress Comment Plugin. Innovative, modern and feature-rich comment system to supercharge your website comment section.
- * Version: 7.6.14
+ * Version: 7.6.15
  * Author: gVectors Team
  * Author URI: https://gvectors.com/
  * Plugin URI: https://wpdiscuz.com/
@@ -94,6 +94,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 		add_action( "admin_enqueue_scripts", [ &$this, "backendFiles" ], 100 );
 		add_action( "wp_enqueue_scripts", [ &$this, "frontendFiles" ] );
 		add_action( "admin_menu", [ &$this, "addPluginOptionsPage" ], 1 );
+		add_shortcode( "wpdiscuz_comments", [ &$this, "wpdiscuzShortcode" ] );
 
 		add_action( "wp_ajax_wpdLoadMoreComments", [ &$this, "loadMoreComments" ] );
 		add_action( "wp_ajax_nopriv_wpdLoadMoreComments", [ &$this, "loadMoreComments" ] );
@@ -150,6 +151,11 @@ class WpdiscuzCore implements WpDiscuzConstants {
 		add_action( "admin_bar_menu", [ &$this, "addToolbarItems" ], 300 );
 
 		add_filter( 'register_block_type_args', [ &$this, "replaceDefaultCommentBlock" ], 99, 2 );
+
+		add_action( "elementor/editor/after_enqueue_scripts", [ &$this, "inlineCommentForElementorJS" ] );
+		add_action( "elementor/editor/after_enqueue_styles", [ &$this, "inlineCommentForElementorCSS" ] );
+		add_action( "elementor/editor/footer", [ &$this, "feedbackDialog" ] );
+		add_action( "elementor/widgets/register", [ &$this, "registerWpdiscuzWidgetInElementor" ] );
 	}
 
 	public static function getInstance() {
@@ -315,7 +321,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 						"comment_html"   => $commentHtml
 					];
 				}
-				$response = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+				$response = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdBubbleUpdate" );
 				wp_send_json_success( $response );
 			}
 		}
@@ -488,7 +494,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 					}
 					do_action( "wpdiscuz_after_comment_post", $newComment, $currentUser );
 					$response["callbackFunctions"] = [];
-					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdAddComment" );
 					$response                      = apply_filters( "wpdiscuz_comment_post", $response );
 					do_action( "wpdiscuz_clean_post_cache", $postId, "comment_posted" );
 					wp_send_json_success( $response );
@@ -661,7 +667,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 					], $components["text.html"] );
 
 					$response["callbackFunctions"] = [];
-					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdSaveEditedComment" );
 					$response                      = apply_filters( "wpdiscuz_comment_edit_save", $response );
 					wp_send_json_success( $response );
 				} else {
@@ -737,7 +743,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 						$response["message"]           = wp_list_comments( $commentListArgs, $comments );
 						$response["parentCommentID"]   = $parentComment->comment_ID;
 						$response["callbackFunctions"] = [];
-						$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+						$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdGetSingleComment" );
 						wp_send_json_success( $response );
 					}
 				}
@@ -782,7 +788,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 					$commentData["loadLastCommentId"] = $this->dbManager->getLastCommentId( $this->commentsArgs );
 				}
 				$commentData["callbackFunctions"] = [];
-				$commentData                      = apply_filters( "wpdiscuz_ajax_callbacks", $commentData );
+				$commentData                      = apply_filters( "wpdiscuz_ajax_callbacks", $commentData, $action = "wpdLoadMoreComments" );
 				wp_send_json_success( $commentData );
 			}
 		}
@@ -816,7 +822,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 					"message"           => $commentData["comment_list"],
 					"callbackFunctions" => [],
 				];
-				$response           = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+				$response           = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdSorting" );
 				wp_send_json_success( $response );
 			}
 		}
@@ -1390,6 +1396,25 @@ class WpdiscuzCore implements WpDiscuzConstants {
 		}
 	}
 
+	public function inlineCommentForElementorJS() {
+		wp_register_script( "wpdiscuz-for-elementor", plugins_url( WPDISCUZ_DIR_NAME . "/assets/js/wpdiscuz-shortcode-for-elementor.js" ), [ "jquery" ], $this->version, true );
+		wp_enqueue_script( "wpdiscuz-for-elementor" );
+		wp_localize_script( "wpdiscuz-for-elementor", "wpdObjectEl", [
+			"shortcode"        => self::WPDISCUZ_FEEDBACK_SHORTCODE,
+			"image"            => plugins_url( WPDISCUZ_DIR_NAME . "/assets/img/shortcode.png" ),
+			"tooltip"          => $this->options->getPhrase( "wc_feedback_shortcode_tooltip" ),
+			"popup_title"      => $this->options->getPhrase( "wc_feedback_popup_title" ),
+			"leave_feebdack"   => $this->options->getPhrase( "wc_please_leave_feebdack" ),
+			"no_text_selected" => esc_html__( "No text is selected. Please select a part of text from post content.", "wpdiscuz" )
+		] );
+		wp_enqueue_script( "thickbox" );
+	}
+
+	public function inlineCommentForElementorCSS() {
+		wp_register_style( "wpdiscuz-for-elementor", plugins_url( WPDISCUZ_DIR_NAME . "/assets/css/wpdiscuz-shortcode-for-elementor.css" ) );
+		wp_enqueue_style( "wpdiscuz-for-elementor" );
+	}
+
 	public function uninstall() {
 		if ( is_admin() && ! empty( $_GET["action"] ) && $_GET["action"] === "wpdiscuz-uninstall" ) {
 			if ( check_admin_referer( "wpdiscuz_uninstall" ) && current_user_can( "manage_options" ) ) {
@@ -1900,7 +1925,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 					}
 					$response["comment_list"]      = wp_list_comments( $commentListArgs, $comments );
 					$response["callbackFunctions"] = [];
-					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdShowReplies" );
 					wp_send_json_success( $response );
 				}
 			}
@@ -1949,7 +1974,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 					$response["commentId"]         = $commentId;
 					$response["parentCommentID"]   = $parentComment->comment_ID;
 					$response["callbackFunctions"] = [];
-					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdMostReactedComment" );
 					wp_send_json_success( $response );
 				}
 			}
@@ -2009,7 +2034,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
 					$response["message"]           = wp_list_comments( $commentListArgs, $comments );
 					$response["commentId"]         = $hottestCommentId;
 					$response["callbackFunctions"] = [];
-					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response );
+					$response                      = apply_filters( "wpdiscuz_ajax_callbacks", $response, $action = "wpdHottestThread" );
 					wp_send_json_success( $response );
 				}
 			}
@@ -2041,9 +2066,9 @@ class WpdiscuzCore implements WpDiscuzConstants {
 	public function footerContents() {
 		if ( $this->isWpdiscuzLoaded ) {
 			global $post;
-//			if ( $this->options->login["showActivityTab"] || $this->options->login["showSubscriptionsTab"] || $this->options->login["showFollowsTab"] || apply_filters( "wpdiscuz_enable_content_modal", false ) ) {
-//				$this->addContentModal();
-//			}
+			if ( $this->options->login["showActivityTab"] || $this->options->login["showSubscriptionsTab"] || $this->options->login["showFollowsTab"] || apply_filters( "wpdiscuz_enable_content_modal", false ) ) {
+				$this->addContentModal();
+			}
 			if ( $this->options->live["enableBubble"] ) {
 				$this->addBubble( $post );
 			}
@@ -2266,6 +2291,14 @@ class WpdiscuzCore implements WpDiscuzConstants {
             </div>
 			<?php
 		}
+	}
+
+	public function registerWpdiscuzWidgetInElementor( $widgets_manager ) {
+
+		require_once( WPDISCUZ_DIR_PATH . "/utils/WpdiscuzElementorIntegration.php" );
+
+		$widgets_manager->register( new WpdiscuzElementorIntegration() );
+
 	}
 
 	public function feedbackShortcode( $atts, $content = "" ) {
@@ -2578,6 +2611,28 @@ class WpdiscuzCore implements WpDiscuzConstants {
 	 */
 	public function getOptions() {
 		return $this->options;
+	}
+
+	public function wpdiscuzShortcode() {
+		global $post;
+		$html = "";
+		$form = $this->wpdiscuzForm->getForm( $post->ID );
+		$form->initFormFields();
+		if ( apply_filters( "is_load_wpdiscuz", $form->getFormID() && ( comments_open( $post ) || $post->comment_count ) && is_singular() && post_type_supports( $post->post_type, "comments" ), $post ) ) {
+			ob_start();
+			include ABSPATH . "wp-content/plugins/wpdiscuz/themes/default/comment-form.php";
+			$html = ob_get_clean();
+		} elseif ( is_single() || is_page() ) {
+			if ( comments_open() || get_comments_number() ) {
+				ob_start();
+				add_filter( 'deprecated_file_trigger_error', '__return_false' );
+				comments_template();
+				remove_filter( 'deprecated_file_trigger_error', '__return_false' );
+				$html = ob_get_clean();
+			}
+		}
+
+		return $html;
 	}
 
 	public function replaceDefaultCommentBlock( $settings, $name ) {

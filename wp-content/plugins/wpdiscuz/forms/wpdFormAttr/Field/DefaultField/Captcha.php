@@ -183,6 +183,11 @@ class Captcha extends Field
             $resp = $this->reCaptcha->verify($token, $this->getIP());
         } else {
             $score = apply_filters("wpdiscuz_recaptcha_score", $options->recaptcha["score"]);
+            if($score <= 0){
+                $score = 0.5;
+            }elseif ($score >= 1){
+                $score = 0.9;
+            }
             $resp = $this->reCaptcha->setExpectedAction($action)
                 ->setScoreThreshold($score)
                 ->verify($token, $this->getIP());

@@ -13,6 +13,7 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants
     private $helper;
     private $wpUploadsPath;
     private $wpUploadsUrl;
+    private $wpUploadsSubdir;
     private $currentUser;
     private $requestUri;
     private $mimeTypes = [];
@@ -23,11 +24,11 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants
         $this->dbManager = $dbManager;
         $this->wpdiscuzForm = $wpdiscuzForm;
         $this->helper = $helper;
-        $wpUploadsDir = wp_upload_dir();
-        $this->wpUploadsPath = $wpUploadsDir["path"];
-        $this->wpUploadsUrl = $this->helper->fixURLScheme($wpUploadsDir["url"]);
+
         $this->requestUri = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : "";
         if ($this->options->content["wmuIsEnabled"]) {
+			add_action("init", [$this, "initUploadsFolderVars"]);
+
             add_filter("wpdiscuz_editor_buttons_html", [&$this, "uploadButtons"], 1, 2);
             add_action("wpdiscuz_button_actions", [&$this, "uploadPreview"], 1, 2);
 
@@ -61,6 +62,20 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants
 //            add_filter("manage_media_columns", [$this, "wpdiscuzMediaCommentColumn"], 10, 2);
         }
     }
+
+	public function initUploadsFolderVars() {
+		$wpUploadsDir = wp_upload_dir();
+
+		$this->wpUploadsSubdir = $wpUploadsDir["subdir"];
+		$wpdiscuzUploadsFolder = apply_filters("wpdiscuz_uploads_folder", "");
+
+		$this->wpUploadsPath = $wpUploadsDir["basedir"] . "/" . trim($wpdiscuzUploadsFolder, "/\\") . $this->wpUploadsSubdir;
+		$this->wpUploadsUrl = $this->helper->fixURLScheme($wpUploadsDir["baseurl"] ."/" . trim($wpdiscuzUploadsFolder, "/\\") . $this->wpUploadsSubdir );
+
+		if (!is_dir($this->wpUploadsPath)) {
+			wp_mkdir_p($this->wpUploadsPath);
+		}
+	}
 
     public function uploadButtons($html, $uniqueId)
     {

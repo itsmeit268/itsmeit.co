@@ -350,7 +350,7 @@ class WpdiscuzHelperEmail implements WpDiscuzConstants {
 		$post       = get_post( $comment->comment_post_ID );
 		$postAuthor = get_userdata( $post->post_author );
 
-		if ( ! apply_filters( "wpdiscuz_email_notification", true, $emailData, $comment ) ) {
+		if ( ! apply_filters( "wpdiscuz_email_notification", true, $emailData, $comment, $subscriptionType ) ) {
 			return;
 		}
 

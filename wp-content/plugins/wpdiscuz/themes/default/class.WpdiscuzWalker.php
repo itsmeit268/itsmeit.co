@@ -4,6 +4,9 @@
 class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants
 {
 
+	/**
+	 * @var WpdiscuzHelper
+	 */
     private $helper;
     private $helperOptimization;
     private $dbManager;

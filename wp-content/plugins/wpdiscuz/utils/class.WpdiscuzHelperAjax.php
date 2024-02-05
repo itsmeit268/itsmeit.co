@@ -386,7 +386,7 @@ class WpdiscuzHelperAjax implements WpDiscuzConstants
                                 $response["followTip"] = esc_attr($this->options->getPhrase("wc_unfollow_user", ["comment" => $comment]));
                                 do_action("wpdiscuz_follow_added", $args);
                                 $response["callbackFunctions"] = [];
-                                $response = apply_filters("wpdiscuz_ajax_callbacks", $response);
+                                $response = apply_filters("wpdiscuz_ajax_callbacks", $response, $action = "wpdFollowUser");
                                 wp_send_json_success($response);
                             } else {
                                 $this->followConfirmAction($comment->comment_post_ID, $followData["id"], $followData["activation_key"], $args["follower_email"]);
@@ -610,7 +610,7 @@ class WpdiscuzHelperAjax implements WpDiscuzConstants
                     ], $components["text.html"]),
                     "callbackFunctions" => [],
                 ];
-                $response = apply_filters("wpdiscuz_ajax_callbacks", $response);
+                $response = apply_filters("wpdiscuz_ajax_callbacks", $response, $action = "wpdReadMore");
                 wp_send_json_success($response);
             } else {
                 wp_send_json_error("error");
@@ -733,7 +733,7 @@ class WpdiscuzHelperAjax implements WpDiscuzConstants
                 $response["curUserReaction"] = $voteType;
             }
             $response["callbackFunctions"] = [];
-            $response = apply_filters("wpdiscuz_ajax_callbacks", $response);
+            $response = apply_filters("wpdiscuz_ajax_callbacks", $response, $action = "wpdVoteOnComment");
             $response = apply_filters("wpdiscuz_comment_vote", $response);
             if ($this->options->thread_display["mostVotedByDefault"]) {
                 do_action("wpdiscuz_reset_comments_cache", $comment->comment_post_ID);
@@ -868,7 +868,7 @@ class WpdiscuzHelperAjax implements WpDiscuzConstants
                     do_action("wpdiscuz_add_rating", $rating, $post_id);
                     do_action("wpdiscuz_clean_post_cache", $post_id, "user_rated");
                     $response = ["callbackFunctions" => []];
-                    $response = apply_filters("wpdiscuz_ajax_callbacks", $response);
+                    $response = apply_filters("wpdiscuz_ajax_callbacks", $response, $action = "wpdUserRate");
                     wp_send_json_success($response);
                 } else {
                     wp_send_json_error("wc_cannot_rate_again");
@@ -888,7 +888,7 @@ class WpdiscuzHelperAjax implements WpDiscuzConstants
                     do_action("wpdiscuz_add_rating", $rating, $post_id);
                     do_action("wpdiscuz_clean_post_cache", $post_id, "user_rated");
                     $response = ["callbackFunctions" => []];
-                    $response = apply_filters("wpdiscuz_ajax_callbacks", $response);
+                    $response = apply_filters("wpdiscuz_ajax_callbacks", $response, $action = "wpdUserRate");
                     wp_send_json_success($response);
                 } else {
                     wp_send_json_error("wc_cannot_rate_again");
