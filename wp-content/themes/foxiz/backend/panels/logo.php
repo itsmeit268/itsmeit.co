@@ -24,16 +24,28 @@ if ( ! function_exists( 'foxiz_register_options_logo_global' ) ) {
 			'subsection' => true,
 			'fields'     => [
 				[
-					'id'    => 'info_add_favico',
+					'id'    => 'info_add_favicon',
 					'type'  => 'info',
 					'style' => 'info',
-					'desc'  => esc_html__( 'Navigate to "Appearance > Customize > Site Identity > Site Icon" to add the favico icon.', 'foxiz' ),
+					'desc'  => esc_html__( 'Go to "Appearance > Customize > Site Identity > Site Icon" to easily add your favicon.', 'foxiz' ),
 				],
 				[
 					'id'    => 'info_add_logo_dark',
 					'type'  => 'info',
+					'style' => 'info',
+					'desc'  => esc_html__( 'Ensure that dark mode logos are configured when enabling dark mode for your site.', 'foxiz' ),
+				],
+				[
+					'id'    => 'template_logo_info',
+					'type'  => 'info',
 					'style' => 'warning',
-					'desc'  => esc_html__( 'Ensure dark mode logos are set if you enable dark mode for your site.', 'foxiz' ),
+					'desc'  => esc_html__( 'The logo settings may not apply to the Header Template. Edit the header with Elementor to configure the logo block if your website uses a header template.', 'foxiz' ),
+				],
+				[
+					'id'    => 'logo_seo_info',
+					'type'  => 'info',
+					'style' => 'warning',
+					'desc'  => esc_html__( 'The "Main Logo" setting is crucial for schema data markup. Please ensure that this setting is configured.', 'foxiz' ),
 				],
 				[
 					'id'          => 'logo',
@@ -42,7 +54,7 @@ if ( ! function_exists( 'foxiz_register_options_logo_global' ) ) {
 					'preview'     => true,
 					'title'       => esc_html__( 'Main Logo', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Select or upload a logo for your site.', 'foxiz' ),
-					'description' => esc_html__( 'The recommended height value is 60px.', 'foxiz' ),
+					'description' => esc_html__( 'IMPORTANT NOTE: Please ensure that this setting is configured for schema markup. The recommended height value is 60px.', 'foxiz' ),
 				],
 				[
 					'id'          => 'dark_logo',

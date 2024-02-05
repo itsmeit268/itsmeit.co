@@ -57,6 +57,8 @@ $foxiz_file_paths = array(
 	'templates/single/standard-7',
 	'templates/single/standard-8',
 	'templates/single/standard-9',
+	'templates/single/standard-10',
+	'templates/single/standard-11',
 	'templates/single/video-1',
 	'templates/single/video-2',
 	'templates/single/video-3',

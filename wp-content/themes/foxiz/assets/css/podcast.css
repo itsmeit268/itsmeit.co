@@ -214,6 +214,7 @@
     flex-grow: 1;
     width: 100%;
     margin: 0 15px;
+    /*rtl:ignore*/
     direction: ltr;
 }
 
@@ -264,6 +265,7 @@
 .mejs-time-current,
 .mejs-time-hovered,
 .mejs-time-loaded {
+    /*rtl:ignore*/
     left: 0;
     width: 100%;
     -webkit-transition: all .15s ease-in;
@@ -271,8 +273,11 @@
     -ms-transform: scaleX(0);
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
+    /*rtl:ignore*/
     -ms-transform-origin: 0 0;
+    /*rtl:ignore*/
     -webkit-transform-origin: 0 0;
+    /*rtl:ignore*/
     transform-origin: 0 0;
 }
 
@@ -284,8 +289,11 @@
     width: 46px;
     height: 20px;
     margin-bottom: 9px;
+    /*rtl:ignore*/
     -ms-transform: translateX(-50%);
+    /*rtl:ignore*/
     -webkit-transform: translateX(-50%);
+    /*rtl:ignore*/
     transform: translateX(-50%);
     text-align: center;
     color: var(--awhite);
@@ -300,7 +308,9 @@
     display: block;
     width: 0;
     height: 0;
+    /*rtl:ignore*/
     -ms-transform: translateX(-50%);
+    /*rtl:ignore*/
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     border: 5px solid var(--player-color, var(--g-color));
@@ -309,6 +319,7 @@
 }
 
 .mejs-time-float-current {
+    /*rtl:ignore*/
     left: 0;
     display: block;
     width: 46px;
@@ -319,9 +330,12 @@
 .mejs-time-handle-content {
     position: absolute;
     z-index: 11;
+    /*rtl:ignore*/
     left: 0;
     cursor: pointer;
+    /*rtl:ignore*/
     -ms-transform: translateX(0);
+    /*rtl:ignore*/
     -webkit-transform: translateX(0);
     transform: translateX(0);
     border: 4px solid transparent;
@@ -329,6 +343,7 @@
 
 .mejs-time-handle-content {
     top: -8px;
+    /*rtl:ignore*/
     left: -6px;
     width: 12px;
     height: 12px;

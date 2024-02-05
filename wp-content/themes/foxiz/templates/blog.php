@@ -146,7 +146,9 @@ if ( ! function_exists( 'foxiz_category_page_header_2' ) ) {
 								<div class="block-qlinks qlayout-2 yes-wrap">
 									<ul class="qlinks-inner">
 										<?php foreach ( $categories as $category ) : ?>
-											<li class="qlink h5"><a href="<?php echo foxiz_get_term_link( $category->term_id ) ?>"><?php echo esc_html( $category->name ); ?></a></li>
+											<li class="qlink h5">
+												<a href="<?php echo foxiz_get_term_link( $category->term_id ) ?>"><?php echo esc_html( $category->name ); ?></a>
+											</li>
 										<?php endforeach; ?>
 									</ul>
 								</div>
@@ -262,17 +264,17 @@ if ( ! function_exists( 'foxiz_search_page_header' ) ) {
 		}
 		?>
 		<header class="<?php echo esc_attr( $classes ); ?>">
-		<div class="rb-container edge-padding">
-			<div class="search-header-inner">
-				<div class="search-header-content">
-					<h1 class="search-title"><?php printf( foxiz_html__( 'Search Results for: %s', 'foxiz' ), get_search_query() ); ?></h1>
-					<p class="search-subtitle"><?php printf( foxiz_html__( 'Showing %s results for your search', 'foxiz' ), $total ); ?></p>
-				</div>
-				<div class="search-header-form">
-					<?php get_search_form(); ?>
+			<div class="rb-container edge-padding">
+				<div class="search-header-inner">
+					<div class="search-header-content">
+						<h1 class="search-title"><?php printf( foxiz_html__( 'Search Results for: %s', 'foxiz' ), get_search_query() ); ?></h1>
+						<p class="search-subtitle"><?php printf( foxiz_html__( 'Showing %s results for your search', 'foxiz' ), $total ); ?></p>
+					</div>
+					<div class="search-header-form">
+						<?php get_search_form(); ?>
+					</div>
 				</div>
 			</div>
-		</div>
 		</header>
 	<?php }
 }
@@ -356,9 +358,14 @@ if ( ! function_exists( 'foxiz_the_blog' ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
 			$classes[] = 'is-sidebar-' . esc_attr( $settings['sidebar_position'] );
-		}
-		if ( ! empty( $settings['sticky_sidebar'] ) ) {
-			$classes[] = 'sticky-sidebar';
+
+			if ( ! empty( $settings['sticky_sidebar'] ) ) {
+				if ( '2' === (string) $settings['sticky_sidebar'] ) {
+					$classes[] = 'sticky-last-w';
+				} else {
+					$classes[] = 'sticky-sidebar';
+				}
+			}
 		} ?>
 		<div class="<?php echo join( ' ', $classes ); ?>">
 			<div class="rb-container edge-padding">

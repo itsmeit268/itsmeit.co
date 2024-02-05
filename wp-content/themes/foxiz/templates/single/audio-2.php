@@ -5,10 +5,8 @@ defined( 'ABSPATH' ) || exit;
 if ( ! function_exists( 'foxiz_render_single_audio_2' ) ) {
 	function foxiz_render_single_audio_2() {
 
-		$classes          = [];
-		$classes[]        = 'single-standard-2 single-embed-2';
+		$classes          = [ 'single-standard-2 single-embed-2' ];
 		$sidebar_name     = foxiz_get_single_setting( 'sidebar_name' );
-		$line_length      = foxiz_get_option( 'single_post_line_length' );
 		$sidebar_position = foxiz_get_single_sidebar_position();
 
 		if ( 'none' === $sidebar_position ) {
@@ -27,12 +25,7 @@ if ( ! function_exists( 'foxiz_render_single_audio_2' ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
 			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
-		}
-		if ( foxiz_get_single_sticky_sidebar() ) {
-			$classes[] = 'sticky-sidebar';
-		}
-		if ( ! empty( $line_length ) ) {
-			$classes[] = 'optimal-line-length';
+			$classes[] = foxiz_get_single_sticky_sidebar();
 		} ?>
 		<div class="<?php echo join( ' ', $classes ); ?>">
 			<?php foxiz_single_open_tag(); ?>

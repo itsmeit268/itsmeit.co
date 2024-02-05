@@ -1,6 +1,7 @@
 <?php
 
 namespace foxizElementorControl;
+
 use function foxiz_count_posts_category;
 use function foxiz_query_order_selection;
 use function is_admin;
@@ -594,7 +595,7 @@ class Options {
 			'0'      => esc_html__( '- Default -', 'foxiz-core' ),
 			'bg'     => esc_html__( 'Background', 'foxiz-core' ),
 			'border' => esc_html__( 'Border', 'foxiz-core' ),
-			'shadow' => esc_html__( 'Shadow', 'foxiz' ),
+			'shadow' => esc_html__( 'Shadow', 'foxiz-core' ),
 		];
 	}
 
@@ -616,7 +617,7 @@ class Options {
 		return [
 			'0'      => esc_html__( '- Default -', 'foxiz-core' ),
 			'border' => esc_html__( 'Border', 'foxiz-core' ),
-			'text'   => esc_html__( 'Text Only', 'foxiz' ),
+			'text'   => esc_html__( 'Text Only', 'foxiz-core' ),
 		];
 	}
 
@@ -710,13 +711,14 @@ class Options {
 	static function meta_divider_dropdown() {
 
 		return [
-			'0'        => esc_html__( '- Default -', 'foxiz' ),
-			'default'  => esc_html__( 'Vertical Line', 'foxiz' ),
-			'line'     => esc_html__( 'Solid Line', 'foxiz' ),
-			'dot'      => esc_html__( 'Dot', 'foxiz' ),
-			'gray-dot' => esc_html__( 'Gray Dot', 'foxiz' ),
-			'none'     => esc_html__( 'White Spacing', 'foxiz' ),
-			'wrap'     => esc_html__( 'Line Wrap', 'foxiz' ),
+			'0'         => esc_html__( '- Default -', 'foxiz-core' ),
+			'default'   => esc_html__( 'Vertical Line', 'foxiz-core' ),
+			'line'      => esc_html__( 'Solid Line', 'foxiz-core' ),
+			'gray-line' => esc_html__( 'Gray Solid Line', 'foxiz' ),
+			'dot'       => esc_html__( 'Dot', 'foxiz-core' ),
+			'gray-dot'  => esc_html__( 'Gray Dot', 'foxiz-core' ),
+			'none'      => esc_html__( 'White Spacing', 'foxiz-core' ),
+			'wrap'      => esc_html__( 'Line Wrap', 'foxiz-core' ),
 		];
 	}
 
@@ -833,7 +835,7 @@ class Options {
 
 	static function entry_category_size_description() {
 
-		return esc_html__( 'Input custom font size value for the entry category of this layout.', 'foxiz-core' );
+		return esc_html__( 'Quickly edit the entry category font size. Leave it blank if you want to control additional font values via font settings.', 'foxiz-core' );
 	}
 
 	static function entry_meta_description() {
@@ -1083,7 +1085,7 @@ class Options {
 
 	static function title_size_description() {
 
-		return esc_html__( 'Input custom font size values (in pixels) for the post title for displaying in this block.', 'foxiz-core' );
+		return esc_html__( 'Quickly edit title size. Leave it blank if you want to control additional font values via font settings.', 'foxiz-core' );
 	}
 
 	static function title_color_description() {

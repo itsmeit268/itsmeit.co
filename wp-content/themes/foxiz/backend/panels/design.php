@@ -29,6 +29,46 @@ if ( ! function_exists( 'foxiz_register_options_design_category' ) ) {
 					'style' => 'info',
 					'desc'  => esc_html__( 'To edit color for individual categories, navigate to "Admin Dashboard > Posts > Categories > Edit".', 'foxiz' ),
 				],
+
+				[
+					'id'     => 'section_start_entry_category_limit',
+					'type'   => 'section',
+					'class'  => 'ruby-section-start',
+					'title'  => esc_html__( 'Limit Number of Category Icons', 'foxiz' ),
+					'indent' => true,
+				],
+				[
+					'id'          => 'max_categories',
+					'title'       => esc_html__( 'Max Category Icons if choose Category', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Enter a value to limit the number of entry categories or taxonomies shown on all post listing layouts.', 'foxiz' ),
+					'description' => esc_html__( 'This is useful when you have multiple categories per post and have not set a primary category in the post settings. Leave it blank to display all categories.', 'foxiz' ),
+					'type'        => 'text',
+					'class'       => 'small-text',
+					'default'     => '',
+				],
+				[
+					'id'          => 'max_post_tags',
+					'title'       => esc_html__( 'Max Category Icons if Choose Post Tags', 'foxiz' ),
+					'subtitle'    => esc_html__( 'In case you replace the category with post tags for the category icon, set the value to limit the number of tags.', 'foxiz' ),
+					'description' => esc_html__( 'This is useful when you have multiple tags per post and have not set a primary tag in the post settings. Leave it blank to display all tags.', 'foxiz' ),
+					'type'        => 'text',
+					'class'       => 'small-text',
+					'default'     => '1',
+				],
+				[
+					'id'     => 'section_end_entry_category_limit',
+					'type'   => 'section',
+					'class'  => 'ruby-section-end',
+					'indent' => false,
+				],
+
+				[
+					'id'     => 'section_start_entry_category_color',
+					'type'   => 'section',
+					'class'  => 'ruby-section-start',
+					'title'  => esc_html__( 'Entry Category Colors', 'foxiz' ),
+					'indent' => true,
+				],
 				[
 					'id'          => 'category_highlight_color',
 					'title'       => esc_html__( 'Highlight Color', 'foxiz' ),
@@ -62,13 +102,10 @@ if ( ! function_exists( 'foxiz_register_options_design_category' ) ) {
 					'default'     => '',
 				],
 				[
-					'id'          => 'max_categories',
-					'title'       => esc_html__( 'Maximum Entry Categories', 'foxiz' ),
-					'subtitle'    => esc_html__( 'Enter a value to limit the number of entry categories or taxonomies shown on all post listing layouts.', 'foxiz' ),
-					'description' => esc_html__( 'This is useful in case you have many categories per post. Leave it blank to show all categories.', 'foxiz' ),
-					'type'        => 'text',
-					'class'       => 'small-text',
-					'default'     => '',
+					'id'     => 'section_end_entry_category_color',
+					'type'   => 'section',
+					'class'  => 'ruby-section-end',
+					'indent' => false,
 				],
 			],
 		];
@@ -170,12 +207,13 @@ if ( ! function_exists( 'foxiz_register_options_design_meta' ) ) {
 					'subtitle' => esc_html__( 'Select a divider style between entry metas.', 'foxiz' ),
 					'type'     => 'select',
 					'options'  => [
-						'default'  => esc_html__( 'Vertical Line', 'foxiz' ),
-						'line'     => esc_html__( 'Solid Line', 'foxiz' ),
-						'dot'      => esc_html__( 'Dot', 'foxiz' ),
-						'gray-dot' => esc_html__( 'Gray Dot', 'foxiz' ),
-						'none'     => esc_html__( 'White Spacing', 'foxiz' ),
-						'wrap'     => esc_html__( 'Line Wrap', 'foxiz' ),
+						'default'   => esc_html__( 'Vertical Line', 'foxiz' ),
+						'line'      => esc_html__( 'Solid Line', 'foxiz' ),
+						'gray-line' => esc_html__( 'Gray Solid Line', 'foxiz' ),
+						'dot'       => esc_html__( 'Dot', 'foxiz' ),
+						'gray-dot'  => esc_html__( 'Gray Dot', 'foxiz' ),
+						'none'      => esc_html__( 'White Spacing', 'foxiz' ),
+						'wrap'      => esc_html__( 'Line Wrap', 'foxiz' ),
 					],
 					'default'  => 'default',
 				],
@@ -281,15 +319,15 @@ if ( ! function_exists( 'foxiz_register_options_design_meta_custom' ) ) {
 					'default'     => '',
 				],
 				[
-					'id'          => 'meta_custom_pos',
+					'id'          => 'meta_custom_important',
 					'type'        => 'switch',
 					'title'       => esc_html__( 'Is Bold Meta', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Highlight this meta with bold font settings.', 'foxiz' ),
 					'description' => esc_html__( 'The "Typography > Entry Meta > Important Meta Font" settings will apply to this meta.', 'foxiz' ),
-					'default'     => 0,
+					'default'     => false,
 				],
 				[
-					'id'       => 'meta_custom_important',
+					'id'       => 'meta_custom_pos',
 					'type'     => 'select',
 					'title'    => esc_html__( 'Label Position', 'foxiz' ),
 					'subtitle' => esc_html__( 'Select a position for the custom meta label.', 'foxiz' ),
@@ -628,6 +666,14 @@ if ( ! function_exists( 'foxiz_register_options_design_hover' ) ) {
 			'subsection' => true,
 			'fields'     => [
 				[
+					'id'       => 'section_start_title_hover_effect',
+					'type'     => 'section',
+					'class'    => 'ruby-section-start',
+					'title'    => esc_html__( 'Title Hover Effect', 'foxiz' ),
+					'subtitle' => esc_html__( 'The color settings will be applied based on the chosen effect. Please note that some settings may not be applicable in certain effect styles.', 'foxiz' ),
+					'indent'   => true,
+				],
+				[
 					'id'       => 'hover_effect',
 					'title'    => esc_html__( 'Title Hover Effect', 'foxiz' ),
 					'subtitle' => esc_html__( 'The settings below will apply to the post title.', 'foxiz' ),
@@ -643,6 +689,51 @@ if ( ! function_exists( 'foxiz_register_options_design_hover' ) ) {
 						'8' => esc_html__( 'Style 8 (Opacity)', 'foxiz' ),
 					],
 					'default'  => '1',
+				],
+				[
+					'id'          => 'title_hover_text_color',
+					'title'       => esc_html__( 'Text Color', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Select a color for the title when hovering.', 'foxiz' ),
+					'type'        => 'color',
+					'transparent' => false,
+					'default'     => '',
+				],
+				[
+					'id'          => 'title_hover_effect_color',
+					'title'       => esc_html__( 'Effect Color', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Select a color for the effect when hovering.', 'foxiz' ),
+					'type'        => 'color',
+					'transparent' => false,
+					'default'     => '',
+				],
+				[
+					'id'          => 'dark_title_hover_text_color',
+					'title'       => esc_html__( 'Dark Mode - Text Color', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Select a color for the title when hovering in dark mode.', 'foxiz' ),
+					'type'        => 'color',
+					'transparent' => false,
+					'default'     => '',
+				],
+				[
+					'id'          => 'dark_title_hover_effect_color',
+					'title'       => esc_html__( 'Dark Mode - Effect Color', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Select a color for the effect when hovering in dark mode.', 'foxiz' ),
+					'type'        => 'color',
+					'transparent' => false,
+					'default'     => '',
+				],
+				[
+					'id'     => 'section_end_title_hover_effect',
+					'type'   => 'section',
+					'class'  => 'ruby-section-end',
+					'indent' => false,
+				],
+				[
+					'id'     => 'section_start_element_hover_effect',
+					'type'   => 'section',
+					'class'  => 'ruby-section-start',
+					'title'  => esc_html__( 'Elements Hover Effect', 'foxiz' ),
+					'indent' => true,
 				],
 				[
 					'id'       => 'menu_hover_effect',
@@ -668,6 +759,12 @@ if ( ! function_exists( 'foxiz_register_options_design_hover' ) ) {
 						'3' => esc_html__( 'Style 3 (Background)', 'foxiz' ),
 					],
 					'default'  => '1',
+				],
+				[
+					'id'     => 'section_end_element_hover_effect',
+					'type'   => 'section',
+					'class'  => 'ruby-section-end no-border',
+					'indent' => false,
 				],
 			],
 		];
@@ -813,9 +910,9 @@ if ( ! function_exists( 'foxiz_register_options_design_placeholder' ) ) {
 
 		return [
 			'id'         => 'foxiz_config_section_search_placeholder',
-			'title'      => esc_html__( 'Search Placeholder', 'foxiz' ),
+			'title'      => esc_html__( 'Search', 'foxiz' ),
 			'icon'       => 'el el-search',
-			'desc'       => esc_html__( 'This placeholder text will apply to all search forms.', 'foxiz' ),
+			'desc'       => esc_html__( 'These settings below will apply to all search forms.', 'foxiz' ),
 			'subsection' => true,
 			'fields'     => [
 				[
@@ -826,6 +923,52 @@ if ( ! function_exists( 'foxiz_register_options_design_placeholder' ) ) {
 					'subtitle'    => esc_html__( 'Input a placeholder text for the search forms.', 'foxiz' ),
 					'description' => esc_html__( 'Leave blank for the default.', 'foxiz' ),
 					'placeholder' => esc_html__( 'Search Headlines, News...', 'foxiz' ),
+				],
+				[
+					'id'          => 'header_search_custom_icon',
+					'type'        => 'media',
+					'url'         => true,
+					'preview'     => true,
+					'title'       => esc_html__( 'Custom Search SVG', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Override default search icon with a SVG icon.', 'foxiz' ),
+					'description' => esc_html__( 'Enable the option in "Theme Design > SVG Upload > SVG Supported" if you cannot upload .SVG files.', 'foxiz' ),
+				],
+				[
+					'id'          => 'header_search_custom_icon_size',
+					'title'       => esc_html__( 'SVG Icon Size', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Input a custom font size (in px) for your SVG icon.', 'foxiz' ),
+					'placeholder' => '20',
+					'type'        => 'text',
+					'class'       => 'small-text',
+					'default'     => '',
+				],
+			],
+		];
+	}
+}
+
+if ( ! function_exists( 'foxiz_register_options_design_loader' ) ) {
+	function foxiz_register_options_design_loader() {
+
+		return [
+			'id'         => 'foxiz_config_section_loader',
+			'title'      => esc_html__( 'Loader Style', 'foxiz' ),
+			'desc'       => esc_html__( 'Customize the ajax loader icon.', 'foxiz' ),
+			'icon'       => 'el el-repeat',
+			'subsection' => true,
+			'fields'     => [
+				[
+					'id'       => 'loader_style',
+					'type'     => 'select',
+					'title'    => esc_html__( 'Loader Style', 'foxiz' ),
+					'subtitle' => esc_html__( 'Select a style for the ajax loader icon.', 'foxiz' ),
+					'options'  => [
+						'1' => esc_html__( '- Default -', 'foxiz' ),
+						'2' => esc_html__( 'Thin Border', 'foxiz' ),
+						'3' => esc_html__( 'Rectangle', 'foxiz' ),
+						'4' => esc_html__( 'Dots', 'foxiz' ),
+					],
+					'default'  => '1',
 				],
 			],
 		];
@@ -898,7 +1041,13 @@ if ( ! function_exists( 'foxiz_register_options_design_container' ) ) {
 					'id'    => 'container_width_info',
 					'type'  => 'info',
 					'style' => 'warning',
-					'desc'  => esc_html__( 'This setting will apply to the entire website, incorrect values may lead to website layout issues. The recommended value is between 1170 and 1440', 'foxiz' ),
+					'desc'  => esc_html__( 'The recommended value is between 1170 and 1440, incorrect values may lead to website layout issues.', 'foxiz' ),
+				],
+				[
+					'id'    => 'container_width_e_info',
+					'type'  => 'info',
+					'style' => 'warning',
+					'desc'  => esc_html__( 'This setup globally affects the website, impacting predefined templates, except for Elementor pages and Ruby templates. Each of them has its own container settings for customizing width in specific sections or containers.', 'foxiz' ),
 				],
 				[
 					'id'          => 'container_width',
@@ -906,7 +1055,7 @@ if ( ! function_exists( 'foxiz_register_options_design_container' ) ) {
 					'class'       => 'small-text',
 					'title'       => esc_html__( 'Container Width', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Input a container width value (in px) for your website, 40px edge padding is included.', 'foxiz' ),
-					'description' => esc_html__( 'Leave blank to set as the default.', 'foxiz' ),
+					'description' => esc_html__( 'Proceed with caution; leave blank to use the default.', 'foxiz' ),
 				],
 			],
 		];

@@ -544,6 +544,16 @@ class Grid_Box_2 extends Widget_Base {
 				'default'     => '0',
 			]
 		);
+		$this->add_control(
+			'entry_tax',
+			[
+				'label'       => esc_html__( 'Replace Category by Taxonomy', 'foxiz-core' ),
+				'description' => Options::post_type_tax_info_description(),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => Options::taxonomy_dropdown(),
+				'default'     => '0',
+			]
+		);
 		$this->add_responsive_control(
 			'entry_category_size', [
 				'label'       => esc_html__( 'Entry Category Size', 'foxiz-core' ),
@@ -567,16 +577,6 @@ class Grid_Box_2 extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'description' => Options::hide_category_description(),
 				'options'     => Options::hide_dropdown(),
-				'default'     => '0',
-			]
-		);
-		$this->add_control(
-			'entry_tax',
-			[
-				'label'       => esc_html__( 'Replace Category by Taxonomy', 'foxiz-core' ),
-				'description' => Options::post_type_tax_info_description(),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => Options::taxonomy_dropdown(),
 				'default'     => '0',
 			]
 		);
@@ -605,6 +605,14 @@ class Grid_Box_2 extends Widget_Base {
 				'selectors'   => [ '{{WRAPPER}}' => '--title-size: {{VALUE}}px;' ],
 			]
 		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'label'    => esc_html__( 'Title Font', 'foxiz-core' ),
+				'name'     => 'title_font',
+				'selector' => '{{WRAPPER}} .entry-title',
+			]
+		);
 		$this->add_control(
 			'title_color',
 			[
@@ -615,14 +623,6 @@ class Grid_Box_2 extends Widget_Base {
 				'selectors'   => [
 					'body:not([data-theme="dark"]) {{WRAPPER}}' => '--title-color: {{VALUE}};',
 				],
-			]
-		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'label'    => esc_html__( 'Title Font', 'foxiz-core' ),
-				'name'     => 'title_font',
-				'selector' => '{{WRAPPER}} .entry-title',
 			]
 		);
 		$this->end_controls_section();

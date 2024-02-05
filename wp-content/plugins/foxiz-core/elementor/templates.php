@@ -174,7 +174,7 @@ if ( ! function_exists( 'foxiz_elementor_single_category' ) ) {
 			}
 		}
 
-		$settings = [ 'entry_category' => true ];
+		$settings['entry_category'] = true;
 		if ( ! empty( $settings['primary_category'] ) && '1' === (string) $settings['primary_category'] ) {
 			$settings['is_singular'] = true;
 		}

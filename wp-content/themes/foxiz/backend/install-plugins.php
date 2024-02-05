@@ -3,9 +3,6 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_register_required_plugins' ) ) {
-	/**
-	 * register default plugins
-	 */
 	function foxiz_register_required_plugins() {
 
 		if ( ! function_exists( 'tgmpa' ) ) {
@@ -18,7 +15,7 @@ if ( ! function_exists( 'foxiz_register_required_plugins' ) ) {
 				'slug'               => 'foxiz-core',
 				'source'             => get_theme_file_path( 'plugins/foxiz-core.zip' ),
 				'required'           => true,
-				'version'            => '2.2.2',
+				'version'            => '2.2.3',
 				'force_activation'   => false,
 				'force_deactivation' => false,
 				'external_url'       => '',
@@ -35,7 +32,7 @@ if ( ! function_exists( 'foxiz_register_required_plugins' ) ) {
 				'source'             => get_theme_file_path( 'plugins/envato-market.zip' ),
 				'force_activation'   => false,
 				'force_deactivation' => false,
-				'version'            => '2.0.10',
+				'version'            => '2.0.11',
 				'external_url'       => '',
 			],
 			[

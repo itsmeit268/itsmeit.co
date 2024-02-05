@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html <?php language_attributes();
 if ( foxiz_is_amp() ) {
-    echo ' [class]="collapse ? \'collapse-activated\' : \'collapse-deactivated\'"';
+	echo ' [class]="collapse ? \'collapse-activated\' : \'collapse-deactivated\'"';
 } ?>>
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>" />

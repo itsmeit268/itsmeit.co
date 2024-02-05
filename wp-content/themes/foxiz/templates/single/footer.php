@@ -1,15 +1,8 @@
 <?php
 /** Don't load directly */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_single_footer' ) ) {
-	/**
-	 * @param false $override
-	 *
-	 * @return false
-	 */
 	function foxiz_single_footer( $override = false ) {
 
 		if ( get_query_var( 'rbsnp' ) || ( foxiz_get_option( 'amp_disable_related' ) && foxiz_is_amp() ) ) {
@@ -71,12 +64,6 @@ if ( ! function_exists( 'foxiz_single_footer' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_single_footer_listing' ) ) {
-	/**
-	 * @param array $settings
-	 * @param null  $_query
-	 *
-	 * @return false
-	 */
 	function foxiz_get_single_footer_listing( $settings = [], $_query = null ) {
 
 		if ( empty( $settings['layout'] ) ) {

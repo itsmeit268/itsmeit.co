@@ -30,15 +30,15 @@ if ( ! function_exists( 'foxiz_register_options_bookmark_general' ) ) {
 					'desc'  => esc_html__( 'As a default, the bookmark and follow icons will not appear in listing layouts. You need to enable each block in its settings.', 'foxiz' ),
 				],
 				[
-					'id'       => 'section_start_bookmark_general',
-					'type'     => 'section',
-					'class'    => 'ruby-section-start',
-					'title'    => esc_html__( 'Personalized System', 'foxiz' ),
+					'id'     => 'section_start_bookmark_general',
+					'type'   => 'section',
+					'class'  => 'ruby-section-start',
+					'title'  => esc_html__( 'Personalized System', 'foxiz' ),
 					'notice' => [
 						esc_html__( 'PLEASE NOTE: The Personalized System needs to be enabled if you are using Personalized Elementor blocks.', 'foxiz' ),
 						esc_html__( 'It is recommended to enable the login popup in "Login > Login Popup Supported" if you select "Redirect to Login for Guest Users" for the personalized system.', 'foxiz' ),
 					],
-					'indent'   => true,
+					'indent' => true,
 				],
 				[
 					'id'          => 'bookmark_system',
@@ -75,15 +75,15 @@ if ( ! function_exists( 'foxiz_register_options_bookmark_general' ) ) {
 					'indent' => false,
 				],
 				[
-					'id'       => 'section_start_reading_list',
-					'type'     => 'section',
-					'class'    => 'ruby-section-start',
-					'title'    => esc_html__( 'Reading List Template', 'foxiz' ),
+					'id'     => 'section_start_reading_list',
+					'type'   => 'section',
+					'class'  => 'ruby-section-start',
+					'title'  => esc_html__( 'Reading List Template', 'foxiz' ),
 					'notice' => [
 						esc_html__( 'PLEASE NOTE: If you use the Directly Load method, you need to exclude the reading list page cache.', 'foxiz' ),
 						esc_html__( 'You can customize the Reading List template in the "Reading List - Saved, Followed and Recommended" panes.', 'foxiz' ),
 					],
-					'indent'   => true,
+					'indent' => true,
 				],
 				[
 					'id'       => 'reading_list_display_mode',
@@ -411,7 +411,8 @@ if ( ! function_exists( 'foxiz_register_options_reading_list_saved' ) ) {
 					'subtitle' => esc_html__( 'Enable or disable sticky sidebar feature.', 'foxiz' ),
 					'options'  => [
 						'0'  => esc_html__( '- Default -', 'foxiz' ),
-						'1'  => esc_html__( 'Enable', 'foxiz' ),
+						'1'  => esc_html__( 'Sticky Sidebar', 'foxiz' ),
+						'2'  => esc_html__( 'Sticky Last Widget', 'foxiz' ),
 						'-1' => esc_html__( 'Disable', 'foxiz' ),
 					],
 					'default'  => '0',
@@ -423,15 +424,15 @@ if ( ! function_exists( 'foxiz_register_options_reading_list_saved' ) ) {
 					'indent' => false,
 				],
 				[
-					'id'       => 'section_start_saved_design',
-					'type'     => 'section',
-					'class'    => 'ruby-section-start',
-					'title'    => esc_html__( 'Blog Design', 'foxiz' ),
+					'id'     => 'section_start_saved_design',
+					'type'   => 'section',
+					'class'  => 'ruby-section-start',
+					'title'  => esc_html__( 'Blog Design', 'foxiz' ),
 					'notice' => [
 						esc_html__( 'The settings below will not be available if you use "Global WP Query Template Shortcode" to build the blog listing.', 'foxiz' ),
 						esc_html__( 'The theme\'s default settings are set to use the "Standard Blog Design". However, you can customize these settings using the options below', 'foxiz' ),
 					],
-					'indent'   => true,
+					'indent' => true,
 				],
 				[
 					'id'       => $prefix . 'crop_size',
@@ -972,7 +973,8 @@ if ( ! function_exists( 'foxiz_register_options_reading_list_recommended' ) ) {
 					'subtitle' => esc_html__( 'Enable or disable sticky sidebar feature.', 'foxiz' ),
 					'options'  => [
 						'0'  => esc_html__( '- Default -', 'foxiz' ),
-						'1'  => esc_html__( 'Enable', 'foxiz' ),
+						'1'  => esc_html__( 'Sticky Sidebar', 'foxiz' ),
+						'2'  => esc_html__( 'Sticky Last Widget', 'foxiz' ),
 						'-1' => esc_html__( 'Disable', 'foxiz' ),
 					],
 					'default'  => '0',
@@ -984,15 +986,15 @@ if ( ! function_exists( 'foxiz_register_options_reading_list_recommended' ) ) {
 					'indent' => false,
 				],
 				[
-					'id'       => 'section_start_recommended_design',
-					'type'     => 'section',
-					'class'    => 'ruby-section-start',
-					'title'    => esc_html__( 'Blog Design', 'foxiz' ),
+					'id'     => 'section_start_recommended_design',
+					'type'   => 'section',
+					'class'  => 'ruby-section-start',
+					'title'  => esc_html__( 'Blog Design', 'foxiz' ),
 					'notice' => [
 						esc_html__( 'The settings below will not be available if you use "Global WP Query Template Shortcode" to build the blog listing.', 'foxiz' ),
 						esc_html__( 'The theme\'s default settings are set to use the "Standard Blog Design". However, you can customize these settings using the options below', 'foxiz' ),
 					],
-					'indent'   => true,
+					'indent' => true,
 				],
 				[
 					'id'       => $prefix . 'crop_size',

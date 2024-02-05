@@ -209,7 +209,7 @@
     flex-grow: 1;
     width: 100%;
     margin: 0 15px;
-    direction: rtl;
+    direction: ltr;
 }
 
 .mejs-time-total {
@@ -259,16 +259,16 @@
 .mejs-time-current,
 .mejs-time-hovered,
 .mejs-time-loaded {
-    right: 0;
+    left: 0;
     width: 100%;
     -webkit-transition: all .15s ease-in;
     transition: all .15s ease-in;
     -ms-transform: scaleX(0);
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
-    -ms-transform-origin: 100% 0;
-    -webkit-transform-origin: 100% 0;
-    transform-origin: 100% 0;
+    -ms-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
 }
 
 .mejs-time-float {
@@ -279,9 +279,9 @@
     width: 46px;
     height: 20px;
     margin-bottom: 9px;
-    -ms-transform: translateX(50%);
-    -webkit-transform: translateX(50%);
-    transform: translateX(50%);
+    -ms-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
     text-align: center;
     color: var(--awhite);
     background: var(--player-color, var(--g-color));
@@ -295,8 +295,8 @@
     display: block;
     width: 0;
     height: 0;
-    -ms-transform: translateX(50%);
-    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
     transform: translateX(50%);
     border: 5px solid var(--player-color, var(--g-color));
     border-color: var(--player-color, var(--g-color)) transparent transparent;
@@ -304,7 +304,7 @@
 }
 
 .mejs-time-float-current {
-    right: 0;
+    left: 0;
     display: block;
     width: 46px;
     text-align: center;
@@ -314,7 +314,7 @@
 .mejs-time-handle-content {
     position: absolute;
     z-index: 11;
-    right: 0;
+    left: 0;
     cursor: pointer;
     -ms-transform: translateX(0);
     -webkit-transform: translateX(0);
@@ -324,7 +324,7 @@
 
 .mejs-time-handle-content {
     top: -8px;
-    right: -6px;
+    left: -6px;
     width: 12px;
     height: 12px;
     -webkit-transition: var(--effect);

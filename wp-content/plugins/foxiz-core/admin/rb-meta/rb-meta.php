@@ -14,7 +14,7 @@ if ( ! class_exists( 'RB_META' ) ) {
 
 		private static $instance;
 
-		const RB_META_VERSION = '2.1';
+		const RB_META_VERSION = '2.2';
 
 		static function get_instance() {
 
@@ -96,10 +96,14 @@ if ( ! class_exists( 'RB_META' ) ) {
 
 		public function register_scripts( $hook ) {
 
-			wp_register_style( 'rb-meta-style', plugin_dir_url( __FILE__ ) . '/assets/meta.css', [], self::RB_META_VERSION );
+			wp_register_style( 'select2-css', FOXIZ_CORE_URL . 'lib/redux-framework/assets/css/select2.css', [], self::RB_META_VERSION, 'all' );
+			wp_register_style( 'rb-meta-style', plugin_dir_url( __FILE__ ) . '/assets/meta.css', [ 'select2-css' ], self::RB_META_VERSION );
+
+			wp_register_script( 'select2-js', FOXIZ_CORE_URL . 'lib/redux-framework/assets/js/select2.min.js', [ 'jquery' ], self::RB_META_VERSION, true );
 			wp_register_script( 'rb-meta-script', plugin_dir_url( __FILE__ ) . '/assets/meta.js', [
 				'jquery',
 				'jquery-ui-datepicker',
+				'select2-js',
 			], self::RB_META_VERSION, true );
 
 			if ( $hook === 'post.php' || $hook === 'post-new.php' ) {
@@ -620,12 +624,65 @@ if ( ! class_exists( 'RB_META' ) ) {
 					<?php endif; ?>
 				</div>
 				<div class="rb-meta-content">
-					<select class="rb-meta-select" name="rb_meta[<?php echo esc_attr( $params['id'] ); ?>]" id="<?php echo esc_attr( $params['id'] ); ?>"/>
+					<select class="rb-meta-select rb-tax-select" name="rb_meta[<?php echo esc_attr( $params['id'] ); ?>]" id="<?php echo esc_attr( $params['id'] ); ?>"/>
 					<option value="0" <?php if ( empty( $params['value'] ) ) {
 						echo 'selected';
 					} ?>>-- <?php echo esc_html( $params['empty'] ); ?> --
 					</option>
 					<?php foreach ( $params['options'] as $name => $id ) :
+						if ( (string) $params['value'] === (string) $id ) : ?>
+							<option selected value="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $name ); ?></option>
+						<?php else : ?>
+							<option value="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $name ); ?></option>
+						<?php endif; ?><?php endforeach; ?>
+					</select>
+					<?php if ( ! empty( $params['info'] ) ) : ?>
+						<span class="rb-meta-info"><?php echo esc_html( $params['info'] ); ?></span>
+					<?php endif; ?>
+				</div>
+			</div>
+			<?php
+		}
+
+		function input_tag_select( $params ) {
+			$defaults = [
+				'id'      => '',
+				'name'    => '',
+				'desc'    => '',
+				'default' => '',
+				'class'   => '',
+				'empty'   => 'None',
+			];
+			$params   = wp_parse_args( $params, $defaults );
+			if ( empty( $params['value'] ) ) {
+				$params['value'] = $params['default'];
+			}
+
+			$tags_data = [];
+
+			$all_tags = get_tags( [ 'hide_empty' => 0 ] );
+
+			if ( ! empty( $all_tags ) ) {
+				foreach ( (array) $all_tags as $tag ) {
+					$tags_data[ $tag->term_id ] = $tag->name;
+				}
+			}
+			$params['options'] = $tags_data;
+			?>
+			<div class="rb-meta rb-select rb-tag-select rb-category-select <?php echo esc_attr( $params['class'] ); ?>">
+				<div class="rb-meta-title">
+					<label for="<?php echo esc_attr( $params['id'] ); ?>" class="rb-meta-label"><?php echo esc_html( $params['name'] ); ?></label>
+					<?php if ( ! empty( $params['desc'] ) ) : ?>
+						<p class="rb-meta-desc"><?php echo esc_html( $params['desc'] ); ?></p>
+					<?php endif; ?>
+				</div>
+				<div class="rb-meta-content">
+					<select class="rb-meta-select rb-tax-select" name="rb_meta[<?php echo esc_attr( $params['id'] ); ?>]" id="<?php echo esc_attr( $params['id'] ); ?>"/>
+					<option value="0" <?php if ( empty( $params['value'] ) ) {
+						echo 'selected';
+					} ?>>-- <?php echo esc_html( $params['empty'] ); ?> --
+					</option>
+					<?php foreach ( $params['options'] as $id => $name ) :
 						if ( (string) $params['value'] === (string) $id ) : ?>
 							<option selected value="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $name ); ?></option>
 						<?php else : ?>

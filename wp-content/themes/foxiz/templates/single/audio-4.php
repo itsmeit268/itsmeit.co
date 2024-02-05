@@ -5,10 +5,8 @@ defined( 'ABSPATH' ) || exit;
 if ( ! function_exists( 'foxiz_render_single_audio_4' ) ) {
 	function foxiz_render_single_audio_4() {
 
-		$classes          = array();
-		$classes[]        = 'single-standard-8 single-embed-4';
+		$classes          = [ 'single-standard-8 single-embed-4' ];
 		$sidebar_name     = foxiz_get_single_setting( 'sidebar_name' );
-		$line_length      = foxiz_get_option( 'single_post_line_length' );
 		$sidebar_position = foxiz_get_single_sidebar_position();
 
 		if ( 'none' === $sidebar_position ) {
@@ -18,45 +16,40 @@ if ( ! function_exists( 'foxiz_render_single_audio_4' ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
 			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
-		}
-		if ( foxiz_get_single_sticky_sidebar() ) {
-			$classes[] = 'sticky-sidebar';
-		}
-		if ( ! empty( $line_length ) ) {
-			$classes[] = 'optimal-line-length';
+			$classes[] = foxiz_get_single_sticky_sidebar();
 		} ?>
-        <div class="<?php echo join( ' ', $classes ); ?>">
-            <div class="rb-container edge-padding">
+		<div class="<?php echo join( ' ', $classes ); ?>">
+			<div class="rb-container edge-padding">
 				<?php foxiz_single_open_tag(); ?>
-                <div class="s-feat-outer">
+				<div class="s-feat-outer">
 					<?php foxiz_single_audio_embed(); ?>
-                </div>
-                <div class="grid-container">
-                    <div class="s-ct">
-                        <header class="single-header">
-			                <?php
-			                foxiz_single_breadcrumb();
-			                foxiz_single_entry_category();
-			                foxiz_single_title();
-			                foxiz_single_tagline();
-			                foxiz_single_header_meta();
-			                ?>
-                        </header>
-		                <?php
-		                foxiz_single_content();
-		                foxiz_single_author_box();
-		                foxiz_single_next_prev();
-		                foxiz_single_comment();
-		                ?>
-                    </div>
-	                <?php foxiz_single_sidebar( $sidebar_name ); ?>
-                </div>
+				</div>
+				<div class="grid-container">
+					<div class="s-ct">
+						<header class="single-header">
+							<?php
+							foxiz_single_breadcrumb();
+							foxiz_single_entry_category();
+							foxiz_single_title();
+							foxiz_single_tagline();
+							foxiz_single_header_meta();
+							?>
+						</header>
+						<?php
+						foxiz_single_content();
+						foxiz_single_author_box();
+						foxiz_single_next_prev();
+						foxiz_single_comment();
+						?>
+					</div>
+					<?php foxiz_single_sidebar( $sidebar_name ); ?>
+				</div>
 				<?php
 				foxiz_single_close_tag();
 				foxiz_single_footer();
 				?>
-            </div>
-        </div>
+			</div>
+		</div>
 		<?php
 	}
 }

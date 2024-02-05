@@ -123,6 +123,7 @@ if ( ! function_exists( 'foxiz_set_body_classes' ) ) {
 		$classes[] = 'btn-ani-' . trim( foxiz_get_option( 'btn_hover_effect', 1 ) );
 		$classes[] = 'is-rm-' . trim( foxiz_get_option( 'readmore_style', 1 ) );
 		$classes[] = 'lmeta-' . foxiz_get_option( 'live_blog_meta', 'dot' );
+		$classes[] = 'loader-' . foxiz_get_option( 'loader_style', 1 );
 
 		$header_style = foxiz_get_header_style();
 		$classes[]    = 'is-hd-' . $header_style['style'];

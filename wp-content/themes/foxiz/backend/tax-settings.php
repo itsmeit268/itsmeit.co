@@ -369,7 +369,8 @@ if ( ! function_exists( 'foxiz_get_category_config' ) ) {
 					'type'    => 'select',
 					'options' => [
 						'0'  => esc_html__( '- Default -', 'foxiz' ),
-						'1'  => esc_html__( 'Enable', 'foxiz' ),
+						'1'  => esc_html__( 'Sticky Sidebar', 'foxiz' ),
+						'2'  => esc_html__( 'Sticky Last Widget', 'foxiz' ),
 						'-1' => esc_html__( 'Disable', 'foxiz' ),
 					],
 					'std'     => '0',

@@ -664,9 +664,6 @@ if ( ! function_exists( 'foxiz_single_simple_content' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_single_entry_footer' ) ) {
-	/**
-	 * @return false
-	 */
 	function foxiz_get_single_entry_footer() {
 
 		ob_start();
@@ -674,35 +671,45 @@ if ( ! function_exists( 'foxiz_get_single_entry_footer' ) ) {
 		foxiz_single_sources();
 		foxiz_single_via();
 		$output = ob_get_clean();
-		if ( ! empty( $output ) ) {
-			return '<div class="efoot">' . $output . '</div>';
-		} else {
+
+		if ( empty( $output ) ) {
 			return false;
 		}
+
+		$class_name = 'efoot';
+		$layout     = foxiz_get_option( 'efoot_layout' );
+		switch ( $layout ) {
+			case 'dark' :
+				$class_name .= ' efoot-border p-categories';
+				break;
+			case 'gray' :
+				$class_name .= ' efoot-border is-b-gray p-categories';
+				break;
+			case 'bg' :
+				$class_name .= ' efoot-bg  p-categories';
+				break;
+			default :
+				$class_name .= ' efoot-commas h5';
+		}
+
+		return '<div class="' . $class_name . '">' . $output . '</div>';
 	}
 }
 
 if ( ! function_exists( 'foxiz_single_tags' ) ) {
-	/**
-	 * @return false
-	 */
 	function foxiz_single_tags() {
 
 		if ( ! foxiz_get_option( 'single_post_tags' ) || ! get_the_tag_list() ) {
 			return false;
 		} ?>
 		<div class="efoot-bar tag-bar">
-			<span class="blabel is-meta"><i class="rbi rbi-tag" aria-hidden="true"></i><?php echo foxiz_html__( 'TAGGED:', 'foxiz' ); ?></span>
-			<span class="tags-list h5"><?php echo get_the_tag_list( '', ', ' ); ?></span>
+			<span class="blabel is-meta"><i class="rbi rbi-tag" aria-hidden="true"></i><?php echo foxiz_html__( 'TAGGED:', 'foxiz' ); ?></span><?php echo get_the_tag_list(); ?>
 		</div>
 		<?php
 	}
 }
 
 if ( ! function_exists( 'foxiz_single_sources' ) ) {
-	/**
-	 * @return false
-	 */
 	function foxiz_single_sources() {
 
 		if ( ! foxiz_get_option( 'single_post_sources' ) ) {
@@ -723,17 +730,13 @@ if ( ! function_exists( 'foxiz_single_sources' ) ) {
 		}
 		?>
 		<div class="efoot-bar source-bar">
-			<span class="blabel is-meta"><i class="rbi rbi-archive" aria-hidden="true"></i><?php echo foxiz_html__( 'SOURCES:', 'foxiz' ); ?></span>
-			<span class="sources-list h5"><?php echo implode( ', ', $links ); ?></span>
+			<span class="blabel is-meta"><i class="rbi rbi-archive" aria-hidden="true"></i><?php echo foxiz_html__( 'SOURCES:', 'foxiz' ); ?></span><?php echo join( '', $links ); ?>
 		</div>
 		<?php
 	}
 }
 
 if ( ! function_exists( 'foxiz_single_via' ) ) {
-	/**
-	 * @return false
-	 */
 	function foxiz_single_via() {
 
 		if ( ! foxiz_get_option( 'single_post_via' ) ) {
@@ -751,11 +754,9 @@ if ( ! function_exists( 'foxiz_single_via' ) ) {
 		}
 		if ( empty( $links ) ) {
 			return false;
-		}
-		?>
+		} ?>
 		<div class="efoot-bar via-bar">
-			<span class="blabel is-meta"><i class="rbi rbi-via" aria-hidden="true"></i><?php echo foxiz_html__( 'VIA:', 'foxiz' ); ?></span>
-			<span class="sources-list h5"><?php echo implode( ', ', $links ); ?></span>
+			<span class="blabel is-meta"><i class="rbi rbi-via" aria-hidden="true"></i><?php echo foxiz_html__( 'VIA:', 'foxiz' ); ?></span><?php echo join( '', $links ); ?>
 		</div>
 		<?php
 	}
@@ -871,7 +872,7 @@ if ( ! function_exists( 'foxiz_single_share_bottom' ) ) {
 		<div class="e-shared-sec entry-sec">
 			<div class="e-shared-header h4">
 				<i class="rbi rbi-share" aria-hidden="true"></i><span><?php
-					if ( 'podcast' == get_post_type() ) {
+					if ( 'podcast' === get_post_type() ) {
 						foxiz_html_e( 'Share This Episode', 'foxiz' );
 					} else {
 						foxiz_html_e( 'Share This Article', 'foxiz' );
@@ -1251,6 +1252,7 @@ if ( ! function_exists( 'foxiz_get_quick_view_review' ) ) {
 			$post_id = get_the_ID();
 		}
 		$settings = foxiz_get_review_settings( $post_id );
+
 		if ( empty( $settings ) || ! is_array( $settings ) ) {
 			return false;
 		}

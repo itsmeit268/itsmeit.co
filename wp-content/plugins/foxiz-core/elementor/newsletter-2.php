@@ -135,16 +135,10 @@ class Newsletter_2 extends Widget_Base {
 		);
 		$this->add_responsive_control(
 			'title_tag_size', [
-				'label'     => esc_html__( 'Heading Font Size', 'foxiz-core' ),
-				'type'      => Controls_Manager::NUMBER,
-				'selectors' => [ '{{WRAPPER}} .newsletter-title' => 'font-size: {{VALUE}}px;' ],
-			]
-		);
-		$this->add_responsive_control(
-			'heading_spacing', [
-				'label'     => esc_html__( 'Bottom Spacing', 'foxiz-core' ),
-				'type'      => Controls_Manager::NUMBER,
-				'selectors' => [ '{{WRAPPER}} .newsletter-title' => 'margin-bottom: {{VALUE}}px;' ],
+				'label'       => esc_html__( 'Heading Font Size', 'foxiz-core' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => esc_html__( 'Quickly edit font size. Leave it blank if you want to control additional font values via font settings.', 'foxiz-core' ),
+				'selectors'   => [ '{{WRAPPER}} .newsletter-title' => 'font-size: {{VALUE}}px;' ],
 			]
 		);
 		$this->add_group_control(
@@ -153,6 +147,13 @@ class Newsletter_2 extends Widget_Base {
 				'label'    => esc_html__( 'Heading Font', 'foxiz-core' ),
 				'name'     => 'title_font',
 				'selector' => '{{WRAPPER}} .newsletter-title',
+			]
+		);
+		$this->add_responsive_control(
+			'heading_spacing', [
+				'label'     => esc_html__( 'Bottom Spacing', 'foxiz-core' ),
+				'type'      => Controls_Manager::NUMBER,
+				'selectors' => [ '{{WRAPPER}} .newsletter-title' => 'margin-bottom: {{VALUE}}px;' ],
 			]
 		);
 		$this->add_control(
@@ -190,16 +191,9 @@ class Newsletter_2 extends Widget_Base {
 		$this->add_responsive_control(
 			'description_size', [
 				'label'       => esc_html__( 'Description Font Size', 'foxiz-core' ),
-				'description' => esc_html__( 'Input custom font size values (in pixels) for the description of this newsletter block', 'foxiz-core' ),
+				'description' => esc_html__( 'Quickly edit font size. Leave it blank if you want to control additional font values via font settings.', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
 				'selectors'   => [ '{{WRAPPER}} .newsletter-description' => 'font-size: {{VALUE}}px;' ],
-			]
-		);
-		$this->add_responsive_control(
-			'description_spacing', [
-				'label'     => esc_html__( 'Bottom Spacing', 'foxiz-core' ),
-				'type'      => Controls_Manager::NUMBER,
-				'selectors' => [ '{{WRAPPER}} .newsletter-description' => 'margin-bottom: {{VALUE}}px;' ],
 			]
 		);
 		$this->add_group_control(
@@ -208,6 +202,13 @@ class Newsletter_2 extends Widget_Base {
 				'label'    => esc_html__( 'Description Font', 'foxiz-core' ),
 				'name'     => 'description_font',
 				'selector' => '{{WRAPPER}} .newsletter-description',
+			]
+		);
+		$this->add_responsive_control(
+			'description_spacing', [
+				'label'     => esc_html__( 'Bottom Spacing', 'foxiz-core' ),
+				'type'      => Controls_Manager::NUMBER,
+				'selectors' => [ '{{WRAPPER}} .newsletter-description' => 'margin-bottom: {{VALUE}}px;' ],
 			]
 		);
 		$this->add_control(
@@ -235,10 +236,18 @@ class Newsletter_2 extends Widget_Base {
 		);
 		$this->add_responsive_control(
 			'input_size', [
-				'label'       => esc_html__( 'Text Size', 'foxiz-core' ),
+				'label'       => esc_html__( 'Input Font Size', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Input custom font size values (in pixels) for the text input fields of this newsletter block.', 'foxiz-core' ),
+				'description' => esc_html__( 'Quickly edit font size. Leave it blank if you want to control additional font values via font settings.', 'foxiz-core' ),
 				'selectors'   => [ '{{WRAPPER}} input[type="text"], {{WRAPPER}} input[type="email"]' => 'font-size: {{VALUE}}px;' ],
+			]
+		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'label'    => esc_html__( 'Input Font', 'foxiz-core' ),
+				'name'     => 'input_font',
+				'selector' => '{{WRAPPER}} input[type="text"], {{WRAPPER}} input[type="email"]',
 			]
 		);
 		$this->add_responsive_control(
@@ -247,14 +256,6 @@ class Newsletter_2 extends Widget_Base {
 				'type'        => Controls_Manager::DIMENSIONS,
 				'description' => esc_html__( 'Input a custom inner padding for the email field', 'foxiz-core' ),
 				'selectors'   => [ '{{WRAPPER}}' => '--mc-input-padding: {{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px;' ],
-			]
-		);
-		$this->add_control(
-			'input_color',
-			[
-				'label'     => esc_html__( 'Input Color', 'foxiz-core' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [ '{{WRAPPER}}' => '--mc-input-color: {{VALUE}};' ],
 			]
 		);
 		$this->add_control(
@@ -292,8 +293,16 @@ class Newsletter_2 extends Widget_Base {
 			'button_size', [
 				'label'       => esc_html__( 'Button Font Size', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Input custom font size values (in pixels) for the mailchimp button of this newsletter block', 'foxiz-core' ),
+				'description' => esc_html__( 'Quickly edit font size. Leave it blank if you want to control additional font values via font settings.', 'foxiz-core' ),
 				'selectors'   => [ '{{WRAPPER}} input[type="submit"]' => 'font-size: {{VALUE}}px;' ],
+			]
+		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'label'    => esc_html__( 'Button Font', 'foxiz-core' ),
+				'name'     => 'button_font',
+				'selector' => '{{WRAPPER}} input[type="submit"]',
 			]
 		);
 		$this->add_control(
@@ -319,38 +328,92 @@ class Newsletter_2 extends Widget_Base {
 				'selectors'   => [ '{{WRAPPER}}' => '--mc-btn-padding: {{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px;' ],
 			]
 		);
+		$this->add_responsive_control(
+			'button_margin', [
+				'label'       => esc_html__( 'Button Margin', 'foxiz-core' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => esc_html__( 'Input spacing value between the submit button and email fields.', 'foxiz-core' ),
+				'selectors'   => [ '{{WRAPPER}}' => '--mc-btn-margin: {{VALUE}}px;' ],
+			]
+		);
+		$this->start_controls_tabs( 'button_hover_effects' );
+		$this->start_controls_tab( 'button_effect_default',
+			[
+				'label' => esc_html__( 'Normal', 'foxiz-core' ),
+			]
+		);
 		$this->add_control(
 			'button_color',
 			[
-				'label'     => esc_html__( 'Button Color', 'foxiz-core' ),
+				'label'     => esc_html__( 'Color', 'foxiz-core' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [ '{{WRAPPER}} input[type="submit"]:not(:hover)' => 'color: {{VALUE}};' ],
 			]
 		);
 		$this->add_control(
-			'dark_button_color',
-			[
-				'label'     => esc_html__( 'Dark Mode - Button Color', 'foxiz-core' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [ '[data-theme="dark"] {{WRAPPER}} input[type="submit"]:not(:hover)' => 'color: {{VALUE}};' ],
-			]
-		);
-		$this->add_control(
 			'button_bg',
 			[
-				'label'     => esc_html__( 'Button Background', 'foxiz-core' ),
+				'label'     => esc_html__( 'Background', 'foxiz-core' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [ '{{WRAPPER}} input[type="submit"]:not(:hover)' => 'background: {{VALUE}};' ],
 			]
 		);
 		$this->add_control(
+			'dark_button_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [ '[data-theme="dark"] {{WRAPPER}} input[type="submit"]:not(:hover)' => 'color: {{VALUE}};' ],
+			]
+		);
+		$this->add_control(
 			'dark_button_bg',
 			[
-				'label'     => esc_html__( 'Dark Mode - Button Background', 'foxiz-core' ),
+				'label'     => esc_html__( 'Dark Mode - Background', 'foxiz-core' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [ '[data-theme="dark"] {{WRAPPER}} input[type="submit"]:not(:hover)' => 'background: {{VALUE}};' ],
 			]
 		);
+		$this->end_controls_tab();
+		$this->start_controls_tab( 'button_effect_hover',
+			[
+				'label' => esc_html__( 'Hover', 'foxiz-core' ),
+			]
+		);
+		$this->add_control(
+			'button_hover_color',
+			[
+				'label'     => esc_html__( 'Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [ '{{WRAPPER}} input[type="submit"]:hover' => 'color: {{VALUE}};' ],
+			]
+		);
+		$this->add_control(
+			'button_hover_bg',
+			[
+				'label'     => esc_html__( 'Background', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [ '{{WRAPPER}} input[type="submit"]:hover' => 'background: {{VALUE}}; --g-color-90: {{VALUE}}e6;' ],
+			]
+		);
+		$this->add_control(
+			'dark_button_hover_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [ '[data-theme="dark"] {{WRAPPER}} input[type="submit"]:hover' => 'color: {{VALUE}};' ],
+			]
+		);
+		$this->add_control(
+			'dark_button_hover_bg',
+			[
+				'label'     => esc_html__( 'Dark Mode - Background', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [ '[data-theme="dark"] {{WRAPPER}} input[type="submit"]:hover' => 'background: {{VALUE}}; --g-color-90: {{VALUE}}e6;' ],
+			]
+		);
+		$this->end_controls_tab();
+		$this->end_controls_tabs();
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'box_section', [

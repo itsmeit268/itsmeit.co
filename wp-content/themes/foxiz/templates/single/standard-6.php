@@ -5,10 +5,8 @@ defined( 'ABSPATH' ) || exit;
 if ( ! function_exists( 'foxiz_render_single_standard_6' ) ) {
 	function foxiz_render_single_standard_6() {
 
-		$classes          = array();
-		$classes[]        = 'single-standard-6';
+		$classes          = [ 'single-standard-6' ];
 		$sidebar_name     = foxiz_get_single_setting( 'sidebar_name' );
-		$line_length      = foxiz_get_option( 'single_post_line_length' );
 		$sidebar_position = foxiz_get_single_sidebar_position();
 		$crop_size        = foxiz_get_single_crop_size( 'foxiz_crop_o1' );
 
@@ -19,12 +17,7 @@ if ( ! function_exists( 'foxiz_render_single_standard_6' ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
 			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
-		}
-		if ( foxiz_get_single_sticky_sidebar() ) {
-			$classes[] = 'sticky-sidebar';
-		}
-		if ( ! empty( $line_length ) ) {
-			$classes[] = 'optimal-line-length';
+			$classes[] = foxiz_get_single_sticky_sidebar();
 		} ?>
 		<div class="<?php echo join( ' ', $classes ); ?>">
 			<?php foxiz_single_open_tag(); ?>
@@ -41,7 +34,7 @@ if ( ! function_exists( 'foxiz_render_single_standard_6' ) ) {
 							?>
 						</div>
 						<div class="s-feat-outer">
-							<div class="featured-vertical"><?php foxiz_single_featured_image( $crop_size, array( 'class' => 'featured-img' ) ); ?></div>
+							<div class="featured-vertical"><?php foxiz_single_featured_image( $crop_size, [ 'class' => 'featured-img' ] ); ?></div>
 							<?php if ( foxiz_get_single_featured_caption() ) : ?>
 								<div class="caption-holder overlay-text">
 									<?php foxiz_single_featured_caption(); ?>

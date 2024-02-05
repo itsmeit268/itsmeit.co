@@ -19,7 +19,7 @@ if ( ! function_exists( 'foxiz_render_header' ) ) {
 		}
 
 		$header = foxiz_get_header_style();
-		if ( ! empty( $header['style'] ) && 'rb_template' == $header['style'] ) {
+		if ( ! empty( $header['style'] ) && 'rb_template' === $header['style'] ) {
 			foxiz_render_header_rb_template( $header['shortcode'] );
 
 			return false;
@@ -399,12 +399,12 @@ if ( ! function_exists( 'foxiz_header_search' ) ) {
 
 		if ( ! isset( $settings['ajax_search'] ) ) {
 			$form_settings['ajax_search'] = foxiz_get_option( 'ajax_search' );
-
-			if ( ! empty( $settings['limit'] ) ) {
-				$form_settings['limit'] = $settings['limit'];
-			}
 		} elseif ( ! empty( $settings['ajax_search'] ) ) {
 			$form_settings['ajax_search'] = true;
+		}
+
+		if ( ! empty( $settings['limit'] ) ) {
+			$form_settings['limit'] = $settings['limit'];
 		}
 
 		if ( ! empty( $settings['header_search_custom_icon']['url'] ) ) {
@@ -494,7 +494,6 @@ if ( ! function_exists( 'foxiz_header_search_form' ) ) {
 		if ( ! empty( $settings['follow'] ) && '1' === (string) $settings['follow'] ) {
 			$form_settings['follow'] = true;
 		}
-
 		if ( isset( $settings['header_search_scheme'] ) ) {
 			$settings['sub_scheme'] = $settings['header_search_scheme'];
 		}
@@ -573,18 +572,15 @@ if ( ! function_exists( 'foxiz_header_more' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_header_mobile' ) ) {
-	/**
-	 * @param $settings
-	 */
 	function foxiz_header_mobile( $settings = [] ) {
 
 		$layout = '';
-		if ( ! empty( $settings['mh_template'] ) ) {
+
+		if ( ! empty( $settings['mh_template'] ) && ! foxiz_is_amp() ) {
 			$layout = 'template';
 		} elseif ( ! empty( $settings['mh_layout'] ) ) {
 			$layout = $settings['mh_layout'];
-		}
-		?>
+		} ?>
 		<div id="header-mobile" class="header-mobile">
 			<div class="header-mobile-wrap">
 				<?php
@@ -701,11 +697,8 @@ if ( ! function_exists( 'foxiz_header_mobile_layout_left_logo' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_header_mobile_layout_top_logo' ) ) {
-	/**
-	 * @param $settings
-	 */
 	function foxiz_header_mobile_layout_top_logo( $settings = [] ) { ?>
-		<div class="mbnav is-top-logo edge-padding">
+		<div class="mbnav is-top-logo edge-padding mh-style-<?php echo foxiz_get_option( 'mh_top_divider', '0' ); ?>">
 			<div class="mlogo-top">
 				<?php foxiz_render_mobile_logo( $settings ); ?>
 			</div>

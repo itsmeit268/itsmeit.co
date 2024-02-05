@@ -67,7 +67,7 @@ if ( ! class_exists( 'Ruby_Login_Screen', false ) ) {
 		function custom_forget_link( $link ) {
 
 			if ( foxiz_get_option( 'login_forget' ) ) {
-				return '<a href="' . esc_url( foxiz_get_option( 'login_forget' ) ) . '">' . foxiz_html__( 'Lost your password?', 'foxiz-core' ) . '</a>';
+				return esc_url( foxiz_get_option( 'login_forget' ) );
 			} else {
 				return $link;
 			}

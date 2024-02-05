@@ -229,25 +229,7 @@ if ( ! function_exists( 'foxiz_register_options_header_search' ) ) {
 					'title'    => esc_html__( 'More Menu - Search Form', 'foxiz' ),
 					'subtitle' => esc_html__( 'Show search form at the top of the more section.', 'foxiz' ),
 					'default'  => true,
-				],
-				[
-					'id'          => 'header_search_custom_icon',
-					'type'        => 'media',
-					'url'         => true,
-					'preview'     => true,
-					'title'       => esc_html__( 'Custom Search SVG', 'foxiz' ),
-					'subtitle'    => esc_html__( 'Override default search icon with a SVG icon.', 'foxiz' ),
-					'description' => esc_html__( 'Enable the option in "Theme Design > SVG Upload > SVG Supported" if you cannot upload .SVG files.', 'foxiz' ),
-				],
-				[
-					'id'          => 'header_search_custom_icon_size',
-					'title'       => esc_html__( 'SVG Icon Size', 'foxiz' ),
-					'subtitle'    => esc_html__( 'Input a custom font size (in px) for your SVG icon.', 'foxiz' ),
-					'placeholder' => '20',
-					'type'        => 'text',
-					'class'       => 'small-text',
-					'default'     => '',
-				],
+				]
 			],
 		];
 	}
@@ -387,7 +369,7 @@ if ( ! function_exists( 'foxiz_register_options_header_mobile' ) ) {
 						'2' => esc_html__( 'Left Logo 2', 'foxiz' ),
 						'3' => esc_html__( 'Top Logo', 'foxiz' ),
 					],
-					'default'  => 0,
+					'default'  => '0',
 				],
 				[
 					'id'          => 'mh_template',
@@ -395,7 +377,7 @@ if ( ! function_exists( 'foxiz_register_options_header_mobile' ) ) {
 					'rows'        => 2,
 					'title'       => esc_html__( 'Header Mobile Template Shortcode', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Input a Ruby Template shortcode to display as a header mobile.', 'foxiz' ),
-					'description' => esc_html__( 'This setting will override the above setting. Leave it blank to use the predefined mobile header.', 'foxiz' ),
+					'description' => esc_html__( 'This setting will override the above setting. Leave it blank to use the predefined mobile header. In AMP mode, it will fallback to predefined header layout due to limitations of AMP.', 'foxiz' ),
 					'placeholder' => '[Ruby_E_Template id="1"]',
 					'default'     => '',
 				],
@@ -429,6 +411,20 @@ if ( ! function_exists( 'foxiz_register_options_header_mobile' ) ) {
 					'title'       => esc_html__( 'Quick View Menu Height', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Input a height value for the quick view menu bar.', 'foxiz' ),
 					'placeholder' => '42',
+				],
+				[
+					'id'          => 'mh_top_divider',
+					'type'        => 'select',
+					'title'       => esc_html__( 'Top Logo - Divider Style', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Select a divider style for the top logo layout.', 'foxiz' ),
+					'description' => esc_html__( 'This setting applies exclusively to the top logo layout.', 'foxiz' ),
+					'options'     => [
+						'0'      => esc_html__( '- None -', 'foxiz' ),
+						'gray'   => esc_html__( 'Gray Border', 'foxiz' ),
+						'dark'   => esc_html__( 'Dark Border', 'foxiz' ),
+						'shadow' => esc_html__( 'Shadow', 'foxiz' ),
+					],
+					'default'     => 'gray',
 				],
 				[
 					'id'     => 'section_end_mh_layout',

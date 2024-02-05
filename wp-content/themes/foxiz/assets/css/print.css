@@ -17,7 +17,7 @@
     .s-cats, .l-shared-sec-outer, .entry-sec, .review-section, .s-ct .widget, .related-sec, .sqview, .t-shared-sec,
     .s-feat-holder img, .single-header-inner:before, .breadcrumb-absolute, .single-header-content:before,
     .featured-embed, .paudio-embed, .pvideo-embed, .tipsy, .top-site-ad, .ruby-table-contents, .single-meta .meta-avatar,
-    .smeta-extra, .sfoter-sec {
+    .smeta-extra, .sfoter-sec, #back-top {
         display: none !important;
     }
 

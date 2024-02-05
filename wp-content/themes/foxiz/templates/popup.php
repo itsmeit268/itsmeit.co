@@ -48,7 +48,7 @@ if ( ! function_exists( 'foxiz_render_privacy' ) ) {
 			$class_name = 'privacy-' . foxiz_get_option( 'privacy_position' );
 		}
 
-		if ( ! empty( foxiz_get_option( 'privacy_width' ) ) && 'wide' == foxiz_get_option( 'privacy_width' ) ) {
+		if ( ! empty( foxiz_get_option( 'privacy_width' ) ) && 'wide' === foxiz_get_option( 'privacy_width' ) ) {
 			$class_name .= ' privacy-wide';
 		}
 

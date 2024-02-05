@@ -191,28 +191,20 @@ class Single_Featured extends Widget_Base {
 		$this->add_control(
 			'caption_align',
 			[
-				'label'     => esc_html__( 'Alignment', 'foxiz-core' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => [
-					'left'    => [
+				'label'        => esc_html__( 'Alignment', 'foxiz-core' ),
+				'type'         => Controls_Manager::CHOOSE,
+				'options'      => [
+					'left'   => [
 						'title' => esc_html__( 'Left', 'foxiz-core' ),
 						'icon'  => 'eicon-text-align-left',
 					],
-					'center'  => [
+					'center' => [
 						'title' => esc_html__( 'Center', 'foxiz-core' ),
 						'icon'  => 'eicon-text-align-center',
 					],
-					'right'   => [
-						'title' => esc_html__( 'Right', 'foxiz-core' ),
-						'icon'  => 'eicon-text-align-right',
-					],
-					'justify' => [
-						'title' => esc_html__( 'Justified', 'foxiz-core' ),
-						'icon'  => 'eicon-text-align-justify',
-					],
 				],
-				'default'   => '',
-				'selectors' => [ '{{WRAPPER}}' => '--caption-align: {{VALUE}};' ],
+				'prefix_class' => 'yes-cap-',
+				'default'      => '',
 			]
 		);
 		$this->add_control(

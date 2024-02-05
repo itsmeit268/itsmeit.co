@@ -245,12 +245,12 @@ div.list-style-element li {
 }
 
 .is-btn.af-button {
-    font-size: var(--mobile-button-size);
+    font-size: var(--mobile-button-size, var(--btn-fsize));
     line-height: 1;
     position: relative;
     z-index: 10;
     display: inline-flex;
-    padding: 0.5em 1.6em;
+    padding: .8em 1.6em;
     color: var(--button-color, #ffffff);
     border-radius: var(--round-7);
     background-color: var(--button-bg, var(--g-color));
@@ -590,10 +590,11 @@ span.af-price {
 }
 
 .review-total-stars {
+    font-size: var(--rem-mini);
     display: flex;
     align-items: center;
     flex-flow: row wrap;
-    --rating-size: 18px;
+    --rating-size: 16px;
     gap: 10px;
 }
 
@@ -620,11 +621,11 @@ span.af-price {
     flex-grow: 1;
     justify-content: center;
     min-width: calc(50% - 10px);
-    padding: 1em;
+    padding: .8em 1.2em;
 }
 
 .is-btn.gb-btn {
-    font-size: var(--mobile-button-size, var(--rem-small));
+    font-size: var(--mobile-button-size, var(--btn-fsize));
     color: var(--button-color, var(--awhite));
     background-color: var(--button-bg, var(--g-color));
 }
@@ -825,7 +826,7 @@ input[type='checkbox'].rb-switch-input {
     }
 
     .is-btn.gb-btn {
-        font-size: var(--tablet-button-size, var(--rem-small));
+        font-size: var(--tablet-button-size, var(--btn-fsize));
     }
 
     .list-style-element li:before {
@@ -860,7 +861,7 @@ input[type='checkbox'].rb-switch-input {
     }
 
     .is-btn.af-button {
-        font-size: var(--tablet-button-size);
+        font-size: var(--tablet-button-size, var(--btn-fsize));
     }
 
     .af-list-inner {
@@ -950,12 +951,9 @@ input[type='checkbox'].rb-switch-input {
         width: var(--desktop-image-size, 150px);
     }
 
-    .is-btn.af-button {
-        font-size: var(--desktop-button-size);
-    }
-
+    .is-btn.af-button,
     .is-btn.gb-btn {
-        font-size: var(--desktop-button-size, var(--rem-small));
+        font-size: var(--desktop-button-size, var(--btn-fsize));
     }
 
     .gb-review-content {
@@ -967,7 +965,7 @@ input[type='checkbox'].rb-switch-input {
     }
 
     .review-total-stars {
-        --rating-size: 22px;
+        --rating-size: 18px;
     }
 
     .gb-review-cards > * {
@@ -984,15 +982,18 @@ input[type='checkbox'].rb-switch-input {
         flex-flow: column nowrap;
     }
 
-    .af-list-item-inner {
-        flex-flow: row wrap;
-        gap: 10px;
-    }
-
-    .af-list-best-price,
-    .af-list-item-inner > * {
+    .af-list-best-price {
         justify-content: space-between;
         width: 100%;
         max-width: 100%;
+    }
+
+    .af-list-item-inner > * {
+        flex-flow: column nowrap;
+        gap: 10px;
+    }
+
+    .af-list-item-left {
+        align-items: flex-start;
     }
 }

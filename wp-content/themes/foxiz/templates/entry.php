@@ -300,7 +300,7 @@ if ( ! function_exists( 'foxiz_entry_meta_date' ) ) {
 		if ( ! empty( $settings['human_time'] ) ) {
 			$date_string = sprintf( foxiz_html__( '%s ago', 'foxiz' ), human_time_diff( get_post_time( 'U', true, $post_id ) ) );
 		} else {
-			$date_string = get_the_date( null, $post_id );
+			$date_string = get_the_date( '', $post_id );
 		}
 
 		$classes[] = 'meta-el meta-date';
@@ -850,19 +850,25 @@ if ( ! function_exists( 'foxiz_entry_meta_user_custom' ) ) {
 		$classes = [];
 
 		$custom_info = rb_get_meta( 'meta_custom', $post_id );
+
 		if ( empty( $custom_info ) ) {
 			return foxiz_entry_meta_user_custom_fallback( $settings );
 		}
+
 		$meta_custom_icon = foxiz_get_option( 'meta_custom_icon' );
 		$meta_custom_text = foxiz_get_option( 'meta_custom_text' );
 		$meta_custom_pos  = foxiz_get_option( 'meta_custom_pos' );
 
-		$custom_string = $custom_info . ' ' . $meta_custom_text;
-		if ( ! empty( $meta_custom_pos ) && 'begin' === $meta_custom_pos ) {
-			$custom_string = $meta_custom_text . ' ' . $custom_info;
-		}
 		$p_label = ! empty( $settings['p_label_custom'] ) ? $settings['p_label_custom'] : '';
 		$s_label = ! empty( $settings['s_label_custom'] ) ? $settings['s_label_custom'] : '';
+
+		$custom_string = $custom_info;
+		if ( empty( $p_label ) && empty( $s_label ) ) {
+			$custom_string = $custom_info . ' ' . $meta_custom_text;
+			if ( ! empty( $meta_custom_pos ) && 'begin' === $meta_custom_pos ) {
+				$custom_string = $meta_custom_text . ' ' . $custom_info;
+			}
+		}
 
 		$classes[] = 'meta-el meta-custom';
 
@@ -1227,6 +1233,7 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 		}
 
 		$output   = '';
+		$rel      = '';
 		$classes  = [];
 		$taxonomy = 'category';
 
@@ -1245,14 +1252,28 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 		$primary_category      = '';
 		$primary_category_name = '';
 
-		if ( ! isset( $settings['is_singular'] ) && 'category' == $taxonomy ) {
-			$primary_category      = rb_get_meta( 'primary_category' );
-			$primary_category_name = get_cat_name( $primary_category );
+		if ( ! isset( $settings['is_singular'] ) ) {
+			if ( 'category' === $taxonomy ) {
+				$primary_category      = rb_get_meta( 'primary_category' );
+				$primary_category_name = get_cat_name( $primary_category );
+			} elseif ( 'post_tag' == $taxonomy ) {
+				$primary_category = rb_get_meta( 'primary_tag' );
+				$tag              = get_term( $primary_category, 'post_tag' );
+				if ( ! is_wp_error( $tag ) ) {
+					$primary_category_name = $tag->name;
+				} else {
+					$primary_category_name = '';
+				}
+			}
 		}
 
-		$max = absint( foxiz_get_option( 'max_categories' ) );
-		$max = empty( $max ) ? 99999 : $max;
+		if ( 'post_tag' === $taxonomy ) {
+			$max = absint( foxiz_get_option( 'max_post_tags' ) );
+		} else {
+			$max = absint( foxiz_get_option( 'max_categories' ) );
+		}
 
+		$max   = empty( $max ) ? 99999 : $max;
 		$index = 1;
 
 		$classes[] = 'p-categories';
@@ -1263,11 +1284,15 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 			$classes[] = $settings['category_classes'];
 		}
 		$classes = join( ' ', $classes );
-		$output  .= '<div class="' . esc_attr( $classes ) . '">';
+		if ( 'category' === $taxonomy ) {
+			$rel = 'rel="category"';
+		}
+
+		$output .= '<div class="' . esc_attr( $classes ) . '">';
 		if ( empty( $primary_category ) || empty ( $primary_category_name ) ) :
 			if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) :
 				foreach ( $categories as $category ) :
-					$output .= '<a class="p-category category-id-' . esc_attr( $category->term_id ) . '" href="' . foxiz_get_term_link( $category->term_id ) . '" rel="category">';
+					$output .= '<a class="p-category category-id-' . esc_attr( $category->term_id ) . '" href="' . foxiz_get_term_link( $category->term_id ) . '" ' . $rel . '>';
 					$output .= esc_html( $category->name );
 					$output .= '</a>';
 
@@ -1278,7 +1303,7 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 				endforeach;
 			endif;
 		else :
-			$output .= '<a class="p-category category-id-' . esc_attr( $primary_category ) . '" href="' . foxiz_get_term_link( $primary_category ) . '" rel="category">';
+			$output .= '<a class="p-category category-id-' . esc_attr( $primary_category ) . '" href="' . foxiz_get_term_link( $primary_category ) . '" ' . $rel . '>';
 			$output .= esc_html( $primary_category_name );
 			$output .= '</a>';
 		endif;
@@ -1493,11 +1518,6 @@ if ( ! function_exists( 'foxiz_get_review_line' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_review_stars' ) ) {
-	/**
-	 * @param int $average
-	 *
-	 * @return string
-	 */
 	function foxiz_get_review_stars( $average = 0 ) {
 
 		$output = '<span class="rstar-wrap">';

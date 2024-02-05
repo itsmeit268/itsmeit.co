@@ -1,6 +1,6 @@
 <?php
 /** FOXIZ functions */
-define( 'FOXIZ_THEME_VERSION', '2.2.2' );
+define( 'FOXIZ_THEME_VERSION', '2.2.3' );
 
 if ( ! defined( 'FOXIZ_TOS_ID' ) ) {
 	define( 'FOXIZ_TOS_ID', 'foxiz_theme_options' );

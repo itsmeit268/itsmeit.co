@@ -33,17 +33,21 @@ if ( ! function_exists( 'foxiz_get_heading' ) ) {
 				'{archive}',
 			], get_search_query( 's' ), $settings['title'] );
 		} elseif ( is_author() ) {
-			$settings['title'] = str_replace( [
-				'{author}',
-				'{archive}',
-			], get_queried_object()->display_name, $settings['title'] );
+			if ( ! empty( get_queried_object()->display_name ) ) {
+				$settings['title'] = str_replace( [
+					'{author}',
+					'{archive}',
+				], get_queried_object()->display_name, $settings['title'] );
+			}
 		} elseif ( is_archive() ) {
-			$settings['title'] = str_replace( [
-				'{archive}',
-				'{category}',
-				'{tag}',
-				'{taxonomy}',
-			], get_queried_object()->name, $settings['title'] );
+			if ( ! empty( get_queried_object()->name ) ) {
+				$settings['title'] = str_replace( [
+					'{archive}',
+					'{category}',
+					'{tag}',
+					'{taxonomy}',
+				], get_queried_object()->name, $settings['title'] );
+			}
 		}
 
 		$class_name = 'block-h';

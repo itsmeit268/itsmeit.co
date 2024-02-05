@@ -594,11 +594,12 @@ if ( ! function_exists( 'foxiz_register_options_podcast_single' ) ) {
 					'title'    => esc_html__( 'Sticky Sidebar', 'foxiz' ),
 					'subtitle' => esc_html__( 'Enable or disable the sticky sidebar for the episode.', 'foxiz' ),
 					'options'  => [
-						'default' => esc_html__( 'Use Global Setting', 'foxiz' ),
-						'1'       => esc_html__( 'Enable', 'foxiz' ),
-						'-1'      => esc_html__( 'Disable', 'foxiz' ),
+						'0'  => esc_html__( '- Default -', 'foxiz' ),
+						'1'  => esc_html__( 'Sticky Sidebar', 'foxiz' ),
+						'2'  => esc_html__( 'Sticky Last Widget', 'foxiz' ),
+						'-1' => esc_html__( 'Disable', 'foxiz' ),
 					],
-					'default'  => 'default',
+					'default'  => '0',
 				],
 				[
 					'id'     => 'section_end_single_podcast_sidebar',

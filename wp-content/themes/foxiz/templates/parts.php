@@ -355,13 +355,13 @@ if ( ! function_exists( 'foxiz_render_pagination' ) ) {
 					$settings['related_id']     = $_query->get( 'related_id' );
 					$settings['post_not_in']    = $_query->get( 'related_excluded_ids' );
 					$settings['posts_per_page'] = $_query->get( 'related_total' );
-					if ( 'simple' == $settings['pagination'] || 'number' == $settings['pagination'] ) {
+					if ( 'simple' == $settings['pagination'] || 'number' === $settings['pagination'] ) {
 						$settings['pagination'] = 'load_more';
 					}
 					break;
 				case 'recommended' :
 				case 'saved':
-					if ( 'simple' == $settings['pagination'] || 'number' == $settings['pagination'] ) {
+					if ( 'simple' == $settings['pagination'] || 'number' === $settings['pagination'] ) {
 						$settings['pagination'] = 'infinite_scroll';
 					}
 					break;
@@ -728,7 +728,7 @@ if ( ! function_exists( 'foxiz_get_social_list' ) ) {
 		$output = '';
 
 		if ( ! empty( $website ) ) {
-			$output .= '<a class="social-link-website" aria-label="' . foxiz_attr__( 'Website', 'foxiz' ) . '" data-title="' . foxiz_attr__( 'Website', 'foxiz' ) . '" href="' . esc_url( $website ) . '" ' . $new_tab . '><i class="rbi rbi-portfolio-o" aria-hidden="true"></i></a>';
+			$output .= '<a class="social-link-website" aria-label="' . foxiz_attr__( 'Website', 'foxiz' ) . '" data-title="' . foxiz_attr__( 'Website', 'foxiz' ) . '" href="' . esc_url( $website ) . '" ' . $new_tab . '><i class="rbi rbi-link" aria-hidden="true"></i></a>';
 		}
 		if ( ! empty( $facebook ) ) {
 			$output .= '<a class="social-link-facebook" aria-label="' . foxiz_attr__( 'Facebook', 'foxiz' ) . '" data-title="' . foxiz_attr__( 'Facebook', 'foxiz' ) . '" href="' . esc_url( $facebook ) . '" ' . $new_tab . '><i class="rbi rbi-facebook" aria-hidden="true"></i></a>';

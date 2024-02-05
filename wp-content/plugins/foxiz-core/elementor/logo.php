@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
+use function foxiz_get_option;
+use function get_bloginfo;
 use function wp_get_attachment_image_src;
 
 /**
@@ -169,8 +171,33 @@ class Logo extends Widget_Base {
 		$settings = $this->get_settings();
 
 		if ( empty( $settings['logo']['url'] ) ) {
+			$default_logo_retina = foxiz_get_option( 'retina_logo' );
+			if ( ! empty( $default_logo_retina['url'] ) ) {
+				$settings['logo'] = $default_logo_retina;
+			} else {
+				$default_logo = foxiz_get_option( 'logo' );
+				if ( ! empty( $default_logo['url'] ) ) {
+					$settings['logo'] = $default_logo;
+				}
+			}
+		}
+
+		if ( empty( $settings['logo']['url'] ) ) {
 			return false;
 		}
+
+		if ( empty( $settings['dark_logo']['url'] ) ) {
+			$default_dark_logo_retina = foxiz_get_option( 'dark_retina_logo' );
+			if ( ! empty( $default_dark_logo_retina['url'] ) ) {
+				$settings['dark_logo'] = $default_dark_logo_retina;
+			} else {
+				$default_dark_logo = foxiz_get_option( 'dark_logo' );
+				if ( ! empty( $default_dark_logo['url'] ) ) {
+					$settings['dark_logo'] = $default_dark_logo;
+				}
+			}
+		}
+
 		$logo_width  = 1;
 		$logo_height = 1;
 
@@ -212,10 +239,10 @@ class Logo extends Widget_Base {
 					} ?> width="<?php echo $logo_width; ?>" height="<?php echo $logo_height; ?>" src="<?php echo $settings['logo']['url']; ?>" alt="<?php echo ( ! empty( $settings['logo']['alt'] ) ) ? esc_attr( $settings['logo']['alt'] ) : get_bloginfo( 'name' ); ?>"/>
 				<?php endif; ?>
 			</a>
-			<?php if ( is_front_page() && ! empty( $settings['heading_tag'] ) && 'yes' == $settings['heading_tag'] ) : ?>
+			<?php if ( is_front_page() && ! empty( $settings['heading_tag'] ) && 'yes' === $settings['heading_tag'] ) : ?>
 				<h1 class="logo-title hidden"><?php bloginfo( 'name' ); ?></h1>
 				<?php if ( get_bloginfo( 'description' ) ) : ?>
-					<p class="site-description hidden"><?php bloginfo( 'description' ); ?></p>
+					<p class="site-description hidden"><?php echo get_bloginfo( 'description' ); ?></p>
 				<?php endif;
 			endif; ?>
 		</div>

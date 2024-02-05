@@ -596,6 +596,16 @@ class Podcast_List_Flex_1 extends Widget_Base {
 				'default'     => 'bg-1',
 			]
 		);
+		$this->add_control(
+			'entry_tax',
+			[
+				'label'       => esc_html__( 'Replace Category by Taxonomy', 'foxiz-core' ),
+				'description' => Options::post_type_tax_info_description(),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => Options::taxonomy_dropdown(),
+				'default'     => '0',
+			]
+		);
 		$this->add_responsive_control(
 			'entry_category_size', [
 				'label'       => esc_html__( 'Entry Show Size', 'foxiz-core' ),
@@ -619,16 +629,6 @@ class Podcast_List_Flex_1 extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'description' => Options::hide_category_description(),
 				'options'     => Options::hide_dropdown( false ),
-				'default'     => '0',
-			]
-		);
-		$this->add_control(
-			'entry_tax',
-			[
-				'label'       => esc_html__( 'Replace Category by Taxonomy', 'foxiz-core' ),
-				'description' => Options::post_type_tax_info_description(),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => Options::taxonomy_dropdown(),
 				'default'     => '0',
 			]
 		);

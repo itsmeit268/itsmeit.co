@@ -1024,38 +1024,48 @@ if ( ! function_exists( 'foxiz_get_related_data' ) ) {
 		if ( ! empty( $settings['total'] ) ) {
 			$params['posts_per_page'] = $settings['total'];
 		}
-		if ( ! empty( $settings['offset'] ) ) {
-			$params['offset'] = $settings['offset'];
-		}
 		if ( ! empty( $settings['ids'] ) ) {
 			$params['post_in'] = esc_attr( $settings['ids'] );
 		}
 		if ( ! empty( $settings['post_id'] ) ) {
-			$params['post_id'] = esc_attr( $settings['post_id'] );
+			$params['related_id'] = esc_attr( $settings['post_id'] );
+		}
+		if ( ! empty( $settings['where'] ) ) {
+			$params['where'] = esc_attr( $settings['where'] );
 		}
 
 		return foxiz_query_related( $params );
 	}
 }
 
-if ( ! function_exists( 'foxiz_get_single_sticky_sidebar' ) ) {
-	/**
-	 * @param string $prefix
-	 *
-	 * @return bool
-	 */
-	function foxiz_get_single_sticky_sidebar( $prefix = 'single_post' ) {
+if ( ! function_exists( 'foxiz_get_single_sticky_setting' ) ) {
+	function foxiz_get_single_sticky_setting( $prefix ) {
 
 		$setting = foxiz_get_option( $prefix . '_sticky_sidebar' );
 		if ( empty( $setting ) || 'default' === $setting ) {
 			$setting = foxiz_get_option( 'sticky_sidebar' );
-		};
-
-		if ( '1' === (string) $setting ) {
-			return true;
 		}
 
-		return false;
+		if ( '-1' === (string) $setting ) {
+			$setting = '';
+		}
+
+		return $setting;
+	}
+}
+
+if ( ! function_exists( 'foxiz_get_single_sticky_sidebar' ) ) {
+	function foxiz_get_single_sticky_sidebar( $prefix = 'single_post' ) {
+
+		$setting = (string) foxiz_get_single_sticky_setting( $prefix );
+
+		if ( '2' === $setting ) {
+			return 'sticky-last-w';
+		} elseif ( '1' === $setting ) {
+			return 'sticky-sidebar';
+		}
+
+		return '';
 	}
 }
 
@@ -1069,11 +1079,16 @@ if ( ! function_exists( 'foxiz_get_category_page_settings' ) ) {
 		if ( empty( $category_id ) ) {
 			$category_id = get_queried_object_id();
 		}
+
 		$settings = rb_get_term_meta( 'foxiz_category_meta', $category_id );
 
 		$settings['category']      = $category_id;
 		$settings['category_name'] = get_cat_name( $category_id );
 		$settings['uuid']          = 'uid_c' . $category_id;
+
+		if ( foxiz_get_option( $prefix . 'entry_tag' ) ) {
+			$settings['entry_tax'] = 'post_tag';
+		}
 
 		if ( empty( $settings['category_header'] ) ) {
 			$settings['category_header'] = foxiz_get_option( $prefix . 'category_header' );
@@ -1163,7 +1178,6 @@ if ( ! function_exists( 'foxiz_get_category_page_settings' ) ) {
 				$settings['sticky_sidebar'] = foxiz_get_option( 'sticky_sidebar' );
 			}
 		}
-
 		if ( '-1' === (string) $settings['sticky_sidebar'] ) {
 			$settings['sticky_sidebar'] = false;
 		}

@@ -103,7 +103,7 @@ class Archive_Description extends Widget_Base {
 			[
 				'label'    => esc_html__( 'Description Font', 'foxiz-core' ),
 				'name'     => 'title_font',
-				'selector' => '{{WRAPPER}} .taxonomy-description',
+				'selector' => '{{WRAPPER}}',
 			]
 		);
 

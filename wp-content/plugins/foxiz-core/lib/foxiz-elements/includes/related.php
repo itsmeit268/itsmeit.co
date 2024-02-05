@@ -22,6 +22,7 @@ if ( ! function_exists( 'foxiz_render_block_related' ) ) {
 		if ( empty( $attributes['where'] ) ) {
 			$attributes['where'] = 'all';
 		}
+
 		$output = '<div class="rb-gutenberg-related">';
 		$output .= do_shortcode(
 			'[ruby_related heading_tag="' . $attributes['heading_tag'] .

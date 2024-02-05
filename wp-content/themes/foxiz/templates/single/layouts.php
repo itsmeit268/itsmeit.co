@@ -5,6 +5,11 @@ defined( 'ABSPATH' ) || exit;
 if ( ! function_exists( 'foxiz_single_post' ) ) {
 	function foxiz_single_post() {
 
+		if ( ! isset( $GLOBALS['foxiz_queried_ids'] ) ) {
+			$GLOBALS['foxiz_queried_ids'] = [];
+		}
+		array_push( $GLOBALS['foxiz_queried_ids'], get_the_ID() );
+
 		if ( 'attachment' === get_post_type() ) {
 			foxiz_render_single_attachment();
 
@@ -40,14 +45,10 @@ if ( ! function_exists( 'foxiz_single_post' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_render_single_post' ) ) {
-	/**
-	 * single layout
-	 */
 	function foxiz_render_single_post() {
 
 		$layout = foxiz_get_single_layout();
 
-		/** fallback for amp */
 		if ( foxiz_is_amp() && 'stemplate' === $layout['layout'] ) {
 			$layout['layout'] = 'standard_7';
 		}

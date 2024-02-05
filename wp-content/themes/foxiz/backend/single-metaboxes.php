@@ -58,18 +58,6 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'default' => 'default',
 							],
 							[
-								'id'      => 'page_header_width',
-								'name'    => esc_html__( 'Max Width of Page Header', 'foxiz' ),
-								'desc'    => esc_html__( 'Select a max-width (edge padding included) for this page header content.', 'foxiz' ),
-								'type'    => 'select',
-								'options' => [
-									'default' => esc_html__( '- Default -', 'foxiz' ),
-									'small'   => esc_html__( 'Small - 860px', 'foxiz' ),
-									'-1'      => esc_html__( 'Full Width - 1280px', 'foxiz' ),
-								],
-								'default' => 'default',
-							],
-							[
 								'id'      => 'page_breadcrumb',
 								'name'    => esc_html__( 'Page Breadcrumb', 'foxiz' ),
 								'desc'    => esc_html__( 'Enable or disable the breadcrumb on this page header.', 'foxiz' ),
@@ -79,6 +67,30 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 									'-1' => esc_html__( 'Disable', 'foxiz' ),
 								],
 								'default' => '0',
+							],
+							[
+								'id'      => 'page_header_width',
+								'name'    => esc_html__( 'Limit Page Header Width', 'foxiz' ),
+								'desc'    => esc_html__( 'Limit the max-width for the page header content, which includes the page title and featured image.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'small'   => esc_html__( 'Optimize Line Length', 'foxiz' ),
+									'-1'      => esc_html__( 'Full Width', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
+								'id'      => 'width_wo_sb',
+								'name'    => esc_html__( 'Limit Page Content Width', 'foxiz' ),
+								'desc'    => esc_html__( 'This setting will only apply if you choose to disable the sidebar on this page.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'small'   => esc_html__( 'Optimize Line Length', 'foxiz' ),
+									'-1'      => esc_html__( 'Full Width', 'foxiz' ),
+								],
+								'default' => 'default',
 							],
 						],
 					],
@@ -105,18 +117,7 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'options' => foxiz_config_sidebar_name(),
 								'default' => 'default',
 							],
-							[
-								'id'      => 'width_wo_sb',
-								'name'    => esc_html__( 'Max Width Content without Sidebar', 'foxiz' ),
-								'desc'    => esc_html__( 'Select a max-width (edge padding included) for the content area without sidebar.', 'foxiz' ),
-								'type'    => 'select',
-								'options' => [
-									'default' => esc_html__( '- Default -', 'foxiz' ),
-									'small'   => esc_html__( 'Small - 860px', 'foxiz' ),
-									'-1'      => esc_html__( 'Full Width - 1280px', 'foxiz' ),
-								],
-								'default' => 'default',
-							],
+
 						],
 					],
 					[
@@ -212,6 +213,21 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'placeholder' => '[Ruby_E_Template id="1"]',
 								'type'        => 'textarea',
 								'default'     => '',
+							],
+						],
+					],
+					[
+						'id'     => 'section-seo',
+						'title'  => esc_html__( 'SEO Optimized', 'foxiz' ),
+						'icon'   => 'dashicons-chart-area',
+						'fields' => [
+							[
+								'id'      => 'meta_description',
+								'name'    => esc_html__( 'Meta Description', 'foxiz' ),
+								'desc'    => esc_html__( 'Input the meta description (SEO) for this page.', 'foxiz' ),
+								'info'    => esc_html__( 'Leave this field blank or disable setting "Theme Options > SEO Optimized > Meta Description" if you are using a 3rd party SEO plugin.', 'foxiz' ),
+								'type'    => 'textarea',
+								'default' => '',
 							],
 						],
 					],
@@ -349,8 +365,8 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 					],
 					[
 						'id'     => 'section-category',
-						'title'  => esc_html__( 'Primary Category', 'foxiz' ),
-						'desc'   => esc_html__( 'Only the selected category will show on the post listing.', 'foxiz' ),
+						'title'  => esc_html__( 'Primary Category & Tag', 'foxiz' ),
+						'desc'   => esc_html__( 'Only the selected category or tag will be displayed on the entry category icon in the post listing.', 'foxiz' ),
 						'icon'   => 'dashicons-admin-network',
 						'fields' => [
 							[
@@ -359,8 +375,18 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'type'        => 'category_select',
 								'taxonomy'    => 'category',
 								'placeholder' => esc_html__( 'Select a primary category for this post.', 'foxiz' ),
-								'desc'        => esc_html__( 'It is useful if this post has many categories.', 'foxiz' ),
-								'info'        => esc_html__( 'Ensure the selected item belongs categories of this post.', 'foxiz' ),
+								'desc'        => esc_html__( 'It is useful if this post has multiple categories.', 'foxiz' ),
+								'info'        => esc_html__( 'Ensure the selected item belongs the categories of this post.', 'foxiz' ),
+								'default'     => '',
+							],
+
+							[
+								'name'        => esc_html__( 'Primary Tag', 'foxiz' ),
+								'id'          => 'primary_tag',
+								'type'        => 'tag_select',
+								'placeholder' => esc_html__( 'Select a primary tag for this post.', 'foxiz' ),
+								'desc'        => esc_html__( 'It is useful if this post has multiple tags, and you want to display tags instead of the category in category icon of the post listings', 'foxiz' ),
+								'info'        => esc_html__( 'Ensure the selected item belongs to the tags of this post.', 'foxiz' ),
 								'default'     => '',
 							],
 						],
@@ -1145,6 +1171,14 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 									'1'       => esc_html__( 'Enable', 'foxiz' ),
 								],
 								'default' => 'default',
+							],
+							[
+								'id'      => 'meta_description',
+								'name'    => esc_html__( 'Meta Description', 'foxiz' ),
+								'desc'    => esc_html__( 'Enter the meta description (SEO) for this post. The theme will fallback to Tagline > Excerpt > part of the post content if left empty.', 'foxiz' ),
+								'info'    => esc_html__( 'If you are using a third-party SEO plugin, fully disable the meta description for Foxiz by turning off the setting in "Theme Options > SEO Optimized > Meta Description".', 'foxiz' ),
+								'type'    => 'textarea',
+								'default' => '',
 							],
 						],
 					],

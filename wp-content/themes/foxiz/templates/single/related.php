@@ -3,11 +3,6 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_get_layout_related_1' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_get_layout_related_1( $settings ) {
 
 		if ( empty( $settings['post_id'] ) ) {

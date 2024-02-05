@@ -625,7 +625,10 @@ if ( ! function_exists( 'foxiz_query_related' ) ) {
 			}
 		}
 
-		$data['where'] = foxiz_get_option( 'single_post_related_where', 'all' );
+		if ( empty( $data['where'] ) ) {
+			$data['where'] = foxiz_get_option( 'single_post_related_where', 'all' );
+		}
+
 		if ( empty( $data['posts_per_page'] ) ) {
 			$data['posts_per_page'] = foxiz_get_option( 'single_post_related_total' );
 		}

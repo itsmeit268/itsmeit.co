@@ -176,11 +176,11 @@ if ( ! class_exists( 'Foxiz_Podcast' ) ) {
 		function enqueue() {
 
 			if ( ! foxiz_is_amp() && ! is_admin() ) {
-				wp_register_script( 'foxiz-player', get_theme_file_uri( 'assets/js/media-element.min.js' ), array( 'jquery' ), FOXIZ_THEME_VERSION, true );
+				wp_deregister_style( 'mediaelement' );
+				wp_register_script( 'foxiz-player', get_theme_file_uri( 'assets/js/media-element.min.js' ), [ 'jquery' ], FOXIZ_THEME_VERSION, true );
 			}
 		}
 	}
 }
 
-/** load */
 Foxiz_Podcast::get_instance();

@@ -166,7 +166,7 @@ class Search_Category extends Widget_Base {
 					'0'    => esc_html__( '- Default -', 'foxiz-core' ),
 					'line' => esc_html__( 'Underline', 'foxiz-core' ),
 					'bold' => esc_html__( 'Bold Underline', 'foxiz-core' ),
-					'gray' => esc_html__( 'Gay Background', 'foxiz-core' ),
+					'gray' => esc_html__( 'Gray Background', 'foxiz-core' ),
 					'none' => esc_html__( 'None', 'foxiz-core' ),
 				],
 				'default' => '0',

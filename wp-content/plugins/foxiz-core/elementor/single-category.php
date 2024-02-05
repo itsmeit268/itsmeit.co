@@ -59,6 +59,16 @@ class Single_Category extends Widget_Base {
 				'default'     => '0',
 			]
 		);
+		$this->add_control(
+			'entry_tax',
+			[
+				'label'       => esc_html__( 'Replace Category by Taxonomy', 'foxiz-core' ),
+				'description' => Options::post_type_tax_info_description(),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => Options::taxonomy_dropdown(),
+				'default'     => '0',
+			]
+		);
 		$this->add_responsive_control(
 			'category_align',
 			[
@@ -108,16 +118,6 @@ class Single_Category extends Widget_Base {
 				'description' => esc_html__( 'Show primary category only', 'foxiz-core' ),
 				'options'     => Options::switch_dropdown( false ),
 				'default'     => '-1',
-			]
-		);
-		$this->add_control(
-			'entry_tax',
-			[
-				'label'       => esc_html__( 'Replace Category by Taxonomy', 'foxiz-core' ),
-				'description' => Options::post_type_tax_info_description(),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => Options::taxonomy_dropdown(),
-				'default'     => '0',
 			]
 		);
 		$this->end_controls_section();

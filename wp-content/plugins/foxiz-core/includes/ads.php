@@ -26,7 +26,7 @@ if ( ! function_exists( 'foxiz_get_adsense' ) ) {
 		$spot = foxiz_adsense_spot( $settings['code'] );
 
 		/** disable adsense unit if have auto ads */
-		if ( ! empty( $spot['data_ad_slot'] ) && ! empty( $spot['data_ad_client'] ) && ! empty( $GLOBALS['foxiz_auto_ads'] ) ) {
+		if ( ! empty( $spot['data_ad_slot'] ) && ! empty( $spot['data_ad_client'] ) && ! empty( $GLOBALS['foxiz_disallowed_ads'] ) ) {
 			return false;
 		}
 
@@ -239,15 +239,23 @@ if ( ! function_exists( 'foxiz_auto_adsense' ) ) {
 	function foxiz_auto_adsense() {
 
 		/** amp auto ad */
-		if ( foxiz_is_amp() && foxiz_get_option( 'amp_ad_auto_code' ) ) {
-			echo foxiz_get_option( 'amp_ad_auto_code' );
+		if ( foxiz_is_amp() ) {
+			if ( foxiz_get_option( 'amp_ad_auto_code' ) ) {
+				echo foxiz_get_option( 'amp_ad_auto_code' );
+				if ( ! foxiz_get_option( 'ad_auto_allowed' ) ) {
+					$GLOBALS['foxiz_disallowed_ads'] = 'yes';
+				}
+			}
+
+			return;
 		}
 
 		$code = foxiz_get_auto_adsense();
 		if ( ! empty( $code ) ) {
-			/** check is google ad */
 			if ( strpos( $code, 'googlesyndication.com/pagead/js/adsbygoogle.js' ) ) {
-				$GLOBALS['foxiz_auto_ads'] = 1;
+				if ( ! foxiz_get_option( 'ad_auto_allowed' ) ) {
+					$GLOBALS['foxiz_disallowed_ads'] = 'yes';
+				}
 			}
 
 			echo foxiz_get_auto_adsense();
@@ -260,7 +268,7 @@ if ( ! function_exists( 'foxiz_get_auto_adsense' ) ) {
 
 		$code = foxiz_get_option( 'ad_auto_code' );
 
-		if ( empty( $code ) || foxiz_is_amp() ) {
+		if ( empty( $code ) ) {
 			return false;
 		}
 
@@ -288,8 +296,7 @@ if ( ! function_exists( 'foxiz_amp_ad' ) ) {
 	 */
 	function foxiz_amp_ad( $settings ) {
 
-		$auto_ads = foxiz_get_option( 'ad_auto_code' );
-		if ( ! empty( $auto_ads ) || empty( $settings['type'] ) ) {
+		if ( ! empty( $GLOBALS['foxiz_disallowed_ads'] ) || empty( $settings['type'] ) ) {
 			return false;
 		}
 

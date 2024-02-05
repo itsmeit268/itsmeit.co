@@ -16,6 +16,7 @@ var RB_META_BOXES = (function (Module, $) {
         self.fileUpload();
         self.datePicker();
         self.repeatGroup();
+        self.taxSelect();
 
         setTimeout(function () {
             self.removeHideJs();
@@ -392,6 +393,12 @@ var RB_META_BOXES = (function (Module, $) {
                 }
             }
         });
+    }
+
+    Module.taxSelect = function () {
+        setTimeout(function () {
+            $('.rb-tax-select').select2();
+        }, 300);
     }
 
     /** remove JS hide */

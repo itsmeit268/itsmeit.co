@@ -81,7 +81,6 @@ if ( ! class_exists( 'Foxiz_Shortcodes', false ) ) {
 				'total'          => 2,
 				'layout'         => 1,
 				'ids'            => '',
-				'offset'         => '',
 				'where'          => '',
 				'post_id'        => get_the_ID(),
 			], $attrs );

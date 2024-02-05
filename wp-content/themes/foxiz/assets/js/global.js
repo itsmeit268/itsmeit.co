@@ -82,6 +82,7 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
             this.highlightShares();
             this.galleryLightbox();
             this.singleFeaturedLightbox();
+            this.accordion();
         }
 
         Module.reInitAll = function () {
@@ -2222,12 +2223,11 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
                     }
                     const nextPostURL = new URL(infiniteWrapper.data('nextposturl'));
                     nextPostURL.searchParams.set('rbsnp', '1');
-                    if (rootGetParams !== null && rootGetParams !== undefined) {
+                    if (rootGetParams) {
                         rootGetParams.forEach((value, key) => {
-                            if ('rbsnp' === key) {
-                                return;
+                            if (key !== 'rbsnp' && 'p' !== key) {
+                                nextPostURL.searchParams.set(key, value);
                             }
-                            nextPostURL.searchParams.set(key, value);
                         });
                     }
                     self.ajaxData.singleProcessing = true;
@@ -2650,6 +2650,40 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
                 }
             });
         }
+
+        Module.accordion = function () {
+            $('.gb-accordion').each(function () {
+                const accordion = $(this);
+                if (!accordion.hasClass('yesLoaded')) {
+                    const accordionItems = accordion.find('.gb-accordion-item');
+
+                    accordion.addClass('yesLoaded');
+                    if (accordion.hasClass('yes-open')) {
+                        accordionItems.first().addClass('active');
+                    }
+
+                    accordionItems.on('click', function () {
+                        const item = $(this);
+                        const isActive = item.hasClass('active');
+
+                        if (!isActive) {
+                            const activeItem = accordionItems.filter('.active');
+                            activeItem.removeClass('active').find('.accordion-item-content').slideUp(250, function () {
+                                $(this).css('display', 'none');
+                            });
+
+                            item.addClass('active').find('.accordion-item-content').slideDown(250, function () {
+                                $(this).css('display', 'block');
+                            });
+                        } else {
+                            item.removeClass('active').find('.accordion-item-content').slideUp(250, function () {
+                                $(this).css('display', 'none');
+                            });
+                        }
+                    });
+                }
+            });
+        };
 
         return Module;
 

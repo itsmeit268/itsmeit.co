@@ -95,6 +95,7 @@ if ( ! class_exists( 'Foxiz_Register_Options' ) ) {
 				'design_back_top',
 				'design_tooltips',
 				'design_input',
+				'design_loader',
 				'design_container',
 
 				'blocks',

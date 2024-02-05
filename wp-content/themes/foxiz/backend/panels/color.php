@@ -21,7 +21,8 @@ if ( ! function_exists( 'foxiz_register_options_color' ) ) {
 				[
 					'id'          => 'global_color',
 					'title'       => esc_html__( 'Global Highlight Color', 'foxiz' ),
-					'subtitle'    => esc_html__( 'Select a global color, This setting apply to all links, menu, category overlays, main page and many contrasting elements.', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Select a global color. This setting applies to all links, menus, category overlays, main pages, and many contrasting elements.', 'foxiz' ),
+					'description' => esc_html__( 'Consider choosing a color to ensure it will contrast with white text.', 'foxiz' ),
 					'type'        => 'color',
 					'transparent' => false,
 					'validate'    => 'color',

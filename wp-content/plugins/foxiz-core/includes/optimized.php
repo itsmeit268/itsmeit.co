@@ -29,10 +29,12 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 			add_action( 'wp_head', [ $this, 'podcast_markup' ], 20 );
 			add_action( 'wp_head', [ $this, 'breadcrumb_markup' ], 25 );
 			/** use jetpack og tags */
-			if ( class_exists( 'Jetpack' ) ) {
-				add_filter( 'jetpack_enable_open_graph', '__return_true', 100 );
-			} else {
-				add_action( 'wp_head', [ $this, 'open_graph' ], 20 );
+			if ( foxiz_get_option( 'open_graph' ) ) {
+				if ( class_exists( 'Jetpack' ) ) {
+					add_filter( 'jetpack_enable_open_graph', '__return_true', 10 );
+				} else {
+					add_action( 'wp_head', [ $this, 'open_graph' ], 20 );
+				}
 			}
 			add_action( 'wp_footer', [ $this, 'post_list_markup' ] );
 			add_filter( 'post_class', [ $this, 'remove_hatom' ], 10, 1 );
@@ -46,7 +48,8 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 			add_action( 'wp_head', [ $this, 'start_head_buffer' ], 0 );
 			add_action( 'wp_head', [ $this, 'end_head_buffer' ], PHP_INT_MAX );
 			add_action( 'wp_head', [ $this, 'preload_font_icon' ], 9 );
-			add_filter( 'get_post_time', [ $this, 'force_updated_date' ], 999, 3 );
+			add_filter( 'get_the_date', [ $this, 'force_updated_date' ], 999, 3 );
+			add_filter( 'get_the_time', [ $this, 'force_updated_time' ], 999, 3 );
 		}
 
 		private $open_graph_conflicting_plugins = [
@@ -140,7 +143,11 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 				return false;
 			}
 
-			$description = rb_get_meta( 'tagline', $post_id );
+			$description = rb_get_meta( 'meta_description', $post_id );
+
+			if ( empty( $description ) ) {
+				$description = rb_get_meta( 'tagline', $post_id );
+			}
 			if ( empty( $description ) ) {
 				$description = get_post_field( 'post_excerpt', $post_id );
 			}
@@ -209,11 +216,12 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 					echo '<meta name="description" content="' . wp_strip_all_tags( $content ) . '">';
 				}
 			} elseif ( is_single() ) {
-				$post_id = get_the_ID();
-				$content = rb_get_meta( 'tagline', $post_id );
-				if ( empty( $content ) ) {
-					$content = get_post_field( 'post_excerpt', $post_id );
+				$content = $this->get_description( get_the_ID() );
+				if ( ! empty( $content ) ) {
+					echo '<meta name="description" content="' . wp_strip_all_tags( $content ) . '">';
 				}
+			} elseif ( is_page() ) {
+				$content = rb_get_meta( 'meta_description' );
 				if ( ! empty( $content ) ) {
 					echo '<meta name="description" content="' . wp_strip_all_tags( $content ) . '">';
 				}
@@ -667,7 +675,7 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 
 		function open_graph() {
 
-			if ( ! foxiz_get_option( 'open_graph' ) || $this->check_conflict_open_graph() || foxiz_is_amp() ) {
+			if ( $this->check_conflict_open_graph() || foxiz_is_amp() ) {
 				return false;
 			}
 
@@ -701,8 +709,8 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 				}
 				?>
 				<meta property="og:type" content="article"/>
-				<meta property="article:published_time" content="<?php echo get_the_time( 'c' ); ?>"/>
-				<meta property="article:modified_time" content="<?php echo get_the_modified_time( 'c' ); ?>"/>
+				<meta property="article:published_time" content="<?php echo get_the_date( DATE_W3C, $post ); ?>"/>
+				<meta property="article:modified_time" content="<?php echo get_the_modified_date( DATE_W3C, $post ); ?>"/>
 				<meta name="author" content="<?php the_author_meta( 'display_name', $post->post_author ); ?>"/>
 				<meta name="twitter:card" content="summary_large_image"/>
 				<meta name="twitter:creator" content="<?php echo '@' . foxiz_get_twitter_name(); ?>"/>
@@ -1115,18 +1123,34 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 		}
 
 		/**
-		 * @param $time
+		 * @param $the_date
 		 * @param $format
-		 * @param $gmt
+		 * @param $post
 		 *
 		 * @return false|int|string
 		 */
-		function force_updated_date( $time, $format, $gmt ) {
+		function force_updated_date( $the_date, $format, $post ) {
 
 			if ( foxiz_get_option( 'force_modified_date' ) && ! is_admin() ) {
-				return get_post_modified_time( $format, $gmt );
+				return get_the_modified_date( $format, $post );
 			} else {
-				return $time;
+				return $the_date;
+			}
+		}
+
+		/**
+		 * @param $the_time
+		 * @param $format
+		 * @param $post
+		 *
+		 * @return false|int|string
+		 */
+		function force_updated_time( $the_time, $format, $post ) {
+
+			if ( foxiz_get_option( 'force_modified_date' ) && ! is_admin() ) {
+				return get_the_modified_time( $format, $post );
+			} else {
+				return $the_time;
 			}
 		}
 	}

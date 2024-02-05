@@ -12,7 +12,6 @@ var FOXIZ_CORE_SCRIPT = (function (Module, $) {
         this.switchDarkMode();
         this.noteToggle();
         this.emailToDownload();
-        this.accordion();
         this.ajaxURL = foxizCoreParams.ajaxurl
     }
 
@@ -342,36 +341,7 @@ var FOXIZ_CORE_SCRIPT = (function (Module, $) {
         });
     };
 
-    Module.accordion = function () {
-        $('.gb-accordion').each(function () {
-            const accordion = $(this);
-            const accordionItems = accordion.find('.gb-accordion-item');
 
-            if (accordion.hasClass('yes-open')) {
-                accordionItems.first().addClass('active');
-            }
-
-            accordionItems.on('click', function () {
-                const item = $(this);
-                const isActive = item.hasClass('active');
-
-                if (!isActive) {
-                    const activeItem = accordionItems.filter('.active');
-                    activeItem.removeClass('active').find('.accordion-item-content').slideUp(250, function () {
-                        $(this).css('display', 'none');
-                    });
-
-                    item.addClass('active').find('.accordion-item-content').slideDown(250, function () {
-                        $(this).css('display', 'block');
-                    });
-                } else {
-                    item.removeClass('active').find('.accordion-item-content').slideUp(250, function () {
-                        $(this).css('display', 'none');
-                    });
-                }
-            });
-        });
-    };
 
     return Module;
 

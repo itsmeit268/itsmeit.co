@@ -428,6 +428,7 @@ a.ui-button:active,
     align-items: center;
     flex-flow: row nowrap;
     margin: 0;
+    white-space: nowrap;
     color: inherit !important;
 }
 
@@ -707,6 +708,7 @@ div#rb-tab-rb-meta-none-tab {
     font-size: 10px;
     line-height: 1;
     display: block;
+    max-width: 70px;
     padding-top: 5px;
     text-align: center;
 }
@@ -873,6 +875,10 @@ body.rtl .group-item:before {
     .rb-meta-tab-header {
         width: 190px;
     }
+
+    .rb-tab-title h3 {
+        font-size: 12px;
+    }
 }
 
 .mce-shortcode-label {
@@ -1035,15 +1041,15 @@ textarea.rb-copy-content {
 .rb-openai-setting-link {
     margin: 0 3px;
     padding: 5px 12px;
+    transition: all .3s;
     border: 1px solid #eeeeee;
     border-radius: 10px;
-    transition: all .3s;
     --webkit-transition: all .3s;
 }
 
 .rb-openai-setting-link:hover {
+    color: #ffffff;
     background: #599b71;
-    color: #fff;
 }
 
 /* rtl  */

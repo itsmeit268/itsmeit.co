@@ -12,10 +12,16 @@ if ( ! function_exists( 'foxiz_register_options_sidebar' ) ) {
 			'icon'   => 'el el-align-right',
 			'fields' => [
 				[
-					'id'    => 'info_global_sidebar',
+					'id'    => 'info_global_sticky',
+					'type'  => 'info',
+					'style' => 'info',
+					'desc'  => esc_html__( 'The sticky sidebar feature uses native CSS, enhancing overall site performance. Sticky all sidebar content prove particularly useful when using a short sidebar, or use "Sticky Last Widget" if you have a long sidebar or want to stick an advertising widget.', 'foxiz' ),
+				],
+				[
+					'id'    => 'info_sticky_template',
 					'type'  => 'info',
 					'style' => 'warning',
-					'desc'  => esc_html__( 'The settings below will apply to whole the website.', 'foxiz' ),
+					'desc'  => esc_html__( 'Tips: A Ruby template will be considered as a widget. If you want to make the last widget in this section sticky when using sidebar template, it is recommended to use two templates or employ a default widget at the end.', 'foxiz' ),
 				],
 				[
 					'id'    => 'info_add_widget',
@@ -46,11 +52,16 @@ if ( ! function_exists( 'foxiz_register_options_sidebar' ) ) {
 				],
 				[
 					'id'          => 'sticky_sidebar',
-					'type'        => 'switch',
+					'type'        => 'select',
 					'title'       => esc_html__( 'Sticky Sidebar', 'foxiz' ),
-					'subtitle'    => esc_html__( 'Making sidebars permanently visible when scrolling up and down.', 'foxiz' ),
-					'description' => esc_html__( 'Useful when a sidebar is too tall or too short compared to the rest of the content.', 'foxiz' ),
-					'default'     => false,
+					'subtitle'    => esc_html__( 'Make sidebars permanently visible while scrolling up and down.', 'foxiz' ),
+					'description' => esc_html__( 'The "Sticky Last Widget" option is helpful if you have a long sidebar or want to make an advertisement sticky.', 'foxiz' ),
+					'options'     => [
+						'0' => esc_html__( '- None -', 'foxiz' ),
+						'1' => esc_html__( 'Sticky Sidebar', 'foxiz' ),
+						'2' => esc_html__( 'Sticky Last Widget', 'foxiz' ),
+					],
+					'default'     => '0',
 				],
 				[
 					'id'       => 'widget_block_editor',
@@ -58,7 +69,7 @@ if ( ! function_exists( 'foxiz_register_options_sidebar' ) ) {
 					'title'    => esc_html__( 'Widget Block Editor', 'foxiz' ),
 					'subtitle' => esc_html__( 'Enable or disable widget block editor (WordPress 5.8 or above).', 'foxiz' ),
 					'default'  => false,
-				]
+				],
 			],
 		];
 	}

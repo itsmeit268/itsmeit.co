@@ -57,7 +57,7 @@ class Banner extends Widget_Base {
 				'ai'          => [ 'active' => false ],
 				'rows'        => 2,
 				'description' => esc_html__( 'Input a title for this banner.', 'foxiz-core' ),
-				'default'     => '',
+				'default'     => 'Your banner title...',
 			]
 		);
 		$this->add_control(
@@ -68,7 +68,7 @@ class Banner extends Widget_Base {
 				'ai'          => [ 'active' => false ],
 				'rows'        => 2,
 				'description' => esc_html__( 'Input a description for this banner.', 'foxiz-core' ),
-				'default'     => '',
+				'default'     => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 			]
 		);
 		$this->add_control(
@@ -77,7 +77,7 @@ class Banner extends Widget_Base {
 				'label'   => esc_html__( 'Button Destination URL', 'foxiz-core' ),
 				'type'    => Controls_Manager::TEXT,
 				'ai'      => [ 'active' => false ],
-				'default' => '',
+				'default' => '#',
 			]
 		);
 		$this->add_control(
@@ -86,32 +86,7 @@ class Banner extends Widget_Base {
 				'label'   => esc_html__( 'Button Label', 'foxiz-core' ),
 				'type'    => Controls_Manager::TEXT,
 				'ai'      => [ 'active' => false ],
-				'default' => '',
-			]
-		);
-		$this->end_controls_section();
-		$this->start_controls_section(
-			'background_section', [
-				'label' => esc_html__( 'Cover Background', 'foxiz-core' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			]
-		);
-		$this->add_control(
-			'e_image',
-			[
-				'label'       => esc_html__( 'Background Image URL', 'foxiz-core' ),
-				'description' => esc_html__( 'Input a background image (attachment URL) for this banner.', 'foxiz-core' ),
-				'type'        => Controls_Manager::MEDIA,
-				'ai'          => [ 'active' => false ],
-			]
-		);
-		$this->add_control(
-			'e_dark_image',
-			[
-				'label'       => esc_html__( 'Dark Mode - Background Image URL', 'foxiz-core' ),
-				'description' => esc_html__( 'Input a background image (attachment URL) for this banner in dark mode.', 'foxiz-core' ),
-				'type'        => Controls_Manager::MEDIA,
-				'ai'          => [ 'active' => false ],
+				'default' => 'Learn More',
 			]
 		);
 		$this->end_controls_section();
@@ -201,7 +176,6 @@ class Banner extends Widget_Base {
 			]
 		);
 		$this->end_controls_section();
-
 		$this->start_controls_section(
 			'button_section', [
 				'label' => esc_html__( 'Button', 'foxiz-core' ),
@@ -281,6 +255,42 @@ class Banner extends Widget_Base {
 				'default'   => '',
 				'selectors' => [
 					'[data-theme="dark"] {{WRAPPER}}' => '--btn-bg: {{VALUE}};',
+				],
+			]
+		);
+		$this->end_controls_section();
+		$this->start_controls_section(
+			'background_section', [
+				'label' => esc_html__( 'Cover Background', 'foxiz-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+		$this->add_control(
+			'e_image',
+			[
+				'label'       => esc_html__( 'Background Image URL', 'foxiz-core' ),
+				'description' => esc_html__( 'Upload a cover background for this block.', 'foxiz-core' ),
+				'type'        => Controls_Manager::MEDIA,
+				'ai'          => [ 'active' => false ],
+			]
+		);
+		$this->add_control(
+			'e_dark_image',
+			[
+				'label'       => esc_html__( 'Dark Mode - Background Image URL', 'foxiz-core' ),
+				'description' => esc_html__( 'Upload a cover background for this block in dark mode.', 'foxiz-core' ),
+				'type'        => Controls_Manager::MEDIA,
+				'ai'          => [ 'active' => false ],
+			]
+		);
+		$this->add_control(
+			'e_image_border',
+			[
+				'label'     => esc_html__( 'Border Radius', 'foxiz-core' ),
+				'type'      => Controls_Manager::NUMBER,
+				'default'   => '',
+				'selectors' => [
+					'{{WRAPPER}}' => '--round-5: {{VALUE}}px;',
 				],
 			]
 		);

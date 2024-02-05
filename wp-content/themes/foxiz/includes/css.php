@@ -386,9 +386,9 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 			$buffer .= $this->font_var( $settings, 'subheading', 'font_sub_heading' );
 			$buffer .= $this->font_var( $settings, 'quote', 'font_quote' );
 			$buffer .= $this->font_var( $settings, 'excerpt', 'font_excerpt' );
+			$buffer .= $this->font_var( $settings, 'bcrumb', 'font_breadcrumb' );
 
 			$buffer .= $this->font_size_var( $settings, 'readmore', 'font_readmore' );
-			$buffer .= $this->font_size_var( $settings, 'bcrumb', 'font_breadcrumb' );
 			$buffer .= $this->font_size_var( $settings, 'excerpt', 'font_excerpt_size' );
 			$buffer .= $this->font_size_var( $settings, 'headline-s', 'font_headline_size_content' );
 			$buffer .= $this->font_size_var( $settings, 'tagline-s', 'font_tagline_size_content' );
@@ -1037,12 +1037,10 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 			if ( ! empty( $settings['privacy_text_color'] ) ) {
 				$output .= '--privacy-color :' . $settings['privacy_text_color'] . ';';
 			}
-			if ( ! empty( $settings['single_post_width_wo_sb'] ) ) {
-				$output .= '--max-width-wo-sb : 860px;';
-			}
 			if ( ! empty( $settings['ad_top_bg'] ) ) {
 				$output .= '--top-site-bg :' . $settings['ad_top_bg'] . ';';
 			}
+
 			if ( ! empty( $settings['custom_border'] ) ) {
 				$settings['custom_border'] = absint( $settings['custom_border'] );
 				$custom_small_border       = $settings['custom_border'] - 3;
@@ -1143,7 +1141,6 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 			if ( isset( $settings['wc_add_cart_border'] ) && '' !== $settings['wc_add_cart_border'] ) {
 				$output .= '--wcac-border :' . absint( $settings['wc_add_cart_border'] ) . 'px;';
 			}
-
 			if ( ! empty( $settings['wc_add_cart_text'] ) ) {
 				$output .= '--wcac-color :' . $settings['wc_add_cart_text'] . ';';
 			}
@@ -1189,18 +1186,38 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 			if ( ! empty( $settings['podcast_custom_icon_size'] ) ) {
 				$output .= '--podcast-svg-size : ' . $settings['podcast_custom_icon_size'] . 'px;';
 			}
-
 			if ( ! empty( $settings['container_width'] ) ) {
 				$output .= '--rb-width : ' . absint( $settings['container_width'] ) . 'px;';
 				$output .= '--rb-small-width : ' . absint( $settings['container_width'] * .67 ) . 'px;';
 			}
-
+			if ( ! empty( $settings['single_post_line_length'] ) ) {
+				$content_sb_width = ! empty( $settings['single_content_width'] ) ? $settings['single_content_width'] : 760;
+				$output           .= '--s-content-width : ' . absint( $content_sb_width ) . 'px;';
+			}
+			if ( ! empty( $settings['single_post_width_wo_sb'] ) ) {
+				$content_fw_width = ! empty( $settings['single_content_fw_width'] ) ? $settings['single_content_fw_width'] : 860;
+				$output           .= '--max-width-wo-sb : ' . absint( $content_fw_width ) . 'px;';
+			}
 			if ( ! empty( $settings['quick_access_menu_height'] ) ) {
 				$output .= '--qview-height : ' . absint( $settings['quick_access_menu_height'] ) . 'px;';
 			}
-
 			if ( ! empty( $settings['alignwide_width'] ) ) {
 				$output .= '--alignwide-w : ' . absint( $settings['alignwide_width'] ) . 'px;';
+			}
+			if ( ! empty( $settings['single_post_sidebar_padding'] ) ) {
+				$output .= '--s-sidebar-padding :' . $settings['single_post_sidebar_padding'] . '%;';
+			}
+			if ( ! empty( $settings['single_10_ratio'] ) ) {
+				$output .= '--s10-feat-ratio :' . $settings['single_10_ratio'] . '%;';
+			}
+			if ( ! empty( $settings['single_11_ratio'] ) ) {
+				$output .= '--s11-feat-ratio :' . $settings['single_11_ratio'] . '%;';
+			}
+			if ( ! empty( $settings['title_hover_text_color'] ) ) {
+				$output .= '--title-hcolor :' . $settings['title_hover_text_color'] . ';';
+			}
+			if ( ! empty( $settings['title_hover_effect_color'] ) ) {
+				$output .= '--title-e-hcolor :' . $settings['title_hover_effect_color'] . ';';
 			}
 
 			return $output;
@@ -1606,6 +1623,12 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 			if ( ! empty( $settings['dark_podcast_player_color'] ) ) {
 				$output .= '--player-color :' . $settings['dark_podcast_player_color'] . ';';
 			}
+			if ( ! empty( $settings['dark_title_hover_text_color'] ) ) {
+				$output .= '--title-hcolor :' . $settings['dark_title_hover_text_color'] . ';';
+			}
+			if ( ! empty( $settings['dark_title_hover_effect_color'] ) ) {
+				$output .= '--title-e-hcolor :' . $settings['dark_title_hover_effect_color'] . ';';
+			}
 
 			return $output;
 		}
@@ -1630,11 +1653,11 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 		/**
 		 * @param       $settings
 		 * @param       $config_id
-		 * @param false $font_size
+		 * @param false $with_font_size
 		 *
 		 * @return false|string
 		 */
-		function font_css( $settings, $config_id, $font_size = false ) {
+		function font_css( $settings, $config_id, $with_font_size = false ) {
 
 			if ( empty( $settings[ $config_id ] ) || ! is_array( $settings[ $config_id ] ) ) {
 				return false;
@@ -1653,9 +1676,14 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 				unset ( $setting['font-options'] );
 			}
 
-			/** control font size via variable */
-			if ( ! $font_size && isset( $setting['font-size'] ) ) {
-				unset( $setting['font-size'] );
+			if ( ! empty( $setting['font-size'] ) ) {
+				if ( ! empty( $setting['line-height'] ) ) {
+					$setting['line-height'] = number_format( absint( $setting['line-height'] ) / absint( $setting['font-size'] ), 2 );
+				}
+
+				if ( ! $with_font_size ) {
+					unset( $setting['font-size'] );
+				}
 			}
 
 			$output = '';
@@ -1684,16 +1712,11 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 			$output = '';
 
 			/** optimize css size for AMP */
-			$font_breadcrumb_css = $this->font_css( $settings, 'font_breadcrumb' );
-			$font_readmore_css   = $this->font_css( $settings, 'font_readmore' );
-
+			$font_readmore_css          = $this->font_css( $settings, 'font_readmore' );
 			$font_mobile_menu_css       = $this->font_css( $settings, 'font_mobile_menu', true );
 			$font_sub_mobile_menu_css   = $this->font_css( $settings, 'font_mobile_sub_menu', true );
 			$font_quick_access_menu_css = $this->font_css( $settings, 'font_quick_access_menu', true );
 
-			if ( ! empty( $font_breadcrumb_css ) ) {
-				$output .= '.breadcrumb-inner, .woocommerce-breadcrumb { ' . $font_breadcrumb_css . '}';
-			}
 			if ( ! empty( $font_readmore_css ) ) {
 				$output .= '.p-readmore { ' . $font_readmore_css . '}';
 			}
@@ -1966,6 +1989,10 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 				if ( 'label' === $settings['live_blog_meta'] || 'all' === $settings['live_blog_meta'] ) {
 					$output .= '.live-tag:after { content: "' . esc_attr( $settings['live_label'] . ' ' ) . '"}';
 				}
+			}
+
+			if ( ! empty( $settings['page_content_width'] ) ) {
+				$output .= '.single-page { --rb-small-width : ' . absint( $settings['page_content_width'] ) . 'px; }';
 			}
 
 			return $output;

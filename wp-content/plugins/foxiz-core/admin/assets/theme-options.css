@@ -8,6 +8,11 @@
         box-shadow: none;
     }
 
+    .redux-container input::placeholder,
+    .redux-container textarea::placeholder {
+        color: #cccccc !important;
+    }
+
     .redux-container tbody {
         overflow: hidden;
         -moz-box-sizing: border-box;
@@ -257,7 +262,7 @@
         margin-right: 2%;
         margin-left: 2%;
         padding: 12px;
-        border-left: 5px solid #f0cb42;
+        border-left: 4px solid #f0cb42;
         border-radius: 7px;
         background: #d8b16014;
     }
@@ -657,6 +662,7 @@
     .redux-image-select span {
         font-size: 10px;
         display: block;
+        max-width: 76px;
         text-align: center;
     }
 
@@ -1375,6 +1381,21 @@
     /* rtl */
     .rtl .redux-sidebar {
         float: right;
+    }
+
+    .rtl .redux-container .ruby-section-start .redux-section-desc {
+        border-right: 4px solid #f0cb42;
+        border-left: none;
+    }
+
+    .rtl .redux-notice-field.redux-info {
+        border-right: 4px solid #0099d5;
+        border-left: none;
+    }
+
+    .rtl .redux-notice-field.redux-warning {
+        border-right: 4px solid #fbeba4;
+        border-left: none;
     }
 
     body.rtl:not(.wp-customizer) .redux-main {

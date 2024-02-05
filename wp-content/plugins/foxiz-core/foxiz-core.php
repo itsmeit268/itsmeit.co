@@ -3,7 +3,7 @@
  * Plugin Name:    Foxiz Core
  * Plugin URI:     https://themeforest.net/user/theme-ruby/
  * Description:    Features for Foxiz, this is required plugin (important) for this theme.
- * Version:        2.2.2
+ * Version:        2.2.3
  * Requires at least: 6.0
  * Requires PHP:   5.6
  * Text Domain:    foxiz-core
@@ -16,7 +16,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'FOXIZ_CORE_VERSION' ) ) {
-	define( 'FOXIZ_CORE_VERSION', '2.2.2' );
+	define( 'FOXIZ_CORE_VERSION', '2.2.3' );
 }
 
 if ( ! defined( 'FOXIZ_TOS_ID' ) ) {

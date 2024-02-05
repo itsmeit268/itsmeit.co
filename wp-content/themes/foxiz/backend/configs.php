@@ -705,7 +705,15 @@ if ( ! function_exists( 'foxiz_config_single_standard_layouts' ) ) {
 			],
 			'standard_9' => [
 				'img'   => foxiz_get_asset_image( 'single-9.png' ),
-				'title' => esc_html__( 'No Featured', 'foxiz' ),
+				'title' => esc_html__( 'Layout 9 (No Featured)', 'foxiz' ),
+			],
+			'standard_10' => [
+				'img'   => foxiz_get_asset_image( 'single-10.png' ),
+				'title' => esc_html__( 'Layout 10', 'foxiz' ),
+			],
+			'standard_11' => [
+				'img'   => foxiz_get_asset_image( 'single-11.png' ),
+				'title' => esc_html__( 'Layout 11', 'foxiz' ),
 			],
 		];
 

@@ -123,6 +123,15 @@ class Block_Heading extends Widget_Base {
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
+		$this->add_control(
+			'tagline_arrow',
+			[
+				'label'       => esc_html__( 'Tagline Arrow', 'foxiz-core' ),
+				'description' => esc_html__( 'Show an arrow icon at the right of the tagline.', 'foxiz-core' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'default'     => 'yes',
+			]
+		);
 		$this->add_responsive_control(
 			'tagline_size',
 			[
@@ -135,13 +144,12 @@ class Block_Heading extends Widget_Base {
 				],
 			]
 		);
-		$this->add_control(
-			'tagline_arrow',
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
 			[
-				'label'       => esc_html__( 'Tagline Arrow', 'foxiz-core' ),
-				'description' => esc_html__( 'Show an arrow icon at the right of the tagline.', 'foxiz-core' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'default'     => 'yes',
+				'label'    => esc_html__( 'Custom Tagline Font', 'foxiz-core' ),
+				'name'     => 'category_font',
+				'selector' => '{{WRAPPER}} .heading-tagline > *',
 			]
 		);
 		$this->add_control(
@@ -166,14 +174,6 @@ class Block_Heading extends Widget_Base {
 				'selectors'   => [
 					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme' => '--heading-tagline-color: {{VALUE}};',
 				],
-			]
-		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'label'    => esc_html__( 'Custom Tagline Font', 'foxiz-core' ),
-				'name'     => 'category_font',
-				'selector' => '{{WRAPPER}} .heading-tagline > *',
 			]
 		);
 		$this->end_controls_section();

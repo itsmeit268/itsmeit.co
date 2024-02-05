@@ -2,12 +2,13 @@
 /** Don't load directly */
 defined( 'ABSPATH' ) || exit;
 
-if ( ! function_exists( 'foxiz_render_single_audio_3' ) ) {
-	function foxiz_render_single_audio_3() {
+if ( ! function_exists( 'foxiz_render_single_standard_11' ) ) {
+	function foxiz_render_single_standard_11() {
 
-		$classes          = [ 'single-standard-7 single-embed-3' ];
+		$classes          = [ 'single-standard-1 single-standard-11' ];
 		$sidebar_name     = foxiz_get_single_setting( 'sidebar_name' );
 		$sidebar_position = foxiz_get_single_sidebar_position();
+		$crop_size        = foxiz_get_single_crop_size( '2048x2048' );
 
 		if ( 'none' === $sidebar_position ) {
 			$sidebar_name = false;
@@ -17,24 +18,27 @@ if ( ! function_exists( 'foxiz_render_single_audio_3' ) ) {
 		} else {
 			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
 			$classes[] = foxiz_get_single_sticky_sidebar();
+		}
+		if ( foxiz_get_option( 'single_11_ratio' ) ) {
+			$classes[] = 'has-feat-ratio';
 		} ?>
 		<div class="<?php echo join( ' ', $classes ); ?>">
-			<?php foxiz_single_open_tag(); ?>
-			<header class="single-header">
-				<div class="rb-small-container edge-padding">
+			<div class="rb-container edge-padding">
+				<?php foxiz_single_open_tag(); ?>
+				<header class="single-header">
 					<?php
 					foxiz_single_breadcrumb();
 					foxiz_single_entry_category();
-					foxiz_single_title();
-					foxiz_single_tagline();
-					foxiz_single_header_meta();
+					foxiz_single_title( 'fw-headline' );
+					foxiz_single_tagline( 'fw-tagline' );
 					?>
-				</div>
-				<div class="rb-container edge-padding">
-					<?php foxiz_single_audio_embed(); ?>
-				</div>
-			</header>
-			<div class="rb-container edge-padding">
+					<div class="s-feat-outer">
+						<?php
+						foxiz_single_standard_featured( $crop_size );
+						foxiz_single_featured_caption(); ?>
+					</div>
+					<?php foxiz_single_header_meta(); ?>
+				</header>
 				<div class="grid-container">
 					<div class="s-ct">
 						<?php
@@ -46,10 +50,10 @@ if ( ! function_exists( 'foxiz_render_single_audio_3' ) ) {
 					</div>
 					<?php foxiz_single_sidebar( $sidebar_name ); ?>
 				</div>
-			</div>
-			<?php foxiz_single_close_tag(); ?>
-			<div class="rb-container edge-padding">
-				<?php foxiz_single_footer(); ?>
+				<?php
+				foxiz_single_close_tag();
+				foxiz_single_footer();
+				?>
 			</div>
 		</div>
 		<?php

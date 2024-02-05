@@ -28,13 +28,13 @@ if ( ! function_exists( 'foxiz_register_options_ad_auto' ) ) {
 					'id'    => 'info_adsense_auto',
 					'type'  => 'info',
 					'style' => 'warning',
-					'desc'  => esc_html__( 'If you use auto ads code, you need to disable any other adsense units code.', 'foxiz' ),
+					'desc'  => esc_html__( 'When utilizing AdSense Auto Ads code, it is essential to deactivate any other AdSense units code.', 'foxiz' ),
 				],
 				[
 					'id'    => 'info_adsense_auto_duplicate',
 					'type'  => 'info',
 					'style' => 'warning',
-					'desc'  => esc_html__( 'Do not place more than one auto ads code in the website.', 'foxiz' ),
+					'desc'  => esc_html__( 'Avoid adding multiple Auto Ads codes on your website, as it can result in undesirable outcomes and impact ad performance.', 'foxiz' ),
 				],
 				[
 					'id'          => 'ad_auto_code',
@@ -45,6 +45,14 @@ if ( ! function_exists( 'foxiz_register_options_ad_auto' ) ) {
 					'description' => esc_html__( 'Leave this option blank to use unit ads code.', 'foxiz' ),
 					'rows'        => 3,
 					'default'     => '',
+				],
+				[
+					'id'          => 'ad_auto_allowed',
+					'title'       => esc_html__( 'Allow Other Ads Placement', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Enable simultaneous display of other ads when using auto ads, this also applies to AMP mode.', 'foxiz' ),
+					'description' => esc_html__( 'PLEASE NOTE: enabling both features simultaneously without proper control may lead to potential issues.', 'foxiz' ),
+					'type'        => 'switch',
+					'default'     => false,
 				],
 				[
 					'id'       => 'disable_ad_auto_wc',

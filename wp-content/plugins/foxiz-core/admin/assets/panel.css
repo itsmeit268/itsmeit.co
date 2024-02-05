@@ -654,8 +654,8 @@ a.activate-info.loading {
 .reactivation-info {
     font-size: 11px;
     font-style: italic;
-    color: #aaaaaa;
     margin: 0;
+    color: #aaaaaa;
 }
 
 .reactivation-info i {
@@ -1591,5 +1591,21 @@ body.rtl .rb-importer-completed {
 
 body.rtl .importer-headline i {
     margin-right: auto;
+    margin-left: 10px;
+}
+
+body.rtl .rb-panel-heading i,
+body.rtl .importer-desc p:before {
+    margin-right: 0;
+    margin-left: 7px;
+}
+
+body.rtl .rb-translation-header i {
+    margin-left: 4px;
+    margin-right: 0;
+}
+
+body.rtl .rb-form-inline-label {
+    margin-right: 0;
     margin-left: 10px;
 }
