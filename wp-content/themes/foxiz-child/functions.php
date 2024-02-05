@@ -42,4 +42,3 @@ function redirect_user_not_admin() {
         exit;
     }
 }
-
