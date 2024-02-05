@@ -1,7 +1,7 @@
 <?php
 
 add_action('wp_head', 'google_analytics_script');
-//add_action('wp_head', 'google_adsense');
+add_action('wp_head', 'google_adsense');
 //add_action('wp_footer', 'add_facebook_script_footer');
 
 function google_analytics_script(){
@@ -34,7 +34,7 @@ function google_analytics_script(){
 
 function google_adsense() {
     ?>
-    <?php if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) { ?>
+    <?php if (is_allow_show_ads() && aicp_can_see_ads()) { ?>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3109927831594907" crossorigin="anonymous"></script>
         <?php } ?>
     <?php include_once get_theme_file_path('include/ezoic_shortcode.php'); ?>
