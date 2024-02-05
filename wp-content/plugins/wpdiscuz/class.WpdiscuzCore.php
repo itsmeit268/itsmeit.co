@@ -2066,9 +2066,9 @@ class WpdiscuzCore implements WpDiscuzConstants {
 	public function footerContents() {
 		if ( $this->isWpdiscuzLoaded ) {
 			global $post;
-			if ( $this->options->login["showActivityTab"] || $this->options->login["showSubscriptionsTab"] || $this->options->login["showFollowsTab"] || apply_filters( "wpdiscuz_enable_content_modal", false ) ) {
-				$this->addContentModal();
-			}
+//			if ( $this->options->login["showActivityTab"] || $this->options->login["showSubscriptionsTab"] || $this->options->login["showFollowsTab"] || apply_filters( "wpdiscuz_enable_content_modal", false ) ) {
+//				$this->addContentModal();
+//			}
 			if ( $this->options->live["enableBubble"] ) {
 				$this->addBubble( $post );
 			}
