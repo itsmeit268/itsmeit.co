@@ -187,12 +187,7 @@ class Taxonomy implements Provider {
 		$terms    = $this->get_terms( $taxonomy, $max_entries, $current_page );
 		Sitemap::maybe_redirect( count( $this->get_terms( $taxonomy, 0, $current_page ) ), $max_entries );
 
-        $languages = pll_languages_list();
-
-        foreach ($languages as $lang) {
-            $terms = get_categories(array('taxonomy' => $type, 'lang' => $lang));
-
-            foreach ( $terms as $term ) {
+        foreach ( $terms as $term ) {
                 $url = [];
                 if ( ! Sitemap::is_object_indexable( $term, 'term' ) ) {
                     continue;
@@ -215,11 +210,6 @@ class Taxonomy implements Provider {
                     $links[] = $url;
                 }
             }
-        }
-
-        usort($links, function ($a, $b) {
-            return $a['category_parent'] - $b['category_parent'];
-        });
 
 		return $links;
 	}

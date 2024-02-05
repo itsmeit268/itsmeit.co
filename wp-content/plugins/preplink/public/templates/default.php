@@ -73,7 +73,7 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                     <?php endif; ?>
                     <div class="session-expired">
                         <p><?= __('Your session has ended, please click', 'prep-link')?>&nbsp;<a href="<?= $view_link ?>"><span style="color: #0a4ad0;"><?= __('here', 'prep-link')?></span></a>&nbsp;<?= __('and do it again.', 'prep-link')?></p>
-                        <p><?= __('If the issue persists, try clearing your cookies or browser history and attempt again.', 'prep-link') ?></p>
+                        <p><?= __('If the issue persists, please try clearing cookies or attempting with a different browser.', 'prep-link') ?></p>
                     </div>
                     <?php if (aicp_can_see_ads() && isset($advertising['pr_ad_7']) && (int)$advertising['pr_ad_7'] == 1 && !empty($advertising['pr_ad_code_7']) && free_level() && is_allow_show_ads()): ?>
                         <div class="preplink-ads preplink-ads-7">

@@ -1,7 +1,7 @@
 <?php
 
 add_action('wp_head', 'google_analytics_script');
-add_action('wp_head', 'google_adsense');
+//add_action('wp_head', 'google_adsense');
 add_action('wp_footer', 'add_facebook_script_footer');
 
 function google_analytics_script(){
