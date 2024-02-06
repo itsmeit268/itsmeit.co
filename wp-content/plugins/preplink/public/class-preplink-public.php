@@ -222,21 +222,13 @@ class Preplink_Public {
     public function render_link_info($content) {
         $post_id = get_the_ID();
         $file_name = get_post_meta($post_id, 'file_name', true);
-        $link_no_login = get_post_meta($post_id, 'link_no_login', true);
-        $link_is_login = get_post_meta($post_id, 'link_is_login', true);
 
-        if ($file_name && $link_is_login && $link_no_login) {
-            if (premium_level() || vip_level()) {
-                $html = $this->prep_link_html($file_name);
-            } else {
-                $html = $this->prep_link_html($file_name);
-            }
-
-            $last_p = strrpos($content, '</p>');
-            if ($last_p !== false) {
-                $content = substr_replace($content, $html, $last_p + 4, 0);
-            }
+        $html = $this->prep_link_html($file_name);
+        $last_p = strrpos($content, '</p>');
+        if ($last_p !== false) {
+            $content = substr_replace($content, $html, $last_p + 4, 0);
         }
+
         return $content;
     }
 

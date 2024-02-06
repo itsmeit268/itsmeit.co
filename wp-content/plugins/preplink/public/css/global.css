@@ -65,6 +65,9 @@ i.material-icons {
 }
 
 @media only screen and (max-device-width: 480px) {
+    #download-now {
+        display: grid;
+    }
     .post-progress, .wrap-countdown {
         text-align: left
     }
