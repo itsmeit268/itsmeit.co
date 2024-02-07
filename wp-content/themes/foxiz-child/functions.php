@@ -43,28 +43,20 @@ function redirect_user_not_admin() {
     }
 }
 
-// Vô hiệu hóa REST API
-add_filter('rest_enabled', '_return_false');
-add_filter('rest_jsonp_enabled', '_return_false');
-
-function _return_false() {
-    return false;
-}
-
-// Loại trừ URL cụ thể từ REST API
-add_filter('rest_endpoints', 'exclude_specific_rest_endpoint');
-
-function exclude_specific_rest_endpoint($endpoints) {
-    // Đường dẫn URL cần loại trừ
-    $excluded_url = '/nextend-social-login/v1/tiktok/redirect_uri';
-
-    foreach ($endpoints as $route => $endpoint) {
-        if (strpos($route, $excluded_url) !== false) {
-            // Nếu đường dẫn URL khớp với đường dẫn cần loại trừ
-            // Thì loại bỏ nó khỏi danh sách endpoint
-            unset($endpoints[$route]);
-        }
+add_filter('rest_authentication_errors', function($result) {
+    if (true === $result || is_wp_error($result)) {
+        return $result;
     }
 
-    return $endpoints;
-}
+    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+    if (strpos($current_url, 'wp-json/nextend-social-login/')) {
+        return $result;
+    }
+
+    if (!is_user_logged_in()) {
+        return new WP_Error('rest_not_logged_in', __('You are not currently logged in.'), array('status' => 401));
+    }
+
+    return $result;
+});

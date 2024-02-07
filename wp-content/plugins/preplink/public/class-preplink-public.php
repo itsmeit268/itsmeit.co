@@ -233,24 +233,27 @@ class Preplink_Public {
     }
 
     public function prep_link_html($file_name) {
-        $blog_url = base64_encode(get_bloginfo('url'));
-        $display_mode = !empty($this->settings['preplink_wait_text']) ? $this->settings['preplink_wait_text'] : 'wait_time';
+        if (is_singular('post')) {
+            $blog_url = base64_encode(get_bloginfo('url'));
+            $display_mode = !empty($this->settings['preplink_wait_text']) ? $this->settings['preplink_wait_text'] : 'wait_time';
 
-        $html = '<h3 class="wp-block-heading" id="download-now"><b>Link download: </b>';
+            $html = '<h3 class="wp-block-heading" id="download-now"><b>Link download: </b>';
 
-        if (is_user_logged_in()) {
-            $display_mode = 'progress';
+            if (is_user_logged_in()) {
+                $display_mode = 'progress';
+            }
+
+            if ($display_mode === 'progress') {
+                $html .= '<div class="post-progress-bar">';
+                $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="post-progress">' . $file_name . '</strong></span></div>';
+            } else {
+                $html .= '<span class="wrap-countdown">';
+                $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="link-countdown">' . $file_name . '</strong></span></span>';
+            }
+
+            $html .= '</h3>';
+            return $html;
         }
-
-        if ($display_mode === 'progress') {
-            $html .= '<div class="post-progress-bar">';
-            $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="post-progress">' . $file_name . '</strong></span></div>';
-        } else {
-            $html .= '<span class="wrap-countdown">';
-            $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="link-countdown">' . $file_name . '</strong></span></span>';
-        }
-
-        $html .= '</h3>';
-        return $html;
+        return '';
     }
 }
