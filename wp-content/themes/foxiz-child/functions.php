@@ -42,3 +42,29 @@ function redirect_user_not_admin() {
         exit;
     }
 }
+
+// Vô hiệu hóa REST API
+add_filter('rest_enabled', '_return_false');
+add_filter('rest_jsonp_enabled', '_return_false');
+
+function _return_false() {
+    return false;
+}
+
+// Loại trừ URL cụ thể từ REST API
+add_filter('rest_endpoints', 'exclude_specific_rest_endpoint');
+
+function exclude_specific_rest_endpoint($endpoints) {
+    // Đường dẫn URL cần loại trừ
+    $excluded_url = '/nextend-social-login/v1/tiktok/redirect_uri';
+
+    foreach ($endpoints as $route => $endpoint) {
+        if (strpos($route, $excluded_url) !== false) {
+            // Nếu đường dẫn URL khớp với đường dẫn cần loại trừ
+            // Thì loại bỏ nó khỏi danh sách endpoint
+            unset($endpoints[$route]);
+        }
+    }
+
+    return $endpoints;
+}

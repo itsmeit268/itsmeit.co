@@ -266,6 +266,9 @@ class PLL_RankMath {
         $og = new \RankMath\OpenGraph\OpenGraph();
         $og->network = 'facebook';
         foreach ( $this->update_ogp_alternate_languages() as $lang ) {
+            if ($lang == 'vi_VN') {
+                $lang = 'vi';
+            }
             $og->tag('og:locale:alternate', $lang );
         }
     }
