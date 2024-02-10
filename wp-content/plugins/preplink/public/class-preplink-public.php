@@ -222,38 +222,39 @@ class Preplink_Public {
     public function render_link_info($content) {
         $post_id = get_the_ID();
         $file_name = get_post_meta($post_id, 'file_name', true);
+        $link_no_login = get_post_meta($post_id, 'link_no_login', true);
+        $link_is_login = get_post_meta($post_id, 'link_is_login', true);
 
-        $html = $this->prep_link_html($file_name);
-        $last_p = strrpos($content, '</p>');
-        if ($last_p !== false) {
-            $content = substr_replace($content, $html, $last_p + 4, 0);
+        if (is_singular('post') && $file_name && $link_is_login && $link_no_login) {
+            $html = $this->prep_link_html($file_name);
+
+            $last_p = strrpos($content, '</p>');
+            if ($last_p !== false) {
+                $content = substr_replace($content, $html, $last_p + 4, 0);
+            }
         }
-
         return $content;
     }
 
     public function prep_link_html($file_name) {
-        if (is_singular('post')) {
-            $blog_url = base64_encode(get_bloginfo('url'));
-            $display_mode = !empty($this->settings['preplink_wait_text']) ? $this->settings['preplink_wait_text'] : 'wait_time';
+        $blog_url = base64_encode(get_bloginfo('url'));
+        $display_mode = !empty($this->settings['preplink_wait_text']) ? $this->settings['preplink_wait_text'] : 'wait_time';
 
-            $html = '<h3 class="wp-block-heading" id="download-now"><b>Link download: </b>';
+        $html = '<h3 class="wp-block-heading" id="download-now"><b>Link download: </b>';
 
-            if (is_user_logged_in()) {
-                $display_mode = 'progress';
-            }
-
-            if ($display_mode === 'progress') {
-                $html .= '<div class="post-progress-bar">';
-                $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="post-progress">' . $file_name . '</strong></span></div>';
-            } else {
-                $html .= '<span class="wrap-countdown">';
-                $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="link-countdown">' . $file_name . '</strong></span></span>';
-            }
-
-            $html .= '</h3>';
-            return $html;
+        if (is_user_logged_in()) {
+            $display_mode = 'progress';
         }
-        return '';
+
+        if ($display_mode === 'progress') {
+            $html .= '<div class="post-progress-bar">';
+            $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="post-progress">' . $file_name . '</strong></span></div>';
+        } else {
+            $html .= '<span class="wrap-countdown">';
+            $html .= '<span id="prep-request" data-id="' . $blog_url . '"><strong class="link-countdown">' . $file_name . '</strong></span></span>';
+        }
+
+        $html .= '</h3>';
+        return $html;
     }
 }
