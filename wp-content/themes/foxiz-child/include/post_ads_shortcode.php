@@ -3,7 +3,7 @@
 /** Sau the p dau tien */
 add_shortcode('after_paragraph', 'after_paragraph');
 function after_paragraph(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - after_image_1 - incontent_6 -->
@@ -27,7 +27,7 @@ function after_paragraph(){
 /** Truoc anh thu 2 */
 add_shortcode('before_image_2', 'before_image_2');
 function before_image_2(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - after_image_8 - incontent_18 -->
@@ -51,7 +51,7 @@ function before_image_2(){
 /** before_paragraph_6 */
 add_shortcode('before_paragraph_6', 'before_paragraph_6');
 function before_paragraph_6(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - after_image_3 - incontent_9 -->
@@ -75,7 +75,7 @@ function before_paragraph_6(){
 /** After image 5 */
 add_shortcode('after_image_5', 'after_image_5');
 function after_image_5(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - banner_post_top - mid_content -->
@@ -99,7 +99,7 @@ function after_image_5(){
 /** After image 9 */
 add_shortcode('after_image_9', 'after_image_9');
 function after_image_9(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - after_image_5 - longer_content -->
@@ -123,7 +123,7 @@ function after_image_9(){
 /** Sau the p 10 */
 add_shortcode('after_paragraph_10', 'after_paragraph_10');
 function after_paragraph_10(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - after_image_6 - incontent_17 -->
@@ -147,7 +147,7 @@ function after_paragraph_10(){
 /** Sau content */
 add_shortcode('after_content', 'after_content');
 function after_content(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - after_start_vote - incontent_5 -->
@@ -171,7 +171,7 @@ function after_content(){
 /** Sau comment */
 add_shortcode('after_comment', 'after_comment');
 function after_comment(){
-    if (is_allow_show_ads() && aicp_can_see_ads() && free_level()) {
+    if (is_allow_show_ads() && aicp_can_see_ads()) {
         ?>
         <div class="aicp">
             <!-- Ezoic - after_comment - incontent_9 -->

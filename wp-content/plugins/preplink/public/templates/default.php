@@ -145,7 +145,7 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
 
                                     </a>
                                     <div class="post-download">
-                                        <p class="tittle"><?php echo $isMeta ? ($file_name) : $prepLinkText; ?></p>
+                                        <p class="tittle"><?= $isMeta ? ($file_name) : $prepLinkText; ?></p>
                                         <p class="post-date"><?= __('Update:', 'prep-link') . ' ' . get_the_modified_date('d/m/Y') ?: get_the_date('d/m/Y')?></p>
                                     </div>
                                 </div>

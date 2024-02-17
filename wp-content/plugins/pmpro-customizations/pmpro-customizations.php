@@ -147,17 +147,34 @@ function is_allow_show_ads() {
 function account_status_render_html($post_id) {
     $account_status = get_account_status();
     $level = member_level($post_id);
+    $current_language = pll_current_language();
     ?>
     <div class="not-vip-download" style="display: none">
         <?php if ($account_status == 'Pending Approval for VIP' || $account_status == 'Đang chờ phê duyệt VIP') : ?>
-            <p class="require-level">Your account is <?= $account_status ?>,<a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to check the status.</p>
+            <?php if ($current_language === 'en') : ?>
+                <p class="require-level">Your account is <?= $account_status ?>, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to check the status.</p>
+            <?php else: ?>
+                <p class="require-level">Tài khoản của bạn đang chờ phê duyệt/thanh toán thành viên VIP, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm vào đây</a> để xem trạng thái.</p>
+            <?php endif;?>
         <?php elseif ($account_status == 'Pending Approval for PREMIUM' || $account_status == 'Đang chờ phê duyệt PREMIUM') :?>
-            <p class="require-level">Your account is <?= $account_status ?>,<a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to check the status.</p>
+            <?php if ($current_language === 'en') : ?>
+                <p class="require-level">Your account is <?= $account_status ?>, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to check the status.</p>
+            <?php else: ?>
+                <p class="require-level">Tài khoản của bạn đang chờ phê duyệt/thanh toán thành viên PREMIUM, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm vào đây</a> để xem trạng thái.</p>
+            <?php endif;?>
         <?php else: ?>
             <?php if ($level == 'vip') : ?>
-                <p class="require-level">You need to be a <strong style="color:#ff0000;font-weight: 600;">VIP</strong> member to download this file,<a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to register.</p>
-            <?php elseif ($level == 'premium'):?>
-                <p class="require-level">You need to purchase a <strong style="color:#ff3300;font-weight: 600;">PREMIUM</strong> membership to download this file,<a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to register.</p>
+                <?php if ($current_language === 'en') : ?>
+                    <p class="require-level">You need to be a <strong style="color:#ff0000;font-weight: 600;">VIP</strong> member to download this file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to register.</p>
+                <?php else: ?>
+                    <p class="require-level">Bạn cần đăng ký gói thành viên <strong style="color:#ff0000;font-weight: 600;">VIP</strong> để download file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm bào đây</a> để đăng ký.</p>
+                <?php endif;?>
+            <?php elseif ($level == 'premium'): ?>
+                <?php if ($current_language === 'en') : ?>
+                    <p class="require-level">You need to purchase a <strong style="color:#ff3300;font-weight: 600;">PREMIUM</strong> membership to download this file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to register.</p>
+                <?php else: ?>
+                    <p class="require-level">Bạn cần đăng ký gói thành viên <strong style="color:#ff3300;font-weight: 600;">PREMIUM</strong> để download file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm bào đây</a> để đăng ký.</p>
+                <?php endif;?>
             <?php endif;?>
         <?php endif; ?>
     </div>
