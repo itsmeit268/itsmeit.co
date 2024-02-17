@@ -183,33 +183,31 @@ class Taxonomy implements Provider {
 	public function get_sitemap_links( $type, $max_entries, $current_page ) {
 		$links    = [];
 		$taxonomy = get_taxonomy( $type );
-
 		$terms    = $this->get_terms( $taxonomy, $max_entries, $current_page );
 		Sitemap::maybe_redirect( count( $this->get_terms( $taxonomy, 0, $current_page ) ), $max_entries );
 
-        foreach ( $terms as $term ) {
-                $url = [];
-                if ( ! Sitemap::is_object_indexable( $term, 'term' ) ) {
-                    continue;
-                }
+		foreach ( $terms as $term ) {
+			$url = [];
+			if ( ! Sitemap::is_object_indexable( $term, 'term' ) ) {
+				continue;
+			}
 
-                $link = $this->get_term_link( $term );
-                if ( ! $link ) {
-                    continue;
-                }
+			$link = $this->get_term_link( $term );
+			if ( ! $link ) {
+				continue;
+			}
 
-                $url['loc']    = $link;
-                $url['mod']    = $this->get_lastmod( $term );
-                $url['images'] = ! is_null( $this->get_image_parser() ) ? $this->get_image_parser()->get_term_images( $term ) : [];
-                $url['category_parent']  = $term->category_parent;
+			$url['loc']    = $link;
+			$url['mod']    = $this->get_lastmod( $term );
+			$url['images'] = ! is_null( $this->get_image_parser() ) ? $this->get_image_parser()->get_term_images( $term ) : [];
 
-                /** This filter is documented at inc/sitemaps/class-post-type-sitemap-provider.php */
-                $url = $this->do_filter( 'sitemap/entry', $url, 'term', $term );
+			/** This filter is documented at inc/sitemaps/class-post-type-sitemap-provider.php */
+			$url = $this->do_filter( 'sitemap/entry', $url, 'term', $term );
 
-                if ( ! empty( $url ) ) {
-                    $links[] = $url;
-                }
-            }
+			if ( ! empty( $url ) ) {
+				$links[] = $url;
+			}
+		}
 
 		return $links;
 	}

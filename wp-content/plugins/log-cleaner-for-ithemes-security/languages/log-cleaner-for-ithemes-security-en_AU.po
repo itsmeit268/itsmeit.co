@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Project-Id-Version: Log cleaner for iThemes Security\n"
+"Project-Id-Version: Log cleaner for Solid Security\n"
 "POT-Creation-Date: 2020-05-05 20:47+0800\n"
 "PO-Revision-Date: 2020-05-05 20:48+0800\n"
 "Language-Team: \n"
@@ -35,17 +35,17 @@ msgstr "You need to select at least one item to delete."
 
 #. Plugin Name of the plugin/theme
 #: log-cleaner-ithemes.php:106
-msgid "Log cleaner for iThemes Security"
-msgstr "Log cleaner for iThemes Security"
+msgid "Log cleaner for Solid Security"
+msgstr "Log cleaner for Solid Security"
 
 #: log-cleaner-ithemes.php:191
 #, php-format
 msgid ""
-"Note: Continuing here will delete the selected iThemes Security logs from "
+"Note: Continuing here will delete the selected Solid Security logs from "
 "the database. You absolutely can not undo this action. If in doubt, <a "
 "href='%s'>view the logs first</a> or backup your database."
 msgstr ""
-"Note: Continuing here will delete the selected iThemes Security logs from "
+"Note: Continuing here will delete the selected Solid Security logs from "
 "the database. You absolutely can not undo this action. If in doubt, <a "
 "href='%s'>view the logs first</a> or backup your database."
 
@@ -100,8 +100,8 @@ msgid "https://wordpress.org/plugins/log-cleaner-for-ithemes-security/"
 msgstr "https://wordpress.org/plugins/log-cleaner-for-ithemes-security/"
 
 #. Description of the plugin/theme
-msgid "Delete iThemes Security logs from the database."
-msgstr "Delete iThemes Security logs from the database."
+msgid "Delete Solid Security logs from the database."
+msgstr "Delete Solid Security logs from the database."
 
 #. Author of the plugin/theme
 msgid "Michael Ott"

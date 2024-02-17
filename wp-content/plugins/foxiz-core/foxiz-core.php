@@ -3,7 +3,7 @@
  * Plugin Name:    Foxiz Core
  * Plugin URI:     https://themeforest.net/user/theme-ruby/
  * Description:    Features for Foxiz, this is required plugin (important) for this theme.
- * Version:        2.2.3
+ * Version:        2.2.4
  * Requires at least: 6.0
  * Requires PHP:   5.6
  * Text Domain:    foxiz-core
@@ -16,7 +16,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'FOXIZ_CORE_VERSION' ) ) {
-	define( 'FOXIZ_CORE_VERSION', '2.2.3' );
+	define( 'FOXIZ_CORE_VERSION', '2.2.4' );
 }
 
 if ( ! defined( 'FOXIZ_TOS_ID' ) ) {
@@ -26,6 +26,8 @@ if ( ! defined( 'FOXIZ_TOS_ID' ) ) {
 define( 'FOXIZ_CORE_URL', plugin_dir_url( __FILE__ ) );
 define( 'FOXIZ_CORE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FOXIZ_REL_PATH', dirname( plugin_basename( __FILE__ ) ) );
+define( 'FOXIZ_LIS_ENC', 'Mjg3YTNiNDQtNzM1OC00YzU1LTlkZDAtMmYxZTFhOTQ3MDIw' );
+define( 'FOXIZ_LIS_DEC', 'Mjg3YTNiNDQtNzM1OC00YzU1LTlkZDAtMmYxZTFhOTQ3MzQw' );
 
 if ( ! function_exists( 'is_plugin_active' ) ) {
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );

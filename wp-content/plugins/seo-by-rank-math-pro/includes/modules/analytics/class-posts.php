@@ -175,6 +175,9 @@ class Posts {
 	 * @param  Variable $arr_orderby is key for sort.
 	 */
 	public function ranking_keyword_array_sort( $arr, $arr_order, $arr_orderby ) {
+		if ( empty( $arr ) || empty( $arr_orderby ) ) {
+			return $arr;
+		}
 
 		if ( 'DESC' === $arr_order ) {
 			uasort(

@@ -111,7 +111,7 @@ if ( ! class_exists( 'RB_Radium_Theme_Importer' ) ) {
 
 		function remote_args() {
 
-			$host_name = parse_url( base64_decode('aHR0cHM6Ly9pdHNtZWl0Lm5ldA==') );
+			$host_name = parse_url( base64_decode(FOXIZ_THEME_URL) );
 			if ( ! empty( $host_name['host'] ) ) {
 				$u_agent = 'WordPress/' . get_bloginfo( 'version' ) . '; ' . $host_name['host'];
 			} else {

@@ -214,6 +214,9 @@ class Import_Row {
 		}
 
 		$sources = $this->get_sources();
+		if ( ! is_array( $data['sources'] ) ) {
+			return;
+		}
 		$sources = array_unique( array_merge( $sources, $data['sources'] ), SORT_REGULAR );
 
 		$url_to = ! empty( $input['destination'] ) ? $input['destination'] : $data['url_to'];

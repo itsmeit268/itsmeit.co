@@ -2734,6 +2734,20 @@ img.mfp-img {
 }
 /* End magnific-popup.css */
 
+.popup-animation .mfp-content {
+    -webkit-transition: all .5s var(--timing);
+    transition: all .5s var(--timing);
+    opacity: 0;
+}
+
+.popup-animation.mfp-ready .mfp-content {
+    opacity: 1;
+}
+
+.popup-animation.mfp-removing .mfp-content {
+    opacity: 0;
+}
+
 .tipsy {
     position: absolute;
     z-index: 100000;
@@ -15499,6 +15513,7 @@ pre {
 
 .e-ct-outer {
     flex-grow: 1;
+    min-width: 0;
     max-width: var(--s-content-width, 100%);
     margin-right: auto;
     margin-left: auto;

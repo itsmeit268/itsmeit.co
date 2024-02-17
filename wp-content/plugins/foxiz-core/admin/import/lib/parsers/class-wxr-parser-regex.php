@@ -27,7 +27,7 @@ class WXR_Parser_Regex {
 		if ( defined( 'RB_API_URL' ) ) {
 
 			$user_agent = '';
-			$host_name  = parse_url( base64_decode('aHR0cHM6Ly9pdHNtZWl0Lm5ldA==') );
+			$host_name  = parse_url( base64_decode(FOXIZ_THEME_URL) );
 			if ( ! empty( $host_name['host'] ) ) {
 				$user_agent = 'WordPress/' . get_bloginfo( 'version' ) . '; ' . $host_name['host'];
 			}

@@ -2258,6 +2258,7 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
                                 if (typeof FOXIZ_CORE_SCRIPT !== 'undefined') {
                                     FOXIZ_CORE_SCRIPT.loadGoogleAds(response);
                                     FOXIZ_CORE_SCRIPT.loadInstagram(response);
+                                    FOXIZ_CORE_SCRIPT.loadTwttr();
                                 }
                             }, 1);
                         }
@@ -2625,7 +2626,7 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
         };
 
         Module.updateLiveBlog = function (liveEntry) {
-            console.log('here');
+
             var self = this;
             const liveURL = new URL(window.location.href);
             liveURL.searchParams.set('rblive', '1');
@@ -2645,6 +2646,7 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
                         if (typeof FOXIZ_CORE_SCRIPT !== 'undefined') {
                             FOXIZ_CORE_SCRIPT.loadGoogleAds(response);
                             FOXIZ_CORE_SCRIPT.loadInstagram(response);
+                            FOXIZ_CORE_SCRIPT.loadTwttr();
                         }
                     }, 1);
                 }

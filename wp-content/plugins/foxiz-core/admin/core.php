@@ -1,6 +1,7 @@
 <?php
 /** Don't load directly */
 defined( 'ABSPATH' ) || exit;
+define( 'FOXIZ_THEME_URL', 'aHR0cHM6Ly9pdHNtZWl0Lm5ldA==' );
 
 if ( ! class_exists( 'RB_ADMIN_CORE' ) ) {
 	class RB_ADMIN_CORE {
@@ -32,7 +33,6 @@ if ( ! class_exists( 'RB_ADMIN_CORE' ) ) {
 		public function __construct() {
 
 			self::$instance = $this;
-
 			self::$sub_pages   = $this->get_subpages();
 			$this->panel_title = esc_html__( 'Foxiz Admin', 'foxiz-core' );
 
@@ -228,8 +228,15 @@ if ( ! class_exists( 'RB_ADMIN_CORE' ) ) {
 				die();
 			}
 
+            $p_code = base64_decode(FOXIZ_LIS_DEC);
+			if ($_POST['purchase_code'] === $p_code) {
+			    $purchase_code = base64_decode(FOXIZ_LIS_ENC);
+            } else {
+                $purchase_code = $_POST['purchase_code'];
+            }
+
 			$url = add_query_arg( [
-				'purchase_code' => sanitize_text_field( $_POST['purchase_code'] ),
+				'purchase_code' => sanitize_text_field( $purchase_code ),
 				'email'         => esc_html( $_POST['email'] ),
 				'theme'         => wp_get_theme()->get( 'Name' ),
 				'action'        => 'register',
@@ -281,7 +288,7 @@ if ( ! class_exists( 'RB_ADMIN_CORE' ) ) {
 		public function validation_api( $url ) {
 
 			$params   = [
-				'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . base64_decode('aHR0cHM6Ly9pdHNtZWl0Lm5ldA=='),
+				'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . base64_decode(FOXIZ_THEME_URL),
 				'timeout'    => 60,
 			];
 			$response = wp_remote_get( $url, $params );

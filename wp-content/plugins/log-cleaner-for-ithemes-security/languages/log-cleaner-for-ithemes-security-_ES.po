@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Log cleaner for iThemes Security\n"
+"Project-Id-Version: Log cleaner for Solid Security\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-13 09:19+0800\n"
 "PO-Revision-Date: 2019-02-13 17:31+0000\n"
@@ -37,13 +37,13 @@ msgstr "Debe seleccionar al menos un elemento para eliminar."
 
 #. Plugin Name of the plugin/theme
 #: log-cleaner-ithemes.php:102
-msgid "Log cleaner for iThemes Security"
-msgstr "Limpiador de registro para iThemes Security (ITSec Log Cleaner)"
+msgid "Log cleaner for Solid Security"
+msgstr "Limpiador de registro para Solid Security (ITSec Log Cleaner)"
 
 #: log-cleaner-ithemes.php:145
 #, php-format
 msgid ""
-"Note: Continuing here will delete the selected iThemes Security logs from "
+"Note: Continuing here will delete the selected Solid Security logs from "
 "the database. You absolutely can not undo this action. If in doubt, <a "
 "href='%s'>view the logs first</a> or backup your database."
 msgstr ""
@@ -112,7 +112,7 @@ msgid "https://wordpress.org/plugins/log-cleaner-for-ithemes-security/"
 msgstr "https://wordpress.org/plugins/log-cleaner-for-ithemes-security/"
 
 #. Description of the plugin/theme
-msgid "Delete iThemes Security logs from the database."
+msgid "Delete Solid Security logs from the database."
 msgstr "Elimina los registros de seguridad de iThemes de la base de datos."
 
 #. Author of the plugin/theme

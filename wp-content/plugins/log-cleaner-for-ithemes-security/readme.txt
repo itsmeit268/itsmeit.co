@@ -1,15 +1,15 @@
-=== Log cleaner for iThemes Security ===
+=== Log cleaner for Solid Security ===
 Contributors:       mikeyott
-Tags:               ithemes, security, log, cleaner
-Requires at least:  4.9
-Tested up to:       6.2
-Stable tag:         1.3.6
+Tags:               solid, security, ithemes, log, cleaner
+Requires at least:  6.0
+Tested up to:       6.4
+Stable tag:         1.4.0
 
-Restores the ability to manually delete iThemes Security logs from the database.
+Restores the ability to manually delete Solid Security logs from the database.
 
 == Description ==
 
-In early 2018, iThemes removed the ability to manually delete the database logs (<a href="https://wordpress.org/support/topic/latest-update-missing-a-button-to-clear-logs/">see this thread</a>). This plugin gives you that control back.
+In early 2018, the ability to delete logs from the database was <a href="https://wordpress.org/support/topic/latest-update-missing-a-button-to-clear-logs/">removed</a>. This plugin gives you that control back.
 
 == Installation ==
 
@@ -17,11 +17,11 @@ Install, activate, done.
 
 == Support ==
 
-<a href="https://wordpress.org/support/plugin/log-cleaner-for-ithemes-security">Log cleaner for iThemes Security Support</a> at the official Wordpress repository.
+<a href="https://wordpress.org/support/plugin/log-cleaner-for-ithemes-security">Log cleaner for Solid Security Support</a> at the official Wordpress repository.
 
 == How to use ==
 
-* Go to <strong>Tools</strong> -> <strong>ITSec Log Cleaner</strong>
+* Go to <strong>Tools</strong> -> <strong>Solid Security Log Cleaner</strong>
 * Select which logs to delete (or select 'All')
 * Hit the <strong>Clear logs</strong> button
 * Get on with the rest of your day (optional)
@@ -33,6 +33,10 @@ Note: This plugin comes with no warranty of any kind.
 Deactivate the plugin, delete if desired.
 
 == Changelog ==
+
+= 1.4.0 =
+
+* Updates to reflect new Solid Security branding.
 
 = 1.3.6 =
 
@@ -56,7 +60,7 @@ Deactivate the plugin, delete if desired.
 
 = 1.3.1 =
 
-* Removed source map reference that was causing 404 errors to be logged in iThemes Security.
+* Removed source map reference that was causing 404 errors to be logged in Solid Security.
 
 = 1.3 =
 
@@ -84,7 +88,7 @@ Deactivate the plugin, delete if desired.
 
 = 1.0.8 =
 
-* Added support for deleting dashboard events (iThemes Security Pro).
+* Added support for deleting dashboard events (Solid Security Pro).
 * UI reduction.
 * Sidebar promoting my other WordPress tools.
 

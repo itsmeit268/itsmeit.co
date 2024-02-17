@@ -28,7 +28,7 @@
 
 .tools_page_log-cleaner {
     #message {
-        width: calc(100% - 320px);
+        
         display: block;
         box-sizing: border-box;
 
@@ -39,7 +39,7 @@
 
     form {
         p {
-            width: calc(100% - 320px);
+            
 
             @media only screen and (max-width: 960px) {
                 width: 100%;
@@ -49,7 +49,6 @@
 }
 .log-cleaner {
 
-    width: calc(100% - 320px);
     box-sizing: border-box;
 
     @media only screen and (max-width: 960px) {
@@ -63,9 +62,7 @@
         position: relative;
     }
 
-    
 
-    
 
     table {
         width: 320px;
@@ -128,22 +125,14 @@
 
 .delete-logs-notice {
     padding: 10px 15px;
-    background: #ea5c52;
-    color: #fff;
+    border-left: solid 4px #ea5c52;
     display: block;
     box-sizing: border-box;
-
-    a {
-        color: #fff;
-        display: inline-block;
-        padding: 2px 6px;
-        border-radius: 2px;
-        border: solid 1px #fff;
-        text-decoration: none;
-    }
+    background: #fff;
+    font-weight: 600;
 }
 
-.ithemes-log-cleaner {
+.solid-security-log-cleaner {
 
     padding: 0 30px 0 0;
 
@@ -151,88 +140,5 @@
         padding: 0;
     }
 
-    .notice.is-dismissible {
-        width: calc(100% - 337px);
-        padding-right: 0;
-
-        @media only screen and (max-width: 960px) {
-            width: calc(100% - 15px);
-            padding-right: 0;
-        }
-    }
-
-    .promo {
-        width: 350px;
-        height: 100%;
-        background: #fff;
-        text-align: center;
-        position: fixed;
-        top: 35px;
-        right: 0;
-        padding: 25px;
-        box-sizing: border-box;
-    }
-    .promo .pos {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 0;
-        padding: 25px;
-    }
-    .promo p {
-        margin: 20px 0 !important;
-    }
-    .promo .ra-logo {
-        display: block;
-        width: 100px;
-        height: auto;
-        margin: 0 auto 25px auto;
-    }
-    .promo .ra-description {
-        font-size: 16px !important;
-    }
-    .promo .ra-product-list {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-    }
-    .promo .ra-product-list li {
-        display: block;
-        margin: 5px;
-    }
-    .promo .ra-product-list li a {
-        display: inline-block;
-        padding: 7px 10px;
-        border: solid 1px #eee;
-        background: #f1f1f1;
-        display: inline-block;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        text-decoration: none;
-    }
-    .promo .ra-cta {
-        display: block;
-        padding: 15px;
-        text-align: center;
-        color: #fff;
-        background: #ff9800;
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
-        box-shadow: 10px 10px 30px 0 rgba(0, 0, 0, 0.2);
-        text-decoration: none;
-        margin: 25px auto;
-        font-weight: bold;
-        max-width: 220px;
-    }
-    .promo .ra-cta:hover {
-        color: #fff;
-    }
 
 }
-

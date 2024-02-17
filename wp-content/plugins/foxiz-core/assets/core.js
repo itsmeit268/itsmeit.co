@@ -189,44 +189,54 @@ var FOXIZ_CORE_SCRIPT = (function (Module, $) {
 
     /** share action */
     Module.shareTrigger = function () {
+
         $('a.share-trigger').off('click').on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
             window.open($(this).attr('href'), '_blank', 'width=600, height=350');
             return false;
         });
-        $('a.copy-trigger').off('click').on('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var target = $(this);
-            var link = target.data('link');
-            var copied = target.data('copied');
-            if (link) {
-                navigator.clipboard.writeText(link).then(
-                    function () {
-                        $('body').find('.tipsy-inner').html((copied));
-                    }).catch(function () {
-                    console.log('Copying is not supported by your browser.');
-                });
-            }
-        });
 
-        $('a.native-share-trigger').on('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            const target = $(this);
+        const copyButton = $('a.copy-trigger');
+        if (navigator.clipboard) {
+            copyButton.off('click').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var target = $(this);
+                var link = target.data('link');
+                var copied = target.data('copied');
+                if (link) {
+                    navigator.clipboard.writeText(link).then(
+                        function () {
+                            $('body').find('.tipsy-inner').html((copied));
+                        }).catch(function () {
+                        console.log('Clipboard API not supported.');
+                    });
+                }
+            });
+        } else {
+            console.log('Clipboard API not supported.');
+            copyButton.hide();
+        }
 
-            if (navigator.share) {
+        const shareButton = $('a.native-share-trigger');
+        if (navigator.share) {
+            shareButton.on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const target = $(this);
+
                 const link = target.data('link');
                 const title = target.data('ptitle');
                 navigator.share({
                     title: title,
                     url: link
                 })
-            } else {
-                console.log('Native share API not supported.');
-            }
-        });
+            });
+        } else {
+            console.log('Native share API not supported.');
+            shareButton.hide();
+        }
     };
 
     /** single infinite load */
@@ -251,6 +261,14 @@ var FOXIZ_CORE_SCRIPT = (function (Module, $) {
                 window.instgrm.Embeds.process();
             };
             this._body.append(embedJS);
+        }
+    }
+
+    Module.loadTwttr = function () {
+        if (typeof twttr !== 'undefined' && typeof twttr.widgets !== 'undefined') {
+            twttr.ready(function (twttr) {
+                twttr.widgets.load();
+            });
         }
     }
 
@@ -340,8 +358,6 @@ var FOXIZ_CORE_SCRIPT = (function (Module, $) {
             });
         });
     };
-
-
 
     return Module;
 

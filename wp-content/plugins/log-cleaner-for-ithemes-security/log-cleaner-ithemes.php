@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name:    Log cleaner for iThemes Security
-Plugin URI:     https://wordpress.org/plugins/log-cleaner-for-ithemes-security/
-Description:    Delete iThemes Security logs from the database.
-Version:        1.3.6
-Author:         Michael Ott
+Plugin Name:    Log cleaner for Solid Security
+Plugin URI:     https://wordpress.org/plugins/log-cleaner-for-solid-security/
+Description:    Delete Solid Security logs from the database.
+Version:        1.4.0
+Author:         Rocket Apps
 Author URI:     https://rocketapps.com.au/
 License:        GPL2
 Domain Path:    /languages/
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Look for translation file.
 function load_log_cleaner_textdomain() {
-    load_plugin_textdomain( 'log-cleaner-for-ithemes-security', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    load_plugin_textdomain( 'log-cleaner-for-solid-security', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
 add_action( 'plugins_loaded', 'load_log_cleaner_textdomain' );
 
@@ -25,12 +25,12 @@ if ( is_multisite() ) {
     add_action('network_admin_menu', 'create_network_cleaner_submenu');
     function create_network_cleaner_submenu() {
         $icon =  plugins_url('images/', __FILE__ ) . 'shield.svg';
-        add_menu_page( "ITSec Log Cleaner", "ITSec Log Cleaner", 'manage_options', 'log-cleaner-for-ithemes-security', 'generate_page_content', $icon);	
+        add_menu_page( "Solid Security Log Cleaner", "Solid Security Log Cleaner", 'manage_options', 'log-cleaner-for-solid-security', 'generate_page_content', $icon);	
     }
 } else {
     add_action('admin_menu', 'create_tools_cleaner_submenu');
     function create_tools_cleaner_submenu() {
-        add_management_page( 'ITSec Log Cleaner', 'ITSec Log Cleaner', 'manage_options', 'log-cleaner-for-ithemes-security', 'generate_page_content' );
+        add_management_page( 'Solid Security Log Cleaner', 'Solid Security Log Cleaner', 'manage_options', 'log-cleaner-for-solid-security', 'generate_page_content' );
     }
 }
 
@@ -46,7 +46,7 @@ add_action('admin_enqueue_scripts', 'log_cleaner_admin_style');
 // Admin page.
 function generate_page_content() { ?>
     
-    <div class="wrap ithemes-log-cleaner">
+    <div class="wrap solid-security-log-cleaner">
         <form action="" method="post">
             <?php
                 $page = $_GET["page"];
@@ -87,19 +87,19 @@ function generate_page_content() { ?>
                         ?>
 
                         <div id="message" class="updated notice notice-success is-dismissible" style="margin: 20px 0;">
-                            <p><?php _e("The selected logs have been deleted.", 'log-cleaner-for-ithemes-security'); ?></p>
+                            <p><?php _e("The selected logs have been deleted.", 'log-cleaner-for-solid-security'); ?></p>
                         </div>
 
                     <?php } else { ?>
                         <div id="message" class="error notice notice-success is-dismissible" style="margin: 20px 0;">
-                            <p><?php _e("You need to select at least one item to delete.", 'log-cleaner-for-ithemes-security'); ?></p>
+                            <p><?php _e("You need to select at least one item to delete.", 'log-cleaner-for-solid-security'); ?></p>
                         </div>
                     <?php  }
 
                 }
             ?>
 
-            <h1><?php _e('Log cleaner for iThemes Security', 'log-cleaner-for-ithemes-security'); ?></h1>
+            <h1><?php _e('Log cleaner for Solid Security', 'log-cleaner-for-solid-security'); ?></h1>
 
             <?php 
                 global $wpdb;
@@ -173,55 +173,57 @@ function generate_page_content() { ?>
             ?>
 
             <?php if($total > 0) { // If there are logs ?>
-            <p class="delete-logs-notice"><?php printf( __( "Note: Continuing here will delete the selected iThemes Security logs from the database. You absolutely can not undo this action. If in doubt, <a href='%s'>view the logs first</a> or backup your database.", "log-cleaner-for-ithemes-security" ), $log_link ); ?></p>
+            <p class="delete-logs-notice">
+                <?php printf( __( "Note: Continuing here will delete the selected Solid Security logs from the database. You absolutely can not undo this action. If in doubt, <a href='%s'>view the logs first</a> or backup your database.", "log-cleaner-for-solid-security" ), $log_link ); ?>
+            </p>
             <?php } ?>
 
             <?php if($total > 0) { // If there are logs ?>
 
             <div class="log-cleaner boxy">
 
-                <p><strong><?php _e("Clear the following log tables: ", 'log-cleaner-for-ithemes-security'); ?></strong></p>
+                <p><strong><?php _e("Clear the following log tables: ", 'log-cleaner-for-solid-security'); ?></strong></p>
 
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tbody>
                         <tr class="all-items">
                             <td><input type="checkbox" name="all" id="all" /></td>
-                            <td><?php _e("All", 'log-cleaner-for-ithemes-security'); ?></td>
+                            <td><?php _e("All", 'log-cleaner-for-solid-security'); ?></td>
                             <td></td>
                         </tr>
                         <?php if($combined_logs > 0) { ?>
                         <tr>
                             <td><input type="checkbox" name="logs" class="other-items" /></td>
-                            <td><?php _e("Security logs", 'log-cleaner-for-ithemes-security'); ?></td>
-                            <td><?php echo $combined_logs; ?> <?php _e("rows", 'log-cleaner-for-ithemes-security'); ?></td>
+                            <td><?php _e("Security logs", 'log-cleaner-for-solid-security'); ?></td>
+                            <td><?php echo $combined_logs; ?> <?php _e("rows", 'log-cleaner-for-solid-security'); ?></td>
                         </tr>
                         <?php } ?>
                         <?php if($num_dashboard_events > 0) { ?>
                         <tr>
                             <td><input type="checkbox" name="dashboard" class="other-items" /></td>
-                            <td><?php _e("Dashboard logs", 'log-cleaner-for-ithemes-security'); ?></td>
-                            <td><?php echo $num_dashboard_events; ?> <?php _e("rows", 'log-cleaner-for-ithemes-security'); ?></td>
+                            <td><?php _e("Dashboard logs", 'log-cleaner-for-solid-security'); ?></td>
+                            <td><?php echo $num_dashboard_events; ?> <?php _e("rows", 'log-cleaner-for-solid-security'); ?></td>
                         </tr>
                         <?php } ?>
                         <?php if($num_lockouts > 0) { ?>
                         <tr>
                             <td><input type="checkbox" name="lockouts" class="other-items" /></td>
-                            <td><?php _e("Lockouts", 'log-cleaner-for-ithemes-security'); ?></td>
-                            <td><?php echo $num_lockouts; ?> <?php _e("rows", 'log-cleaner-for-ithemes-security'); ?></td>
+                            <td><?php _e("Lockouts", 'log-cleaner-for-solid-security'); ?></td>
+                            <td><?php echo $num_lockouts; ?> <?php _e("rows", 'log-cleaner-for-solid-security'); ?></td>
                         </tr>
                         <?php } ?>
                         <?php if($num_temps > 0) { ?>
                         <tr>
                             <td class="no-border"><input type="checkbox" name="temp" class="other-items" /></td>
-                            <td class="no-border"><?php _e("Temps", 'log-cleaner-for-ithemes-security'); ?></td>
-                            <td class="no-border"><?php echo $num_temps; ?> <?php _e("rows", 'log-cleaner-for-ithemes-security'); ?></td>
+                            <td class="no-border"><?php _e("Temps", 'log-cleaner-for-solid-security'); ?></td>
+                            <td class="no-border"><?php echo $num_temps; ?> <?php _e("rows", 'log-cleaner-for-solid-security'); ?></td>
                         </tr>
                         <?php } ?>
                         <?php if($num_ds > 0) { ?>
                         <tr>
                             <td class="no-border"><input type="checkbox" name="ds" class="other-items" /></td>
-                            <td class="no-border"><?php _e("Distributed Storage", 'log-cleaner-for-ithemes-security'); ?></td>
-                            <td class="no-border"><?php echo $num_ds; ?> <?php _e("rows", 'log-cleaner-for-ithemes-security'); ?></td>
+                            <td class="no-border"><?php _e("Distributed Storage", 'log-cleaner-for-solid-security'); ?></td>
+                            <td class="no-border"><?php echo $num_ds; ?> <?php _e("rows", 'log-cleaner-for-solid-security'); ?></td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -234,7 +236,7 @@ function generate_page_content() { ?>
                         <tr class="total">
                             <td class="no-border"></td>
                             <td class="no-border">Total:</td>
-                            <td class="no-border"><?php echo $total; ?> <?php _e("rows", 'log-cleaner-for-ithemes-security'); ?></td>
+                            <td class="no-border"><?php echo $total; ?> <?php _e("rows", 'log-cleaner-for-solid-security'); ?></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -266,12 +268,12 @@ function generate_page_content() { ?>
 
             <?php  // If the total number of log entries is not 0, and if you're an administrator
                 if(current_user_can( 'manage_options' )) { ?>
-                <input type="submit" name="submit" class="button button-primary" value="<?php _e('Clear logs', 'log-cleaner-for-ithemes-security'); ?>" onclick="return confirm('<?php _e('This is your last chance. Are you sure?', 'log-cleaner-for-ithemes-security'); ?>')" />
+                <input type="submit" name="submit" class="button button-primary" value="<?php _e('Clear logs', 'log-cleaner-for-solid-security'); ?>" onclick="return confirm('<?php _e('This is your last chance. Are you sure?', 'log-cleaner-for-solid-security'); ?>')" />
                 <?php wp_nonce_field( 'delete-things','things' ) ?>
             <?php } ?>
 
             <?php } else { // Otherwise, all logs are clear ?>
-                <p class="all-clear">&#10004; <?php _e("All logs are clear.", 'log-cleaner-for-ithemes-security'); ?></p>
+                <p class="all-clear">&#10004; <?php _e("All logs are clear.", 'log-cleaner-for-solid-security'); ?></p>
             <?php } ?>
     
         </form>

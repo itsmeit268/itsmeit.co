@@ -240,9 +240,10 @@ class Post_Views_Counter_Counter {
 		elseif ( $pvc->options['general']['counter_mode'] === 'js' ) {
 			add_action( 'wp_ajax_pvc-check-post', [ $this, 'check_post_js' ] );
 			add_action( 'wp_ajax_nopriv_pvc-check-post', [ $this, 'check_post_js' ] );
-		// rest api counter
-		} elseif ( $pvc->options['general']['counter_mode'] === 'rest_api' )
-			add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
+		}
+
+		// rest api
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 	}
 
 	/**
@@ -1053,19 +1054,14 @@ class Post_Views_Counter_Counter {
 	public function delete_post_views( $post_id ) {
 		global $wpdb;
 
-		$where = [ 'id' => $post_id ];
-		$format = [ '%d' ];
+		$data = [
+			'where'		=> [ 'id' => $post_id ],
+			'format'	=> [ '%d' ]
+		];
 
-		// get number of columns
-		$noc = Post_Views_Counter()->functions->get_number_of_columns();
+		$data = apply_filters( 'pvc_delete_post_views_where_clause', $data, $post_id );
 
-		// content?
-		if ( $noc === 5 ) {
-			$where['content'] = 0;
-			$format[] = '%d';
-		}
-
-		$wpdb->delete( $wpdb->prefix . 'post_views', $where, $format );
+		$wpdb->delete( $wpdb->prefix . 'post_views', $data['where'], $data['format'] );
 	}
 
 	/**
@@ -1330,8 +1326,8 @@ class Post_Views_Counter_Counter {
 			[
 				'methods'				 => [ 'POST' ],
 				'callback'				 => [ $this, 'check_post_rest_api' ],
-				'permission_callback'	 => [ $this, 'post_view_permissions_check' ],
-				'args'					 => [
+				'permission_callback'	 => [ $this, 'view_post_permissions_check' ],
+				'args'					 => apply_filters( 'pvc_rest_api_view_post_args', [
 					'id'			=> [
 						'default'			 => 0,
 						'sanitize_callback'	 => 'absint'
@@ -1342,7 +1338,7 @@ class Post_Views_Counter_Counter {
 					'storage_data'	=> [
 						'default'			 => ''
 					]
-				]
+				] )
 			]
 		);
 
@@ -1354,12 +1350,12 @@ class Post_Views_Counter_Counter {
 				'methods'				 => [ 'GET', 'POST' ],
 				'callback'				 => [ $this, 'get_post_views_rest_api' ],
 				'permission_callback'	 => [ $this, 'get_post_views_permissions_check' ],
-				'args'					 => [
+				'args'					 => apply_filters( 'pvc_rest_api_get_post_views_args', [
 					'id' => [
 						'default'			=> 0,
 						'sanitize_callback'	=> [ $this, 'validate_rest_api_data' ]
 					]
-				]
+				] )
 			]
 		);
 	}
@@ -1375,16 +1371,6 @@ class Post_Views_Counter_Counter {
 	}
 
 	/**
-	 * Check if a given request has access to view post.
-	 *
-	 * @param object $request
-	 * @return bool
-	 */
-	public function post_view_permissions_check( $request ) {
-		return (bool) apply_filters( 'pvc_rest_api_post_views_check', true, $request );
-	}
-
-	/**
 	 * Check if a given request has access to get views.
 	 *
 	 * @param object $request
@@ -1392,6 +1378,16 @@ class Post_Views_Counter_Counter {
 	 */
 	public function get_post_views_permissions_check( $request ) {
 		return (bool) apply_filters( 'pvc_rest_api_get_post_views_check', true, $request );
+	}
+	
+	/**
+	 * Check if a given request has access to view post.
+	 *
+	 * @param object $request
+	 * @return bool
+	 */
+	public function view_post_permissions_check( $request ) {
+		return (bool) apply_filters( 'pvc_rest_api_view_post_check', true, $request );
 	}
 
 	/**

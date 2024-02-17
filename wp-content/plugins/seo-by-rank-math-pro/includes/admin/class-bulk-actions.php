@@ -40,37 +40,10 @@ class Bulk_Actions {
 		unset( $taxonomies['post_format'] );
 		$taxonomies = wp_list_pluck( $taxonomies, 'label', 'name' );
 		foreach ( $taxonomies as $taxonomy => $label ) {
-			$this->filter( "bulk_actions-edit-{$taxonomy}", 'tax_bulk_actions' );
 			$this->filter( "handle_bulk_actions-edit-{$taxonomy}", 'handle_tax_bulk_actions', 10, 3 );
 		}
 
 		$this->action( 'save_post', 'save_post_primary_term' );
-		$this->action( 'admin_enqueue_scripts', 'enqueue' );
-	}
-
-	/**
-	 * Add bulk actions for applicable taxonomies.
-	 *
-	 * @param  array $actions Actions.
-	 * @return array             New actions.
-	 */
-	public function tax_bulk_actions( $actions ) {
-		if ( ! Helper::has_cap( 'onpage_advanced' ) ) {
-			return $actions;
-		}
-
-		$actions['rank_math_options']              = __( '&#8595; Rank Math', 'rank-math-pro' );
-		$actions['rank_math_bulk_robots_noindex']  = __( 'Set to noindex', 'rank-math-pro' );
-		$actions['rank_math_bulk_robots_index']    = __( 'Set to index', 'rank-math-pro' );
-		$actions['rank_math_bulk_robots_nofollow'] = __( 'Set to nofollow', 'rank-math-pro' );
-		$actions['rank_math_bulk_robots_follow']   = __( 'Set to follow', 'rank-math-pro' );
-
-		if ( Helper::is_module_active( 'redirections' ) && Helper::has_cap( 'redirections' ) ) {
-			$actions['rank_math_bulk_redirect']      = __( 'Redirect', 'rank-math-pro' );
-			$actions['rank_math_bulk_stop_redirect'] = __( 'Remove redirection', 'rank-math-pro' );
-		}
-
-		return $actions;
 	}
 
 	/**
@@ -356,18 +329,5 @@ class Bulk_Actions {
 		}
 
 		update_post_meta( $post_id, 'rank_math_primary_' . $taxonomy['name'], absint( $input ) );
-	}
-
-	/**
-	 * Enqueue scripts and add JSON.
-	 *
-	 * @return void
-	 */
-	public function enqueue() {
-		if ( ! Admin_Helper::is_post_list() ) {
-			return;
-		}
-
-		Helper::add_json( 'confirmSchemaDelete', __( 'Are you sure you want to change the Schema type for the selected posts? Doing so may irreversibly delete the existing Schema data.', 'rank-math-pro' ) );
 	}
 }
