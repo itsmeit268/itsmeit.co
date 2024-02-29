@@ -87,27 +87,34 @@ class Safe_Comment_Content_Public {
 	}
 
 	public function set_robots_filter() {
-		$robots = array(
-			'index' => 'noindex', 'follow' => 'nofollow',
-			'archive' => 'noarchive', 'snippet' => 'nosnippet',
-		);
+        if (!function_exists('aioseo' ) && !function_exists('wpseo_init' ) && !function_exists('rank_math' )) {
+            $robots = array('noindex' => true, 'nofollow' => true, 'noarchive' => true, 'nosnippet' => true,);
+            add_filter('wp_robots', function() use ($robots) {
+                return $robots;
+            });
+        }
 
-		if (function_exists('rank_math' )){
-			add_filter( 'rank_math/frontend/robots', function() use ($robots) {
-				return $robots;
-			});
-		}
+        $robots = array(
+            'index' => 'noindex', 'follow' => 'nofollow',
+            'archive' => 'noarchive', 'snippet' => 'nosnippet',
+        );
 
-		if (function_exists('wpseo_init' )){
-			add_filter( 'wpseo_robots', function() use ($robots) {
-				return $robots;
-			});
-		}
+        if (function_exists('rank_math' )){
+            add_filter( 'rank_math/frontend/robots', function() use ($robots) {
+                return $robots;
+            });
+        }
 
-		if (function_exists('aioseo' )){
-			add_filter( 'aioseo_robots_meta', function() use ($robots) {
-				return $robots;
-			});
-		}
+        if (function_exists('wpseo_init' )){
+            add_filter( 'wpseo_robots', function() use ($robots) {
+                return $robots;
+            });
+        }
+
+        if (function_exists('aioseo' )){
+            add_filter( 'aioseo_robots_meta', function() use ($robots) {
+                return $robots;
+            });
+        }
 	}
 }

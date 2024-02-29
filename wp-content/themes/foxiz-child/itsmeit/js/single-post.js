@@ -161,16 +161,6 @@
             });
         }
 
-        function _linkOlderVersion(){
-            var $progress = $('.post-progress-bar,.wrap-countdown');
-            if ($progress.length){
-                $progress.parents('li').addClass('link-older-version');
-            }
-            if (windowWidth < 700) {
-                $('strong:contains("|")').remove();
-            }
-        }
-
         function _remove_adstera_mb(){
             var elm = $('.advertising-adsterra');
             if (windowWidth < 700 && elm.length) {
@@ -181,7 +171,6 @@
         _removeTextShare();
         _faqRankmath();
         _fixElmEnlighterTheme_and_ads();
-        _linkOlderVersion();
         _remove_adstera_mb();
         _magnificPopup('#ftwp-postcontent', 'figure.wp-block-image img,.aligncenter img');
     });

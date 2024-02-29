@@ -463,10 +463,6 @@ ol.link-download-file > li {
 .related-5 > .inner>.block-inner>.p-wrap{
     margin-bottom: 0 !important;
 }
-.link-older-version {
-    list-style-type: none;
-    margin-left: -1em;
-}
 .is-layout-flex>.wp-block-column {
     padding: 0 5px 0 5px;
 }
