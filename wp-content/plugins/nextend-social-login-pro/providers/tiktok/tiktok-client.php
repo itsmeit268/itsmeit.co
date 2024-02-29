@@ -73,7 +73,7 @@ class NextendSocialProviderTiktokClient extends NextendSocialOauth2 {
          * TikTok returns status code 200 even if there is an error.
          * If there is no access_token set in the response then we need to throw an error.
          */
-        throw new Exception(json_encode($access_token_data));
+        throw new NSLSanitizedRequestErrorMessageException(json_encode($access_token_data));
     }
 
     /**
@@ -84,12 +84,12 @@ class NextendSocialProviderTiktokClient extends NextendSocialOauth2 {
     protected function errorFromResponse($response) {
         if (isset($response['message'])) {
             if (isset($response['data']) && isset($response['data']['description'])) {
-                throw new Exception($response['data']['description']);
+                throw new NSLSanitizedRequestErrorMessageException($response['data']['description']);
             } else {
-                throw new Exception($response['message']);
+                throw new NSLSanitizedRequestErrorMessageException($response['message']);
             }
         } else if (isset($response['error']) && isset($response['error']['message'])) {
-            throw new Exception($response['error']['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['error']['message']);
         } else {
             parent::errorFromResponse($response);
         }

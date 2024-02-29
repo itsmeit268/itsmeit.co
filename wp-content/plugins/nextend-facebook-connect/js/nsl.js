@@ -2,9 +2,10 @@
  * Used when Cross-Origin-Opener-Policy blocked the access to the opener. We can't have a reference of the opened windows, so we should attempt to refresh only the windows that has opened popups.
  */
 window._nslHasOpenedPopup = false;
+window._nslWebViewNoticeElement = null;
 
 window.NSLPopup = function (url, title, w, h) {
-    var userAgent = navigator.userAgent,
+    const userAgent = navigator.userAgent,
         mobile = function () {
             return /\b(iPhone|iP[ao]d)/.test(userAgent) ||
                 /\b(iP[ao]d)/.test(userAgent) ||
@@ -30,7 +31,7 @@ window.NSLPopup = function (url, title, w, h) {
     features.push('top=' + right);
     features.push('scrollbars=1');
 
-    var newWindow = window.open(url, title, features.join(','));
+    const newWindow = window.open(url, title, features.join(','));
 
     if (window.focus) {
         newWindow.focus();
@@ -41,7 +42,7 @@ window.NSLPopup = function (url, title, w, h) {
     return newWindow;
 };
 
-var isWebView = null;
+let isWebView = null;
 
 function checkWebView() {
     if (isWebView === null) {
@@ -63,7 +64,7 @@ function checkWebView() {
         }
 
         function _detectBrowser(ua) {
-            var android = /Android/.test(ua);
+            let android = /Android/.test(ua);
 
             if (/Opera Mini/.test(ua) || / OPR/.test(ua) || / OPT/.test(ua)) {
                 return "Opera";
@@ -128,7 +129,7 @@ function checkWebView() {
         }
 
         function _normalizeSemverString(version) {
-            var ary = version.split(/[\._]/);
+            const ary = version.split(/[\._]/);
             return (parseInt(ary[0], 10) || 0) + "." +
                 (parseInt(ary[1], 10) || 0) + "." +
                 (parseInt(ary[2], 10) || 0);
@@ -149,7 +150,7 @@ function checkWebView() {
         }
 
         function _isWebView_iOS(options) {
-            var document = (window["document"] || {});
+            const document = (window["document"] || {});
 
             if ("WEB_VIEW" in options) {
                 return options["WEB_VIEW"];
@@ -164,12 +165,12 @@ function checkWebView() {
             return !("requestFileSystem" in window || "webkitRequestFileSystem" in window || false);
         }
 
-        var options = {};
-        var nav = window.navigator || {};
-        var ua = nav.userAgent || "";
-        var os = _detectOS(ua);
-        var browser = _detectBrowser(ua);
-        var browserVersion = _detectBrowserVersion(ua, browser);
+        const options = {},
+            nav = window.navigator || {},
+            ua = nav.userAgent || "",
+            os = _detectOS(ua),
+            browser = _detectBrowser(ua),
+            browserVersion = _detectBrowserVersion(ua, browser);
 
         isWebView = _isWebView(ua, os, browser, browserVersion, options);
     }
@@ -178,18 +179,19 @@ function checkWebView() {
 }
 
 function isAllowedWebViewForUserAgent(provider) {
-    var facebookAllowedWebViews = [
+    const facebookAllowedWebViews = [
         'Instagram',
         'FBAV',
         'FBAN'
-    ], whitelist = [];
+    ];
+    let whitelist = [];
 
     if (provider && provider === 'facebook') {
         whitelist = facebookAllowedWebViews;
     }
 
-    var nav = window.navigator || {};
-    var ua = nav.userAgent || "";
+    const nav = window.navigator || {},
+        ua = nav.userAgent || "";
 
     if (whitelist.length && ua.match(new RegExp(whitelist.join('|')))) {
         return true;
@@ -198,20 +200,43 @@ function isAllowedWebViewForUserAgent(provider) {
     return false;
 }
 
+function disableButtonInWebView(providerButtonElement) {
+    if (providerButtonElement) {
+        providerButtonElement.classList.add('nsl-disabled-provider');
+        providerButtonElement.setAttribute('href', '#');
+
+        providerButtonElement.addEventListener('pointerdown', (e) => {
+            if (!window._nslWebViewNoticeElement) {
+                window._nslWebViewNoticeElement = document.createElement('div');
+                window._nslWebViewNoticeElement.id = "nsl-notices-fallback";
+                window._nslWebViewNoticeElement.addEventListener('pointerdown', function (e) {
+                    this.parentNode.removeChild(this);
+                    window._nslWebViewNoticeElement = null;
+                });
+                const webviewNoticeHTML = '<div class="error"><p>' + scriptOptions._localizedStrings.webview_notification_text + '</p></div>';
+
+                window._nslWebViewNoticeElement.insertAdjacentHTML("afterbegin", webviewNoticeHTML);
+                document.body.appendChild(window._nslWebViewNoticeElement);
+            }
+        });
+    }
+
+}
+
 window._nslDOMReady(function () {
 
     window.nslRedirect = function (url) {
-        if (_redirectOverlay) {
-            var overlay = document.createElement('div');
+        if (scriptOptions._redirectOverlay) {
+            const overlay = document.createElement('div');
             overlay.id = "nsl-redirect-overlay";
-            var overlayHTML = '',
-                overlayContainer = "<div id='nsl-redirect-overlay-container'>",
+            let overlayHTML = '';
+            const overlayContainer = "<div id='nsl-redirect-overlay-container'>",
                 overlayContainerClose = "</div>",
                 overlaySpinner = "<div id='nsl-redirect-overlay-spinner'></div>",
-                overlayTitle = "<p id='nsl-redirect-overlay-title'>" + _localizedStrings.redirect_overlay_title + "</p>",
-                overlayText = "<p id='nsl-redirect-overlay-text'>" + _localizedStrings.redirect_overlay_text + "</p>";
+                overlayTitle = "<p id='nsl-redirect-overlay-title'>" + scriptOptions._localizedStrings.redirect_overlay_title + "</p>",
+                overlayText = "<p id='nsl-redirect-overlay-text'>" + scriptOptions._localizedStrings.redirect_overlay_text + "</p>";
 
-            switch (_redirectOverlay) {
+            switch (scriptOptions._redirectOverlay) {
                 case "overlay-only":
                     break;
                 case "overlay-with-spinner":
@@ -229,11 +254,11 @@ window._nslDOMReady(function () {
         window.location = url;
     };
 
-    var targetWindow = _targetWindow || 'prefer-popup',
+    let targetWindow = scriptOptions._targetWindow || 'prefer-popup',
         lastPopup = false;
 
 
-    var buttonLinks = document.querySelectorAll(' a[data-plugin="nsl"][data-action="connect"], a[data-plugin="nsl"][data-action="link"]');
+    const buttonLinks = document.querySelectorAll(' a[data-plugin="nsl"][data-action="connect"], a[data-plugin="nsl"][data-action="link"]');
     buttonLinks.forEach(function (buttonLink) {
         buttonLink.addEventListener('click', function (e) {
             if (lastPopup && !lastPopup.closed) {
@@ -241,7 +266,7 @@ window._nslDOMReady(function () {
                 lastPopup.focus();
             } else {
 
-                var href = this.href,
+                let href = this.href,
                     success = false;
                 if (href.indexOf('?') !== -1) {
                     href += '&';
@@ -249,7 +274,7 @@ window._nslDOMReady(function () {
                     href += '?';
                 }
 
-                var redirectTo = this.dataset.redirect;
+                const redirectTo = this.dataset.redirect;
                 if (redirectTo === 'current') {
                     href += 'redirect=' + encodeURIComponent(window.location.href) + '&';
                 } else if (redirectTo && redirectTo !== '') {
@@ -267,7 +292,7 @@ window._nslDOMReady(function () {
                         e.preventDefault();
                     }
                 } else if (targetWindow === 'prefer-new-tab') {
-                    var newTab = window.open(href + 'display=popup', '_blank');
+                    const newTab = window.open(href + 'display=popup', '_blank');
                     if (newTab) {
                         if (window.focus) {
                             newTab.focus();
@@ -286,29 +311,36 @@ window._nslDOMReady(function () {
         });
     });
 
-    let hasWebViewLimitation = false;
+    let buttonCountChanged = false;
 
-    var googleLoginButtons = document.querySelectorAll(' a[data-plugin="nsl"][data-provider="google"]');
+    const googleLoginButtons = document.querySelectorAll(' a[data-plugin="nsl"][data-provider="google"]');
     if (googleLoginButtons.length && checkWebView()) {
         googleLoginButtons.forEach(function (googleLoginButton) {
-            googleLoginButton.remove();
-            hasWebViewLimitation = true;
+            if (scriptOptions._unsupportedWebviewBehavior === 'disable-button') {
+                disableButtonInWebView(googleLoginButton);
+            } else {
+                googleLoginButton.remove();
+                buttonCountChanged = true;
+            }
         });
     }
 
-    var facebookLoginButtons = document.querySelectorAll(' a[data-plugin="nsl"][data-provider="facebook"]');
+    const facebookLoginButtons = document.querySelectorAll(' a[data-plugin="nsl"][data-provider="facebook"]');
     if (facebookLoginButtons.length && checkWebView() && /Android/.test(window.navigator.userAgent) && !isAllowedWebViewForUserAgent('facebook')) {
         facebookLoginButtons.forEach(function (facebookLoginButton) {
-            facebookLoginButton.remove();
-            hasWebViewLimitation = true;
+            if (scriptOptions._unsupportedWebviewBehavior === 'disable-button') {
+                disableButtonInWebView(facebookLoginButton);
+            } else {
+                facebookLoginButton.remove();
+                buttonCountChanged = true;
+            }
         });
     }
 
-
     const separators = document.querySelectorAll('div.nsl-separator');
-    if (hasWebViewLimitation && separators.length) {
+    if (buttonCountChanged && separators.length) {
         separators.forEach(function (separator) {
-            let separatorParentNode = separator.parentNode;
+            const separatorParentNode = separator.parentNode;
             if (separatorParentNode) {
                 const separatorButtonContainer = separatorParentNode.querySelector('div.nsl-container-buttons');
                 if (separatorButtonContainer && !separatorButtonContainer.hasChildNodes()) {

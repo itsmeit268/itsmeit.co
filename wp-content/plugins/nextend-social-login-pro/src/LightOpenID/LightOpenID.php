@@ -21,6 +21,8 @@ use ErrorException;
  *              - fix: don't use get_magic_quotes_gpc() function with PHP 7.4.0 and above
  *              - fix: Required parameter $update_claimed_id follows optional parameter $method
  *              - getServer() method to get the discovered server
+ *              - request_streams() - don't redefine the $params array parameter of the method to a string value, as
+ *              after PHP 7 the func_get_args() function returns the current value of the variable.
  *
  */
 class LightOpenID {
@@ -312,6 +314,18 @@ class LightOpenID {
         return $headers;
     }
 
+    /**
+     * Make sure the parameters of this method won't be override inside, as that will modify the values returned by the
+     * func_get_args() function inside as well!
+     *
+     * @param        $url
+     * @param string $method
+     * @param array  $params
+     * @param bool   $update_claimed_id
+     *
+     * @return array|false
+     * @throws ErrorException
+     */
     protected function request_streams($url, $method = 'GET', $params = array(), $update_claimed_id = false) {
         if (!$this->hostExists($url)) {
             throw new ErrorException("Could not connect to $url.", 404);
@@ -321,7 +335,7 @@ class LightOpenID {
             $this->cnmatch = parse_url($url, PHP_URL_HOST);
         }
 
-        $params = http_build_query($params, '', '&');
+        $query_params = http_build_query($params, '', '&');
         switch ($method) {
             case 'GET':
                 $opts = array(
@@ -335,7 +349,7 @@ class LightOpenID {
                         'CN_match' => $this->cnmatch
                     )
                 );
-                $url  = $url . ($params ? '?' . $params : '');
+                $url  = $url . ($query_params ? '?' . $query_params : '');
                 if (!empty($this->proxy)) {
                     $opts['http']['proxy'] = $this->proxy_url();
                 }
@@ -346,7 +360,7 @@ class LightOpenID {
                         'method'        => 'POST',
                         'header'        => 'Content-type: application/x-www-form-urlencoded',
                         'user_agent'    => $this->user_agent,
-                        'content'       => $params,
+                        'content'       => $query_params,
                         'ignore_errors' => true,
                     ),
                     'ssl'  => array(
@@ -407,7 +421,7 @@ class LightOpenID {
                 // Change the stream context options.
                 stream_context_get_default($opts);
 
-                $headers = get_headers($url . ($params ? '?' . $params : ''));
+                $headers = get_headers($url . ($query_params ? '?' . $query_params : ''));
 
                 // Restore the stream context options.
                 stream_context_get_default($default);

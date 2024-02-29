@@ -115,9 +115,6 @@ class NextendSocialLoginAdmin {
     public static function admin_init() {
 
         if (current_user_can(NextendSocialLogin::getRequiredCapability())) {
-            if (!defined('NSL_PRO_PATH')) {
-                require_once(dirname(__FILE__) . '/notice.php');
-            }
 
             if (!isset($_GET['page']) || $_GET['page'] != 'nextend-social-login' || !isset($_GET['view']) || $_GET['view'] != 'fix-redirect-uri') {
                 add_action('admin_notices', 'NextendSocialLoginAdmin::show_oauth_uri_notice');
@@ -126,7 +123,6 @@ class NextendSocialLoginAdmin {
             if (!self::isPro() && NextendSocialLogin::$settings->get('woocommerce_dismissed') == 0 && class_exists('woocommerce', false) && count(NextendSocialLogin::$enabledProviders)) {
                 add_action('admin_notices', 'NextendSocialLoginAdmin::show_woocommerce_notice');
             }
-
 
             if (defined('THEME_MY_LOGIN_VERSION') && version_compare(THEME_MY_LOGIN_VERSION, '7.0.0', '>=')) {
                 if (!NextendSocialLogin::getRegisterFlowPage() || !NextendSocialLogin::getProxyPage()) {
@@ -382,6 +378,7 @@ class NextendSocialLoginAdmin {
                 case 'show_embedded_login_form':
                 case 'embedded_login_form_button_align':
                 case 'redirect_overlay':
+                case 'unsupported_webview_behavior':
                     $newData[$key] = sanitize_text_field($value);
                     break;
                 case 'enabled':
@@ -525,7 +522,7 @@ class NextendSocialLoginAdmin {
 
         if (is_wp_error($request)) {
 
-            throw new Exception($request->get_error_message());
+            throw new NSLSanitizedRequestErrorMessageException($request->get_error_message());
         } else if (wp_remote_retrieve_response_code($request) !== 200) {
 
             $response = json_decode(wp_remote_retrieve_body($request), true);
@@ -537,7 +534,7 @@ class NextendSocialLoginAdmin {
                 return new WP_Error('error', $message);
             }
 
-            throw new Exception(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
+            throw new NSLSanitizedRequestErrorMessageException(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
         }
 
         $response = json_decode(wp_remote_retrieve_body($request), true);

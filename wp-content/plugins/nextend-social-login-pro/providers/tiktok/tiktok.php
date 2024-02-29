@@ -191,7 +191,7 @@ class NextendSocialPROProviderTiktok extends NextendSocialProviderOAuth {
         /**
          * TikTok made entire API modifications in the past, that could cause unexpected results. If we get to this point, we should throw an error!
          */
-        throw new Exception(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), json_encode($user)));
+        throw new NSLSanitizedRequestErrorMessageException(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), json_encode($user)));
 
     }
 

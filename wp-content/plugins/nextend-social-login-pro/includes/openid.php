@@ -60,7 +60,7 @@ abstract class NextendSocialOpenID extends NextendSocialAuth {
 
     public function checkError() {
         if (isset($_REQUEST['error']) && isset($_REQUEST['error_description'])) {
-            throw new Exception($_REQUEST['error'] . ': ' . htmlspecialchars_decode($_REQUEST['error_description']));
+            throw new NSLSanitizedRequestErrorMessageException($_REQUEST['error'] . ': ' . htmlspecialchars_decode($_REQUEST['error_description']));
         }
     }
 
@@ -98,9 +98,9 @@ abstract class NextendSocialOpenID extends NextendSocialAuth {
                 return add_query_arg($args, $authUrl);
             }
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new NSLSanitizedRequestErrorMessageException($e->getMessage());
         }
-        throw new Exception(__('Unexpected response: The provider didn\'t return the Authorization URL!', 'nextend-facebook-connect'));
+        throw new NSLSanitizedRequestErrorMessageException(__('Unexpected response: The provider didn\'t return the Authorization URL!', 'nextend-facebook-connect'));
     }
 
     /**
@@ -156,7 +156,7 @@ abstract class NextendSocialOpenID extends NextendSocialAuth {
      */
     protected function errorFromResponse($response) {
         if (isset($response['error'])) {
-            throw new Exception($response['error'] . ': ' . $response['error_description']);
+            throw new NSLSanitizedRequestErrorMessageException($response['error'] . ': ' . $response['error_description']);
         }
     }
 
@@ -185,7 +185,7 @@ abstract class NextendSocialOpenID extends NextendSocialAuth {
 
         if (is_wp_error($request)) {
 
-            throw new Exception($request->get_error_message());
+            throw new NSLSanitizedRequestErrorMessageException($request->get_error_message());
         } else if (wp_remote_retrieve_response_code($request) !== 200) {
 
             $this->errorFromResponse(json_decode(wp_remote_retrieve_body($request), true));
@@ -194,7 +194,7 @@ abstract class NextendSocialOpenID extends NextendSocialAuth {
         $result = json_decode(wp_remote_retrieve_body($request), true);
 
         if (!is_array($result)) {
-            throw new Exception(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
+            throw new NSLSanitizedRequestErrorMessageException(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
         }
 
         return $result;

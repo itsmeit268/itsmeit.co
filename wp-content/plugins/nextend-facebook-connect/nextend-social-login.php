@@ -20,9 +20,9 @@ require_once(NSL_PATH . '/compat.php');
 
 class NextendSocialLogin {
 
-    public static $version = '3.1.11';
+    public static $version = '3.1.13';
 
-    public static $nslPROMinVersion = '3.1.11';
+    public static $nslPROMinVersion = '3.1.13';
 
     public static $proxyPage = false;
 
@@ -181,6 +181,7 @@ class NextendSocialLogin {
             'default_redirect_reg'             => '',
             'blacklisted_urls'                 => '',
             'redirect_overlay'                 => 'overlay-with-spinner-and-message',
+            'unsupported_webview_behavior'     => '',
             'target'                           => 'prefer-popup',
             'allow_register'                   => -1,
             'allow_unlink'                     => 1,
@@ -223,8 +224,6 @@ class NextendSocialLogin {
             'woocoommerce_form_button_style'   => 'default',
             'woocoommerce_form_button_align'   => 'left',
             'woocommerce_account_details'      => 'before',
-            'woocommerce_cfw'                  => 'show',
-            'woocommerce_cfw_layout'           => 'below',
 
             'memberpress_login'                        => 'before',
             'memberpress_form_button_align'            => 'left',
@@ -569,6 +568,8 @@ class NextendSocialLogin {
         if (!empty($stylesheet) && file_exists($stylesheet)) {
             echo '<style type="text/css">' . file_get_contents($stylesheet) . '</style>';
         }
+
+        self::noticeStyles();
     }
 
     public static function stylesWithoutTag() {
@@ -576,6 +577,32 @@ class NextendSocialLogin {
         $stylesheet = self::get_template_part('style.css');
         if (!empty($stylesheet) && file_exists($stylesheet)) {
             echo file_get_contents($stylesheet);
+        }
+
+        self::noticeStylesWithoutTag();
+    }
+
+    public static function noticeStyles() {
+        static $noticeStylesOnce = null;
+        if ($noticeStylesOnce === null) {
+            $noticeStylesheet = self::get_template_part('notice-styles.css');
+            if (!empty($noticeStylesheet) && file_exists($noticeStylesheet)) {
+                echo '<style type="text/css">' . file_get_contents($noticeStylesheet) . '</style>';
+            }
+
+            $noticeStylesOnce = true;
+        }
+    }
+
+    public static function noticeStylesWithoutTag() {
+        static $noticeStylesOnce = null;
+        if ($noticeStylesOnce === null) {
+            $noticeStylesheet = self::get_template_part('notice-styles.css');
+            if (!empty($noticeStylesheet) && file_exists($noticeStylesheet)) {
+                echo file_get_contents($noticeStylesheet);
+            }
+
+            $noticeStylesOnce = true;
         }
     }
 
@@ -603,11 +630,19 @@ class NextendSocialLogin {
             $scripts = NSL_PATH . '/js/nsl.js';
             if (file_exists($scripts)) {
                 $localizedStrings = array(
-                    'redirect_overlay_title' => __('Hold On', 'nextend-facebook-connect'),
-                    'redirect_overlay_text'  => __('You are being redirected to another page,<br>it may take a few seconds.', 'nextend-facebook-connect')
+                    'redirect_overlay_title'    => __('Hold On', 'nextend-facebook-connect'),
+                    'redirect_overlay_text'     => __('You are being redirected to another page,<br>it may take a few seconds.', 'nextend-facebook-connect'),
+                    'webview_notification_text' => __('The selected provider doesn\'t support embedded browsers!', 'nextend-facebook-connect'),
                 );
 
-                echo '<script type="text/javascript">(function (undefined) {var _localizedStrings=' . wp_json_encode($localizedStrings) . ';var _targetWindow=' . wp_json_encode(self::$settings->get('target')) . ';var _redirectOverlay=' . wp_json_encode(self::$settings->get('redirect_overlay')) . ";\n" . file_get_contents($scripts) . '})();</script>';
+                $scriptOptions = array(
+                    '_localizedStrings'           => $localizedStrings,
+                    '_targetWindow'               => self::$settings->get('target'),
+                    '_redirectOverlay'            => self::$settings->get('redirect_overlay'),
+                    '_unsupportedWebviewBehavior' => self::$settings->get('unsupported_webview_behavior'),
+                );
+
+                echo '<script type="text/javascript">(function (undefined) {let scriptOptions=' . wp_json_encode($scriptOptions) . ";\n" . file_get_contents($scripts) . '})();</script>';
             }
             $once = true;
         }

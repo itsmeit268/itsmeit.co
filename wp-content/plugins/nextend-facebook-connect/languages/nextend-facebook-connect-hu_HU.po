@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nextend-facebook-connect\n"
-"POT-Creation-Date: 2023-11-03 17:51+0100\n"
-"PO-Revision-Date: 2023-11-03 17:51+0100\n"
+"POT-Creation-Date: 2024-02-20 21:02+0100\n"
+"PO-Revision-Date: 2024-02-20 21:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: nextend-facebook-connect\n"
 "Language: hu\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -932,8 +932,8 @@ msgstr ""
 #, php-format
 msgid ""
 "Enabling this option will add a GET parameter to the URL where we redirect "
-"after a successful registration or login with social login. %1$sLearn more"
-"%2$s."
+"after a successful registration or login with social login. %1$sLearn "
+"more%2$s."
 msgstr ""
 
 msgid "Page for register flow"
@@ -1061,6 +1061,28 @@ msgstr ""
 msgid "Note:"
 msgstr ""
 
+msgid "Unsupported WebView behavior"
+msgstr ""
+
+#, fuzzy
+#| msgid "Image button"
+msgid "Remove button"
+msgstr "Gomb képpel"
+
+#, fuzzy
+#| msgid "Default button"
+msgid "Disable button"
+msgstr "Alap gomb"
+
+#, php-format
+msgid "Some %1$sproviders%2$s don't support embedded browsers."
+msgstr ""
+
+msgid ""
+"This setting defines if we should remove or disable the related buttons in "
+"WebView environments."
+msgstr ""
+
 msgid "Below and floating"
 msgstr "Alul lebegve"
 
@@ -1158,17 +1180,6 @@ msgstr "Login elrendezése"
 msgid "Default with separator"
 msgstr "Alul, elválasztóval"
 
-msgid "Checkout for WooCommerce"
-msgstr ""
-
-#, fuzzy
-#| msgid "No Connect button in login form"
-msgid "No Connect button in \"Checkout for WooCommerce\" form"
-msgstr "Ne legyen összekapcsoló gomb a belépő űrlapnál"
-
-msgid "Checkout for WooCommerce layout"
-msgstr ""
-
 #, fuzzy
 #| msgid "No Connect button in login form"
 msgid "No Connect buttons in account details form"
@@ -1222,12 +1233,6 @@ msgid "Avatar <span class=\"count\">(%s)</span>"
 msgid_plural "Avatar <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
-
-msgid "Invalid URL Provided."
-msgstr ""
-
-msgid "Could not create Temporary file."
-msgstr ""
 
 #, php-format
 msgid "%1$s &lsaquo; %2$s &#8212; WordPress"
@@ -1377,8 +1382,8 @@ msgid "Update now!"
 msgstr ""
 
 msgid ""
-"By clicking Register, you accept our <a href=\"#privacy_policy_url\" target="
-"\"_blank\">Privacy Policy</a>"
+"By clicking Register, you accept our <a href=\"#privacy_policy_url\" "
+"target=\"_blank\">Privacy Policy</a>"
 msgstr ""
 
 msgid "Hold On"
@@ -1386,6 +1391,9 @@ msgstr "Egy kis türelmet kérünk..."
 
 msgid "You are being redirected to another page,<br>it may take a few seconds."
 msgstr "Átirányítás folyamatban,<br> ez eltarthat néhány másodpercig."
+
+msgid "The selected provider doesn't support embedded browsers!"
+msgstr ""
 
 msgid "Social Login"
 msgstr "Közösségi belépés"
@@ -1679,8 +1687,8 @@ msgstr "Kötelező"
 
 #, php-format
 msgid ""
-"If you are not sure what is your %1$s, please head over to <a href=\"%2$s"
-"\">Getting Started</a>"
+"If you are not sure what is your %1$s, please head over to <a "
+"href=\"%2$s\">Getting Started</a>"
 msgstr ""
 "Ha nem vagy benne biztos, hogy mit kell írnod a(z) %1$s mezőbe, menj vissza "
 "az <a href=\"%2$s\">Első lépések</a> fülre."
@@ -1749,8 +1757,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Under the \"<b>OAuth 2.0 Client IDs</b>\" section find your Client ID: <b>"
-"%s</b>"
+"Under the \"<b>OAuth 2.0 Client IDs</b>\" section find your Client ID: "
+"<b>%s</b>"
 msgstr ""
 
 #, fuzzy, php-format
@@ -1830,9 +1838,22 @@ msgid ""
 msgstr ""
 
 #, fuzzy, php-format
+#| msgid "Fill \"Site URL\" with the url of your homepage, probably: <b>%s</b>"
+msgid "Fill the %1$s field with the url of your homepage, probably: %2$s"
+msgstr ""
+"Írd be a weboldalad főoldalának címét a \"Site URL\" mezőbe. Valószínűleg ez "
+"lesz az: <b>%s</b>"
+
+#, php-format
+msgid ""
+"Enter your privacy policy and terms of service links into the %1$s and %2$s "
+"fields."
+msgstr ""
+
+#, fuzzy, php-format
 #| msgid ""
-#| "Fill the \"Authorized domains\" field with your domain name probably: <b>"
-#| "%s</b> without subdomains!"
+#| "Fill the \"Authorized domains\" field with your domain name probably: "
+#| "<b>%s</b> without subdomains!"
 msgid ""
 "Under the \"<b>%1$s</b>\" section press the \"<b>%2$s</b>\" button and  "
 "enter your domain name, probably: <b>%3$s</b> without subdomains!"
@@ -1899,9 +1920,9 @@ msgstr ""
 #, php-format
 msgid ""
 "Currently your App is in %1$s mode, so only limited number of people can use "
-"it. To allow this App for any user with a Google Account, click on the \"%2$s"
-"\" option on the left side, then click the \"%3$s\" button under the \"%4$s"
-"\" section, and press the \"%5$s\" button. "
+"it. To allow this App for any user with a Google Account, click on the "
+"\"%2$s\" option on the left side, then click the \"%3$s\" button under the "
+"\"%4$s\" section, and press the \"%5$s\" button. "
 msgstr ""
 
 msgid "Client ID"
@@ -2080,9 +2101,9 @@ msgstr ""
 
 #, php-format
 msgid ""
-"You’ll find your API key and secret on this page. Copy and paste the \"<b>"
-"%1$s</b>\" and the \"<b>%2$s</b>\" to the corresponding fields at %3$s and "
-"press \"<b>Save Changes</b>\"."
+"You’ll find your API key and secret on this page. Copy and paste the "
+"\"<b>%1$s</b>\" and the \"<b>%2$s</b>\" to the corresponding fields at %3$s "
+"and press \"<b>Save Changes</b>\"."
 msgstr ""
 
 #, php-format
@@ -2268,6 +2289,11 @@ msgstr ""
 
 #, php-format
 msgid ""
+"The Spotify Sync data requires the %1$s with the necessary scopes enabled!"
+msgstr ""
+
+#, php-format
+msgid ""
 "The TikTok Sync data requires the %1$s with the necessary scopes enabled!"
 msgstr ""
 
@@ -2303,8 +2329,8 @@ msgstr ""
 "oldalon."
 
 msgid ""
-"Fill \"<b>Security Profile Name</b>\", \"<b>Security Profile Description</b>"
-"\" and \"<b>Consent Privacy Notice URL</b>\"."
+"Fill \"<b>Security Profile Name</b>\", \"<b>Security Profile Description</"
+"b>\" and \"<b>Consent Privacy Notice URL</b>\"."
 msgstr ""
 
 msgid "Once you filled all the required fields, click \"<b>Save</b>\"."
@@ -2315,8 +2341,8 @@ msgstr ""
 #| "Fill \"Allowed Origins\" with the url of your homepage, probably: <b>%s</"
 #| "b>"
 msgid ""
-"Fill \"<b>Allowed Origins</b>\" with the url of your homepage, probably: <b>"
-"%s</b>"
+"Fill \"<b>Allowed Origins</b>\" with the url of your homepage, probably: "
+"<b>%s</b>"
 msgstr ""
 "Írd be a weboldalad főoldalának címét a \"Allowed Origins\" mezőbe. "
 "Valószínűleg ez lesz az: <b>%s</b>"
@@ -2385,8 +2411,8 @@ msgid ""
 "To allow your visitors to log in with their %1$s account, first you must "
 "create an %1$s App. The following guide will help you through the %1$s App "
 "creation process. After you have created your %1$s App, head over to "
-"\"Settings\" and configure the given \"%2$s\", \"%3$s\", \"%4$s\" and \"%5$s"
-"\" according to your %1$s App."
+"\"Settings\" and configure the given \"%2$s\", \"%3$s\", \"%4$s\" and "
+"\"%5$s\" according to your %1$s App."
 msgstr ""
 "Ahhoz. hogy a felhasználók beléphessenek a %1$s fiókjukkal, először létre "
 "kell hoznod egy %1$s Appot. Az alábbi útmutató végig vezet a %1$s App "
@@ -2458,13 +2484,13 @@ msgstr ""
 
 msgid ""
 "If you have multiple Apps, then at the \"<b>Choose a Primary App ID</b>\" "
-"field <b>select the App what you just created</b>, then click \"<b>Save</b>"
-"\"."
+"field <b>select the App what you just created</b>, then click \"<b>Save</"
+"b>\"."
 msgstr ""
 
 msgid ""
-"Finally press the \"<b>Continue</b>\" button and then the \"<b>Register</b>"
-"\" button."
+"Finally press the \"<b>Continue</b>\" button and then the \"<b>Register</"
+"b>\" button."
 msgstr ""
 
 msgid "<b>Don't download the key yet!</b>"
@@ -2558,8 +2584,8 @@ msgstr ""
 
 msgid ""
 "<b>Open the downloaded file</b> with a text editor, like Notepad, <b><u>copy "
-"all of its contents</u></b> and <b>paste it</b> into the \"<b>Private Key</b>"
-"\" field of Nextend Social Login."
+"all of its contents</u></b> and <b>paste it</b> into the \"<b>Private Key</"
+"b>\" field of Nextend Social Login."
 msgstr ""
 
 msgid "<strong><u>Team Identifier:</u></strong>"
@@ -3818,8 +3844,8 @@ msgid "Scroll down to the \"<b>Remove Hard Coded Information</b>\" section."
 msgstr ""
 
 msgid ""
-"Click on the \"<b>I’ve reviewed and removed any hard-coded information.</b>"
-"\". "
+"Click on the \"<b>I’ve reviewed and removed any hard-coded information.</"
+"b>\". "
 msgstr ""
 
 #, fuzzy
@@ -3893,6 +3919,99 @@ msgstr "Fiók összekapcsolása a <b>Facebook</b>-kal"
 msgid "Unlink account from <b>Slack</b>"
 msgstr "Szétkapcsolás <b>Facebook</b>-tól"
 
+msgid "Green"
+msgstr ""
+
+#, fuzzy, php-format
+#| msgid ""
+#| "Select \"Read only\" at Default Access under the Authentication section."
+msgid ""
+"Find the %1$s button on the top right and scroll down to the %2$s button, "
+"and click on it!"
+msgstr ""
+"Válaszd ki a \"Read only\"-t a Default Access-nél az Authentication "
+"szekcióban."
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Finally, click on the %s button at the bottom."
+msgstr "Kattints a \"Create\" gombra"
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Click on the purple \"%s\" button!"
+msgstr "Kattints a \"Create\" gombra"
+
+#, php-format
+msgid ""
+"Enter an \"%1$s\" and \"%2$s\" of your choice (they will be displayed to the "
+"user on the grant screen)."
+msgstr ""
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Choose the \"%1$s\" option at \"%2$s\"."
+msgstr "Kattints a \"Create\" gombra"
+
+#, fuzzy, php-format
+#| msgid "Name your project and then click on the Create button again"
+msgid "Read through the \"%1$s\" and put a tick in the checkbox."
+msgstr "Adj nevet a projektnek és kattints a \"Create\" gombra újra."
+
+#, php-format
+msgid ""
+"Click on \"%1$s\". Your application is now registered, and you'll be "
+"redirected to the app overview page."
+msgstr ""
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Click on the the %1$s button."
+msgstr "Kattints a \"Create\" gombra"
+
+#, php-format
+msgid ""
+"Click on \"%1$s\", copy and save the \"%2$s\" value. This is what you will "
+"use later on the Settings tab for the \"%2$s\" field."
+msgstr ""
+
+#, php-format
+msgid ""
+"Currently your app is in %1$s which  means that, up to 25 authenticated %2$s "
+"users can use your app. If you want anybody with a %2$s account to use your "
+"app, then you need to move to %3$s. To request %3$s, use the navigation menu "
+"and go to %4$s, then hit \"%5$s\", and go through the \"%6$s\" process. In "
+"the last step you will need to choose the following OAuth scope: %7$s and "
+"all the other extra scopes connected to the %8$s fields you enabled."
+msgstr ""
+
+#, php-format
+msgid ""
+"Once %1$s reviewed and approved your request ( it can take up to 6 weeks ), "
+"find the \"%2$s\" and \"%3$s\" values you copied earlier. Enter these for "
+"the fields with the same name on the \"%4$s\" tab."
+msgstr ""
+
+#, fuzzy
+#| msgid "Continue with <b>LinkedIn</b>"
+msgid "Continue with <b>Spotify</b>"
+msgstr "Folytatás a <b>LinkedIn</b>-nel"
+
+#, fuzzy
+#| msgid "Sign up with <b>Facebook</b>"
+msgid "Sign up with <b>Spotify</b>"
+msgstr "Regisztrálás a <b>Facebook</b>-kal"
+
+#, fuzzy
+#| msgid "Link account with <b>Facebook</b>"
+msgid "Link account with <b>Spotify</b>"
+msgstr "Fiók összekapcsolása a <b>Facebook</b>-kal"
+
+#, fuzzy
+#| msgid "Unlink account from <b>Facebook</b>"
+msgid "Unlink account from <b>Spotify</b>"
+msgstr "Szétkapcsolás <b>Facebook</b>-tól"
+
 #, fuzzy, php-format
 #| msgid ""
 #| "To allow your visitors to log in with their %1$s account, first you must "
@@ -3934,8 +4053,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"<b>WARNING:</b> The %1$s API can not return any email address! %2$sLearn more"
-"%3$s."
+"<b>WARNING:</b> The %1$s API can not return any email address! %2$sLearn "
+"more%3$s."
 msgstr ""
 
 msgid "Web API Key"
@@ -4206,8 +4325,8 @@ msgstr ""
 #| msgid ""
 #| "Fill \"Site address\" with the url of your homepage, probably: <b>%s</b>"
 msgid ""
-"Fill \"<b>Website address</b>\" with the url of your homepage, probably: <b>"
-"%s</b>"
+"Fill \"<b>Website address</b>\" with the url of your homepage, probably: "
+"<b>%s</b>"
 msgstr ""
 "Írd be a weboldalad főoldalának címét a \"Site address\" mezőbe. "
 "Valószínűleg ez lesz az: <b>%s</b>"
@@ -4418,6 +4537,26 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
+#, fuzzy, php-format
+#~| msgid "Click on the Create button"
+#~ msgid "Hit the %1$s button next to the old URI."
+#~ msgstr "Kattints a \"Create\" gombra"
+
+#, fuzzy, php-format
+#~| msgid "Add the following URL to the \"Live Return URL\" field <b>%s</b> "
+#~ msgid "Add your web domain or URL to the \"%1$s\" field."
+#~ msgstr "Tedd a következő linket az \"Live Return URL\" mezőbe: <b>%s</b>"
+
+#, fuzzy, php-format
+#~| msgid "Make sure that the \"%1$s\" field contains %2$s"
+#~ msgid "For the \"%1$s\", enter the following URL: "
+#~ msgstr "Győződj meg róla, hogy a \"%1$s\" mező tartalmazza: %2$s"
+
+#, fuzzy
+#~| msgid "No Connect button in login form"
+#~ msgid "No Connect button in \"Checkout for WooCommerce\" form"
+#~ msgstr "Ne legyen összekapcsoló gomb a belépő űrlapnál"
+
 #~ msgid "Click on \"Save\""
 #~ msgstr "Kattints a \"Save\" gombra"
 
@@ -4487,8 +4626,8 @@ msgstr ""
 #, fuzzy, php-format
 #~| msgid "Add the following URL to the \"Redirect URLs\" field <b>%s</b> "
 #~ msgid ""
-#~ "Select \"<b>Web</b>\" and enter the following URL to the \"<b>Site URL</b>"
-#~ "\" field: <b>%s</b>"
+#~ "Select \"<b>Web</b>\" and enter the following URL to the \"<b>Site URL</"
+#~ "b>\" field: <b>%s</b>"
 #~ msgstr "Tedd a következő linket az \"Redirect URLs:\" mezőbe: <b>%s</b>"
 
 #, fuzzy
@@ -4504,15 +4643,15 @@ msgstr ""
 #, fuzzy, php-format
 #~| msgid "Enter your domain name to the App Domains"
 #~ msgid ""
-#~ "Enter your domain name to the \"<b>App Domains</b>\" field, probably: <b>"
-#~ "%s</b>"
+#~ "Enter your domain name to the \"<b>App Domains</b>\" field, probably: "
+#~ "<b>%s</b>"
 #~ msgstr "Írd be a domain neved az \"App Domains\" mezőbe"
 
 #, fuzzy
 #~| msgid ""
 #~| "Your application is currently private ( Status: In Development ), which "
-#~| "means that only you can log in with it. In the top bar click on the \"OFF"
-#~| "\" switcher and select a category for your App."
+#~| "means that only you can log in with it. In the top bar click on the "
+#~| "\"OFF\" switcher and select a category for your App."
 #~ msgid ""
 #~ "Your application is currently private, which means that only you can log "
 #~ "in with it. In the top bar switch the \"<b>App Mode</b>\" from "
@@ -4652,8 +4791,8 @@ msgstr ""
 #~| msgid ""
 #~| "Add the following URL to the \"Authorized redirect URI\" field <b>%s</b> "
 #~ msgid ""
-#~ "Add the following URL to the \"<b>Authorized redirect URI</b>\" field <b>"
-#~ "%s</b> "
+#~ "Add the following URL to the \"<b>Authorized redirect URI</b>\" field "
+#~ "<b>%s</b> "
 #~ msgstr ""
 #~ "Tedd a következő linket az \"Authorized redirect URI\" mezőbe: <b>%s</b>"
 
@@ -4834,11 +4973,6 @@ msgstr ""
 
 #~ msgid "Choose Web"
 #~ msgstr "Válaszd a \"Web\"-et"
-
-#~ msgid "Fill \"Site URL\" with the url of your homepage, probably: <b>%s</b>"
-#~ msgstr ""
-#~ "Írd be a weboldalad főoldalának címét a \"Site URL\" mezőbe. Valószínűleg "
-#~ "ez lesz az: <b>%s</b>"
 
 #~ msgid ""
 #~ "%s took the place of Nextend Google Connect. You can delete Nextend "

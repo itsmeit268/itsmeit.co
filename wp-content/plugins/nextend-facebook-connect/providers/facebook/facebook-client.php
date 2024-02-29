@@ -3,7 +3,7 @@ require_once NSL_PATH . '/includes/oauth2.php';
 
 class NextendSocialProviderFacebookClient extends NextendSocialOauth2 {
 
-    const DEFAULT_GRAPH_VERSION = 'v13.0';
+    const DEFAULT_GRAPH_VERSION = 'v19.0';
 
     private $isTest = false;
 
@@ -74,7 +74,7 @@ class NextendSocialProviderFacebookClient extends NextendSocialOauth2 {
 
         if (is_wp_error($request)) {
 
-            throw new Exception($request->get_error_message());
+            throw new NSLSanitizedRequestErrorMessageException($request->get_error_message());
         } else if (wp_remote_retrieve_response_code($request) !== 200) {
 
             $this->errorFromResponse(json_decode(wp_remote_retrieve_body($request), true));
@@ -83,7 +83,7 @@ class NextendSocialProviderFacebookClient extends NextendSocialOauth2 {
         $accessTokenData = json_decode(wp_remote_retrieve_body($request), true);
 
         if (!is_array($accessTokenData)) {
-            throw new Exception(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
+            throw new NSLSanitizedRequestErrorMessageException(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
         }
 
         $accessTokenData['created'] = time();
@@ -95,7 +95,7 @@ class NextendSocialProviderFacebookClient extends NextendSocialOauth2 {
 
     protected function errorFromResponse($response) {
         if (isset($response['error'])) {
-            throw new Exception($response['error']['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['error']['message']);
         }
     }
 

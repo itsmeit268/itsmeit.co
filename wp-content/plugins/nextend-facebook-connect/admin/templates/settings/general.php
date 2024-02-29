@@ -304,6 +304,22 @@
         </td>
     </tr>
 
+    <tr>
+        <th scope="row"><?php _e('Unsupported WebView behavior', 'nextend-facebook-connect'); ?></th>
+        <td>
+            <fieldset>
+                <label><input type="radio" name="unsupported_webview_behavior"
+                              value="" <?php if ($settings->get('unsupported_webview_behavior') == '') : ?> checked="checked" <?php endif; ?>>
+                    <span><?php _e('Remove button', 'nextend-facebook-connect'); ?></span></label><br>
+                <label><input type="radio" name="unsupported_webview_behavior"
+                              value="disable-button" <?php if ($settings->get('unsupported_webview_behavior') == 'disable-button') : ?> checked="checked" <?php endif; ?>>
+                    <span><?php _e('Disable button', 'nextend-facebook-connect'); ?></span></label><br>
+            </fieldset>
+            <p class="description"><?php printf(__('Some %1$sproviders%2$s don\'t support embedded browsers.', 'nextend-facebook-connect'), '<a href="https://nextendweb.com/nextend-social-login-docs/can-use-nextend-social-login-webview/" target="_blank">', '</a>'); ?></p>
+            <p class="description"><?php printf(__('This setting defines if we should remove or disable the related buttons in WebView environments.', 'nextend-facebook-connect'), '<a href="https://nextendweb.com/nextend-social-login-docs/can-use-nextend-social-login-webview/" target="_blank">', '</a>'); ?></p>
+        </td>
+    </tr>
+
     </tbody>
 </table>
 

@@ -61,7 +61,7 @@ class NextendSocialProviderGoogleClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['error']['message'])) {
-            throw new Exception($response['error']['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['error']['message']);
         }
     }
 

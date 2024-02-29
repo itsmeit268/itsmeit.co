@@ -52,9 +52,9 @@ class NextendSocialProviderTwitchClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['error']) && isset($response['message'])) {
-            throw new Exception($response['error'] . ' - ' . $response['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['error'] . ' - ' . $response['message']);
         } else if (isset($response['status']) && isset($response['message'])) {
-            throw new Exception($response['status'] . ' - ' . $response['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['status'] . ' - ' . $response['message']);
         } else {
             parent::errorFromResponse($response);
         }

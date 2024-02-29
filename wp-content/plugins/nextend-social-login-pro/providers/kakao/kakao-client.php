@@ -58,7 +58,7 @@ class NextendSocialProviderKakaoClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['code']) && isset($response['response'])) {
-            throw new Exception($response['code'] . ' - ' . $response['response']);
+            throw new NSLSanitizedRequestErrorMessageException($response['code'] . ' - ' . $response['response']);
         } else {
             parent::errorFromResponse($response);
         }

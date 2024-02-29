@@ -50,7 +50,7 @@ class NextendSocialProviderRedditClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['message']) && isset($response['error'])) {
-            throw new Exception($response['message'] . ' - ' . $response['error']);
+            throw new NSLSanitizedRequestErrorMessageException($response['message'] . ' - ' . $response['error']);
         } else {
             parent::errorFromResponse($response);
         }

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nextend-facebook-connect\n"
-"POT-Creation-Date: 2023-11-03 17:50+0100\n"
+"POT-Creation-Date: 2024-02-20 21:02+0100\n"
 "PO-Revision-Date: 2020-06-29 13:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: nextend-facebook-connect\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -960,6 +960,24 @@ msgstr ""
 msgid "Note:"
 msgstr ""
 
+msgid "Unsupported WebView behavior"
+msgstr ""
+
+msgid "Remove button"
+msgstr ""
+
+msgid "Disable button"
+msgstr ""
+
+#, php-format
+msgid "Some %1$sproviders%2$s don't support embedded browsers."
+msgstr ""
+
+msgid ""
+"This setting defines if we should remove or disable the related "
+"buttons in WebView environments."
+msgstr ""
+
 msgid "Below and floating"
 msgstr ""
 
@@ -1041,15 +1059,6 @@ msgstr ""
 msgid "Default with separator"
 msgstr ""
 
-msgid "Checkout for WooCommerce"
-msgstr ""
-
-msgid "No Connect button in \"Checkout for WooCommerce\" form"
-msgstr ""
-
-msgid "Checkout for WooCommerce layout"
-msgstr ""
-
 msgid "No Connect buttons in account details form"
 msgstr ""
 
@@ -1093,12 +1102,6 @@ msgid "Avatar <span class=\"count\">(%s)</span>"
 msgid_plural "Avatar <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
-
-msgid "Invalid URL Provided."
-msgstr ""
-
-msgid "Could not create Temporary file."
-msgstr ""
 
 #, php-format
 msgid "%1$s &lsaquo; %2$s &#8212; WordPress"
@@ -1236,6 +1239,9 @@ msgstr ""
 
 msgid ""
 "You are being redirected to another page,<br>it may take a few seconds."
+msgstr ""
+
+msgid "The selected provider doesn't support embedded browsers!"
 msgstr ""
 
 msgid "Social Login"
@@ -1505,8 +1511,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"If you are not sure what is your %1$s, please head over to <a href="
-"\"%2$s\">Getting Started</a>"
+"If you are not sure what is your %1$s, please head over to <a "
+"href=\"%2$s\">Getting Started</a>"
 msgstr ""
 
 msgid "App Secret"
@@ -1584,8 +1590,8 @@ msgid ""
 "If you don't have a project yet, you'll need to create one. You can do "
 "this by clicking on the blue \"<b>%1$s</b>\" text on the right side!  "
 "( If you already have a project, then in the top bar click on the name "
-"of your project instead, which will bring up a modal and click <b>"
-"\"%2$s\"</b>. )"
+"of your project instead, which will bring up a modal and click "
+"<b>\"%2$s\"</b>. )"
 msgstr ""
 
 #, php-format
@@ -1605,8 +1611,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Choose a <b>%1$s</b> according to your needs and press \"<b>%2$s</b>"
-"\". If you want to enable the social login with %3$s for any users "
+"Choose a <b>%1$s</b> according to your needs and press \"<b>%2$s</"
+"b>\". If you want to enable the social login with %3$s for any users "
 "with a %3$s account, then pick the \"%4$s\" option!"
 msgstr ""
 
@@ -1627,6 +1633,16 @@ msgstr ""
 msgid ""
 "For the \"<b>%1$s</b>\" field, select an email address that users can "
 "use to contact you with questions about their consent."
+msgstr ""
+
+#, php-format
+msgid "Fill the %1$s field with the url of your homepage, probably: %2$s"
+msgstr ""
+
+#, php-format
+msgid ""
+"Enter your privacy policy and terms of service links into the %1$s and "
+"%2$s fields."
 msgstr ""
 
 #, php-format
@@ -1856,15 +1872,16 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Go back to your X project and on the left side, under the \"<b>%s</b>"
-"\" section click on the name of your App."
+"Go back to your X project and on the left side, under the \"<b>%s</"
+"b>\" section click on the name of your App."
 msgstr ""
 
 #, php-format
 msgid ""
 "If you want to get the email address as well, then don’t forget to "
-"enable the %1$s option. In this case you also need to fill the \"<b>"
-"%2$s</b>\" and the \"<b>%3$s</b>\" fields with the corresponding URLs!"
+"enable the %1$s option. In this case you also need to fill the "
+"\"<b>%2$s</b>\" and the \"<b>%3$s</b>\" fields with the corresponding "
+"URLs!"
 msgstr ""
 
 #, php-format
@@ -2024,6 +2041,12 @@ msgstr ""
 
 #, php-format
 msgid ""
+"The Spotify Sync data requires the %1$s with the necessary scopes "
+"enabled!"
+msgstr ""
+
+#, php-format
+msgid ""
 "The TikTok Sync data requires the %1$s with the necessary scopes "
 "enabled!"
 msgstr ""
@@ -2112,13 +2135,13 @@ msgid ""
 "To allow your visitors to log in with their %1$s account, first you "
 "must create an %1$s App. The following guide will help you through the "
 "%1$s App creation process. After you have created your %1$s App, head "
-"over to \"Settings\" and configure the given \"%2$s\", \"%3$s\", \"%4$s"
-"\" and \"%5$s\" according to your %1$s App."
+"over to \"Settings\" and configure the given \"%2$s\", \"%3$s\", "
+"\"%4$s\" and \"%5$s\" according to your %1$s App."
 msgstr ""
 
 msgid ""
-"Make sure you have an <strong>active subscription for the <a href="
-"\"https://developer.apple.com/programs/\" target=\"_blank\">Apple "
+"Make sure you have an <strong>active subscription for the <a "
+"href=\"https://developer.apple.com/programs/\" target=\"_blank\">Apple "
 "Developer Program</a></strong>, as that is necessary for both creating "
 "and maintaining an Apple App!"
 msgstr ""
@@ -2179,8 +2202,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"If you have multiple Apps, then at the \"<b>Choose a Primary App ID</b>"
-"\" field <b>select the App what you just created</b>, then click "
+"If you have multiple Apps, then at the \"<b>Choose a Primary App ID</"
+"b>\" field <b>select the App what you just created</b>, then click "
 "\"<b>Save</b>\"."
 msgstr ""
 
@@ -2197,8 +2220,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Go to the \"<b>%1$s</b>\" section, what you will find within the \"%2$s"
-"\" tab."
+"Go to the \"<b>%1$s</b>\" section, what you will find within the "
+"\"%2$s\" tab."
 msgstr ""
 
 #, php-format
@@ -2245,8 +2268,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Finally press the \"<b>Continue</b>\" button and then the \"<b>Save</b>"
-"\" button."
+"Finally press the \"<b>Continue</b>\" button and then the \"<b>Save</"
+"b>\" button."
 msgstr ""
 
 msgid "4.) Configure Nextend Social Login with your credentials:"
@@ -2303,8 +2326,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Once you filled up all the fields, click on the \"<b>Generate Token</b>"
-"\" button."
+"Once you filled up all the fields, click on the \"<b>Generate Token</"
+"b>\" button."
 msgstr ""
 
 msgid ""
@@ -2452,13 +2475,13 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Fill \"<b>Website</b>\" with the url of your homepage, probably: <b>"
-"%s</b>"
+"Fill \"<b>Website</b>\" with the url of your homepage, probably: "
+"<b>%s</b>"
 msgstr ""
 
 msgid ""
-"Complete the Human test and click the \"<b>Register my application</b>"
-"\" button."
+"Complete the Human test and click the \"<b>Register my application</"
+"b>\" button."
 msgstr ""
 
 #, php-format
@@ -2531,8 +2554,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Fill <b>Homepage URL</b> with the url of your homepage, probably: <b>"
-"%s</b>"
+"Fill <b>Homepage URL</b> with the url of your homepage, probably: "
+"<b>%s</b>"
 msgstr ""
 
 msgid ""
@@ -2670,8 +2693,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"In the popup you should set the \"%1$s\" to either \"%2$s\" or \"%3$s"
-"\" depending on your needs."
+"In the popup you should set the \"%1$s\" to either \"%2$s\" or "
+"\"%3$s\" depending on your needs."
 msgstr ""
 
 #, php-format
@@ -2682,10 +2705,10 @@ msgstr ""
 
 #, php-format
 msgid ""
-"%1$s The \"%2$s\" type itself and certain scopes (e.g. \"%3$s\", \"%4$s"
-"\" - used when you turn on the corresponding setting on our %5$s tab), "
-"will require you to register business information, or if you are a "
-"single developer verify your identity (both can be done under the "
+"%1$s The \"%2$s\" type itself and certain scopes (e.g. \"%3$s\", "
+"\"%4$s\" - used when you turn on the corresponding setting on our %5$s "
+"tab), will require you to register business information, or if you are "
+"a single developer verify your identity (both can be done under the "
 "\"%6$s\" menu point), in order to be able to request consent to these "
 "items."
 msgstr ""
@@ -2754,8 +2777,8 @@ msgid "Click the \"<b>Create a new provider</b>\" button."
 msgstr ""
 
 msgid ""
-"Fill the \"<b>Provider name</b>\" field and click the \"<b>Create</b>"
-"\" button."
+"Fill the \"<b>Provider name</b>\" field and click the \"<b>Create</"
+"b>\" button."
 msgstr ""
 
 msgid ""
@@ -3384,6 +3407,83 @@ msgstr ""
 msgid "Unlink account from <b>Slack</b>"
 msgstr ""
 
+msgid "Green"
+msgstr ""
+
+#, php-format
+msgid ""
+"Find the %1$s button on the top right and scroll down to the %2$s "
+"button, and click on it!"
+msgstr ""
+
+#, php-format
+msgid "Finally, click on the %s button at the bottom."
+msgstr ""
+
+#, php-format
+msgid "Click on the purple \"%s\" button!"
+msgstr ""
+
+#, php-format
+msgid ""
+"Enter an \"%1$s\" and \"%2$s\" of your choice (they will be displayed "
+"to the user on the grant screen)."
+msgstr ""
+
+#, php-format
+msgid "Choose the \"%1$s\" option at \"%2$s\"."
+msgstr ""
+
+#, php-format
+msgid "Read through the \"%1$s\" and put a tick in the checkbox."
+msgstr ""
+
+#, php-format
+msgid ""
+"Click on \"%1$s\". Your application is now registered, and you'll be "
+"redirected to the app overview page."
+msgstr ""
+
+#, php-format
+msgid "Click on the the %1$s button."
+msgstr ""
+
+#, php-format
+msgid ""
+"Click on \"%1$s\", copy and save the \"%2$s\" value. This is what you "
+"will use later on the Settings tab for the \"%2$s\" field."
+msgstr ""
+
+#, php-format
+msgid ""
+"Currently your app is in %1$s which  means that, up to 25 "
+"authenticated %2$s users can use your app. If you want anybody with a "
+"%2$s account to use your app, then you need to move to %3$s. To "
+"request %3$s, use the navigation menu and go to %4$s, then hit "
+"\"%5$s\", and go through the \"%6$s\" process. In the last step you "
+"will need to choose the following OAuth scope: %7$s and all the other "
+"extra scopes connected to the %8$s fields you enabled."
+msgstr ""
+
+#, php-format
+msgid ""
+"Once %1$s reviewed and approved your request ( it can take up to 6 "
+"weeks ), find the \"%2$s\" and \"%3$s\" values you copied earlier. "
+"Enter these for the fields with the same name on the \"%4$s\" tab."
+msgstr ""
+
+msgid "Continue with <b>Spotify</b>"
+msgstr ""
+
+msgid "Sign up with <b>Spotify</b>"
+msgstr ""
+
+msgid "Link account with <b>Spotify</b>"
+msgstr ""
+
+msgid "Unlink account from <b>Spotify</b>"
+msgstr ""
+
 #, php-format
 msgid ""
 "To allow your visitors to log in with their %1$s account, first you "
@@ -3646,8 +3746,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Fill the \"<b>Base domain</b>\" field with your domain, probably: <b>"
-"%s</b>"
+"Fill the \"<b>Base domain</b>\" field with your domain, probably: "
+"<b>%s</b>"
 msgstr ""
 
 msgid ""
@@ -3715,8 +3815,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Here you can see your \"<b>Client ID</b>\" and \"<b>Client Secret</b>"
-"\". These will be needed in the plugin's settings."
+"Here you can see your \"<b>Client ID</b>\" and \"<b>Client Secret</"
+"b>\". These will be needed in the plugin's settings."
 msgstr ""
 
 msgid "Continue with <b>WordPress.com</b>"
@@ -3747,8 +3847,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Enter the URL of your site to the \"<b>Home Page URL</b>\" field: <b>"
-"%s</b>"
+"Enter the URL of your site to the \"<b>Home Page URL</b>\" field: "
+"<b>%s</b>"
 msgstr ""
 
 #, php-format
@@ -3765,9 +3865,9 @@ msgid "Click \"<b>Create App</b>\"."
 msgstr ""
 
 msgid ""
-"On the top of the page, you will find the necessary \"<b>Client ID</b>"
-"\" and \"<b>Client Secret</b>\"! These will be needed in the plugin's "
-"settings."
+"On the top of the page, you will find the necessary \"<b>Client ID</"
+"b>\" and \"<b>Client Secret</b>\"! These will be needed in the "
+"plugin's settings."
 msgstr ""
 
 msgid "Continue with <b>Yahoo</b>"

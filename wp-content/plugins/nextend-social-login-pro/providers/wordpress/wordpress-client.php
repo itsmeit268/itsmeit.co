@@ -28,7 +28,7 @@ class NextendSocialProviderWordpressClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['error']) && isset($response['message'])) {
-            throw new Exception($response['error'] . ' - ' . $response['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['error'] . ' - ' . $response['message']);
         } else {
             parent::errorFromResponse($response);
         }

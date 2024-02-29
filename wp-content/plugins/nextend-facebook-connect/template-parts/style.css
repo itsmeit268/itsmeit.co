@@ -158,6 +158,11 @@ div.nsl-container .nsl-button-facebook[data-skin="light"] {
     box-shadow: inset 0 0 0 1px #1877F2;
 }
 
+div.nsl-container .nsl-button-spotify[data-skin="white"] {
+    color: #191414;
+    box-shadow: inset 0 0 0 1px #191414;
+}
+
 div.nsl-container .nsl-button-apple div.nsl-button-label-container {
     font-size: 17px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -189,6 +194,11 @@ div.nsl-container .nsl-button-kakao {
 
 .nsl-container {
     clear: both;
+}
+
+.nsl-disabled-provider .nsl-button {
+    filter: grayscale(1);
+    opacity: 0.8;
 }
 
 /*Button align start*/

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nextend-facebook-connect\n"
-"POT-Creation-Date: 2023-11-03 17:51+0100\n"
-"PO-Revision-Date: 2023-11-03 17:51+0100\n"
+"POT-Creation-Date: 2024-02-20 21:02+0100\n"
+"PO-Revision-Date: 2024-02-20 21:02+0100\n"
 "Last-Translator: Erik Molenaar <info@erikmolenaar.nl>\n"
 "Language-Team: nextend-facebook-connect\n"
 "Language: nl_NL\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -940,8 +940,8 @@ msgstr ""
 #, php-format
 msgid ""
 "Enabling this option will add a GET parameter to the URL where we redirect "
-"after a successful registration or login with social login. %1$sLearn more"
-"%2$s."
+"after a successful registration or login with social login. %1$sLearn "
+"more%2$s."
 msgstr ""
 
 msgid "Page for register flow"
@@ -1073,6 +1073,28 @@ msgstr ""
 msgid "Note:"
 msgstr ""
 
+msgid "Unsupported WebView behavior"
+msgstr ""
+
+#, fuzzy
+#| msgid "Image button"
+msgid "Remove button"
+msgstr "Knop afbeelding"
+
+#, fuzzy
+#| msgid "Default button"
+msgid "Disable button"
+msgstr "Standaard knop"
+
+#, php-format
+msgid "Some %1$sproviders%2$s don't support embedded browsers."
+msgstr ""
+
+msgid ""
+"This setting defines if we should remove or disable the related buttons in "
+"WebView environments."
+msgstr ""
+
 msgid "Below and floating"
 msgstr "Onder en zwevend"
 
@@ -1157,17 +1179,6 @@ msgstr "Facturering layout"
 msgid "Default with separator"
 msgstr "Hieronder met separator"
 
-msgid "Checkout for WooCommerce"
-msgstr ""
-
-#, fuzzy
-#| msgid "No Connect button in Register form"
-msgid "No Connect button in \"Checkout for WooCommerce\" form"
-msgstr "Geen Verbindingsknop in het Registratieformulier"
-
-msgid "Checkout for WooCommerce layout"
-msgstr ""
-
 msgid "No Connect buttons in account details form"
 msgstr "Geen Verbindingsknop  in het accountgegevens formulier"
 
@@ -1218,12 +1229,6 @@ msgid "Avatar <span class=\"count\">(%s)</span>"
 msgid_plural "Avatar <span class=\"count\">(%s)</span>"
 msgstr[0] "Profielfoto <span class=\"count\">(%s)</span>"
 msgstr[1] "Profielfoto <span class=\"count\">(%s)</span>"
-
-msgid "Invalid URL Provided."
-msgstr ""
-
-msgid "Could not create Temporary file."
-msgstr ""
 
 #, php-format
 msgid "%1$s &lsaquo; %2$s &#8212; WordPress"
@@ -1378,16 +1383,19 @@ msgid "Update now!"
 msgstr "Update nu!"
 
 msgid ""
-"By clicking Register, you accept our <a href=\"#privacy_policy_url\" target="
-"\"_blank\">Privacy Policy</a>"
+"By clicking Register, you accept our <a href=\"#privacy_policy_url\" "
+"target=\"_blank\">Privacy Policy</a>"
 msgstr ""
-"Door op Registreren te klikken, accepteer je onze <a href="
-"\"#privacy_policy_url\" target=\"_blank\">Privacybeleid</a>"
+"Door op Registreren te klikken, accepteer je onze <a "
+"href=\"#privacy_policy_url\" target=\"_blank\">Privacybeleid</a>"
 
 msgid "Hold On"
 msgstr ""
 
 msgid "You are being redirected to another page,<br>it may take a few seconds."
+msgstr ""
+
+msgid "The selected provider doesn't support embedded browsers!"
 msgstr ""
 
 msgid "Social Login"
@@ -1499,8 +1507,8 @@ msgstr ""
 
 #, fuzzy, php-format
 #| msgid ""
-#| "Fill \"Display Name\" and \"Contact Email\". The specified \"Display Name"
-#| "\" will appear on your %s!"
+#| "Fill \"Display Name\" and \"Contact Email\". The specified \"Display "
+#| "Name\" will appear on your %s!"
 msgid ""
 "Fill the %1$s and %2$s fields. The specified app name will appear on your "
 "%3$s!"
@@ -1694,8 +1702,8 @@ msgstr "Verplicht"
 
 #, php-format
 msgid ""
-"If you are not sure what is your %1$s, please head over to <a href=\"%2$s"
-"\">Getting Started</a>"
+"If you are not sure what is your %1$s, please head over to <a "
+"href=\"%2$s\">Getting Started</a>"
 msgstr ""
 "Als je niet zeker weet wat je %1$s is, ga dan naar <a href=\"%2$s\">Aan de "
 "slag</a>"
@@ -1762,8 +1770,8 @@ msgstr "Klik op de \"Inloggegevens\" in het linker menu"
 
 #, php-format
 msgid ""
-"Under the \"<b>OAuth 2.0 Client IDs</b>\" section find your Client ID: <b>"
-"%s</b>"
+"Under the \"<b>OAuth 2.0 Client IDs</b>\" section find your Client ID: "
+"<b>%s</b>"
 msgstr ""
 
 #, fuzzy, php-format
@@ -1844,9 +1852,21 @@ msgid ""
 msgstr ""
 
 #, fuzzy, php-format
+#| msgid "Fill \"Website\" with the url of your homepage, probably: <b>%s</b>"
+msgid "Fill the %1$s field with the url of your homepage, probably: %2$s"
+msgstr ""
+"Vul \"Website\" in met de url van je homepage, waarschijnlijk: <b>%s</b>"
+
+#, php-format
+msgid ""
+"Enter your privacy policy and terms of service links into the %1$s and %2$s "
+"fields."
+msgstr ""
+
+#, fuzzy, php-format
 #| msgid ""
-#| "Fill the \"Authorized domains\" field with your domain name probably: <b>"
-#| "%s</b> without subdomains!"
+#| "Fill the \"Authorized domains\" field with your domain name probably: "
+#| "<b>%s</b> without subdomains!"
 msgid ""
 "Under the \"<b>%1$s</b>\" section press the \"<b>%2$s</b>\" button and  "
 "enter your domain name, probably: <b>%3$s</b> without subdomains!"
@@ -1915,9 +1935,9 @@ msgstr ""
 #, php-format
 msgid ""
 "Currently your App is in %1$s mode, so only limited number of people can use "
-"it. To allow this App for any user with a Google Account, click on the \"%2$s"
-"\" option on the left side, then click the \"%3$s\" button under the \"%4$s"
-"\" section, and press the \"%5$s\" button. "
+"it. To allow this App for any user with a Google Account, click on the "
+"\"%2$s\" option on the left side, then click the \"%3$s\" button under the "
+"\"%4$s\" section, and press the \"%5$s\" button. "
 msgstr ""
 
 msgid "Client ID"
@@ -1959,8 +1979,8 @@ msgstr ""
 
 #, fuzzy, php-format
 #| msgid ""
-#| "In the left sidebar under the Products section, click on \"Facebook Login"
-#| "\" and select Settings"
+#| "In the left sidebar under the Products section, click on \"Facebook "
+#| "Login\" and select Settings"
 msgid "On the left side, under the %s section click on the name of your App."
 msgstr ""
 "Klik in de linkerzijbalk onder de Producten-sectie op \"Facebook Login\" en "
@@ -2110,15 +2130,15 @@ msgstr ""
 
 #, php-format
 msgid ""
-"You’ll find your API key and secret on this page. Copy and paste the \"<b>"
-"%1$s</b>\" and the \"<b>%2$s</b>\" to the corresponding fields at %3$s and "
-"press \"<b>Save Changes</b>\"."
+"You’ll find your API key and secret on this page. Copy and paste the "
+"\"<b>%1$s</b>\" and the \"<b>%2$s</b>\" to the corresponding fields at %3$s "
+"and press \"<b>Save Changes</b>\"."
 msgstr ""
 
 #, fuzzy, php-format
 #| msgid ""
-#| "In the left sidebar under the Products section, click on \"Facebook Login"
-#| "\" and select Settings"
+#| "In the left sidebar under the Products section, click on \"Facebook "
+#| "Login\" and select Settings"
 msgid ""
 "Go back to your X project and on the left side, under the \"<b>%s</b>\" "
 "section click on the name of your App."
@@ -2338,6 +2358,11 @@ msgstr ""
 
 #, php-format
 msgid ""
+"The Spotify Sync data requires the %1$s with the necessary scopes enabled!"
+msgstr ""
+
+#, php-format
+msgid ""
 "The TikTok Sync data requires the %1$s with the necessary scopes enabled!"
 msgstr ""
 
@@ -2385,8 +2410,8 @@ msgstr ""
 #| "Fill \"Security Profile Name\", \"Security Profile Description\" and "
 #| "\"Consent Privacy Notice URL\"."
 msgid ""
-"Fill \"<b>Security Profile Name</b>\", \"<b>Security Profile Description</b>"
-"\" and \"<b>Consent Privacy Notice URL</b>\"."
+"Fill \"<b>Security Profile Name</b>\", \"<b>Security Profile Description</"
+"b>\" and \"<b>Consent Privacy Notice URL</b>\"."
 msgstr ""
 "Vul \"Naam Beveiligingsprofiel\", \"Beschrijving Beveiligingsprofiel\" en "
 "\"Toestemming privacyverklaring URL\" in."
@@ -2401,8 +2426,8 @@ msgstr "Zodra je alle verplichte velden hebt ingevuld, klik je op \"Opslaan\"."
 #| "Fill \"Allowed Origins\" with the url of your homepage, probably: <b>%s</"
 #| "b>"
 msgid ""
-"Fill \"<b>Allowed Origins</b>\" with the url of your homepage, probably: <b>"
-"%s</b>"
+"Fill \"<b>Allowed Origins</b>\" with the url of your homepage, probably: "
+"<b>%s</b>"
 msgstr ""
 "Vul \"Toegestane Oorsprong\" in met de url van je homepage, waarschijnlijk: "
 "<b>%s</b>"
@@ -2477,8 +2502,8 @@ msgid ""
 "To allow your visitors to log in with their %1$s account, first you must "
 "create an %1$s App. The following guide will help you through the %1$s App "
 "creation process. After you have created your %1$s App, head over to "
-"\"Settings\" and configure the given \"%2$s\", \"%3$s\", \"%4$s\" and \"%5$s"
-"\" according to your %1$s App."
+"\"Settings\" and configure the given \"%2$s\", \"%3$s\", \"%4$s\" and "
+"\"%5$s\" according to your %1$s App."
 msgstr ""
 "Om je bezoekers in te laten loggen met hun %1$s account, moet je eerst een "
 "%1$s App aanmaken. De volgende gids helpt je door het %1$s App "
@@ -2554,13 +2579,13 @@ msgstr ""
 
 msgid ""
 "If you have multiple Apps, then at the \"<b>Choose a Primary App ID</b>\" "
-"field <b>select the App what you just created</b>, then click \"<b>Save</b>"
-"\"."
+"field <b>select the App what you just created</b>, then click \"<b>Save</"
+"b>\"."
 msgstr ""
 
 msgid ""
-"Finally press the \"<b>Continue</b>\" button and then the \"<b>Register</b>"
-"\" button."
+"Finally press the \"<b>Continue</b>\" button and then the \"<b>Register</"
+"b>\" button."
 msgstr ""
 
 msgid "<b>Don't download the key yet!</b>"
@@ -2656,8 +2681,8 @@ msgstr ""
 
 msgid ""
 "<b>Open the downloaded file</b> with a text editor, like Notepad, <b><u>copy "
-"all of its contents</u></b> and <b>paste it</b> into the \"<b>Private Key</b>"
-"\" field of Nextend Social Login."
+"all of its contents</u></b> and <b>paste it</b> into the \"<b>Private Key</"
+"b>\" field of Nextend Social Login."
 msgstr ""
 
 msgid "<strong><u>Team Identifier:</u></strong>"
@@ -3947,8 +3972,8 @@ msgid "Scroll down to the \"<b>Remove Hard Coded Information</b>\" section."
 msgstr ""
 
 msgid ""
-"Click on the \"<b>I’ve reviewed and removed any hard-coded information.</b>"
-"\". "
+"Click on the \"<b>I’ve reviewed and removed any hard-coded information.</"
+"b>\". "
 msgstr ""
 
 #, fuzzy
@@ -4018,6 +4043,99 @@ msgstr "Koppel met <b>Facebook</b>"
 msgid "Unlink account from <b>Slack</b>"
 msgstr "Ontkoppel van <b>Facebook</b>"
 
+msgid "Green"
+msgstr ""
+
+#, fuzzy, php-format
+#| msgid ""
+#| "Select the \"Settings\" tab and scroll down to the Authentication section!"
+msgid ""
+"Find the %1$s button on the top right and scroll down to the %2$s button, "
+"and click on it!"
+msgstr ""
+"Selecteer het tabblad \"Instellingen\" en scroll naar beneden naar de sectie "
+"Authenticatie!"
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Finally, click on the %s button at the bottom."
+msgstr "Klik op de knop Aanmaken"
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Click on the purple \"%s\" button!"
+msgstr "Klik op de knop Aanmaken"
+
+#, php-format
+msgid ""
+"Enter an \"%1$s\" and \"%2$s\" of your choice (they will be displayed to the "
+"user on the grant screen)."
+msgstr ""
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Choose the \"%1$s\" option at \"%2$s\"."
+msgstr "Klik op de knop Aanmaken"
+
+#, fuzzy, php-format
+#| msgid "Name your project and then click on the Create button again"
+msgid "Read through the \"%1$s\" and put a tick in the checkbox."
+msgstr "Geef je project een naam en klik dan opnieuw op de knop Aanmaken"
+
+#, php-format
+msgid ""
+"Click on \"%1$s\". Your application is now registered, and you'll be "
+"redirected to the app overview page."
+msgstr ""
+
+#, fuzzy, php-format
+#| msgid "Click on the Create button"
+msgid "Click on the the %1$s button."
+msgstr "Klik op de knop Aanmaken"
+
+#, php-format
+msgid ""
+"Click on \"%1$s\", copy and save the \"%2$s\" value. This is what you will "
+"use later on the Settings tab for the \"%2$s\" field."
+msgstr ""
+
+#, php-format
+msgid ""
+"Currently your app is in %1$s which  means that, up to 25 authenticated %2$s "
+"users can use your app. If you want anybody with a %2$s account to use your "
+"app, then you need to move to %3$s. To request %3$s, use the navigation menu "
+"and go to %4$s, then hit \"%5$s\", and go through the \"%6$s\" process. In "
+"the last step you will need to choose the following OAuth scope: %7$s and "
+"all the other extra scopes connected to the %8$s fields you enabled."
+msgstr ""
+
+#, php-format
+msgid ""
+"Once %1$s reviewed and approved your request ( it can take up to 6 weeks ), "
+"find the \"%2$s\" and \"%3$s\" values you copied earlier. Enter these for "
+"the fields with the same name on the \"%4$s\" tab."
+msgstr ""
+
+#, fuzzy
+#| msgid "Continue with <b>LinkedIn</b>"
+msgid "Continue with <b>Spotify</b>"
+msgstr "Doorgaan met <b>LinkedIn</b>"
+
+#, fuzzy
+#| msgid "Continue with <b>Facebook</b>"
+msgid "Sign up with <b>Spotify</b>"
+msgstr "Doorgaan met <b>Facebook</b>"
+
+#, fuzzy
+#| msgid "Link account with <b>Facebook</b>"
+msgid "Link account with <b>Spotify</b>"
+msgstr "Koppel met <b>Facebook</b>"
+
+#, fuzzy
+#| msgid "Unlink account from <b>Facebook</b>"
+msgid "Unlink account from <b>Spotify</b>"
+msgstr "Ontkoppel van <b>Facebook</b>"
+
 #, fuzzy, php-format
 #| msgid ""
 #| "To allow your visitors to log in with their %1$s account, first you must "
@@ -4059,8 +4177,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"<b>WARNING:</b> The %1$s API can not return any email address! %2$sLearn more"
-"%3$s."
+"<b>WARNING:</b> The %1$s API can not return any email address! %2$sLearn "
+"more%3$s."
 msgstr ""
 
 #, fuzzy
@@ -4335,8 +4453,8 @@ msgstr "Voer de titel van je app in en selecteer \"Website\"."
 #| msgid ""
 #| "Fill \"Site address\" with the url of your homepage, probably: <b>%s</b>"
 msgid ""
-"Fill \"<b>Website address</b>\" with the url of your homepage, probably: <b>"
-"%s</b>"
+"Fill \"<b>Website address</b>\" with the url of your homepage, probably: "
+"<b>%s</b>"
 msgstr ""
 "Vul \"Siteadres\" in met de url van je homepage, waarschijnlijk: <b>%s</b>"
 
@@ -4568,6 +4686,28 @@ msgstr "Bevestig wachtwoord"
 msgid "Username"
 msgstr "Gebruikersnaam"
 
+#, fuzzy, php-format
+#~| msgid "Click on the Create button"
+#~ msgid "Hit the %1$s button next to the old URI."
+#~ msgstr "Klik op de knop Aanmaken"
+
+#, fuzzy, php-format
+#~| msgid "Add the following URL to the \"Live Return URL\" field <b>%s</b> "
+#~ msgid "Add your web domain or URL to the \"%1$s\" field."
+#~ msgstr ""
+#~ "Voeg de volgende URL toe aan het \"Live Return URL\" veld <b>%s</b> "
+
+#, fuzzy, php-format
+#~| msgid ""
+#~| "Enter the URL of your site to the \"Home Page URL\" field: <b>%s</b>"
+#~ msgid "For the \"%1$s\", enter the following URL: "
+#~ msgstr "Voer de URL van je site in het veld \"Home Page URL\" in: <b>%s</b>"
+
+#, fuzzy
+#~| msgid "No Connect button in Register form"
+#~ msgid "No Connect button in \"Checkout for WooCommerce\" form"
+#~ msgstr "Geen Verbindingsknop in het Registratieformulier"
+
 #, fuzzy
 #~| msgid ""
 #~| "Scroll down to \"LIVE APP SETTINGS\", search the \"Live Return URL\" "
@@ -4711,8 +4851,8 @@ msgstr "Gebruikersnaam"
 #, fuzzy, php-format
 #~| msgid "Add the following URL to the \"Redirect URLs\" field <b>%s</b> "
 #~ msgid ""
-#~ "Select \"<b>Web</b>\" and enter the following URL to the \"<b>Site URL</b>"
-#~ "\" field: <b>%s</b>"
+#~ "Select \"<b>Web</b>\" and enter the following URL to the \"<b>Site URL</"
+#~ "b>\" field: <b>%s</b>"
 #~ msgstr ""
 #~ "Voeg de volgende URL toe aan het veld \"Omleidings-URLs\" <b>%s</b> "
 
@@ -4729,23 +4869,23 @@ msgstr "Gebruikersnaam"
 #, fuzzy, php-format
 #~| msgid "Enter your domain name to the App Domains"
 #~ msgid ""
-#~ "Enter your domain name to the \"<b>App Domains</b>\" field, probably: <b>"
-#~ "%s</b>"
+#~ "Enter your domain name to the \"<b>App Domains</b>\" field, probably: "
+#~ "<b>%s</b>"
 #~ msgstr "Voer je domeinnaam in bij de App Domeinen"
 
 #, fuzzy
 #~| msgid ""
 #~| "Your application is currently private ( Status: In Development ), which "
-#~| "means that only you can log in with it. In the top bar click on the \"OFF"
-#~| "\" switcher and select a category for your App."
+#~| "means that only you can log in with it. In the top bar click on the "
+#~| "\"OFF\" switcher and select a category for your App."
 #~ msgid ""
 #~ "Your application is currently private, which means that only you can log "
 #~ "in with it. In the top bar switch the \"<b>App Mode</b>\" from "
 #~ "\"<b>Development</b>\" to \"<b>Live</b>\"."
 #~ msgstr ""
 #~ "Je applicatie is momenteel privé (Status: In Ontwikkeling), wat betekent "
-#~ "dat alleen jij ermee kunt inloggen. Klik in de bovenste balk op de \"OFF"
-#~ "\" schakelaar en selecteer een categorie voor je App."
+#~ "dat alleen jij ermee kunt inloggen. Klik in de bovenste balk op de "
+#~ "\"OFF\" schakelaar en selecteer een categorie voor je App."
 
 #, fuzzy, php-format
 #~| msgid "Click on the Create button"
@@ -4796,8 +4936,8 @@ msgstr "Gebruikersnaam"
 #~| "Fill the \"Application Name\" and select \"Web Application\" at "
 #~| "\"Application Type\"."
 #~ msgid ""
-#~ "Fill the \"<b>Application Name</b>\" and select \"<b>Web Application</b>"
-#~ "\" at \"<b>Application Type</b>\"."
+#~ "Fill the \"<b>Application Name</b>\" and select \"<b>Web Application</"
+#~ "b>\" at \"<b>Application Type</b>\"."
 #~ msgstr ""
 #~ "Vul de \"Applicatie Naam\" in en selecteer \"Web Applicatie\" bij "
 #~ "\"Applicatie Type\"."
@@ -4937,8 +5077,8 @@ msgstr "Gebruikersnaam"
 #~| msgid ""
 #~| "Add the following URL to the \"Authorized redirect URI\" field <b>%s</b> "
 #~ msgid ""
-#~ "Add the following URL to the \"<b>Authorized redirect URI</b>\" field <b>"
-#~ "%s</b> "
+#~ "Add the following URL to the \"<b>Authorized redirect URI</b>\" field "
+#~ "<b>%s</b> "
 #~ msgstr ""
 #~ "Voeg de volgende URL toe aan het veld \"Geautoriseerde omleidings-URI\" "
 #~ "<b>%s</b>\" "

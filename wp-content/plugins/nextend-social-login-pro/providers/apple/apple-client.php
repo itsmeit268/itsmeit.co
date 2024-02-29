@@ -86,7 +86,7 @@ class NextendSocialProviderAppleClient extends NextendSocialOauth2 {
 
             if (is_wp_error($request)) {
 
-                throw new Exception($request->get_error_message());
+                throw new NSLSanitizedRequestErrorMessageException($request->get_error_message());
             } else if (wp_remote_retrieve_response_code($request) !== 200) {
 
                 $this->errorFromResponse(json_decode(wp_remote_retrieve_body($request), true));
@@ -95,7 +95,7 @@ class NextendSocialProviderAppleClient extends NextendSocialOauth2 {
             $accessTokenData = json_decode(wp_remote_retrieve_body($request), true);
 
             if (!is_array($accessTokenData)) {
-                throw new Exception(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
+                throw new NSLSanitizedRequestErrorMessageException(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
             }
 
             /*
@@ -123,7 +123,7 @@ class NextendSocialProviderAppleClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['error'])) {
-            throw new Exception($response['error']);
+            throw new NSLSanitizedRequestErrorMessageException($response['error']);
         }
     }
 

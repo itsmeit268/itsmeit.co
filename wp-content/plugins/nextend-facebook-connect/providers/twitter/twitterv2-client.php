@@ -50,7 +50,7 @@ class NextendSocialProviderTwitterv2Client extends NextendSocialOauth2 {
 
             return add_query_arg($args, $this->getEndpointAuthorization());
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new NSLSanitizedRequestErrorMessageException($e->getMessage());
         }
     }
 

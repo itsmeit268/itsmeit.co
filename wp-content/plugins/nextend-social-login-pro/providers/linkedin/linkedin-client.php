@@ -33,7 +33,7 @@ class NextendSocialProviderLinkedInClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['serviceErrorCode']) && isset($response['message'])) {
-            throw new Exception($response['serviceErrorCode'] . ' - ' . $response['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['serviceErrorCode'] . ' - ' . $response['message']);
         } else {
             parent::errorFromResponse($response);
         }

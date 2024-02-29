@@ -130,7 +130,7 @@ class NextendSocialPROProviderTwitch extends NextendSocialProviderOAuth {
             return $response['data'][0];
         }
 
-        throw new Exception(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), json_encode($response)));
+        throw new NSLSanitizedRequestErrorMessageException(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), json_encode($response)));
     }
 
     public function getMe() {

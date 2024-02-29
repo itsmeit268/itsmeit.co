@@ -792,11 +792,11 @@ abstract class NextendSocialProvider extends NextendSocialProviderDummy {
     public function liveConnectRedirect() {
         if (!empty($_GET['trackerdata']) && !empty($_GET['trackerdata_hash'])) {
             if (wp_hash($_GET['trackerdata']) === $_GET['trackerdata_hash']) {
-                Persistent::set('trackerdata', $_GET['trackerdata']);
+                Persistent::set('trackerdata', sanitize_text_field($_GET['trackerdata']));
             }
         }
         if (!empty($_GET['redirect'])) {
-            Persistent::set('redirect', $_GET['redirect']);
+            Persistent::set('redirect', sanitize_url($_GET['redirect']));
         }
     }
 

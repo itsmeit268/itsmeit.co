@@ -3,8 +3,8 @@ Contributors: nextendweb
 Tags: social login, facebook, google, twitter, x, linkedin, register, login, social, nextend facebook connect, social sign in
 Donate link: https://www.facebook.com/nextendweb
 Requires at least: 4.9
-Tested up to: 6.4
-Stable tag: 3.1.11
+Tested up to: 6.4.3
+Stable tag: 3.1.13
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -47,7 +47,7 @@ Providers are the services which the visitors can use to register and log in to 
 * UserPro compatibility
 * Ultimate Member compatibility
 * Easy Digital Downloads compatibility
-* Pro providers: LinkedIn, Amazon, VKontakte, WordPress.com, Yahoo, PayPal, Disqus, Apple, GitHub, Microsoft, Line, Discord, Slack, TikTok, Steam, Twitch, Kakao, Reddit and more coming soon
+* Pro providers: LinkedIn, Amazon, VKontakte, WordPress.com, Yahoo, PayPal, Disqus, Apple, GitHub, Microsoft, Line, Discord, Slack, TikTok, Steam, Twitch, Kakao, Reddit, Spotify and more coming soon
 * Configure whether email address should be asked on registration at each provider
 * Configure whether username should be asked on registration at each provider
 * Choose from icons or wide buttons
@@ -124,6 +124,24 @@ Using the Pro Addon you can set where the login buttons should appear on the Reg
 4. The Settings page of the Facebook provider.
 
 == Changelog ==
+
+= 3.1.13 =
+* Security fix: Error message sanitization.
+
+
+= 3.1.12 =
+* Fix: We will now delete the user avatar if the social media account which was used to set the avatar for the user gets unlinked.
+* Fix: Fixed an issue where an error was thrown whenever the download_url() function would return a WP_Error object during the unlinking process.
+* Fix: Fixed an issue where a plugin/theme force update check could cause a fatal error.
+* Feature: [Global Settings](https://nextendweb.com/nextend-social-login-docs/global-settings/) Added new "Unsupported WebView behaviour" option which determines what should happen to the social login buttons in WebView environments.
+* Improvement: Removed custom download_url() method, instead we will use the standard WordPress version, as it now works as expected.
+* Improvement: [Google](https://nextendweb.com/nextend-social-login-docs/provider-google/#configuration/) Getting Started updated.
+* Improvement: [Facebook](https://nextendweb.com/nextend-social-login-docs/provider-facebook/) API call version updated from v13.0 to v19.0.
+
+* PRO: Fix: Updated our code to comply with the fact that func_get_args() no longer reports the original value passed to a parameter, and instead returns the current value.
+* PRO: Improvement: Removed no longer needed "Checkout for WooCommerce" integration, and instead added the following actions at the billing form: woocommerce_before_checkout_shipping_form, woocommerce_after_checkout_shipping_form
+* PRO: New provider: [Spotify](https://nextendweb.com/nextend-social-login-docs/provider-spotify/)
+
 
 = 3.1.11 =
 * Fix: The default "Terms and conditions" text can now be translated with our language files.

@@ -37,7 +37,7 @@ class NextendSocialProviderGitHubClient extends NextendSocialOauth2 {
      */
     protected function errorFromResponse($response) {
         if (isset($response['message'])) {
-            throw new Exception($response['message']);
+            throw new NSLSanitizedRequestErrorMessageException($response['message']);
         } else {
             parent::errorFromResponse($response);
         }
@@ -75,7 +75,7 @@ class NextendSocialProviderGitHubClient extends NextendSocialOauth2 {
 
             if (is_wp_error($request)) {
 
-                throw new Exception($request->get_error_message());
+                throw new NSLSanitizedRequestErrorMessageException($request->get_error_message());
             } else if (wp_remote_retrieve_response_code($request) !== 200) {
 
                 $this->errorFromResponse(json_decode(wp_remote_retrieve_body($request), true));
@@ -84,7 +84,7 @@ class NextendSocialProviderGitHubClient extends NextendSocialOauth2 {
             $accessTokenData = json_decode(wp_remote_retrieve_body($request), true);
 
             if (!is_array($accessTokenData)) {
-                throw new Exception(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
+                throw new NSLSanitizedRequestErrorMessageException(sprintf(__('Unexpected response: %s', 'nextend-facebook-connect'), wp_remote_retrieve_body($request)));
             } else if (isset($accessTokenData['error'])) {
                 /**
                  * GitHub returns response code 200 when Client secret is invalid.

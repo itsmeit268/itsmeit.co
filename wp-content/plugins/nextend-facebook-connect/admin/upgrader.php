@@ -66,7 +66,7 @@ class NextendSocialUpgrader {
 
     public static function injectUpdate($transient) {
 
-        if (!empty($transient)) {
+        if (is_object($transient)) {
             if (!class_exists('NextendSocialLoginPRO', false)) {
                 return $transient;
             }
