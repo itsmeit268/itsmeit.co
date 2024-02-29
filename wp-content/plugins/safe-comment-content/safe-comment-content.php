@@ -17,7 +17,7 @@
  * Plugin URI:        https://itsmeit.co
  * Description:       Encode strings or words that are sensitive, vulgar, or violate guidelines within the comments.
  * Version:           1.0.0
- * Author:            itsmeit | Technology Blogs
+ * Author:            itsmeit.co
  * Author URI:        https://itsmeit.co
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt

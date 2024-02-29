@@ -1,0 +1,85 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Safe Comment Content\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-29 14:38+0000\n"
+"PO-Revision-Date: 2024-02-29 14:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.6; wp-6.4.3\n"
+"X-Domain: safe-comment-content"
+
+#: admin/class-safe-comment-content-admin.php:77
+msgid "Comment Moderation"
+msgstr "Kiểm duyệt bình luận"
+
+#: admin/class-safe-comment-content-admin.php:33
+msgid "Donate"
+msgstr ""
+
+#: admin/class-safe-comment-content-admin.php:33
+msgid "Donate Now"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Encode strings or words that are sensitive, vulgar, or violate guidelines "
+"within the comments."
+msgstr ""
+"Mã hóa các chuỗi hoặc từ nhạy cảm, thô tục hoặc vi phạm nguyên tắc trong "
+"nhận xét."
+
+#: admin/class-safe-comment-content-admin.php:70
+msgid "Endpoint"
+msgstr ""
+
+#: admin/class-safe-comment-content-admin.php:51
+msgid "General Settings"
+msgstr ""
+
+#: public/templates/prep_link_template.php:12
+msgid "here"
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://itsmeit.co"
+msgstr ""
+
+#. Author of the plugin
+msgid "itsmeit.co"
+msgstr ""
+
+#. Name of the plugin
+msgid "Safe Comment Content"
+msgstr ""
+
+#: admin/class-safe-comment-content-admin.php:32
+msgid "Settings"
+msgstr ""
+
+#: public/templates/prep_link_template.php:5
+msgid "The link you are navigating to is beyond the control scope of"
+msgstr "Liên kết bạn đang điều hướng đến nằm ngoài phạm vi kiểm soát của"
+
+#: public/templates/prep_link_template.php:11
+msgid "The session has expired, please click"
+msgstr ""
+
+#: public/templates/prep_link_template.php:12
+msgid "to refresh."
+msgstr ""
+
+#: public/templates/prep_link_template.php:7
+msgid "✓ Redirect"
+msgstr "✓ Chuyển hướng"
+
+#: public/templates/prep_link_template.php:8
+msgid "✘ Cancel"
+msgstr "✘ Quay lại"

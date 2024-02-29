@@ -160,8 +160,7 @@ class Intelligent_Link_Public {
     }
 
     public function href_ex_elm(){
-        $href_exclude = ilgl_settings()['href_exclude'];
-        return !empty($href_exclude) ? rtrim($href_exclude, ','): '';
+        return !empty(ilgl_settings()['href_exclude']) ? rtrim(ilgl_settings()['href_exclude'], ','): '';
     }
 
     public function allow_domain(){

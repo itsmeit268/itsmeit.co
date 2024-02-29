@@ -4,7 +4,7 @@
  * @link       https://itsmeit.co
  * @package    Safe_Comment_Content
  * @subpackage Safe_Comment_Content/public
- * @author     itsmeit | Technology Blogs <admin@itsmeit.co>
+ * @author     itsmeit.co
  */
 class Safe_Comment_Content_Public {
 
@@ -80,7 +80,7 @@ class Safe_Comment_Content_Public {
 	 */
 	public function endpoint_setting() {
 		$settings = get_option('scc_settings', array());
-		if (!empty($settings)) {
+		if (!empty($settings['endpoint'])) {
 			return preg_replace('/[^\p{L}a-zA-Z0-9_\-.]/u', '', trim($settings['endpoint']));
 		}
 		return '1';
