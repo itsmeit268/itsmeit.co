@@ -226,6 +226,9 @@ class Intelligent_Link_Public {
         $display_mode = !empty(ilgl_settings()['preplink_wait_text']) ? ilgl_settings()['preplink_wait_text'] : 'wait_time';
         $html = '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : 'Link download: ') . '</b>';
 
+        if (is_user_logged_in()) {
+            $display_mode = 'progress';
+        }
         if ($display_mode === 'progress') {
             $html .= '<div class="post-progress-bar">';
             $html .= '<span class="prep-request" data-id="' . $blog_url . '"><strong class="post-progress">' . $file_name . '</strong></span></div>';
