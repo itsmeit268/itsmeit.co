@@ -88,6 +88,10 @@ class Posts {
 			$data['schemas_in_use'] = Helper::get_default_schema_type( $id, true, true );
 		}
 
+		if ( ! \RankMath\Google\Analytics::is_analytics_connected() ) {
+			return $data;
+		}
+
 		// Get keywords info for this post.
 		$keywords = DB::analytics()
 			->selectCount( 'DISTINCT(query)', 'keywords' )
