@@ -11,11 +11,15 @@
     max-height: 35px;
 }
 
-.igl-download-now>.post-progress-bar>.prep-request>.post-progress{
+.igl-download-now>.post-progress-bar>.prep-request>.post-progress, ul li >.post-progress-bar{
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 100%;
     overflow: hidden;
+}
+
+ul li >.post-progress-bar{
+    display: block;
 }
 
 .igl-download-now>.wrap-countdown,
@@ -76,8 +80,19 @@
     max-height: 30px;
     margin-bottom: 1.5px;
 }
-ul li > .wrap-countdown > .prep-request > .link-countdown {
+
+.post-progress:hover {
+    color: orangered;
+}
+
+ul li > .wrap-countdown > .prep-request > .link-countdown,
+ul li > .wrap-countdown > .prep-request > .text-show-complete{
     display: block;
+    vertical-align: unset;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow: hidden;
 }
 ul li > .wrap-countdown > .prep-request > .link-countdown:hover,
 ul li > .post-progress-bar > .prep-request > .post-progress:hover {
@@ -99,10 +114,6 @@ ul li > .post-progress-bar > .prep-request > .post-progress:hover {
 .post-progress-bar a, .wrap-countdown a {
     text-decoration: none !important;
     box-shadow: none
-}
-
-.counter {
-    padding-top: 5px
 }
 
 i.material-icons {
@@ -131,9 +142,7 @@ i.material-icons {
     margin-bottom: 10px;
     font-weight: 600;
 }
-ul li > .post-progress-bar {
-    padding-left: 5px;
-}
+
 .woocommerce-product-details__short-description >.igl-download-now,
 .woocommerce-product-details__short-description >.list-link-redirect,
 .product-short-description >.igl-download-now,
@@ -146,7 +155,15 @@ ul li > .post-progress-bar {
     display: block;
 }
 .woocommerce-product-details__short-description >.list-link-redirect > ul li >.post-progress-bar > .prep-request>.post-progress,
- .product-short-description >.list-link-redirect > ul li >.post-progress-bar > .prep-request>.post-progress {
+.product-short-description >.list-link-redirect > ul li >.post-progress-bar > .prep-request>.post-progress {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.text-show-complete {
+    vertical-align: unset;
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 100%;

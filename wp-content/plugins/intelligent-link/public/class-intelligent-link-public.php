@@ -22,7 +22,9 @@ class Intelligent_Link_Public {
 
     public function enqueue_scripts() {
         if (is_plugin_enable()){
+            wp_enqueue_script('wp-i18n', includes_url('/js/dist/i18n.js'), array('wp-element'), '1.0', true);
             wp_enqueue_script('intelligent-link', plugin_dir_url(__FILE__) . 'js/intelligent-link'.(INTELLIGENT_LINK_DEV == 1 ? '': '.min').'.js', array('jquery'), INTELLIGENT_LINK_VERSION, true);
+
             $href_vars = [];
             $href_vars = apply_filters('ilgl_href_vars', $href_vars);
             wp_localize_script('intelligent-link', 'href_vars', array_merge(
@@ -30,6 +32,7 @@ class Intelligent_Link_Public {
                     'end_point'              => $this->endpoint_conf(),
                     'prep_url'               => $this->allow_domain(),
                     'pre_elm_exclude'        => $this->exclude_elm(),
+                    'href_ex_elm'            => $this->href_ex_elm(),
                     'count_down'             => !empty(ilgl_settings()['preplink_countdown']) ? ilgl_settings()['preplink_countdown'] : 0,
                     'cookie_time'            => !empty(ilgl_settings()['cookie_time']) ? ilgl_settings()['cookie_time'] : 5,
                     'display_mode'           => !empty(ilgl_settings()['preplink_wait_text']) ? ilgl_settings()['preplink_wait_text'] : 'wait_time',
@@ -52,7 +55,7 @@ class Intelligent_Link_Public {
 
     public function preplink_rewrite_endpoint(){
         if (is_plugin_enable()){
-            add_rewrite_endpoint($this->endpoint_conf(), EP_PERMALINK | EP_PAGES );
+            add_rewrite_endpoint($this->endpoint_conf(), EP_PERMALINK | EP_PAGES | EP_ROOT | EP_CATEGORIES | EP_SEARCH);
             add_filter('template_include', [$this, 'intelligent_link_template_include']);
             if (INTELLIGENT_LINK_DEV == 1) {
                 flush_rewrite_rules();
@@ -79,6 +82,7 @@ class Intelligent_Link_Public {
     public function intelligent_link_template_include($template) {
         global $wp_query;
 
+
         $intelligent_link_template = apply_filters('intelligent_link_template', '');
 
         if (empty($intelligent_link_template)) {
@@ -101,6 +105,14 @@ class Intelligent_Link_Public {
         $product_category = isset($wp_query->query_vars['product_cat']) ? $wp_query->query_vars['product_cat']: '';
 
         if ($product_category == $this->endpoint_conf()) {
+            $this->prep_head();
+            add_filter( 'pre_get_document_title', function ($title) {
+                if (empty(get_the_title()) || empty($title)) {
+                    return isset($_COOKIE['prep_title']) ? $_COOKIE['prep_title'] . ' – ' . get_bloginfo('name') : get_bloginfo('name');
+                }
+                return $title;
+            });
+
             remove_all_actions('woocommerce_before_main_content');
             remove_all_actions('woocommerce_archive_description');
             remove_all_actions('woocommerce_before_shop_loop');
@@ -108,10 +120,10 @@ class Intelligent_Link_Public {
             remove_all_actions('woocommerce_after_shop_loop');
             remove_all_actions('woocommerce_sidebar');
 
-            $this->prep_head();
             include_once $intelligent_link_template;
             exit;
         }
+
 
         return $template;
     }
@@ -145,6 +157,11 @@ class Intelligent_Link_Public {
             $excludeList = '.prep-link-download-btn,.prep-link-btn,.keyword-search,.session-expired,.comment';
         }
         return $excludeList;
+    }
+
+    public function href_ex_elm(){
+        $href_exclude = ilgl_settings()['href_exclude'];
+        return !empty($href_exclude) ? rtrim($href_exclude, ','): '';
     }
 
     public function allow_domain(){
@@ -206,13 +223,8 @@ class Intelligent_Link_Public {
 
     public function prep_link_html($meta_attr, $file_name) {
         $blog_url = base64_encode(get_bloginfo('url'));
-        $html = '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : 'Link download: ') . '</b>';
-
         $display_mode = !empty(ilgl_settings()['preplink_wait_text']) ? ilgl_settings()['preplink_wait_text'] : 'wait_time';
-
-        if (is_user_logged_in()) {
-            $display_mode = 'progress';
-        }
+        $html = '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : 'Link download: ') . '</b>';
 
         if ($display_mode === 'progress') {
             $html .= '<div class="post-progress-bar">';
@@ -224,15 +236,16 @@ class Intelligent_Link_Public {
 
         $html .= '</' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . '>';
 
-        $show_list = 0;
+        $show_list = !empty($meta_attr['show_list']) ? true: false;
+
         if ($show_list) {
             $list_link = get_post_meta(get_the_ID(), 'link-download-metabox', true);
             $settings = get_option('meta_attr', array());
-            $total = (int)$settings['field_lists'] ?: 5;
+            $total = (int) $settings['field_lists']? : 5;
 
             if (isset($list_link) && !empty($list_link) && is_array($list_link)) {
                 $html .= '<div class="list-link-redirect">';
-                $html .= '<p class="ilgl-other-version">' . __('Other Version') . '</p>';
+                $html .= '<p class="ilgl-other-version">'.__('Other Version').'</p>';
                 $html .= '<ul>';
 
                 for ($i = 1; $i <= $total; $i++) {

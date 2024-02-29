@@ -17,12 +17,11 @@
             text_complete = href_vars.replace_text,
             elm_exclude = href_vars.pre_elm_exclude.trim(),
             exclude_elm = elm_exclude.replace(/\\r\\|\r\n|\s/g, "").replace(/^,|,$/g, '').split(","),
-            allow_url   = href_vars.prep_url,
+            allow_url = href_vars.prep_url,
             windowWidth = $(window).width(),
             modify_conf = href_vars.modify_conf,
             meta_attr   = href_vars.meta_attr,
-            is_popup    = parseInt(href_vars.is_popup),
-            is_login    = href_vars.is_user_logged_in;
+            href_ex_elm = href_vars.href_ex_elm;
 
         var countdownStatus = {};
 
@@ -128,10 +127,14 @@
                     var svgExists = $this.find("svg").length > 0;
                     var icon_Exists = $this.find("i").length > 0;
 
-                    if (imgExists || svgExists || icon_Exists) {
+                    var excludedElements = href_ex_elm.split(",").map(function(item) {
+                        return item.trim();
+                    });
+
+                    if (imgExists || svgExists || icon_Exists || $this.is(excludedElements.join(','))) {
                         $this.attr({'href': 'javascript:void(0)', 'data-id': modified_url, 'data-text': text_link, 'data-image': '1'}).addClass('prep-request');
                     } else {
-                        var replacement = '';
+                        var replacement;
                         if (display_mode === 'progress') {
                             replacement = '<div class="post-progress-bar"><span class="prep-request" data-id="' + modified_url + '"><strong class="post-progress">' + text_link + '</strong></span></div>';
                         } else {
@@ -198,18 +201,6 @@
                         window.location.href = intelligent_link();
                     }
                 } else {
-                    if (!is_popup && !is_login) {
-                        $('.login-toggle').trigger('click');
-                        $('.mes-login').remove();
-                        var mes = $('.logo-popup-description');
-                        //Bạn có muốn đăng nhập để bỏ qua thời gian chờ đợi?
-                        //Would you like to log in to skip the waiting time?
-                        mes.after('<div class="mes-login" style="color: red;font-size: 15px;">'+ href_vars.logged_in_notice +'</div>');
-                        $('#user_login,#user_pass').on('focus', function() {
-                            $('.mes-login').remove();
-                        });
-                    }
-
                     $this.off('click');
                     countdownStatus[modified_url] = { active: true };
                     if (display_mode === 'wait_time') {
@@ -226,10 +217,6 @@
             let downloadTimer;
             let timeleft = is_meta.length? parseInt(meta_attr.time) : time_cnf;
 
-            if (is_login) {
-                timeleft = 1;
-            }
-
             const countdown = () => {
                 $elm.html(`<strong> ${wait_text} ${timeleft}s...</strong>`);
                 timeleft--;
@@ -237,7 +224,7 @@
                     clearInterval(downloadTimer);
 
                     let wait_time_html = `<span class="text-hide-complete" data-complete="1" data-text="${title}"></span>`;
-                    wait_time_html += '<span style="vertical-align: unset;">' + ((text_complete.enable === 'yes') ? text_complete.text : title) + '</span>';
+                    wait_time_html += '<span class="text-show-complete">' + ((text_complete.enable === 'yes') ? text_complete.text : title) + '</span>';
 
                     $elm.html(wait_time_html);
 
@@ -273,10 +260,6 @@
 
             let currentWidth = 0;
             let timeleft = is_meta.length? parseInt(meta_attr.time) : time_cnf;
-
-            if (is_login) {
-                timeleft = 3;
-            }
 
             parent.css({'width': parent.width(), 'margin-right': '25px'});
             $progress.width("0%");
@@ -335,6 +318,5 @@
         reset_request();
         prep_request_link();
         processClick();
-        remove_empty_elm();
     });
 })(jQuery);

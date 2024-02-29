@@ -29,8 +29,6 @@ $link_no_login      = get_post_meta($post_id, 'link_no_login', true);
 $link_is_login      = get_post_meta($post_id, 'link_is_login', true);
 $file_size          = get_post_meta($post_id, 'file_size', true);
 
-$prep_meta          = isset($_COOKIE['prep_meta']) ? $_COOKIE['prep_meta'] : '';
-
 if ($download_meta === $prep_request) {
     $isMeta = true;
 }
