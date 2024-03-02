@@ -565,7 +565,7 @@ class Email_Maketting_Public
                             get_bloginfo('url') . '/subscribe-verify/?rqco=' . $verification_code . '&rqem=' . base64_encode($email)
                          );
 
-                        $subject = __('Subscribe to the newsletter from ' . get_bloginfo('name') );
+                        $subject = __('Subscribe to the newsletter from', 'email-maketting') .' '. "(" . str_replace("https://", "", get_bloginfo('url')) . ")";
                         wp_mail($email, $subject, $template_content, array(
                             'Content-Type: text/html; charset=UTF-8',
                             'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>'
@@ -774,7 +774,7 @@ class Email_Maketting_Public
                     'From: ' . get_bloginfo('name') . ' <' . $admin_email . '>'
                 ) );
 
-                setcookie("contact-email-is-sent", "1", time() + 3600, "/");
+                setcookie("contact-email-is-sent", "1", time() + 300, "/");
 
                 $wpdb->insert($contact_table, array(
                     'name' => $customer_name,

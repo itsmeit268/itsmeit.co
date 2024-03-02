@@ -8,9 +8,9 @@ include_once get_theme_file_path('include/ezoic_cookie.php');
 include_once get_theme_file_path('include/robots.php');
 
 add_filter('wp_mail_from_name', 'change_wp_mail_from_name');
-function change_wp_mail_from_name($original_email_from){
-    $new_email_from_name = get_bloginfo('name');
-    return $new_email_from_name;
+function change_wp_mail_from_name($email){
+    $email = "ItsmeIT Team";
+    return $email;
 }
 
 if (!is_admin()) {
