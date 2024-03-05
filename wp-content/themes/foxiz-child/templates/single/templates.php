@@ -813,7 +813,7 @@ if ( ! function_exists( 'foxiz_single_share_bottom' ) ) {
 		} ?>
 
         <?php
-        $advertising = get_option('preplink_advertising');
+        $advertising = get_option('ads_code');
         if (isset($advertising['ads_7']) && !empty($advertising['ads_7']) && free_level() && is_allow_show_ads()): ?>
             <div class="preplink-ads preplink-ads-7 advertising-adsterra">
                 <p style="margin-left: 10px;">– Advertising –</p>
