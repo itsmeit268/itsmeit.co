@@ -814,10 +814,10 @@ if ( ! function_exists( 'foxiz_single_share_bottom' ) ) {
 
         <?php
         $advertising = get_option('preplink_advertising');
-        if (isset($advertising['pr_ad_7']) && (int)$advertising['pr_ad_7'] == 1 && !empty($advertising['pr_ad_code_7']) && free_level() && is_allow_show_ads()): ?>
+        if (isset($advertising['ads_7']) && !empty($advertising['ads_7']) && free_level() && is_allow_show_ads()): ?>
             <div class="preplink-ads preplink-ads-7 advertising-adsterra">
                 <p style="margin-left: 10px;">– Advertising –</p>
-                <?= $advertising['pr_ad_code_7'] ?>
+                <?= $advertising['ads_7'] ?>
             </div>
         <?php endif; ?>
         <div class="e-shared-sec entry-sec">
