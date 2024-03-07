@@ -555,13 +555,16 @@ class WPOSA {
 	 * @since 1.0.0
 	 */
 	public function sanitize_fields( $fields ) {
-		foreach ( $fields as $field_slug => $field_value ) {
-			$sanitize_callback = $this->get_sanitize_callback( $field_slug );
 
-			// If callback is set, call it.
-			if ( $sanitize_callback ) {
-				$fields[ $field_slug ] = call_user_func( $sanitize_callback, $field_value );
-				continue;
+		if(is_array( $fields )) {
+			foreach ( $fields as $field_slug => $field_value ) {
+				$sanitize_callback = $this->get_sanitize_callback( $field_slug );
+
+				// If callback is set, call it.
+				if ( $sanitize_callback ) {
+					$fields[ $field_slug ] = call_user_func( $sanitize_callback, $field_value );
+					continue;
+				}
 			}
 		}
 
@@ -1004,7 +1007,7 @@ class WPOSA {
 					<div class="wposa-version"><?php esc_html_e( 'Version' ); ?>: <?php echo esc_html( $this->plugin_version )?></div>
 				</div>
 				<div class="wposa-header--right">
-					<p><?php esc_html_e( 'IndexNow is a small WordPress Plugin for quickly notifying search engines whenever their website content is created, updated, or deleted.', 'mihdan-index-now' ); ?></p>
+					<p><?php esc_html_e( 'IndexNow is a small WordPress Plugin for quickly notifying search engines whenever your website content is created, updated, or deleted.', 'mihdan-index-now' ); ?></p>
 				</div>
 			</div>
 			<?php $this->show_navigation(); ?>
@@ -1248,7 +1251,7 @@ class WPOSA {
 					.change();
 
 				const REDIRECT_URL  = '<?php echo esc_url( admin_url( 'admin.php?page=' . Utils::get_plugin_slug() ) ); ?>';
-				const CODE_ENDPOINT = 'https://oauth.yandex.ru/authorize?state=yandex-webmaster&response_type=code&force_confirm=yes&redirect_uri=' + REDIRECT_URL + '&client_id=';
+				const CODE_ENDPOINT = 'https://oauth.yandex.com/authorize?state=yandex-webmaster&response_type=code&force_confirm=yes&redirect_uri=' + REDIRECT_URL + '&client_id=';
 
 				$( '#button_get_token' ).on(
 					'click',

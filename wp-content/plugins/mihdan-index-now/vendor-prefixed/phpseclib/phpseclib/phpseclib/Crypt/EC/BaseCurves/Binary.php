@@ -13,8 +13,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -22,16 +20,14 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BinaryField;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BinaryField;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BinaryField\Integer as BinaryInteger;
 /**
  * Curves over y^2 + x*y = x^3 + a*x^2 + b
  *
- * @package Binary
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 class Binary extends Base
 {
@@ -110,9 +106,9 @@ class Binary extends Base
     {
         switch (\true) {
             case !\is_string($x) && !$x instanceof BinaryInteger:
-                throw new \UnexpectedValueException('Mihdan\\IndexNow\\Dependencies\\Argument 1 passed to Binary::setBasePoint() must be a string or an instance of BinaryField\\Integer');
+                throw new \UnexpectedValueException('Argument 1 passed to Binary::setBasePoint() must be a string or an instance of BinaryField\\Integer');
             case !\is_string($y) && !$y instanceof BinaryInteger:
-                throw new \UnexpectedValueException('Mihdan\\IndexNow\\Dependencies\\Argument 2 passed to Binary::setBasePoint() must be a string or an instance of BinaryField\\Integer');
+                throw new \UnexpectedValueException('Argument 2 passed to Binary::setBasePoint() must be a string or an instance of BinaryField\\Integer');
         }
         if (!isset($this->factory)) {
             throw new \RuntimeException('setModulo needs to be called before this method');

@@ -10,8 +10,6 @@
  *
  * PHP version 5
  *
- * @category  Crypt
- * @package   DSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -19,15 +17,14 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\Formats\Keys;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common\Formats\Keys\PuTTY as Progenitor;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * PuTTY Formatted DSA Key Handler
  *
- * @package DSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class PuTTY extends Progenitor
 {
@@ -35,20 +32,17 @@ abstract class PuTTY extends Progenitor
      * Public Handler
      *
      * @var string
-     * @access private
      */
     const PUBLIC_HANDLER = 'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Crypt\\DSA\\Formats\\Keys\\OpenSSH';
     /**
      * Algorithm Identifier
      *
      * @var array
-     * @access private
      */
     protected static $types = ['ssh-dss'];
     /**
      * Break a public or private key down into its constituent components
      *
-     * @access public
      * @param string $key
      * @param string $password optional
      * @return array
@@ -68,7 +62,6 @@ abstract class PuTTY extends Progenitor
     /**
      * Convert a private key to the appropriate format.
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $p
      * @param \phpseclib3\Math\BigInteger $q
      * @param \phpseclib3\Math\BigInteger $g
@@ -85,12 +78,11 @@ abstract class PuTTY extends Progenitor
         }
         $public = Strings::packSSH2('iiii', $p, $q, $g, $y);
         $private = Strings::packSSH2('i', $x);
-        return self::wrapPrivateKey($public, $private, 'ssh-dsa', $password, $options);
+        return self::wrapPrivateKey($public, $private, 'ssh-dss', $password, $options);
     }
     /**
      * Convert a public key to the appropriate format
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $p
      * @param \phpseclib3\Math\BigInteger $q
      * @param \phpseclib3\Math\BigInteger $g
@@ -102,6 +94,6 @@ abstract class PuTTY extends Progenitor
         if ($q->getLength() != 160) {
             throw new \InvalidArgumentException('SSH only supports keys with an N (length of Group Order q) of 160');
         }
-        return self::wrapPublicKey(Strings::packSSH2('iiii', $p, $q, $g, $y), 'ssh-dsa');
+        return self::wrapPublicKey(Strings::packSSH2('iiii', $p, $q, $g, $y), 'ssh-dss');
     }
 }

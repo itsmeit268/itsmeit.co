@@ -17,28 +17,26 @@
  */
 namespace Mihdan\IndexNow\Dependencies\Google\AuthHandler;
 
-use Mihdan\IndexNow\Dependencies\GuzzleHttp\Client;
-use Mihdan\IndexNow\Dependencies\GuzzleHttp\ClientInterface;
 use Exception;
+use Mihdan\IndexNow\Dependencies\GuzzleHttp\ClientInterface;
+/** @internal */
 class AuthHandlerFactory
 {
     /**
      * Builds out a default http handler for the installed version of guzzle.
      *
-     * @return Guzzle5AuthHandler|Guzzle6AuthHandler|Guzzle7AuthHandler
+     * @return Guzzle6AuthHandler|Guzzle7AuthHandler
      * @throws Exception
      */
     public static function build($cache = null, array $cacheConfig = [])
     {
         $guzzleVersion = null;
-        if (\defined('\\Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\ClientInterface::MAJOR_VERSION')) {
+        if (\defined('Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\ClientInterface::MAJOR_VERSION')) {
             $guzzleVersion = ClientInterface::MAJOR_VERSION;
-        } elseif (\defined('\\Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\ClientInterface::VERSION')) {
+        } elseif (\defined('Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\ClientInterface::VERSION')) {
             $guzzleVersion = (int) \substr(ClientInterface::VERSION, 0, 1);
         }
         switch ($guzzleVersion) {
-            case 5:
-                return new Guzzle5AuthHandler($cache, $cacheConfig);
             case 6:
                 return new Guzzle6AuthHandler($cache, $cacheConfig);
             case 7:

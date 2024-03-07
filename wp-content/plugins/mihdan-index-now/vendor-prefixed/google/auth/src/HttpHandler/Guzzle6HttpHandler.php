@@ -20,6 +20,7 @@ namespace Mihdan\IndexNow\Dependencies\Google\Auth\HttpHandler;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\ClientInterface;
 use Mihdan\IndexNow\Dependencies\Psr\Http\Message\RequestInterface;
 use Mihdan\IndexNow\Dependencies\Psr\Http\Message\ResponseInterface;
+/** @internal */
 class Guzzle6HttpHandler
 {
     /**
@@ -37,7 +38,7 @@ class Guzzle6HttpHandler
      * Accepts a PSR-7 request and an array of options and returns a PSR-7 response.
      *
      * @param RequestInterface $request
-     * @param array $options
+     * @param array<mixed> $options
      * @return ResponseInterface
      */
     public function __invoke(RequestInterface $request, array $options = [])
@@ -48,7 +49,7 @@ class Guzzle6HttpHandler
      * Accepts a PSR-7 request and an array of options and returns a PromiseInterface
      *
      * @param RequestInterface $request
-     * @param array $options
+     * @param array<mixed> $options
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      */

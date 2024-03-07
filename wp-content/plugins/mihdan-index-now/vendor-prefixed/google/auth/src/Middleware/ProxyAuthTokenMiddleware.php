@@ -30,11 +30,12 @@ use Mihdan\IndexNow\Dependencies\Psr\Http\Message\RequestInterface;
  * Requests will be accessed with the authorization header:
  *
  * 'proxy-authorization' 'Bearer <value of auth_token>'
+ * @internal
  */
 class ProxyAuthTokenMiddleware
 {
     /**
-     * @var callback
+     * @var callable
      */
     private $httpHandler;
     /**
@@ -42,7 +43,7 @@ class ProxyAuthTokenMiddleware
      */
     private $fetcher;
     /**
-     * @var callable
+     * @var ?callable
      */
     private $tokenCallback;
     /**
@@ -100,7 +101,7 @@ class ProxyAuthTokenMiddleware
     /**
      * Call fetcher to fetch the token.
      *
-     * @return string
+     * @return string|null
      */
     private function fetchToken()
     {
@@ -115,11 +116,16 @@ class ProxyAuthTokenMiddleware
         if (\array_key_exists('id_token', $auth_tokens)) {
             return $auth_tokens['id_token'];
         }
+        return null;
     }
+    /**
+     * @return string|null;
+     */
     private function getQuotaProject()
     {
         if ($this->fetcher instanceof GetQuotaProjectInterface) {
             return $this->fetcher->getQuotaProject();
         }
+        return null;
     }
 }

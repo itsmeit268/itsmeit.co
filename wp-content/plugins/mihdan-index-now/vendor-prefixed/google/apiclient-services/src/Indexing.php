@@ -22,7 +22,7 @@ use Mihdan\IndexNow\Dependencies\Google\Client;
  * Service definition for Indexing (v3).
  *
  * <p>
- * Notifies Google when your web pages change.</p>
+ * Notifies Google Web Search when your web pages change.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -30,6 +30,7 @@ use Mihdan\IndexNow\Dependencies\Google\Client;
  * </p>
  *
  * @author Google, Inc.
+ * @internal
  */
 class Indexing extends \Mihdan\IndexNow\Dependencies\Google\Service
 {

@@ -21,8 +21,6 @@
  * ?>
  * </code>
  *
- * @category  Crypt
- * @package   DSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2016 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -31,17 +29,16 @@
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt;
 
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common\AsymmetricKey;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\Parameters;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\PrivateKey;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\PublicKey;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\Parameters;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\InsufficientSetupException;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * Pure-PHP FIPS 186-4 compliant implementation of DSA.
  *
- * @package DSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class DSA extends AsymmetricKey
 {
@@ -49,14 +46,12 @@ abstract class DSA extends AsymmetricKey
      * Algorithm Name
      *
      * @var string
-     * @access private
      */
     const ALGORITHM = 'DSA';
     /**
      * DSA Prime P
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $p;
     /**
@@ -65,41 +60,35 @@ abstract class DSA extends AsymmetricKey
      * Prime divisor of p-1
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $q;
     /**
      * DSA Group Generator G
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $g;
     /**
      * DSA public key value y
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $y;
     /**
      * Signature Format
      *
      * @var string
-     * @access private
      */
     protected $sigFormat;
     /**
      * Signature Format (Short)
      *
      * @var string
-     * @access private
      */
     protected $shortFormat;
     /**
      * Create DSA parameters
      *
-     * @access public
      * @param int $L
      * @param int $N
      * @return \phpseclib3\Crypt\DSA|bool
@@ -107,6 +96,10 @@ abstract class DSA extends AsymmetricKey
     public static function createParameters($L = 2048, $N = 224)
     {
         self::initialize_static_variables();
+        $class = new \ReflectionClass(static::class);
+        if ($class->isFinal()) {
+            throw new \RuntimeException('createParameters() should not be called from final classes (' . static::class . ')');
+        }
         if (!isset(self::$engines['PHP'])) {
             self::useBestEngine();
         }
@@ -167,27 +160,26 @@ abstract class DSA extends AsymmetricKey
      * Returns the private key, from which the publickey can be extracted
      *
      * @param int[] ...$args
-     * @access public
      * @return DSA\PrivateKey
      */
     public static function createKey(...$args)
     {
         self::initialize_static_variables();
+        $class = new \ReflectionClass(static::class);
+        if ($class->isFinal()) {
+            throw new \RuntimeException('createKey() should not be called from final classes (' . static::class . ')');
+        }
         if (!isset(self::$engines['PHP'])) {
             self::useBestEngine();
         }
         if (\count($args) == 2 && \is_int($args[0]) && \is_int($args[1])) {
             $params = self::createParameters($args[0], $args[1]);
+        } elseif (\count($args) == 1 && $args[0] instanceof Parameters) {
+            $params = $args[0];
+        } elseif (!\count($args)) {
+            $params = self::createParameters();
         } else {
-            if (\count($args) == 1 && $args[0] instanceof Parameters) {
-                $params = $args[0];
-            } else {
-                if (!\count($args)) {
-                    $params = self::createParameters();
-                } else {
-                    throw new InsufficientSetupException('Valid parameters are either two integers (L and N), a single DSA object or no parameters at all.');
-                }
-            }
+            throw new InsufficientSetupException('Valid parameters are either two integers (L and N), a single DSA object or no parameters at all.');
         }
         $private = new PrivateKey();
         $private->p = $params->p;
@@ -203,23 +195,19 @@ abstract class DSA extends AsymmetricKey
      * OnLoad Handler
      *
      * @return bool
-     * @access protected
-     * @param array $components
      */
-    protected static function onLoad($components)
+    protected static function onLoad(array $components)
     {
         if (!isset(self::$engines['PHP'])) {
             self::useBestEngine();
         }
         if (!isset($components['x']) && !isset($components['y'])) {
             $new = new Parameters();
+        } elseif (isset($components['x'])) {
+            $new = new PrivateKey();
+            $new->x = $components['x'];
         } else {
-            if (isset($components['x'])) {
-                $new = new PrivateKey();
-                $new->x = $components['x'];
-            } else {
-                $new = new PublicKey();
-            }
+            $new = new PublicKey();
         }
         $new->p = $components['p'];
         $new->q = $components['q'];
@@ -245,7 +233,6 @@ abstract class DSA extends AsymmetricKey
      *
      * More specifically, this L (the length of DSA Prime P) and N (the length of DSA Group Order q)
      *
-     * @access public
      * @return array
      */
     public function getLength()
@@ -257,11 +244,13 @@ abstract class DSA extends AsymmetricKey
      *
      * @see self::useInternalEngine()
      * @see self::useBestEngine()
-     * @access public
      * @return string
      */
     public function getEngine()
     {
+        if (!isset(self::$engines['PHP'])) {
+            self::useBestEngine();
+        }
         return self::$engines['OpenSSL'] && \in_array($this->hash->getHash(), \openssl_get_md_methods()) ? 'OpenSSL' : 'PHP';
     }
     /**
@@ -271,7 +260,6 @@ abstract class DSA extends AsymmetricKey
      * value.
      *
      * @see self::getPublicKey()
-     * @access public
      * @return mixed
      */
     public function getParameters()
@@ -285,7 +273,6 @@ abstract class DSA extends AsymmetricKey
      *
      * Valid values are: ASN1, SSH2, Raw
      *
-     * @access public
      * @param string $format
      */
     public function withSignatureFormat($format)
@@ -298,7 +285,6 @@ abstract class DSA extends AsymmetricKey
     /**
      * Returns the signature format currently being used
      *
-     * @access public
      */
     public function getSignatureFormat()
     {

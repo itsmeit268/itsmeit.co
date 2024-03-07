@@ -18,8 +18,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -27,15 +25,14 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\PrimeField;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\PrimeField;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\PrimeField\Integer as PrimeInteger;
 /**
  * Curves over a*x^2 + y^2 = 1 + d*x^2*y^2
  *
- * @package Prime
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 class TwistedEdwards extends Base
 {
@@ -110,9 +107,9 @@ class TwistedEdwards extends Base
     {
         switch (\true) {
             case !$x instanceof BigInteger && !$x instanceof PrimeInteger:
-                throw new \UnexpectedValueException('Mihdan\\IndexNow\\Dependencies\\Argument 1 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
+                throw new \UnexpectedValueException('Argument 1 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
             case !$y instanceof BigInteger && !$y instanceof PrimeInteger:
-                throw new \UnexpectedValueException('Mihdan\\IndexNow\\Dependencies\\Argument 2 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
+                throw new \UnexpectedValueException('Argument 2 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
         }
         if (!isset($this->factory)) {
             throw new \RuntimeException('setModulo needs to be called before this method');

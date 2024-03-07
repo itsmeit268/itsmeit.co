@@ -18,9 +18,8 @@
 namespace Mihdan\IndexNow\Dependencies\Google\Http;
 
 use Mihdan\IndexNow\Dependencies\Google\Auth\HttpHandler\HttpHandlerFactory;
-use Mihdan\IndexNow\Dependencies\Google\Client;
-use Mihdan\IndexNow\Dependencies\Google\Task\Runner;
 use Mihdan\IndexNow\Dependencies\Google\Service\Exception as GoogleServiceException;
+use Mihdan\IndexNow\Dependencies\Google\Task\Runner;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\ClientInterface;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\Exception\RequestException;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\Psr7\Response;
@@ -28,6 +27,7 @@ use Mihdan\IndexNow\Dependencies\Psr\Http\Message\RequestInterface;
 use Mihdan\IndexNow\Dependencies\Psr\Http\Message\ResponseInterface;
 /**
  * This class implements the RESTful transport of apiServiceRequest()'s
+ * @internal
  */
 class REST
 {
@@ -35,18 +35,19 @@ class REST
      * Executes a Psr\Http\Message\RequestInterface and (if applicable) automatically retries
      * when errors occur.
      *
-     * @param Client $client
-     * @param RequestInterface $req
-     * @param string $expectedClass
+     * @template T
+     * @param ClientInterface $client
+     * @param RequestInterface $request
+     * @param class-string<T>|false|null $expectedClass
      * @param array $config
      * @param array $retryMap
-     * @return mixed decoded result
+     * @return mixed|T|null
      * @throws \Google\Service\Exception on server side error (ie: not authenticated,
      *  invalid or malformed post body, invalid url)
      */
-    public static function execute(ClientInterface $client, RequestInterface $request, $expectedClass = null, $config = array(), $retryMap = null)
+    public static function execute(ClientInterface $client, RequestInterface $request, $expectedClass = null, $config = [], $retryMap = null)
     {
-        $runner = new Runner($config, \sprintf('%s %s', $request->getMethod(), (string) $request->getUri()), array(\get_class(), 'doExecute'), array($client, $request, $expectedClass));
+        $runner = new Runner($config, \sprintf('%s %s', $request->getMethod(), (string) $request->getUri()), [self::class, 'doExecute'], [$client, $request, $expectedClass]);
         if (null !== $retryMap) {
             $runner->setRetryMap($retryMap);
         }
@@ -55,10 +56,11 @@ class REST
     /**
      * Executes a Psr\Http\Message\RequestInterface
      *
-     * @param Client $client
+     * @template T
+     * @param ClientInterface $client
      * @param RequestInterface $request
-     * @param string $expectedClass
-     * @return array decoded result
+     * @param class-string<T>|false|null $expectedClass
+     * @return mixed|T|null
      * @throws \Google\Service\Exception on server side error (ie: not authenticated,
      *  invalid or malformed post body, invalid url)
      */
@@ -74,7 +76,7 @@ class REST
             }
             $response = $e->getResponse();
             // specific checking for Guzzle 5: convert to PSR7 response
-            if ($response instanceof \Mihdan\IndexNow\Dependencies\GuzzleHttp\Message\ResponseInterface) {
+            if (\interface_exists('Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Message\\ResponseInterface') && $response instanceof \Mihdan\IndexNow\Dependencies\GuzzleHttp\Message\ResponseInterface) {
                 $response = new Response($response->getStatusCode(), $response->getHeaders() ?: [], $response->getBody(), $response->getProtocolVersion(), $response->getReasonPhrase());
             }
         }
@@ -83,11 +85,13 @@ class REST
     /**
      * Decode an HTTP Response.
      * @static
-     * @throws \Google\Service\Exception
+     *
+     * @template T
      * @param RequestInterface $response The http response to be decoded.
      * @param ResponseInterface $response
-     * @param string $expectedClass
-     * @return mixed|null
+     * @param class-string<T>|false|null $expectedClass
+     * @return mixed|T|null
+     * @throws \Google\Service\Exception
      */
     public static function decodeHttpResponse(ResponseInterface $response, RequestInterface $request = null, $expectedClass = null)
     {

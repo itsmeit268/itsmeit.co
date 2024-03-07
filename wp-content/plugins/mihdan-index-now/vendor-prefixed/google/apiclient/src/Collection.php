@@ -6,10 +6,12 @@ namespace Mihdan\IndexNow\Dependencies\Google;
  * Extension to the regular Google\Model that automatically
  * exposes the items array for iteration, so you can just
  * iterate over the object rather than a reference inside.
+ * @internal
  */
 class Collection extends Model implements \Iterator, \Countable
 {
     protected $collection_key = 'items';
+    /** @return void */
     #[\ReturnTypeWillChange]
     public function rewind()
     {
@@ -17,6 +19,7 @@ class Collection extends Model implements \Iterator, \Countable
             \reset($this->{$this->collection_key});
         }
     }
+    /** @return mixed */
     #[\ReturnTypeWillChange]
     public function current()
     {
@@ -25,6 +28,7 @@ class Collection extends Model implements \Iterator, \Countable
             return \current($this->{$this->collection_key});
         }
     }
+    /** @return mixed */
     #[\ReturnTypeWillChange]
     public function key()
     {
@@ -32,17 +36,20 @@ class Collection extends Model implements \Iterator, \Countable
             return \key($this->{$this->collection_key});
         }
     }
+    /** @return mixed */
     #[\ReturnTypeWillChange]
     public function next()
     {
         return \next($this->{$this->collection_key});
     }
+    /** @return bool */
     #[\ReturnTypeWillChange]
     public function valid()
     {
         $key = $this->key();
         return $key !== null && $key !== \false;
     }
+    /** @return int */
     #[\ReturnTypeWillChange]
     public function count()
     {
@@ -51,6 +58,8 @@ class Collection extends Model implements \Iterator, \Countable
         }
         return \count($this->{$this->collection_key});
     }
+    /** @return bool */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         if (!\is_numeric($offset)) {
@@ -58,6 +67,8 @@ class Collection extends Model implements \Iterator, \Countable
         }
         return isset($this->{$this->collection_key}[$offset]);
     }
+    /** @return mixed */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (!\is_numeric($offset)) {
@@ -66,6 +77,8 @@ class Collection extends Model implements \Iterator, \Countable
         $this->coerceType($offset);
         return $this->{$this->collection_key}[$offset];
     }
+    /** @return void */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (!\is_numeric($offset)) {
@@ -73,6 +86,8 @@ class Collection extends Model implements \Iterator, \Countable
         }
         $this->{$this->collection_key}[$offset] = $value;
     }
+    /** @return void */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         if (!\is_numeric($offset)) {

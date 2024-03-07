@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -14,23 +12,20 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Formats\Keys;
 
-use Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime\Hex;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Base as BaseCurve;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Prime as PrimeCurve;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Binary as BinaryCurve;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\TwistedEdwards as TwistedEdwardsCurve;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\PrimeField;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Base as BaseCurve;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Binary as BinaryCurve;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Prime as PrimeCurve;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\TwistedEdwards as TwistedEdwardsCurve;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\UnsupportedCurveException;
 use Mihdan\IndexNow\Dependencies\phpseclib3\File\ASN1;
 use Mihdan\IndexNow\Dependencies\phpseclib3\File\ASN1\Maps;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\UnsupportedCurveException;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * Generic EC Key Parsing Helper functions
  *
- * @package EC
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 trait Common
 {
@@ -261,7 +256,7 @@ trait Common
                     $modulo[] = 0;
                     $curve->setModulo(...$modulo);
                     $len = \ceil($modulo[0] / 8);
-                    $curve->setCoefficients(Hex::encode($data['curve']['a']), Hex::encode($data['curve']['b']));
+                    $curve->setCoefficients(Strings::bin2hex($data['curve']['a']), Strings::bin2hex($data['curve']['b']));
                     $point = self::extractPoint("\x00" . $data['base'], $curve);
                     $curve->setBasePoint(...$point);
                     $curve->setOrder($data['order']);
@@ -304,7 +299,7 @@ trait Common
         // the first byte of a bit string represents the number of bits in the last byte that are to be ignored but,
         // currently, bit strings wanting a non-zero amount of bits trimmed are not supported
         if (($val = Strings::shift($str)) != "\x00") {
-            throw new \UnexpectedValueException('extractPoint expects the first byte to be null - not ' . Hex::encode($val));
+            throw new \UnexpectedValueException('extractPoint expects the first byte to be null - not ' . Strings::bin2hex($val));
         }
         if ($str == "\x00") {
             return [];
@@ -320,7 +315,7 @@ trait Common
             \preg_match("#(.)(.{{$order}})(.{{$order}})#s", $str, $matches);
             list(, $w, $x, $y) = $matches;
             if ($w != "\x04") {
-                throw new \UnexpectedValueException('The first byte of an uncompressed point should be 04 - not ' . Hex::encode($val));
+                throw new \UnexpectedValueException('The first byte of an uncompressed point should be 04 - not ' . Strings::bin2hex($val));
             }
             $point = [$curve->convertInteger(new BigInteger($x, 256)), $curve->convertInteger(new BigInteger($y, 256))];
             if (!$curve->verifyPoint($point)) {

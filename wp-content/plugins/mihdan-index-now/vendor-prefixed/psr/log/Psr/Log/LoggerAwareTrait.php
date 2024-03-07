@@ -4,6 +4,7 @@ namespace Mihdan\IndexNow\Dependencies\Psr\Log;
 
 /**
  * Basic Implementation of LoggerAwareInterface.
+ * @internal
  */
 trait LoggerAwareTrait
 {

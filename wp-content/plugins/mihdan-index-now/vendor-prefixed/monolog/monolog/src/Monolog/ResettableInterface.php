@@ -1,5 +1,6 @@
 <?php
 
+declare (strict_types=1);
 /*
  * This file is part of the Monolog package.
  *
@@ -23,8 +24,12 @@ namespace Mihdan\IndexNow\Dependencies\Monolog;
  * in one process.
  *
  * @author Grégoire Pineau <lyrixx@lyrixx.info>
+ * @internal
  */
 interface ResettableInterface
 {
+    /**
+     * @return void
+     */
     public function reset();
 }

@@ -1,5 +1,6 @@
 <?php
 
+declare (strict_types=1);
 /*
  * This file is part of the Monolog package.
  *
@@ -12,6 +13,7 @@ namespace Mihdan\IndexNow\Dependencies\Monolog\Handler;
 
 use Mihdan\IndexNow\Dependencies\Aws\Sdk;
 use Mihdan\IndexNow\Dependencies\Aws\DynamoDb\DynamoDbClient;
+use Mihdan\IndexNow\Dependencies\Monolog\Formatter\FormatterInterface;
 use Mihdan\IndexNow\Dependencies\Aws\DynamoDb\Marshaler;
 use Mihdan\IndexNow\Dependencies\Monolog\Formatter\ScalarFormatter;
 use Mihdan\IndexNow\Dependencies\Monolog\Logger;
@@ -20,10 +22,11 @@ use Mihdan\IndexNow\Dependencies\Monolog\Logger;
  *
  * @link https://github.com/aws/aws-sdk-php/
  * @author Andrew Lawson <adlawson@gmail.com>
+ * @internal
  */
 class DynamoDbHandler extends AbstractProcessingHandler
 {
-    const DATE_FORMAT = 'Y-m-d\\TH:i:s.uO';
+    public const DATE_FORMAT = 'Y-m-d\\TH:i:s.uO';
     /**
      * @var DynamoDbClient
      */
@@ -40,15 +43,10 @@ class DynamoDbHandler extends AbstractProcessingHandler
      * @var Marshaler
      */
     protected $marshaler;
-    /**
-     * @param DynamoDbClient $client
-     * @param string         $table
-     * @param int            $level
-     * @param bool           $bubble
-     */
-    public function __construct(DynamoDbClient $client, $table, $level = Logger::DEBUG, $bubble = \true)
+    public function __construct(DynamoDbClient $client, string $table, $level = Logger::DEBUG, bool $bubble = \true)
     {
-        if (\defined('Aws\\Sdk::VERSION') && \version_compare(Sdk::VERSION, '3.0', '>=')) {
+        /** @phpstan-ignore-next-line */
+        if (\defined('Mihdan\\IndexNow\\Dependencies\\Aws\\Sdk::VERSION') && \version_compare(Sdk::VERSION, '3.0', '>=')) {
             $this->version = 3;
             $this->marshaler = new Marshaler();
         } else {
@@ -59,9 +57,9 @@ class DynamoDbHandler extends AbstractProcessingHandler
         parent::__construct($level, $bubble);
     }
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    protected function write(array $record)
+    protected function write(array $record) : void
     {
         $filtered = $this->filterEmptyFields($record['formatted']);
         if ($this->version === 3) {
@@ -70,22 +68,22 @@ class DynamoDbHandler extends AbstractProcessingHandler
             /** @phpstan-ignore-next-line */
             $formatted = $this->client->formatAttributes($filtered);
         }
-        $this->client->putItem(array('TableName' => $this->table, 'Item' => $formatted));
+        $this->client->putItem(['TableName' => $this->table, 'Item' => $formatted]);
     }
     /**
-     * @param  array $record
-     * @return array
+     * @param  mixed[] $record
+     * @return mixed[]
      */
-    protected function filterEmptyFields(array $record)
+    protected function filterEmptyFields(array $record) : array
     {
         return \array_filter($record, function ($value) {
             return !empty($value) || \false === $value || 0 === $value;
         });
     }
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    protected function getDefaultFormatter()
+    protected function getDefaultFormatter() : FormatterInterface
     {
         return new ScalarFormatter(self::DATE_FORMAT);
     }

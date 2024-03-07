@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  Exception
- * @package   InsufficientSetupException
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -17,8 +15,8 @@ namespace Mihdan\IndexNow\Dependencies\phpseclib3\Exception;
 /**
  * InsufficientSetupException
  *
- * @package InsufficientSetupException
  * @author  Jim Wigginton <terrafrost@php.net>
+ * @internal
  */
 class InsufficientSetupException extends \RuntimeException
 {

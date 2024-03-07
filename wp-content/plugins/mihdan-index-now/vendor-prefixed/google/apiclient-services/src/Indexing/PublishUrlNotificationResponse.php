@@ -17,6 +17,7 @@
  */
 namespace Mihdan\IndexNow\Dependencies\Google\Service\Indexing;
 
+/** @internal */
 class PublishUrlNotificationResponse extends \Mihdan\IndexNow\Dependencies\Google\Model
 {
     protected $urlNotificationMetadataType = UrlNotificationMetadata::class;

@@ -5,8 +5,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Math
- * @package   BigInteger
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -14,13 +12,12 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\PHP\Reductions;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\PHP\Base;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\PHP;
 /**
  * PHP Montgomery Modular Exponentiation Engine with interleaved multiplication
  *
- * @package PHP
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class MontgomeryMult extends Montgomery
 {
@@ -32,11 +29,10 @@ abstract class MontgomeryMult extends Montgomery
      *
      * @see self::_prepMontgomery()
      * @see self::_montgomery()
-     * @access private
      * @param array $x
      * @param array $y
      * @param array $m
-     * @param string $class
+     * @param class-string<PHP> $class
      * @return array
      */
     public static function multiplyReduce(array $x, array $y, array $m, $class)

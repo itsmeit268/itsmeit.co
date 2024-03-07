@@ -25,6 +25,7 @@ use Mihdan\IndexNow\Dependencies\GuzzleHttp\Psr7\Request;
 /**
  * Wrapper around Google Access Tokens which provides convenience functions
  *
+ * @internal
  */
 class Revoke
 {
@@ -56,7 +57,7 @@ class Revoke
                 $token = $token['access_token'];
             }
         }
-        $body = Psr7\Utils::streamFor(\http_build_query(array('token' => $token)));
+        $body = Psr7\Utils::streamFor(\http_build_query(['token' => $token]));
         $request = new Request('POST', Client::OAUTH2_REVOKE_URI, ['Cache-Control' => 'no-store', 'Content-Type' => 'application/x-www-form-urlencoded'], $body);
         $httpHandler = HttpHandlerFactory::build($this->http);
         $response = $httpHandler($request);

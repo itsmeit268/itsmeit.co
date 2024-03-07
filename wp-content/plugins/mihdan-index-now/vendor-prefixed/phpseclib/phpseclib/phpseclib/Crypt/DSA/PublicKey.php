@@ -3,8 +3,6 @@
 /**
  * DSA Public Key
  *
- * @category  Crypt
- * @package   DSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -12,24 +10,22 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA;
 
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\Formats\Signature\ASN1 as ASN1Signature;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common;
 /**
  * DSA Public Key
  *
- * @package DSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
-class PublicKey extends DSA implements Common\PublicKey
+final class PublicKey extends DSA implements Common\PublicKey
 {
     use Common\Traits\Fingerprint;
     /**
      * Verify a signature
      *
      * @see self::verify()
-     * @access public
      * @param string $message
      * @param string $signature
      * @return mixed

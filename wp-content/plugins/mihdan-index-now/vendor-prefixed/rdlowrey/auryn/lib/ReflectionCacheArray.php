@@ -2,6 +2,7 @@
 
 namespace Mihdan\IndexNow\Dependencies\Auryn;
 
+/** @internal */
 class ReflectionCacheArray implements ReflectionCache
 {
     private $cache = array();

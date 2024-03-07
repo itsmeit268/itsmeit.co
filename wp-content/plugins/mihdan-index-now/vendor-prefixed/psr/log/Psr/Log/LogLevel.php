@@ -4,6 +4,7 @@ namespace Mihdan\IndexNow\Dependencies\Psr\Log;
 
 /**
  * Describes log levels.
+ * @internal
  */
 class LogLevel
 {

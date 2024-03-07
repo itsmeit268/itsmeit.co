@@ -7,8 +7,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -20,6 +18,7 @@ namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Curves;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\KoblitzPrime;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 //class secp256k1 extends Prime
+/** @internal */
 class secp256k1 extends KoblitzPrime
 {
     public function __construct()

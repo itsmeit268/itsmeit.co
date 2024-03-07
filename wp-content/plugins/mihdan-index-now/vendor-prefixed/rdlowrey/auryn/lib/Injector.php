@@ -2,6 +2,7 @@
 
 namespace Mihdan\IndexNow\Dependencies\Auryn;
 
+/** @internal */
 class Injector
 {
     const A_RAW = ':';

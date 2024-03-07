@@ -17,6 +17,7 @@
  */
 namespace Mihdan\IndexNow\Dependencies\Google\Service\Indexing;
 
+/** @internal */
 class UrlNotificationMetadata extends \Mihdan\IndexNow\Dependencies\Google\Model
 {
     protected $latestRemoveType = UrlNotification::class;

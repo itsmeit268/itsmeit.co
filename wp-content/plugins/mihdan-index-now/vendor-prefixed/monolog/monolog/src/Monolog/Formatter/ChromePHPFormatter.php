@@ -1,5 +1,6 @@
 <?php
 
+declare (strict_types=1);
 /*
  * This file is part of the Monolog package.
  *
@@ -15,15 +16,18 @@ use Mihdan\IndexNow\Dependencies\Monolog\Logger;
  * Formats a log message according to the ChromePHP array format
  *
  * @author Christophe Coevoet <stof@notk.org>
+ * @internal
  */
 class ChromePHPFormatter implements FormatterInterface
 {
     /**
      * Translates Monolog log levels to Wildfire levels.
+     *
+     * @var array<int, 'log'|'info'|'warn'|'error'>
      */
-    private $logLevels = array(Logger::DEBUG => 'log', Logger::INFO => 'info', Logger::NOTICE => 'info', Logger::WARNING => 'warn', Logger::ERROR => 'error', Logger::CRITICAL => 'error', Logger::ALERT => 'error', Logger::EMERGENCY => 'error');
+    private $logLevels = [Logger::DEBUG => 'log', Logger::INFO => 'info', Logger::NOTICE => 'info', Logger::WARNING => 'warn', Logger::ERROR => 'error', Logger::CRITICAL => 'error', Logger::ALERT => 'error', Logger::EMERGENCY => 'error'];
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function format(array $record)
     {
@@ -33,7 +37,7 @@ class ChromePHPFormatter implements FormatterInterface
             $backtrace = $record['extra']['file'] . ' : ' . $record['extra']['line'];
             unset($record['extra']['file'], $record['extra']['line']);
         }
-        $message = array('message' => $record['message']);
+        $message = ['message' => $record['message']];
         if ($record['context']) {
             $message['context'] = $record['context'];
         }
@@ -43,11 +47,14 @@ class ChromePHPFormatter implements FormatterInterface
         if (\count($message) === 1) {
             $message = \reset($message);
         }
-        return array($record['channel'], $message, $backtrace, $this->logLevels[$record['level']]);
+        return [$record['channel'], $message, $backtrace, $this->logLevels[$record['level']]];
     }
+    /**
+     * {@inheritDoc}
+     */
     public function formatBatch(array $records)
     {
-        $formatted = array();
+        $formatted = [];
         foreach ($records as $record) {
             $formatted[] = $this->format($record);
         }

@@ -20,6 +20,7 @@ namespace Mihdan\IndexNow\Dependencies\Google\Utils;
 /**
  * Implementation of levels 1-3 of the URI Template spec.
  * @see http://tools.ietf.org/html/rfc6570
+ * @internal
  */
 class UriTemplate
 {
@@ -27,19 +28,19 @@ class UriTemplate
     const TYPE_LIST = "2";
     const TYPE_SCALAR = "4";
     /**
-     * @var $operators array
+     * @var array $operators
      * These are valid at the start of a template block to
      * modify the way in which the variables inside are
      * processed.
      */
-    private $operators = array("+" => "reserved", "/" => "segments", "." => "dotprefix", "#" => "fragment", ";" => "semicolon", "?" => "form", "&" => "continuation");
+    private $operators = ["+" => "reserved", "/" => "segments", "." => "dotprefix", "#" => "fragment", ";" => "semicolon", "?" => "form", "&" => "continuation"];
     /**
-     * @var reserved array
+     * @var array<string>
      * These are the characters which should not be URL encoded in reserved
      * strings.
      */
-    private $reserved = array("=", ",", "!", "@", "|", ":", "/", "?", "#", "[", "]", '$', "&", "'", "(", ")", "*", "+", ";");
-    private $reservedEncoded = array("%3D", "%2C", "%21", "%40", "%7C", "%3A", "%2F", "%3F", "%23", "%5B", "%5D", "%24", "%26", "%27", "%28", "%29", "%2A", "%2B", "%3B");
+    private $reserved = ["=", ",", "!", "@", "|", ":", "/", "?", "#", "[", "]", '$', "&", "'", "(", ")", "*", "+", ";"];
+    private $reservedEncoded = ["%3D", "%2C", "%21", "%40", "%7C", "%3A", "%2F", "%3F", "%23", "%5B", "%5D", "%24", "%26", "%27", "%28", "%29", "%2A", "%2B", "%3B"];
     public function parse($string, array $parameters)
     {
         return $this->resolveNextSection($string, $parameters);
@@ -169,7 +170,7 @@ class UriTemplate
                     $value = $this->getValue($parameters[$key], $length);
                     break;
                 case self::TYPE_LIST:
-                    $values = array();
+                    $values = [];
                     foreach ($parameters[$key] as $pkey => $pvalue) {
                         $pvalue = $this->getValue($pvalue, $length);
                         if ($combine && $explode) {
@@ -184,7 +185,7 @@ class UriTemplate
                     }
                     break;
                 case self::TYPE_MAP:
-                    $values = array();
+                    $values = [];
                     foreach ($parameters[$key] as $pkey => $pvalue) {
                         $pvalue = $this->getValue($pvalue, $length);
                         if ($explode) {
@@ -202,14 +203,12 @@ class UriTemplate
                     }
                     break;
             }
+        } elseif ($tag_empty) {
+            // If we are just indicating empty values with their key name, return that.
+            return $key;
         } else {
-            if ($tag_empty) {
-                // If we are just indicating empty values with their key name, return that.
-                return $key;
-            } else {
-                // Otherwise we can skip this variable due to not being defined.
-                return \false;
-            }
+            // Otherwise we can skip this variable due to not being defined.
+            return \false;
         }
         if ($reserved) {
             $value = \str_replace($this->reservedEncoded, $this->reserved, $value);
@@ -242,7 +241,7 @@ class UriTemplate
      */
     private function combineList($vars, $sep, $parameters, $combine, $reserved, $tag_empty, $combine_on_empty)
     {
-        $ret = array();
+        $ret = [];
         foreach ($vars as $var) {
             $response = $this->combine($var, $parameters, $sep, $combine, $reserved, $tag_empty, $combine_on_empty);
             if ($response === \false) {

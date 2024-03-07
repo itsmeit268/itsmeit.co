@@ -2,6 +2,7 @@
 
 namespace Mihdan\IndexNow\Dependencies\Auryn;
 
+/** @internal */
 class InjectionException extends InjectorException
 {
     public $dependencyChain;

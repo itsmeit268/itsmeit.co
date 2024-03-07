@@ -16,8 +16,6 @@
  * ?>
  * </code>
  *
- * @category  Crypt
- * @package   DH
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2016 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -25,19 +23,18 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\NoKeyLoadedException;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\UnsupportedOperationException;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common\AsymmetricKey;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DH\Parameters;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DH\PrivateKey;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DH\PublicKey;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DH\Parameters;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\NoKeyLoadedException;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\UnsupportedOperationException;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * Pure-PHP (EC)DH implementation
  *
- * @package DH
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class DH extends AsymmetricKey
 {
@@ -45,14 +42,12 @@ abstract class DH extends AsymmetricKey
      * Algorithm Name
      *
      * @var string
-     * @access private
      */
     const ALGORITHM = 'DH';
     /**
      * DH prime
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $prime;
     /**
@@ -61,9 +56,14 @@ abstract class DH extends AsymmetricKey
      * Prime divisor of p-1
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $base;
+    /**
+     * Public Key
+     *
+     * @var \phpseclib3\Math\BigInteger
+     */
+    protected $publicKey;
     /**
      * Create DH parameters
      *
@@ -72,11 +72,14 @@ abstract class DH extends AsymmetricKey
      *  - an integer representing the size of the prime in bits (the base is assumed to be 2)
      *  - a string (eg. diffie-hellman-group14-sha1)
      *
-     * @access public
      * @return Parameters
      */
     public static function createParameters(...$args)
     {
+        $class = new \ReflectionClass(static::class);
+        if ($class->isFinal()) {
+            throw new \RuntimeException('createParameters() should not be called from final classes (' . static::class . ')');
+        }
         $params = new Parameters();
         if (\count($args) == 2 && $args[0] instanceof BigInteger && $args[1] instanceof BigInteger) {
             //if (!$args[0]->isPrime()) {
@@ -146,11 +149,14 @@ abstract class DH extends AsymmetricKey
      *
      * @param Parameters $params
      * @param int $length optional
-     * @access public
      * @return DH\PrivateKey
      */
     public static function createKey(Parameters $params, $length = 0)
     {
+        $class = new \ReflectionClass(static::class);
+        if ($class->isFinal()) {
+            throw new \RuntimeException('createKey() should not be called from final classes (' . static::class . ')');
+        }
         $one = new BigInteger(1);
         if ($length) {
             $max = $one->bitwise_leftShift($length);
@@ -170,7 +176,6 @@ abstract class DH extends AsymmetricKey
      *
      * @param PrivateKey|EC $private
      * @param PublicKey|BigInteger|string $public
-     * @access public
      * @return mixed
      */
     public static function computeSecret($private, $public)
@@ -185,6 +190,7 @@ abstract class DH extends AsymmetricKey
                     return $public->publicKey->powMod($private->privateKey, $private->prime)->toBytes(\true);
                 case \is_string($public):
                     $public = new BigInteger($public, -256);
+                // fall-through
                 case $public instanceof BigInteger:
                     return $public->powMod($private->privateKey, $private->prime)->toBytes(\true);
                 default:
@@ -195,6 +201,7 @@ abstract class DH extends AsymmetricKey
             switch (\true) {
                 case $public instanceof EC\PublicKey:
                     $public = $public->getEncodedCoordinates();
+                // fall-through
                 case \is_string($public):
                     $point = $private->multiply($public);
                     switch ($private->getCurve()) {
@@ -236,10 +243,8 @@ abstract class DH extends AsymmetricKey
      * OnLoad Handler
      *
      * @return bool
-     * @access protected
-     * @param array $components
      */
-    protected static function onLoad($components)
+    protected static function onLoad(array $components)
     {
         if (!isset($components['privateKey']) && !isset($components['publicKey'])) {
             $new = new Parameters();
@@ -259,7 +264,6 @@ abstract class DH extends AsymmetricKey
     /**
      * Determines which hashing function should be used
      *
-     * @access public
      * @param string $hash
      */
     public function withHash($hash)
@@ -269,7 +273,6 @@ abstract class DH extends AsymmetricKey
     /**
      * Returns the hash algorithm currently being used
      *
-     * @access public
      */
     public function getHash()
     {
@@ -282,13 +285,12 @@ abstract class DH extends AsymmetricKey
      * value.
      *
      * @see self::getPublicKey()
-     * @access public
      * @return mixed
      */
     public function getParameters()
     {
-        $type = self::validatePlugin('Keys', 'PKCS1', 'saveParameters');
+        $type = DH::validatePlugin('Keys', 'PKCS1', 'saveParameters');
         $key = $type::saveParameters($this->prime, $this->base);
-        return self::load($key, 'PKCS1');
+        return DH::load($key, 'PKCS1');
     }
 }

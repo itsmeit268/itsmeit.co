@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  Crypt
- * @package   DSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2016 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -18,9 +16,8 @@ use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common\Formats\Signature\Raw a
 /**
  * Raw DSA Signature Handler
  *
- * @package DSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class Raw extends Progenitor
 {

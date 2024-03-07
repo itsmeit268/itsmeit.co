@@ -3,8 +3,6 @@
 /**
  * DH Private Key
  *
- * @category  Crypt
- * @package   DH
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -12,36 +10,32 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DH;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DH;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DH;
 /**
  * DH Private Key
  *
- * @package DH
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
-class PrivateKey extends DH
+final class PrivateKey extends DH
 {
     use Common\Traits\PasswordProtected;
     /**
      * Private Key
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $privateKey;
     /**
      * Public Key
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $publicKey;
     /**
      * Returns the public key
      *
-     * @access public
      * @return DH\PublicKey
      */
     public function getPublicKey()

@@ -13,24 +13,21 @@
  *
  * PHP version 5 and 7
  *
- * @category  Math
- * @package   BigInteger
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Math\BinaryField;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\Common\FiniteField\Integer as Base;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BinaryField;
-use Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime\Hex;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\Common\FiniteField\Integer as Base;
 /**
  * Binary Finite Fields
  *
- * @package Math
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 class Integer extends Base
 {
@@ -49,7 +46,7 @@ class Integer extends Base
     /**
      * Holds the PrimeField's modulo
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected static $modulo;
     /**
@@ -73,6 +70,8 @@ class Integer extends Base
     }
     /**
      * Set the modulo for a given instance
+     * @param int $instanceID
+     * @param string $modulo
      */
     public static function setModulo($instanceID, $modulo)
     {
@@ -382,7 +381,7 @@ class Integer extends Base
     /**
      * Returns the modulo
      *
-     * @return integer
+     * @return string
      */
     public static function getModulo($instanceID)
     {
@@ -404,7 +403,7 @@ class Integer extends Base
      */
     public function toHex()
     {
-        return Hex::encode($this->toBytes());
+        return Strings::bin2hex($this->toBytes());
     }
     /**
      * Converts an Integer to a bit string (eg. base-2).
@@ -428,7 +427,6 @@ class Integer extends Base
     /**
      *  __toString() magic method
      *
-     * @access public
      */
     public function __toString()
     {
@@ -437,7 +435,6 @@ class Integer extends Base
     /**
      *  __debugInfo() magic method
      *
-     * @access public
      */
     public function __debugInfo()
     {

@@ -3,8 +3,6 @@
 /**
  * EC Public Key
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -12,32 +10,30 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC;
 
+use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Hash;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Formats\Signature\ASN1 as ASN1Signature;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\TwistedEdwards as TwistedEdwardsCurve;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Montgomery as MontgomeryCurve;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\TwistedEdwards as TwistedEdwardsCurve;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Curves\Ed25519;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Formats\Keys\PKCS1;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Formats\Signature\ASN1 as ASN1Signature;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Hash;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\UnsupportedOperationException;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * EC Public Key
  *
- * @package EC
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
-class PublicKey extends EC implements Common\PublicKey
+final class PublicKey extends EC implements Common\PublicKey
 {
     use Common\Traits\Fingerprint;
     /**
      * Verify a signature
      *
      * @see self::verify()
-     * @access public
      * @param string $message
      * @param string $signature
      * @return mixed

@@ -19,6 +19,7 @@ namespace Mihdan\IndexNow\Dependencies\Google\Auth;
 
 /**
  * Describes a class which supports signing arbitrary strings.
+ * @internal
  */
 interface SignBlobInterface extends FetchAuthTokenInterface
 {

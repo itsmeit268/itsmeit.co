@@ -19,12 +19,14 @@ namespace Mihdan\IndexNow\Dependencies\Google;
 
 use Mihdan\IndexNow\Dependencies\Google\Http\Batch;
 use TypeError;
+/** @internal */
 class Service
 {
     public $batchPath;
     public $rootUrl;
     public $version;
     public $servicePath;
+    public $serviceName;
     public $availableScopes;
     public $resource;
     private $client;
@@ -35,7 +37,7 @@ class Service
         } elseif (\is_array($clientOrConfig)) {
             $this->client = new Client($clientOrConfig ?: []);
         } else {
-            $errorMessage = 'Mihdan\\IndexNow\\Dependencies\\constructor must be array or instance of Google\\Client';
+            $errorMessage = 'constructor must be array or instance of Google\\Client';
             if (\class_exists('TypeError')) {
                 throw new TypeError($errorMessage);
             }

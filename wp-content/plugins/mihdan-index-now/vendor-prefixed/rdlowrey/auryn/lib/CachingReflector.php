@@ -2,6 +2,7 @@
 
 namespace Mihdan\IndexNow\Dependencies\Auryn;
 
+/** @internal */
 class CachingReflector implements Reflector
 {
     const CACHE_KEY_CLASSES = 'auryn.refls.classes.';

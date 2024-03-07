@@ -33,21 +33,14 @@ use Mihdan\IndexNow\Dependencies\Psr\Cache\CacheItemPoolInterface;
  *     $sysvCache
  * );
  * ```
+ * @internal
  */
 class GCECache
 {
     const GCE_CACHE_KEY = 'google_auth_on_gce_cache';
     use CacheTrait;
     /**
-     * @var array
-     */
-    private $cacheConfig;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $cache;
-    /**
-     * @param array $cacheConfig Configuration for the cache
+     * @param array<mixed> $cacheConfig Configuration for the cache
      * @param CacheItemPoolInterface $cache
      */
     public function __construct(array $cacheConfig = null, CacheItemPoolInterface $cache = null)

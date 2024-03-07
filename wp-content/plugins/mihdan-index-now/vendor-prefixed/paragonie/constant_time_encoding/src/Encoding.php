@@ -3,8 +3,9 @@
 declare (strict_types=1);
 namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 
+use TypeError;
 /**
- *  Copyright (c) 2016 - 2018 Paragon Initiative Enterprises.
+ *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,6 +29,7 @@ namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 /**
  * Class Encoding
  * @package ParagonIE\ConstantTime
+ * @internal
  */
 abstract class Encoding
 {
@@ -36,7 +38,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32Encode(string $str) : string
     {
@@ -47,7 +49,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32EncodeUpper(string $str) : string
     {
@@ -58,7 +60,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32Decode(string $str) : string
     {
@@ -69,7 +71,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32DecodeUpper(string $str) : string
     {
@@ -80,7 +82,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32HexEncode(string $str) : string
     {
@@ -91,7 +93,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32HexEncodeUpper(string $str) : string
     {
@@ -102,7 +104,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32HexDecode(string $str) : string
     {
@@ -113,7 +115,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base32HexDecodeUpper(string $str) : string
     {
@@ -124,7 +126,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base64Encode(string $str) : string
     {
@@ -135,7 +137,7 @@ abstract class Encoding
      *
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base64Decode(string $str) : string
     {
@@ -147,7 +149,7 @@ abstract class Encoding
      * Base64 character set "./[A-Z][a-z][0-9]"
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base64EncodeDotSlash(string $str) : string
     {
@@ -161,7 +163,7 @@ abstract class Encoding
      * @param string $str
      * @return string
      * @throws \RangeException
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base64DecodeDotSlash(string $str) : string
     {
@@ -173,7 +175,7 @@ abstract class Encoding
      * Base64 character set "[.-9][A-Z][a-z]" or "./[0-9][A-Z][a-z]"
      * @param string $str
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base64EncodeDotSlashOrdered(string $str) : string
     {
@@ -187,7 +189,7 @@ abstract class Encoding
      * @param string $str
      * @return string
      * @throws \RangeException
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function base64DecodeDotSlashOrdered(string $str) : string
     {
@@ -199,7 +201,7 @@ abstract class Encoding
      *
      * @param string $bin_string (raw binary)
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function hexEncode(string $bin_string) : string
     {
@@ -223,7 +225,7 @@ abstract class Encoding
      *
      * @param string $bin_string (raw binary)
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function hexEncodeUpper(string $bin_string) : string
     {

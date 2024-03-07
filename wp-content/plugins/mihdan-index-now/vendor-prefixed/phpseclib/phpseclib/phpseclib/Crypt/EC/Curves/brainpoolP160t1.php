@@ -18,8 +18,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -29,6 +27,7 @@ namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Curves;
 
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Prime;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
+/** @internal */
 class brainpoolP160t1 extends Prime
 {
     public function __construct()

@@ -18,6 +18,7 @@
 namespace Mihdan\IndexNow\Dependencies\Google\Auth\Cache;
 
 use Mihdan\IndexNow\Dependencies\Psr\Cache\InvalidArgumentException as PsrInvalidArgumentException;
+/** @internal */
 class InvalidArgumentException extends \InvalidArgumentException implements PsrInvalidArgumentException
 {
 }

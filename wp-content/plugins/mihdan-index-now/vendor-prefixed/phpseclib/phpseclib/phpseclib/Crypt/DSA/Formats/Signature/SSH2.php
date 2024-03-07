@@ -7,8 +7,6 @@
  *
  * Handles signatures in the format used by SSH2
  *
- * @category  Crypt
- * @package   Common
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2016 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -16,21 +14,19 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\Formats\Signature;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * SSH2 Signature Handler
  *
- * @package Common
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class SSH2
 {
     /**
      * Loads a signature
      *
-     * @access public
      * @param string $sig
      * @return mixed
      */
@@ -52,7 +48,6 @@ abstract class SSH2
     /**
      * Returns a signature in the appropriate format
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $r
      * @param \phpseclib3\Math\BigInteger $s
      * @return string

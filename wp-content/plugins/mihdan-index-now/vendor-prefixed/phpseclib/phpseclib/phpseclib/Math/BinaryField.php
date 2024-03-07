@@ -7,24 +7,20 @@
  *
  * PHP version 5 and 7
  *
- * @category  Math
- * @package   BigInteger
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Math;
 
-use Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime\Hex;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\Common\FiniteField;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BinaryField\Integer;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BinaryField\Integer;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\Common\FiniteField;
 /**
  * Binary Finite Fields
  *
- * @package Math
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 class BinaryField extends FiniteField
 {
@@ -40,12 +36,23 @@ class BinaryField extends FiniteField
      * @var int
      */
     protected $instanceID;
+    /** @var BigInteger */
+    private $randomMax;
     /**
      * Default constructor
      */
     public function __construct(...$indices)
     {
         $m = \array_shift($indices);
+        if ($m > 571) {
+            /* sect571r1 and sect571k1 are the largest binary curves that https://www.secg.org/sec2-v2.pdf defines
+               altho theoretically there may be legit reasons to use binary finite fields with larger degrees
+               imposing a limit on the maximum size is both reasonable and precedented. in particular,
+               http://tools.ietf.org/html/rfc4253#section-6.1 (The Secure Shell (SSH) Transport Layer Protocol) says
+               "implementations SHOULD check that the packet length is reasonable in order for the implementation to
+                avoid denial of service and/or buffer overflow attacks" */
+            throw new \OutOfBoundsException('Degrees larger than 571 are not supported');
+        }
         $val = \str_repeat('0', $m) . '1';
         foreach ($indices as $index) {
             $val[$index] = '1';
@@ -104,7 +111,7 @@ class BinaryField extends FiniteField
      * Returns an instance of a dynamically generated PrimeFieldInteger class
      *
      * @param string $num
-     * @return object
+     * @return Integer
      */
     public function newInteger($num)
     {
@@ -113,7 +120,7 @@ class BinaryField extends FiniteField
     /**
      * Returns an integer on the finite field between one and the prime modulo
      *
-     * @return object
+     * @return Integer
      */
     public function randomInteger()
     {
@@ -126,7 +133,7 @@ class BinaryField extends FiniteField
     /**
      * Returns the length of the modulo in bytes
      *
-     * @return integer
+     * @return int
      */
     public function getLengthInBytes()
     {
@@ -135,7 +142,7 @@ class BinaryField extends FiniteField
     /**
      * Returns the length of the modulo in bits
      *
-     * @return integer
+     * @return int
      */
     public function getLength()
     {
@@ -145,7 +152,7 @@ class BinaryField extends FiniteField
      * Converts a base-2 string to a base-256 string
      *
      * @param string $x
-     * @param integer $size 
+     * @param int|null $size
      * @return string
      */
     public static function base2ToBase256($x, $size = null)

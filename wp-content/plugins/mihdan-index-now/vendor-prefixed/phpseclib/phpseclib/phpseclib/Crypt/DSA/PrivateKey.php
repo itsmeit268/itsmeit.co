@@ -3,8 +3,6 @@
 /**
  * DSA Private Key
  *
- * @category  Crypt
- * @package   DSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -12,25 +10,23 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA;
 
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\Formats\Signature\ASN1 as ASN1Signature;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common;
 /**
  * DSA Private Key
  *
- * @package DSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
-class PrivateKey extends DSA implements Common\PrivateKey
+final class PrivateKey extends DSA implements Common\PrivateKey
 {
     use Common\Traits\PasswordProtected;
     /**
      * DSA secret exponent x
      *
      * @var \phpseclib3\Math\BigInteger
-     * @access private
      */
     protected $x;
     /**
@@ -52,7 +48,6 @@ class PrivateKey extends DSA implements Common\PrivateKey
      * without the parameters and the PKCS1 DSA public key format does not include the parameters.
      *
      * @see self::getPrivateKey()
-     * @access public
      * @return mixed
      */
     public function getPublicKey()
@@ -68,7 +63,6 @@ class PrivateKey extends DSA implements Common\PrivateKey
      * Create a signature
      *
      * @see self::verify()
-     * @access public
      * @param string $message
      * @return mixed
      */

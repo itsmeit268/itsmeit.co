@@ -5,8 +5,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Math
- * @package   BigInteger
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -18,9 +16,8 @@ use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\OpenSSL as P
 /**
  * OpenSSL Modular Exponentiation Engine
  *
- * @package BCMath
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class OpenSSL extends Progenitor
 {

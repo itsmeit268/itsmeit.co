@@ -3,8 +3,6 @@
 /**
  * DSA Parameters
  *
- * @category  Crypt
- * @package   DSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -16,11 +14,10 @@ use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA;
 /**
  * DSA Parameters
  *
- * @package DSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
-class Parameters extends DSA
+final class Parameters extends DSA
 {
     /**
      * Returns the parameters

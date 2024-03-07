@@ -3,8 +3,8 @@
 namespace Mihdan\IndexNow\Dependencies\Google\AuthHandler;
 
 use Mihdan\IndexNow\Dependencies\Google\Auth\CredentialsLoader;
-use Mihdan\IndexNow\Dependencies\Google\Auth\HttpHandler\HttpHandlerFactory;
 use Mihdan\IndexNow\Dependencies\Google\Auth\FetchAuthTokenCache;
+use Mihdan\IndexNow\Dependencies\Google\Auth\HttpHandler\HttpHandlerFactory;
 use Mihdan\IndexNow\Dependencies\Google\Auth\Middleware\AuthTokenMiddleware;
 use Mihdan\IndexNow\Dependencies\Google\Auth\Middleware\ScopedAccessTokenMiddleware;
 use Mihdan\IndexNow\Dependencies\Google\Auth\Middleware\SimpleMiddleware;
@@ -12,8 +12,9 @@ use Mihdan\IndexNow\Dependencies\GuzzleHttp\Client;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\ClientInterface;
 use Mihdan\IndexNow\Dependencies\Psr\Cache\CacheItemPoolInterface;
 /**
-* This supports Guzzle 6
-*/
+ * This supports Guzzle 6
+ * @internal
+ */
 class Guzzle6AuthHandler
 {
     protected $cache;
@@ -71,6 +72,6 @@ class Guzzle6AuthHandler
     }
     private function createAuthHttp(ClientInterface $http)
     {
-        return new Client(['base_uri' => $http->getConfig('base_uri'), 'http_errors' => \true, 'verify' => $http->getConfig('verify'), 'proxy' => $http->getConfig('proxy')]);
+        return new Client(['http_errors' => \true] + $http->getConfig());
     }
 }

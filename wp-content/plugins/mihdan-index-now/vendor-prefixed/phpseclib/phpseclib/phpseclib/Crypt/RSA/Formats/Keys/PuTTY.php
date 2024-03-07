@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  Crypt
- * @package   RSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -14,15 +12,14 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\RSA\Formats\Keys;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common\Formats\Keys\PuTTY as Progenitor;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * PuTTY Formatted RSA Key Handler
  *
- * @package RSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class PuTTY extends Progenitor
 {
@@ -30,20 +27,17 @@ abstract class PuTTY extends Progenitor
      * Public Handler
      *
      * @var string
-     * @access private
      */
     const PUBLIC_HANDLER = 'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Crypt\\RSA\\Formats\\Keys\\OpenSSH';
     /**
      * Algorithm Identifier
      *
      * @var array
-     * @access private
      */
     protected static $types = ['ssh-rsa'];
     /**
      * Break a public or private key down into its constituent components
      *
-     * @access public
      * @param string $key
      * @param string $password optional
      * @return array
@@ -81,7 +75,6 @@ abstract class PuTTY extends Progenitor
     /**
      * Convert a private key to the appropriate format.
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $n
      * @param \phpseclib3\Math\BigInteger $e
      * @param \phpseclib3\Math\BigInteger $d
@@ -104,7 +97,6 @@ abstract class PuTTY extends Progenitor
     /**
      * Convert a public key to the appropriate format
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $n
      * @param \phpseclib3\Math\BigInteger $e
      * @return string

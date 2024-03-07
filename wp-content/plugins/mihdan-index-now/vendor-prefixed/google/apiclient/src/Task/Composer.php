@@ -18,9 +18,10 @@
 namespace Mihdan\IndexNow\Dependencies\Google\Task;
 
 use Mihdan\IndexNow\Dependencies\Composer\Script\Event;
+use InvalidArgumentException;
 use Mihdan\IndexNow\Dependencies\Symfony\Component\Filesystem\Filesystem;
 use Mihdan\IndexNow\Dependencies\Symfony\Component\Finder\Finder;
-use InvalidArgumentException;
+/** @internal */
 class Composer
 {
     /**

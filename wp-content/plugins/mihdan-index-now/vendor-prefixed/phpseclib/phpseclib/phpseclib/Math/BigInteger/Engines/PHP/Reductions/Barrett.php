@@ -5,8 +5,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Math
- * @package   BigInteger
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -14,13 +12,13 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\PHP\Reductions;
 
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\PHP;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\PHP\Base;
 /**
  * PHP Barrett Modular Exponentiation Engine
  *
- * @package PHP
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class Barrett extends Base
 {
@@ -44,7 +42,7 @@ abstract class Barrett extends Base
      *
      * @param array $n
      * @param array $m
-     * @param string $class
+     * @param class-string<PHP> $class
      * @return array
      */
     protected static function reduce(array $n, array $m, $class)

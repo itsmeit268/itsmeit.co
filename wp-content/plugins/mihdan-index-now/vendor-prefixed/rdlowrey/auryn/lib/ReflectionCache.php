@@ -2,6 +2,7 @@
 
 namespace Mihdan\IndexNow\Dependencies\Auryn;
 
+/** @internal */
 interface ReflectionCache
 {
     public function fetch($key);

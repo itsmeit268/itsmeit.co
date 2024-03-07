@@ -18,6 +18,7 @@
 namespace Mihdan\IndexNow\Dependencies\Google;
 
 use Exception as BaseException;
+/** @internal */
 class Exception extends BaseException
 {
 }

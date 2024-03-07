@@ -2,6 +2,7 @@
 
 namespace Mihdan\IndexNow\Dependencies\Auryn;
 
+/** @internal */
 class StandardReflector implements Reflector
 {
     public function getClass($class)

@@ -7,8 +7,6 @@
  *
  * Place in $HOME/.ssh/authorized_keys
  *
- * @category  Crypt
- * @package   DSA
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -16,16 +14,14 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\DSA\Formats\Keys;
 
-use Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime\Base64;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\Common\Formats\Keys\OpenSSH as Progenitor;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * OpenSSH Formatted DSA Key Handler
  *
- * @package DSA
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class OpenSSH extends Progenitor
 {
@@ -38,7 +34,6 @@ abstract class OpenSSH extends Progenitor
     /**
      * Break a public or private key down into its constituent components
      *
-     * @access public
      * @param string $key
      * @param string $password optional
      * @return array
@@ -61,7 +56,6 @@ abstract class OpenSSH extends Progenitor
     /**
      * Convert a public key to the appropriate format
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $p
      * @param \phpseclib3\Math\BigInteger $q
      * @param \phpseclib3\Math\BigInteger $g
@@ -91,7 +85,6 @@ abstract class OpenSSH extends Progenitor
     /**
      * Convert a private key to the appropriate format.
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $p
      * @param \phpseclib3\Math\BigInteger $q
      * @param \phpseclib3\Math\BigInteger $g

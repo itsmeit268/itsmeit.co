@@ -16,8 +16,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2019 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -25,17 +23,15 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\PrimeField;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Curves\Curve25519;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\PrimeField;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\PrimeField\Integer as PrimeInteger;
 /**
  * Curves over y^2 = x^3 + a*x + x
  *
- * @package EC
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 class Montgomery extends Base
 {
@@ -121,9 +117,9 @@ class Montgomery extends Base
     {
         switch (\true) {
             case !$x instanceof BigInteger && !$x instanceof PrimeInteger:
-                throw new \UnexpectedValueException('Mihdan\\IndexNow\\Dependencies\\Argument 1 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
+                throw new \UnexpectedValueException('Argument 1 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
             case !$y instanceof BigInteger && !$y instanceof PrimeInteger:
-                throw new \UnexpectedValueException('Mihdan\\IndexNow\\Dependencies\\Argument 2 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
+                throw new \UnexpectedValueException('Argument 2 passed to Prime::setBasePoint() must be an instance of either BigInteger or PrimeField\\Integer');
         }
         if (!isset($this->factory)) {
             throw new \RuntimeException('setModulo needs to be called before this method');

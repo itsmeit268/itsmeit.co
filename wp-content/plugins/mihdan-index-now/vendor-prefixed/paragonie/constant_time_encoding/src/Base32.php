@@ -3,8 +3,11 @@
 declare (strict_types=1);
 namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 
+use InvalidArgumentException;
+use RangeException;
+use TypeError;
 /**
- *  Copyright (c) 2016 - 2018 Paragon Initiative Enterprises.
+ *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,6 +33,7 @@ namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
  * [A-Z][2-7]
  *
  * @package ParagonIE\ConstantTime
+ * @internal
  */
 abstract class Base32 implements EncoderInterface
 {
@@ -60,7 +64,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $binString
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function encode(string $binString) : string
     {
@@ -71,7 +75,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $src
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function encodeUnpadded(string $src) : string
     {
@@ -82,7 +86,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $src
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function encodeUpper(string $src) : string
     {
@@ -93,7 +97,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $src
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     public static function encodeUpperUnpadded(string $src) : string
     {
@@ -164,13 +168,34 @@ abstract class Base32 implements EncoderInterface
         return \pack('C', $src + $diff);
     }
     /**
+     * @param string $encodedString
+     * @param bool $upper
+     * @return string
+     */
+    public static function decodeNoPadding(string $encodedString, bool $upper = \false) : string
+    {
+        $srcLen = Binary::safeStrlen($encodedString);
+        if ($srcLen === 0) {
+            return '';
+        }
+        if (($srcLen & 7) === 0) {
+            for ($j = 0; $j < 7 && $j < $srcLen; ++$j) {
+                if ($encodedString[$srcLen - $j - 1] === '=') {
+                    throw new InvalidArgumentException("decodeNoPadding() doesn't tolerate padding");
+                }
+            }
+        }
+        return static::doDecode($encodedString, $upper, \true);
+    }
+    /**
      * Base32 decoding
      *
      * @param string $src
      * @param bool $upper
      * @param bool $strictPadding
      * @return string
-     * @throws \TypeError
+     *
+     * @throws TypeError
      * @psalm-suppress RedundantCondition
      */
     protected static function doDecode(string $src, bool $upper = \false, bool $strictPadding = \false) : string
@@ -193,7 +218,7 @@ abstract class Base32 implements EncoderInterface
                 }
             }
             if (($srcLen & 7) === 1) {
-                throw new \RangeException('Incorrect padding');
+                throw new RangeException('Incorrect padding');
             }
         } else {
             $src = \rtrim($src, '=');
@@ -245,6 +270,9 @@ abstract class Base32 implements EncoderInterface
                 $c6 = static::$method($chunk[7]);
                 $dest .= \pack('CCCC', ($c0 << 3 | $c1 >> 2) & 0xff, ($c1 << 6 | $c2 << 1 | $c3 >> 4) & 0xff, ($c3 << 4 | $c4 >> 1) & 0xff, ($c4 << 7 | $c5 << 2 | $c6 >> 3) & 0xff);
                 $err |= ($c0 | $c1 | $c2 | $c3 | $c4 | $c5 | $c6) >> 8;
+                if ($strictPadding) {
+                    $err |= $c6 << 5 & 0xff;
+                }
             } elseif ($i + 5 < $srcLen) {
                 /** @var int $c1 */
                 $c1 = static::$method($chunk[2]);
@@ -269,6 +297,9 @@ abstract class Base32 implements EncoderInterface
                 $c4 = static::$method($chunk[5]);
                 $dest .= \pack('CCC', ($c0 << 3 | $c1 >> 2) & 0xff, ($c1 << 6 | $c2 << 1 | $c3 >> 4) & 0xff, ($c3 << 4 | $c4 >> 1) & 0xff);
                 $err |= ($c0 | $c1 | $c2 | $c3 | $c4) >> 8;
+                if ($strictPadding) {
+                    $err |= $c4 << 7 & 0xff;
+                }
             } elseif ($i + 3 < $srcLen) {
                 /** @var int $c1 */
                 $c1 = static::$method($chunk[2]);
@@ -278,6 +309,9 @@ abstract class Base32 implements EncoderInterface
                 $c3 = static::$method($chunk[4]);
                 $dest .= \pack('CC', ($c0 << 3 | $c1 >> 2) & 0xff, ($c1 << 6 | $c2 << 1 | $c3 >> 4) & 0xff);
                 $err |= ($c0 | $c1 | $c2 | $c3) >> 8;
+                if ($strictPadding) {
+                    $err |= $c3 << 4 & 0xff;
+                }
             } elseif ($i + 2 < $srcLen) {
                 /** @var int $c1 */
                 $c1 = static::$method($chunk[2]);
@@ -285,11 +319,17 @@ abstract class Base32 implements EncoderInterface
                 $c2 = static::$method($chunk[3]);
                 $dest .= \pack('CC', ($c0 << 3 | $c1 >> 2) & 0xff, ($c1 << 6 | $c2 << 1) & 0xff);
                 $err |= ($c0 | $c1 | $c2) >> 8;
+                if ($strictPadding) {
+                    $err |= $c2 << 6 & 0xff;
+                }
             } elseif ($i + 1 < $srcLen) {
                 /** @var int $c1 */
                 $c1 = static::$method($chunk[2]);
                 $dest .= \pack('C', ($c0 << 3 | $c1 >> 2) & 0xff);
                 $err |= ($c0 | $c1) >> 8;
+                if ($strictPadding) {
+                    $err |= $c1 << 6 & 0xff;
+                }
             } else {
                 $dest .= \pack('C', $c0 << 3 & 0xff);
                 $err |= $c0 >> 8;
@@ -297,7 +337,7 @@ abstract class Base32 implements EncoderInterface
         }
         $check = $err === 0;
         if (!$check) {
-            throw new \RangeException('Base32::doDecode() only expects characters in the correct base32 alphabet');
+            throw new RangeException('Base32::doDecode() only expects characters in the correct base32 alphabet');
         }
         return $dest;
     }
@@ -308,7 +348,7 @@ abstract class Base32 implements EncoderInterface
      * @param bool $upper
      * @param bool $pad
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      */
     protected static function doEncode(string $src, bool $upper = \false, $pad = \true) : string
     {

@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  File
- * @package   ASN1
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2016 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -24,9 +22,8 @@ use Mihdan\IndexNow\Dependencies\phpseclib3\File\ASN1;
  *
  * - https://www.opends.org/wiki/page/DefinitionRelativeDistinguishedName
  *
- * @package ASN1
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class RelativeDistinguishedName
 {

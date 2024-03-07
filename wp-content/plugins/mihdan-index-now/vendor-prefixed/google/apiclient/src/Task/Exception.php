@@ -18,6 +18,7 @@
 namespace Mihdan\IndexNow\Dependencies\Google\Task;
 
 use Mihdan\IndexNow\Dependencies\Google\Exception as GoogleException;
+/** @internal */
 class Exception extends GoogleException
 {
 }

@@ -9,8 +9,6 @@
  *
  * PHP version 5
  *
- * @category  Crypt
- * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2015 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -19,14 +17,13 @@
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Formats\Keys;
 
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Curves\Ed25519;
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\UnsupportedFormatException;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /**
  * libsodium Key Handler
  *
- * @package EC
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class libsodium
 {
@@ -34,13 +31,11 @@ abstract class libsodium
     /**
      * Is invisible flag
      *
-     * @access private
      */
     const IS_INVISIBLE = \true;
     /**
      * Break a public or private key down into its constituent components
      *
-     * @access public
      * @param string $key
      * @param string $password optional
      * @return array
@@ -68,7 +63,9 @@ abstract class libsodium
         $curve = new Ed25519();
         $components = ['curve' => $curve];
         if (isset($private)) {
-            $components['dA'] = $curve->extractSecret($private);
+            $arr = $curve->extractSecret($private);
+            $components['dA'] = $arr['dA'];
+            $components['secret'] = $arr['secret'];
         }
         $components['QA'] = isset($public) ? self::extractPoint($public, $curve) : $curve->multiplyPoint($curve->getBasePoint(), $components['dA']);
         return $components;
@@ -76,7 +73,6 @@ abstract class libsodium
     /**
      * Convert an EC public key to the appropriate format
      *
-     * @access public
      * @param \phpseclib3\Crypt\EC\Curves\Ed25519 $curve
      * @param \phpseclib3\Math\Common\FiniteField\Integer[] $publicKey
      * @return string
@@ -88,24 +84,24 @@ abstract class libsodium
     /**
      * Convert a private key to the appropriate format.
      *
-     * @access public
      * @param \phpseclib3\Math\BigInteger $privateKey
      * @param \phpseclib3\Crypt\EC\Curves\Ed25519 $curve
      * @param \phpseclib3\Math\Common\FiniteField\Integer[] $publicKey
+     * @param string $secret optional
      * @param string $password optional
      * @return string
      */
-    public static function savePrivateKey(BigInteger $privateKey, Ed25519 $curve, array $publicKey, $password = '')
+    public static function savePrivateKey(BigInteger $privateKey, Ed25519 $curve, array $publicKey, $secret = null, $password = '')
     {
-        if (!isset($privateKey->secret)) {
+        if (!isset($secret)) {
             throw new \RuntimeException('Private Key does not have a secret set');
         }
-        if (\strlen($privateKey->secret) != 32) {
+        if (\strlen($secret) != 32) {
             throw new \RuntimeException('Private Key secret is not of the correct length');
         }
         if (!empty($password) && \is_string($password)) {
             throw new UnsupportedFormatException('libsodium private keys do not support encryption');
         }
-        return $privateKey->secret . $curve->encodePoint($publicKey);
+        return $secret . $curve->encodePoint($publicKey);
     }
 }

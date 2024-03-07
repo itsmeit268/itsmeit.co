@@ -5,8 +5,6 @@
  *
  * PHP version 5 and 7
  *
- * @category  Math
- * @package   BigInteger
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2017 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -14,14 +12,13 @@
  */
 namespace Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\BCMath\Reductions;
 
-use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\BCMath\Base;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\BCMath;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger\Engines\BCMath\Base;
 /**
  * PHP Barrett Modular Exponentiation Engine
  *
- * @package PHP
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  public
+ * @internal
  */
 abstract class EvalBarrett extends Base
 {
@@ -69,7 +66,7 @@ abstract class EvalBarrett extends Base
         $m = "'{$m}'";
         $u = "'{$u}'";
         $m1 = "'{$m1}'";
-        $code .= '
+        $code = '
             $lsd = substr($n, -' . $cutoff . ');
             $msd = substr($n, 0, -' . $cutoff . ');
 

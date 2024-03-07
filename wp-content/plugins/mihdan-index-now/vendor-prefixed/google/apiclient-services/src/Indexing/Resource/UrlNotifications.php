@@ -27,6 +27,7 @@ use Mihdan\IndexNow\Dependencies\Google\Service\Indexing\UrlNotificationMetadata
  *   $indexingService = new Google\Service\Indexing(...);
  *   $urlNotifications = $indexingService->urlNotifications;
  *  </code>
+ * @internal
  */
 class UrlNotifications extends \Mihdan\IndexNow\Dependencies\Google\Service\Resource
 {
@@ -40,6 +41,7 @@ class UrlNotifications extends \Mihdan\IndexNow\Dependencies\Google\Service\Reso
      *
      * @opt_param string url URL that is being queried.
      * @return UrlNotificationMetadata
+     * @throws \Google\Service\Exception
      */
     public function getMetadata($optParams = [])
     {
@@ -53,6 +55,7 @@ class UrlNotifications extends \Mihdan\IndexNow\Dependencies\Google\Service\Reso
      * @param UrlNotification $postBody
      * @param array $optParams Optional parameters.
      * @return PublishUrlNotificationResponse
+     * @throws \Google\Service\Exception
      */
     public function publish(UrlNotification $postBody, $optParams = [])
     {

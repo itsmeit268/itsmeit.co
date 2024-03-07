@@ -3,8 +3,9 @@
 declare (strict_types=1);
 namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 
+use TypeError;
 /**
- *  Copyright (c) 2016 - 2018 Paragon Initiative Enterprises.
+ *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,6 +33,7 @@ namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
  * mbstring.func_overload
  *
  * @package ParagonIE\ConstantTime
+ * @internal
  */
 abstract class Binary
 {
@@ -63,7 +65,8 @@ abstract class Binary
      * @param int $start
      * @param ?int $length
      * @return string
-     * @throws \TypeError
+     *
+     * @throws TypeError
      */
     public static function safeSubstr(string $str, int $start = 0, $length = null) : string
     {

@@ -20,6 +20,7 @@ namespace Mihdan\IndexNow\Dependencies\Google\Auth\HttpHandler;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\ClientInterface;
 /**
  * Stores an HTTP Client in order to prevent multiple instantiations.
+ * @internal
  */
 class HttpClientCache
 {
