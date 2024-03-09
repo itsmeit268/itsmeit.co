@@ -146,7 +146,7 @@
                  * Fix show ads */
                 if (windowWidth > 700) {
                     $('.is-layout-flex').each(function () {
-                        var $codeBlockInside = $(this).find('.code-block');
+                        var $codeBlockInside = $(this).find('.itsmeit-code-block');
                         if ($codeBlockInside.length) {
                             $codeBlockInside.each(function () {
                                 var $codeBlock = $(this);
