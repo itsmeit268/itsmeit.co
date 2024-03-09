@@ -221,9 +221,16 @@ class Intelligent_Link_Public {
     }
 
     public function prep_link_html($meta_attr, $file_name) {
+        $advertising = get_option('ads_code');
         $blog_url = base64_encode(get_bloginfo('url'));
         $display_mode = !empty(ilgl_settings()['preplink_wait_text']) ? ilgl_settings()['preplink_wait_text'] : 'wait_time';
-        $html = '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : 'Link download: ') . '</b>';
+
+        $html = '';
+        if (isset($advertising['ads_7']) && !empty($advertising['ads_7'])) {
+            $html = '<div class="preplink-ads preplink-ads-7 advertising-adsterra"><p style="margin-left: 10px;">– Advertising –</p>'.$advertising['ads_7'].'</div>';
+        }
+
+        $html .= '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : 'Link download: ') . '</b>';
 
         if (is_user_logged_in()) {
             $display_mode = 'progress';
@@ -237,6 +244,26 @@ class Intelligent_Link_Public {
         }
 
         $html .= '</' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . '>';
+
+        if (is_allow_show_ads() && aicp_can_see_ads()) {
+            $html .= '
+            <div class="aicp">
+                <!-- Ezoic - after_start_vote - incontent_5 -->
+                <div id="ezoic-pub-ad-placeholder-176">
+                    <ins class="adsbygoogle"
+                         style="display:block; text-align:center;"
+                         data-ad-layout="in-article"
+                         data-ad-format="fluid"
+                         data-ad-client="ca-pub-3109927831594907"
+                         data-ad-slot="4318488805"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                <!-- End Ezoic - after_start_vote - incontent_5 -->
+            </div>';
+        }
+
 
         $show_list = !empty($meta_attr['show_list']) ? true: false;
 

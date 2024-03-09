@@ -128,7 +128,8 @@
                             'トゥイット.92',
                             'it\'s made',
                             'duyanh',
-                            'loibv'
+                            'loibv',
+                            'ItsmeIT'
                         ].includes(displayName)
                     ) {
                         return;
