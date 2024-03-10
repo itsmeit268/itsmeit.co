@@ -230,7 +230,7 @@ class Intelligent_Link_Public {
             $html = '<div class="preplink-ads preplink-ads-7 advertising-adsterra"><p style="margin-left: 10px;">– Advertising –</p>'.$advertising['ads_7'].'</div>';
         }
 
-        $html .= '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : 'Link download: ') . '</b>';
+        $html .= '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' id="igl-download-now" class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : '') . '</b>';
 
         if (is_user_logged_in()) {
             $display_mode = 'progress';
@@ -273,10 +273,7 @@ class Intelligent_Link_Public {
             $total = (int) $settings['field_lists']? : 5;
 
             if (isset($list_link) && !empty($list_link) && is_array($list_link)) {
-                $html .= '<div class="list-link-redirect">';
-                $html .= '<p class="ilgl-other-version">'.__('Other Version').'</p>';
-                $html .= '<ul>';
-
+                $html .= '<div class="list-link-redirect" style="display: none">';
                 for ($i = 1; $i <= $total; $i++) {
                     $file_name_key = 'file_name-' . $i;
                     $link_no_login_key = 'link_no_login-' . $i;
@@ -286,17 +283,14 @@ class Intelligent_Link_Public {
                     if (isset($list_link[$file_name_key]) && !empty($list_link[$link_no_login_key]) && isset($list_link[$link_is_login_key])) {
                         $file_name = $list_link[$file_name_key];
                         $size = $list_link[$size_key];
-                        $html .= '<li>';
                         if (is_user_logged_in()) {
-                            $html .= '<a href="' . esc_html($list_link[$link_is_login_key]) . '" class="preplink-btn-link list-preplink-btn-link">' . esc_html($file_name . ' ' . $size) . '</a>';
+                            $html .= '<a href="' . esc_html(base64_encode($list_link[$link_is_login_key])) . '" class="preplink-btn-link list-preplink-btn-link">' . esc_html($file_name . ' ' . $size) . '</a>';
                         } else {
-                            $html .= '<a href="' . esc_html($list_link[$link_no_login_key]) . '" class="preplink-btn-link list-preplink-btn-link">' . esc_html($file_name . ' ' . $size) . '</a>';
+                            $html .= '<a href="' . esc_html(base64_encode($list_link[$link_no_login_key])) . '" class="preplink-btn-link list-preplink-btn-link">' . esc_html($file_name . ' ' . $size) . '</a>';
                         }
-                        $html .= '</li>';
+
                     }
                 }
-
-                $html .= '</ul>';
                 $html .= '</div>';
             }
         }

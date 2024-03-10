@@ -677,7 +677,7 @@ class Intelligent_Link_Admin {
             <option value="h4" <?= isset($meta_attr['elm']) && $meta_attr['elm'] === 'h4' ? 'selected' : '' ?>>h4</option>
             <option value="h5" <?= isset($meta_attr['elm']) && $meta_attr['elm'] === 'h5' ? 'selected' : '' ?>>h5</option>
         </select>
-        <input type="text" name="meta_attr[pre_fix]" placeholder="Link download:" value="<?= esc_attr(!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : 'Link download:') ?>"/>
+        <input type="text" name="meta_attr[pre_fix]" placeholder="Link download:" value="<?= esc_attr(!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : '') ?>"/>
     <?php }
 
 

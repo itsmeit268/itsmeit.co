@@ -1,5 +1,7 @@
 .igl-download-now,
 .igl-download-now>.wrap-countdown,
+.list-link-redirect>.wrap-countdown,
+.list-link-redirect>.post-progress-bar,
 .igl-download-now>.post-progress-bar{
     display: flex;
     white-space: nowrap;
@@ -11,20 +13,27 @@
     max-height: 35px;
 }
 
-.igl-download-now>.post-progress-bar>.prep-request>.post-progress, ul li >.post-progress-bar{
+.igl-download-now>.post-progress-bar>.prep-request>.post-progress,
+.list-link-redirect>.post-progress-bar>.prep-request>.post-progress,
+.igl-download-now>.wrap-countdown>.prep-request>.link-countdown,
+.list-link-redirect>.wrap-countdown>.prep-request>.link-countdown,
+.list-link-redirect>.post-progress-bar,
+.list-link-redirect>.wrap-countdown{
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 100%;
     overflow: hidden;
 }
 
-ul li >.post-progress-bar{
-    display: block;
+.list-link-redirect>.post-progress-bar,
+.list-link-redirect>.wrap-countdown{
+    margin-top: 8px;
 }
 
 .igl-download-now>.wrap-countdown,
-.igl-download-now>.post-progress-bar{
-    margin-left: 10px;
+.igl-download-now>.post-progress-bar,
+.list-link-redirect>.post-progress-bar,
+.list-link-redirect>.wrap-countdown{
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -37,19 +46,35 @@ ul li >.post-progress-bar{
 }
 
 .igl-download-now>.post-progress-bar,
-.igl-download-now>.wrap-countdown {
+.igl-download-now>.wrap-countdown,
+.list-link-redirect>.post-progress-bar,
+.list-link-redirect>.wrap-countdown{
     background-color: #e2e2e2;
 }
 
 .igl-download-now>.post-progress-bar>.prep-request>.post-progress,
-.igl-download-now>.wrap-countdown {
+.list-link-redirect>.post-progress-bar>.prep-request>.post-progress,
+.igl-download-now>.wrap-countdown,
+.list-link-redirect>.wrap-countdown{
     padding: 5px 10px;
     background-color: #1479b3;
-    color:#fff;
+    color: #fff;
     margin-bottom: 0;
+    padding-left: 30px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 15px;
+}
+.igl-download-now{
+    margin-bottom: 5px !important;
+}
+.list-link-redirect>.wrap-countdown,
+.list-link-redirect>.post-progress-bar{
+    display: block;
 }
 
-.igl-download-now>.post-progress-bar>.prep-request>.post-progress>.text-complete {
+.igl-download-now>.post-progress-bar>.prep-request>.post-progress>.text-complete,
+.list-link-redirect>.post-progress-bar>.prep-request>.post-progress>.text-complete{
     color:#fff;
 }
 .text-complete:hover{
@@ -81,12 +106,13 @@ ul li >.post-progress-bar{
     margin-bottom: 1.5px;
 }
 
-.post-progress:hover {
-    color: orangered;
+.post-progress:hover,
+.link-countdown:hover {
+    color: #faedea;
 }
 
-ul li > .wrap-countdown > .prep-request > .link-countdown,
-ul li > .wrap-countdown > .prep-request > .text-show-complete{
+.list-link-redirect > .wrap-countdown > .prep-request > .link-countdown,
+.list-link-redirect > .wrap-countdown > .prep-request > .text-show-complete{
     display: block;
     vertical-align: unset;
     white-space: nowrap;
@@ -94,9 +120,9 @@ ul li > .wrap-countdown > .prep-request > .text-show-complete{
     max-width: 100%;
     overflow: hidden;
 }
-ul li > .wrap-countdown > .prep-request > .link-countdown:hover,
-ul li > .post-progress-bar > .prep-request > .post-progress:hover {
-    color: orangered;
+.list-link-redirect > .wrap-countdown > .prep-request > .link-countdown:hover,
+.list-link-redirect > .post-progress-bar > .prep-request > .post-progress:hover {
+    color: #faedea;
 }
 
 .wrap-countdown {
@@ -111,7 +137,8 @@ ul li > .post-progress-bar > .prep-request > .post-progress:hover {
     cursor: pointer;
 }
 
-.post-progress-bar a, .wrap-countdown a {
+.post-progress-bar a,
+.wrap-countdown a {
     text-decoration: none !important;
     box-shadow: none
 }
@@ -135,12 +162,6 @@ i.material-icons {
 
 .session-end:hover {
     color: orangered;
-}
-
-.ilgl-other-version {
-    font-size: 18px;
-    margin-bottom: 10px;
-    font-weight: 600;
 }
 
 .woocommerce-product-details__short-description >.igl-download-now,
@@ -170,7 +191,34 @@ i.material-icons {
     overflow: hidden;
 }
 
+.igl-download-now>.post-progress-bar.prep-request,
+.igl-download-now>.wrap-countdown.prep-request,
+.list-link-redirect>.post-progress-bar.prep-request,
+.list-link-redirect>.wrap-countdown.prep-request{
+    position: relative;
+}
+
+.igl-download-now>.post-progress-bar>.prep-request>.post-progress:before,
+.igl-download-now>.wrap-countdown>.prep-request>strong:before,
+.list-link-redirect>.post-progress-bar>.prep-request>.post-progress:before,
+.list-link-redirect>.wrap-countdown>.prep-request>strong:before,.text-show-complete:before {
+    position: absolute;
+    content: '';
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    left: 10px;
+    top: 6px;
+    width: 15px;
+    height: 15px;
+    background-image: url('../images/down-icon.svg');
+}
+
 @media only screen and (max-device-width: 480px) {
+    .igl-download-now>.wrap-countdown,
+    .igl-download-now>.post-progress-bar {
+        margin-left: 0;
+    }
     .post-progress, .wrap-countdown {
         text-align: left
     }
@@ -180,25 +228,12 @@ i.material-icons {
         display: block;
     }
 
-    h3 a,ul li > .post-progress-bar > .prep-request> .post-progress {
-        display: block;
-    }
-
     .post-progress-bar,.post-progress {
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: 100%;
         /*overflow: hidden;*/
     }
-
-    ul li >.post-progress-bar {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        overflow: hidden;
-        display: block;
-    }
-
 
     .igl-download-now>.wrap-countdown {
         align-items: center;
@@ -215,11 +250,6 @@ i.material-icons {
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: 100%;
-        overflow: hidden;
-    }
-
-    ul li > .post-progress-bar > .prep-request > .post-progress{
-        margin-bottom: 0;
         overflow: hidden;
     }
 }

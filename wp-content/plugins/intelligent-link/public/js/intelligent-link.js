@@ -23,7 +23,8 @@
             meta_attr   = href_vars.meta_attr,
             is_popup    = parseInt(href_vars.is_popup),
             is_login    = href_vars.is_user_logged_in,
-            href_ex_elm = href_vars.href_ex_elm;
+            href_ex_elm = href_vars.href_ex_elm,
+            list_link   = '.list-link-redirect';
 
         var countdownStatus = {};
 
@@ -110,7 +111,12 @@
                 var $this = $(this),
                     href = $this.attr('href'),
                     allow_urls = allow_url.replace(/\\r\\|\r\n|\s/g, "").replace(/^,|,$/g, '').split(","),
-                    text_link = $this.text().trim() || '>> Redirect Link <<';
+                    text_link = $this.text().trim() || '>> Redirect Link <<',
+                    is_list_link = $this.parent(list_link);
+
+                if (is_list_link.length) {
+                    href = atob($this.attr('href'));
+                }
 
                 if (exclude_elm.some(sel => $this.is(sel)) || $this.closest(exclude_elm.join(',')).length > 0 || href === undefined || href === null || !href.length) {
                     return;
@@ -228,6 +234,7 @@
         function _start_countdown($elm, url, title, is_meta) {
             let downloadTimer;
             let timeleft = is_meta.length? parseInt(meta_attr.time) : time_cnf;
+            const is_list_link = $elm.parents(list_link);
 
             if (is_login) {
                 timeleft = 1;
@@ -244,7 +251,7 @@
 
                     $elm.html(wait_time_html);
 
-                    if (!is_meta.length) {
+                    if (!is_meta.length && !is_list_link.length) {
                         $elm.parents('.wrap-countdown').css({'color': '#0c7905', 'font-weight': '600'});
                     } else {
                         $elm.parents('.wrap-countdown').css({'background': '#0c7905'});
@@ -273,6 +280,7 @@
             const $progress = $elm.find('.post-progress');
             const progressWidth = $progress.width();
             const parent = $elm.parent('.post-progress-bar');
+            const is_list_link = $elm.parents(list_link);
 
             let currentWidth = 0;
             let timeleft = is_meta.length? parseInt(meta_attr.time) : time_cnf;
@@ -284,7 +292,7 @@
             parent.css({'width': parent.width(), 'margin-right': '25px'});
             $progress.width("0%");
 
-            if (!is_meta.length) {
+            if (!is_meta.length && !is_list_link.length) {
                 $progress.css({
                     'background-color': '#1479B3',
                     'color': '#fff',
@@ -308,7 +316,7 @@
                     let progress_html = `<span class="text-hide-complete" data-complete="1" data-text="${title}"></span>`;
                     progress_html += '<span class="text-complete">' + ((text_complete.enable === 'yes') ? text_complete.text : title) + '</span>';
                     $elm.html('<strong class="post-progress" style="color:#0c7c3f;">' + progress_html + '</strong>');
-                    if (parent.parents('.igl-download-now').length) {
+                    if (parent.parents('.igl-download-now').length || is_list_link) {
                         $elm.html('<strong class="post-progress" style="background-color:#018f06">' + progress_html + '</strong>');
                     }
 
@@ -328,13 +336,27 @@
             }, timeleft);
         }
 
-        function remove_empty_elm(){
-            if ($('.list-link-redirect ul').is(':empty')) {
-                $('.list-link-redirect').remove();
+        function update_list_link(){
+            if ($(list_link).length) {
+                if ($(list_link).children().length === 0) {
+                    $(list_link).remove();
+                } else {
+                    var load = 0;
+                    window.addEventListener('scroll', function onScroll() {
+                        var elementTop = $(list_link).offset().top;
+                        var windowHeight = $(window).height();
+                        var scrollPosition = $(window).scrollTop();
+                        if (load === 0 && elementTop < scrollPosition + windowHeight) {
+                            load = 1;
+                            $(list_link).fadeIn(1000);
+                            window.removeEventListener('scroll', onScroll);
+                        }
+                    });
+                }
             }
         }
 
-        remove_empty_elm();
+        update_list_link();
         reset_request();
         prep_request_link();
         processClick();
