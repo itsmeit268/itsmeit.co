@@ -18,6 +18,7 @@
 .igl-download-now>.wrap-countdown>.prep-request>.link-countdown,
 .list-link-redirect>.wrap-countdown>.prep-request>.link-countdown,
 .list-link-redirect>.post-progress-bar,
+.list-link-redirect>.post-progress-bar,
 .list-link-redirect>.wrap-countdown{
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -83,6 +84,7 @@
 .b-h-down {
     margin-top: 5px;
     font-size: 18px;
+    margin-right: 5px;
 }
 
 .post-progress-bar {
@@ -215,9 +217,16 @@ i.material-icons {
 }
 
 @media only screen and (max-device-width: 480px) {
+    .igl-download-now {
+        display: block;
+        white-space: inherit;
+        max-height: 100%
+    }
+
     .igl-download-now>.wrap-countdown,
     .igl-download-now>.post-progress-bar {
         margin-left: 0;
+        height: 100%;
     }
     .post-progress, .wrap-countdown {
         text-align: left
