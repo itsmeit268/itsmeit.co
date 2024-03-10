@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: left;
     max-height: 35px;
+    text-transform: uppercase;
 }
 
 .igl-download-now>.post-progress-bar>.prep-request>.post-progress,
