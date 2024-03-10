@@ -90,7 +90,7 @@ class Authors_List_1 extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Count Posts', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
-				'description' => esc_html__( 'Enable or disable total posts information of each category.', 'foxiz-core' ),
+				'description' => Options::count_posts_description(),
 				'options'     => Options::switch_dropdown( false ),
 				'default'     => '1',
 			]
@@ -101,7 +101,7 @@ class Authors_List_1 extends Widget_Base {
 				'label'       => esc_html__( 'Follow Button', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => Options::switch_dropdown( false ),
-				'description' => esc_html__( 'Enable or disable follow button.', 'foxiz-core' ),
+				'description' => esc_html__( 'Enable or disable the follow button.', 'foxiz-core' ),
 				'default'     => '-1',
 			]
 		);
@@ -289,7 +289,7 @@ class Authors_List_1 extends Widget_Base {
 			'bottom_margin', [
 				'label'       => esc_html__( 'Custom Bottom Margin', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Input custom bottom margin values (in pixels) between category items.', 'foxiz-core' ),
+				'description' => esc_html__( 'Input custom bottom margin values (in pixels) between items.', 'foxiz-core' ),
 				'selectors'   => [ '{{WRAPPER}} .block-wrap' => '--bottom-spacing: {{VALUE}}px;' ],
 			]
 		);

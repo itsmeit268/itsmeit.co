@@ -12,12 +12,11 @@ if ( foxiz_is_amp() ) {
 if ( $foxiz_hide_comment ) {
 	$foxiz_class_name .= ' is-hidden';
 }
-
 if ( ! get_comments_number() ) {
 	$foxiz_class_name .= ' no-comment';
 }
 ?>
-<div id="rb-user-reviews-<?php echo esc_attr( get_the_ID() ); ?>" class="comment-box-wrap entry-sec rb-user-reviews">
+<div id="rb-user-reviews-<?php echo get_the_ID(); ?>" class="comment-box-wrap entry-sec rb-user-reviews">
 	<div class="comment-box-header">
 		<?php if ( $foxiz_hide_comment ) :
 			$review_link = '#';
@@ -31,7 +30,7 @@ if ( ! get_comments_number() ) {
 			<span class="h3"><i class="rbi rbi-feedback"></i><?php echo foxiz_get_review_heading( get_the_ID() ); ?></span>
 		<?php endif; ?>
 	</div>
-	<div class="<?php echo esc_attr( $foxiz_class_name ); ?>">
+	<div class="<?php echo strip_tags( $foxiz_class_name ); ?>">
 		<?php if ( comments_open() || pings_open() ) : ?>
 			<div id="comments" class="comments-area rb-reviews-area">
 				<?php if ( have_comments() ) : ?>
@@ -81,7 +80,7 @@ if ( ! get_comments_number() ) {
 					$comment_form['fields'] = [];
 					foreach ( $fields as $key => $field ) {
 						$field_html = '<p class="comment-form-' . esc_attr( $key ) . '">';
-						$field_html .= '<label for="' . esc_attr( $key ) . '">' . esc_html( $field['label'] );
+						$field_html .= '<label for="' . esc_attr( $key ) . '">' . foxiz_strip_tags( $field['label'] );
 						if ( ! empty( $field['required'] ) && $field['required'] ) {
 							$field_html .= '&nbsp;<span class="required">*</span>';
 						}

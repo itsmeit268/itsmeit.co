@@ -134,7 +134,6 @@ if ( ! class_exists( 'Foxiz_Register_Options' ) ) {
 
 				'page',
 				'category',
-				'blog_pages',
 				'blog',
 				'author',
 				'search',

@@ -69,12 +69,12 @@ if ( ! function_exists( 'foxiz_category_page_header_1' ) ) {
 
 		$class_name = 'archive-header category-header-1';
 		if ( ! empty( $settings['pattern'] ) && '-1' !== (string) $settings['pattern'] ) {
-			$class_name .= ' is-pattern pattern-' . esc_attr( $settings['pattern'] );
+			$class_name .= ' is-pattern pattern-' . $settings['pattern'];
 		} else {
 			$class_name .= ' solid-bg';
 		}
 		?>
-		<header class="<?php echo esc_attr( $class_name ); ?>">
+		<header class="<?php echo strip_tags( $class_name ); ?>">
 			<div class="rb-container edge-padding">
 				<div class="archive-inner">
 					<div class="archive-header-content">
@@ -94,7 +94,7 @@ if ( ! function_exists( 'foxiz_category_page_header_1' ) ) {
 								<div class="subcat-wrap">
 									<span class="subcat-heading"><i class="rbi rbi-share"></i><?php foxiz_html_e( 'Find More:', 'foxiz' ) ?></span>
 									<?php foreach ( $categories as $category ) : ?>
-										<span class="sub-cat-item h5"><a href="<?php echo foxiz_get_term_link( $category->term_id ) ?>"><?php echo esc_html( $category->name ); ?></a></span>
+										<span class="sub-cat-item h5"><a href="<?php echo foxiz_get_term_link( $category->term_id ) ?>"><?php foxiz_render_inline_html( $category->name ); ?></a></span>
 									<?php endforeach; ?>
 								</div>
 							<?php endif;
@@ -122,11 +122,11 @@ if ( ! function_exists( 'foxiz_category_page_header_2' ) ) {
 
 		$class_name = 'archive-header category-header-2';
 		if ( ! empty( $settings['pattern'] ) && '-1' !== (string) $settings['pattern'] ) {
-			$class_name .= ' is-pattern pattern-' . esc_attr( $settings['pattern'] );
+			$class_name .= ' is-pattern pattern-' . $settings['pattern'];
 		} else {
 			$class_name .= ' solid-bg';
 		} ?>
-		<header class="<?php echo esc_attr( $class_name ); ?>">
+		<header class="<?php echo strip_tags( $class_name ); ?>">
 			<div class="rb-container edge-padding">
 				<div class="archive-inner">
 					<div class="archive-header-content light-scheme">
@@ -147,7 +147,7 @@ if ( ! function_exists( 'foxiz_category_page_header_2' ) ) {
 									<ul class="qlinks-inner">
 										<?php foreach ( $categories as $category ) : ?>
 											<li class="qlink h5">
-												<a href="<?php echo foxiz_get_term_link( $category->term_id ) ?>"><?php echo esc_html( $category->name ); ?></a>
+												<a href="<?php echo foxiz_get_term_link( $category->term_id ) ?>"><?php foxiz_render_inline_html( $category->name ); ?></a>
 											</li>
 										<?php endforeach; ?>
 									</ul>
@@ -174,11 +174,11 @@ if ( ! function_exists( 'foxiz_category_page_header_3' ) ) {
 
 		$class_name = 'archive-header category-header-3';
 		if ( ! empty( $settings['pattern'] ) && '-1' !== (string) $settings['pattern'] ) {
-			$class_name .= ' is-pattern pattern-' . esc_attr( $settings['pattern'] );
+			$class_name .= ' is-pattern pattern-' . $settings['pattern'];
 		} else {
 			$class_name .= ' solid-bg';
 		} ?>
-		<header class="<?php echo esc_attr( $class_name ); ?>">
+		<header class="<?php echo strip_tags( $class_name ); ?>">
 			<div class="rb-container edge-padding archive-header-content">
 				<?php foxiz_single_category_title( $settings ); ?>
 			</div>
@@ -194,11 +194,11 @@ if ( ! function_exists( 'foxiz_category_page_header_4' ) ) {
 
 		$class_name = 'archive-header category-header-4';
 		if ( ! empty( $settings['pattern'] ) && '-1' !== (string) $settings['pattern'] ) {
-			$class_name .= ' is-pattern pattern-' . esc_attr( $settings['pattern'] );
+			$class_name .= ' is-pattern pattern-' . $settings['pattern'];
 		} else {
 			$class_name .= ' solid-bg';
 		} ?>
-		<header class="<?php echo esc_attr( $class_name ); ?>">
+		<header class="<?php echo strip_tags( $class_name ); ?>">
 			<div class="rb-container edge-padding archive-header-content">
 				<?php
 				foxiz_single_category_title( $settings );
@@ -227,17 +227,18 @@ if ( ! function_exists( 'foxiz_archive_page_header' ) ) {
 			$class_name .= ' is-centered';
 		}
 		if ( ! empty( $settings['pattern'] ) && '-1' !== (string) $settings['pattern'] ) {
-			$class_name .= ' is-pattern pattern-' . esc_attr( $settings['pattern'] );
+			$class_name .= ' is-pattern pattern-' . $settings['pattern'];
 		} else {
 			$class_name .= ' solid-bg';
 		} ?>
-		<header class="<?php echo esc_attr( $class_name ); ?>">
+		<header class="<?php echo strip_tags( $class_name ); ?>">
 			<div class="rb-container edge-padding archive-header-content">
 				<?php if ( ! empty( $settings['breadcrumb'] ) ) {
 					echo foxiz_get_breadcrumb( 'archive-breadcrumb' );
-				} ?>
-				<h1 class="archive-title"><?php echo get_the_archive_title(); ?></h1>
-				<?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>
+				}
+				foxiz_archive_title();
+				the_archive_description( '<div class="taxonomy-description">', '</div>' );
+				?>
 			</div>
 		</header>
 	<?php }
@@ -263,7 +264,7 @@ if ( ! function_exists( 'foxiz_search_page_header' ) ) {
 			$classes .= ' light-scheme';
 		}
 		?>
-		<header class="<?php echo esc_attr( $classes ); ?>">
+		<header class="<?php echo strip_tags( $classes ); ?>">
 			<div class="rb-container edge-padding">
 				<div class="search-header-inner">
 					<div class="search-header-content">
@@ -357,7 +358,7 @@ if ( ! function_exists( 'foxiz_the_blog' ) ) {
 		if ( empty( $settings['sidebar_name'] ) || ! is_active_sidebar( $settings['sidebar_name'] ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
-			$classes[] = 'is-sidebar-' . esc_attr( $settings['sidebar_position'] );
+			$classes[] = 'is-sidebar-' . $settings['sidebar_position'];
 
 			if ( ! empty( $settings['sticky_sidebar'] ) ) {
 				if ( '2' === (string) $settings['sticky_sidebar'] ) {
@@ -367,7 +368,7 @@ if ( ! function_exists( 'foxiz_the_blog' ) ) {
 				}
 			}
 		} ?>
-		<div class="<?php echo join( ' ', $classes ); ?>">
+		<div class="<?php echo strip_tags( join( ' ', $classes ) ); ?>">
 			<div class="rb-container edge-padding">
 				<div class="grid-container">
 					<div class="blog-content">
@@ -429,13 +430,11 @@ if ( ! function_exists( 'foxiz_get_blog_layout' ) ) {
 if ( ! function_exists( 'foxiz_the_blog_heading' ) ) {
 	/**
 	 * @param array $settings
-	 *
-	 * @return false
 	 */
 	function foxiz_the_blog_heading( $settings = [] ) {
 
 		if ( empty( $settings['blog_heading'] ) ) {
-			return false;
+			return;
 		}
 		if ( empty( $settings['blog_heading_layout'] ) ) {
 			$settings['blog_heading_layout'] = foxiz_get_option( 'heading_layout' );
@@ -460,15 +459,10 @@ if ( ! function_exists( 'foxiz_the_blog_heading' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_author_page_header' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_author_page_header( $settings = [] ) {
 
 		if ( ! foxiz_get_option( 'author_bio' ) ) {
-			return false;
+			return;
 		}
 		$author_id   = get_queried_object_id();
 		$job         = get_the_author_meta( 'job', $author_id );
@@ -476,11 +470,11 @@ if ( ! function_exists( 'foxiz_author_page_header' ) ) {
 
 		$class_name = 'archive-header author-header';
 		if ( ! empty( $settings['pattern'] ) && '-1' !== (string) $settings['pattern'] ) {
-			$class_name .= ' is-pattern pattern-' . esc_attr( $settings['pattern'] );
+			$class_name .= ' is-pattern pattern-' . $settings['pattern'];
 		} else {
 			$class_name .= ' solid-bg';
 		} ?>
-		<header class="<?php echo esc_attr( $class_name ); ?>">
+		<header class="<?php echo strip_tags( $class_name ); ?>">
 			<div class="rb-container edge-padding">
 				<div class="author-header-inner">
 					<?php if ( ! empty( $settings['breadcrumb'] ) ) {
@@ -495,20 +489,19 @@ if ( ! function_exists( 'foxiz_author_page_header' ) ) {
 								<?php if ( ! empty( $settings['follow_author_header'] ) ) : ?>
 									<div class="bio-title-wrap b-follow">
 										<h2 class="bio-title"><?php echo get_the_author_meta( 'display_name', $author_id ); ?></h2>
-										<span class="rb-follow follow-trigger" data-name="<?php echo get_the_author_meta( 'display_name', $author_id ); ?>" data-uid="<?php echo esc_attr( $author_id ); ?>"></span>
+										<span class="rb-follow follow-trigger" data-name="<?php echo get_the_author_meta( 'display_name', $author_id ); ?>" data-uid="<?php echo strip_tags( $author_id ); ?>"></span>
 									</div>
 								<?php else: ?>
 									<h2 class="bio-title"><?php echo get_the_author_meta( 'display_name', $author_id ); ?></h2>
 								<?php endif;
 
 								if ( ! empty( $description ) ) : ?>
-									<div class="bio-description"><?php echo wp_kses( $description, 'foxiz' ); ?></div>
+									<div class="bio-description"><?php echo foxiz_strip_tags( $description ); ?></div>
 								<?php endif;
-
 								if ( foxiz_get_social_list( foxiz_get_user_socials( $author_id ), true, false ) ) : ?>
 									<div class="usocials meta-text tooltips-n">
 										<?php if ( ! empty( $job ) ) : ?>
-											<div class="bio-job"><?php echo wp_kses( $job, 'foxiz' ); ?></div>
+											<div class="bio-job"><?php foxiz_render_inline_html( $job ); ?></div>
 										<?php endif; ?>
 										<span class="ef-label"><?php foxiz_html_e( 'Follow: ', 'foxiz' ); ?></span><?php echo foxiz_get_social_list( foxiz_get_user_socials( $author_id ), true, false ); ?>
 									</div>
@@ -518,7 +511,7 @@ if ( ! function_exists( 'foxiz_author_page_header' ) ) {
 						<div class="bio-count-posts">
 							<?php $total_posts = count_user_posts( $author_id );
 							if ( $total_posts > 0 ) : ?>
-								<span class="h1 bio-count"><?php echo esc_html( $total_posts ); ?></span>
+								<span class="h1 bio-count"><?php foxiz_render_inline_html( $total_posts ); ?></span>
 								<span class="is-meta"><?php
 									if ( (string) $total_posts === '1' ) {
 										foxiz_html_e( 'Article', 'foxiz' );
@@ -580,3 +573,26 @@ if ( ! function_exists( 'foxiz_blog_template' ) ) {
 		echo '<div class="blog-builder">' . do_shortcode( trim( $shortcode ) ) . '</div>';
 	}
 }
+
+if ( ! function_exists( 'foxiz_archive_title' ) ) {
+	function foxiz_archive_title() {
+
+		if ( is_tag() && foxiz_get_option( 'follow_tag_header' ) ) {
+			foxiz_tax_title_followed();
+
+			return;
+		} ?>
+		<h1 class="archive-title"><?php echo get_the_archive_title(); ?></h1>
+		<?php
+	}
+}
+
+if ( ! function_exists( 'foxiz_tax_title_followed' ) ) {
+	function foxiz_tax_title_followed() { ?>
+		<div class="archive-title b-follow">
+			<h1><?php echo get_the_archive_title(); ?></h1>
+			<span class="rb-follow follow-trigger" data-name="<?php single_term_title(); ?>" data-cid="<?php echo get_queried_object_id(); ?>"></span>
+		</div>
+	<?php }
+}
+

@@ -23,7 +23,7 @@ if ( ! function_exists( 'foxiz_overlay_1' ) ) {
 		<div class="overlay-holder">
 			<?php foxiz_entry_featured( $settings ); ?>
 			<div class="overlay-wrap">
-				<div class="<?php echo esc_attr( $inner_classes ); ?>">
+				<div class="<?php echo strip_tags( $inner_classes ); ?>">
 					<?php
 					foxiz_entry_top( $settings );
 					foxiz_entry_title( $settings );
@@ -60,7 +60,7 @@ if ( ! function_exists( 'foxiz_overlay_2' ) ) {
 		<div class="overlay-holder">
 			<?php foxiz_entry_featured( $settings ); ?>
 			<div class="overlay-wrap">
-				<div class="<?php echo esc_attr( $inner_classes ); ?>">
+				<div class="<?php echo strip_tags( $inner_classes ); ?>">
 					<?php
 					foxiz_entry_top( $settings );
 					foxiz_entry_title( $settings );
@@ -100,7 +100,7 @@ if ( ! function_exists( 'foxiz_overlay_flex' ) ) {
 		<div class="overlay-holder">
 			<?php foxiz_entry_featured( $settings ); ?>
 			<div class="overlay-wrap">
-				<div class="<?php echo esc_attr( $inner_classes ); ?>">
+				<div class="<?php echo strip_tags( $inner_classes ); ?>">
 					<?php
 					foreach ( $settings['block_structure'] as $element ) :
 						switch ( $element ) {

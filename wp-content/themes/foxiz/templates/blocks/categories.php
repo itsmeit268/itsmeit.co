@@ -2,12 +2,33 @@
 /** Don't load directly */
 defined( 'ABSPATH' ) || exit;
 
+if ( ! function_exists( 'foxiz_update_tax_list_settings' ) ) {
+	function foxiz_update_tax_list_settings( $settings ) {
+
+		$settings['selected_ids'] = [];
+		$settings['allowed_tax']  = [];
+
+		if ( ! empty( $settings['categories'] ) ) {
+			$settings['selected_ids'] = explode( ',', $settings['categories'] );
+			$settings['selected_ids'] = array_map( 'trim', $settings['selected_ids'] );
+		}
+
+		if ( ! empty( $settings['tax_followed'] ) ) {
+			$settings['allowed_tax'] = explode( ',', $settings['tax_followed'] );
+			$settings['allowed_tax'] = array_map( 'trim', $settings['allowed_tax'] );
+		} else {
+			if ( '1' === $settings['followed'] ) {
+				$settings['allowed_tax'] = [ 'category' ];
+			} elseif ( '2' == $settings['followed'] ) {
+				$settings['allowed_tax'] = [ 'post_tag' ];
+			}
+		}
+
+		return $settings;
+	}
+}
+
 if ( ! function_exists( 'foxiz_get_categories_1' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_categories_1( $settings = [] ) {
 
 		$settings = wp_parse_args( $settings, [
@@ -16,7 +37,7 @@ if ( ! function_exists( 'foxiz_get_categories_1' ) ) {
 			'categories' => [],
 		] );
 
-		if ( empty( $settings['followed'] ) || '1' !== (string) $settings['followed'] ) {
+		if ( empty( $settings['followed'] ) || '-1' === (string) $settings['followed'] ) {
 			$settings['display_mode'] = 'direct';
 		}
 
@@ -52,18 +73,17 @@ if ( ! function_exists( 'foxiz_get_categories_1' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_live_get_categories_1' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_live_get_categories_1( $settings = [] ) {
 
-		$category_ids = foxiz_merge_saved_categories( $settings );
+		$term_ids = foxiz_merge_saved_terms( $settings );
+		if ( ! count( $term_ids ) ) {
+			return;
+		}
+		$settings = foxiz_update_tax_list_settings( $settings );
 		?>
 		<div class="block-inner">
-			<?php foreach ( $category_ids as $category_id ) :
-				$settings['cid'] = $category_id;
+			<?php foreach ( $term_ids as $term_id ) :
+				$settings['cid'] = $term_id;
 				foxiz_category_item_1( $settings );
 			endforeach; ?>
 		</div>
@@ -71,11 +91,6 @@ if ( ! function_exists( 'foxiz_live_get_categories_1' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_categories_2' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_categories_2( $settings = [] ) {
 
 		$settings = wp_parse_args( $settings, [
@@ -84,7 +99,7 @@ if ( ! function_exists( 'foxiz_get_categories_2' ) ) {
 			'categories' => [],
 		] );
 
-		if ( empty( $settings['followed'] ) || '1' !== (string) $settings['followed'] ) {
+		if ( empty( $settings['followed'] ) || '-1' === (string) $settings['followed'] ) {
 			$settings['display_mode'] = 'direct';
 		}
 
@@ -124,18 +139,17 @@ if ( ! function_exists( 'foxiz_get_categories_2' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_live_get_categories_2' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_live_get_categories_2( $settings = [] ) {
 
-		$category_ids = foxiz_merge_saved_categories( $settings );
+		$term_ids = foxiz_merge_saved_terms( $settings );
+		if ( ! count( $term_ids ) ) {
+			return;
+		}
+		$settings = foxiz_update_tax_list_settings( $settings );
 		?>
 		<div class="block-inner">
-			<?php foreach ( $category_ids as $category_id ) :
-				$settings['cid'] = $category_id;
+			<?php foreach ( $term_ids as $term_id ) :
+				$settings['cid'] = $term_id;
 				foxiz_category_item_2( $settings );
 			endforeach; ?>
 		</div>
@@ -143,11 +157,6 @@ if ( ! function_exists( 'foxiz_live_get_categories_2' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_categories_3' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_categories_3( $settings = [] ) {
 
 		$settings = wp_parse_args( $settings, [
@@ -156,7 +165,7 @@ if ( ! function_exists( 'foxiz_get_categories_3' ) ) {
 			'categories' => [],
 		] );
 
-		if ( empty( $settings['followed'] ) || '1' !== (string) $settings['followed'] ) {
+		if ( empty( $settings['followed'] ) || '-1' === (string) $settings['followed'] ) {
 			$settings['display_mode'] = 'direct';
 		}
 
@@ -195,18 +204,17 @@ if ( ! function_exists( 'foxiz_get_categories_3' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_live_get_categories_3' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_live_get_categories_3( $settings = [] ) {
 
-		$category_ids = foxiz_merge_saved_categories( $settings );
+		$term_ids = foxiz_merge_saved_terms( $settings );
+		if ( ! count( $term_ids ) ) {
+			return;
+		}
+		$settings = foxiz_update_tax_list_settings( $settings );
 		?>
 		<div class="block-inner">
-			<?php foreach ( $category_ids as $category_id ) :
-				$settings['cid'] = $category_id;
+			<?php foreach ( $term_ids as $term_id ) :
+				$settings['cid'] = $term_id;
 				foxiz_category_item_3( $settings );
 			endforeach; ?>
 		</div>
@@ -214,11 +222,6 @@ if ( ! function_exists( 'foxiz_live_get_categories_3' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_categories_4' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_categories_4( $settings = [] ) {
 
 		$settings = wp_parse_args( $settings, [
@@ -227,7 +230,7 @@ if ( ! function_exists( 'foxiz_get_categories_4' ) ) {
 			'categories' => [],
 		] );
 
-		if ( empty( $settings['followed'] ) || '1' !== (string) $settings['followed'] ) {
+		if ( empty( $settings['followed'] ) || '-1' === (string) $settings['followed'] ) {
 			$settings['display_mode'] = 'direct';
 		}
 
@@ -263,18 +266,17 @@ if ( ! function_exists( 'foxiz_get_categories_4' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_live_get_categories_4' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_live_get_categories_4( $settings = [] ) {
 
-		$category_ids = foxiz_merge_saved_categories( $settings );
+		$term_ids = foxiz_merge_saved_terms( $settings );
+		if ( ! count( $term_ids ) ) {
+			return;
+		}
+		$settings = foxiz_update_tax_list_settings( $settings );
 		?>
 		<div class="block-inner">
-			<?php foreach ( $category_ids as $category_id ) :
-				$settings['cid'] = $category_id;
+			<?php foreach ( $term_ids as $term_id ) :
+				$settings['cid'] = $term_id;
 				foxiz_category_item_4( $settings );
 			endforeach; ?>
 		</div>
@@ -282,20 +284,15 @@ if ( ! function_exists( 'foxiz_live_get_categories_4' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_categories_5' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_categories_5( $settings = [] ) {
 
 		$settings = wp_parse_args( $settings, [
 			'uuid'       => '',
-			'name'       => 'categories_1',
+			'name'       => 'categories_5',
 			'categories' => [],
 		] );
 
-		if ( empty( $settings['followed'] ) || '1' !== (string) $settings['followed'] ) {
+		if ( empty( $settings['followed'] ) || '-1' === (string) $settings['followed'] ) {
 			$settings['display_mode'] = 'direct';
 		}
 
@@ -331,19 +328,74 @@ if ( ! function_exists( 'foxiz_get_categories_5' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_live_get_categories_5' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_live_get_categories_5( $settings = [] ) {
 
-		$category_ids = foxiz_merge_saved_categories( $settings );
+		$term_ids = foxiz_merge_saved_terms( $settings );
+		if ( ! count( $term_ids ) ) {
+			return;
+		}
+		$settings = foxiz_update_tax_list_settings( $settings );
 		?>
 		<div class="block-inner">
-			<?php foreach ( $category_ids as $category_id ) :
-				$settings['cid'] = $category_id;
+			<?php foreach ( $term_ids as $term_id ) :
+				$settings['cid'] = $term_id;
 				foxiz_category_item_5( $settings );
+			endforeach; ?>
+		</div>
+	<?php }
+}
+
+if ( ! function_exists( 'foxiz_get_categories_6' ) ) {
+	function foxiz_get_categories_6( $settings = [] ) {
+
+		$settings = wp_parse_args( $settings, [
+			'uuid'       => '',
+			'name'       => 'categories_6',
+			'categories' => [],
+		] );
+
+		if ( empty( $settings['followed'] ) || '-1' === (string) $settings['followed'] ) {
+			$settings['display_mode'] = 'direct';
+		}
+
+		$settings['classes'] = 'block-categories block-categories-6';
+
+		$params = foxiz_get_category_block_params( $settings );
+		if ( empty( $settings['display_mode'] ) ) {
+			$settings['classes'] .= ' is-ajax-categories';
+			foxiz_categories_localize_script( $params );
+		}
+
+		ob_start();
+		foxiz_block_open_tag( $settings );
+		if ( class_exists( 'Elementor\\Plugin' ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+			foxiz_live_get_categories_6( $params );
+		} else {
+			if ( empty( $settings['display_mode'] ) ) {
+				echo '<div class="block-loader">' . foxiz_get_svg( 'loading', '', 'animation' ) . '</div>';
+			} else {
+				foxiz_live_get_categories_6( $params );
+			}
+		}
+		foxiz_block_close_tag();
+
+		return ob_get_clean();
+	}
+}
+
+if ( ! function_exists( 'foxiz_live_get_categories_6' ) ) {
+	function foxiz_live_get_categories_6( $settings = [] ) {
+
+		$term_ids = foxiz_merge_saved_terms( $settings );
+		if ( ! count( $term_ids ) ) {
+			return;
+		}
+		$settings = foxiz_update_tax_list_settings( $settings );
+		?>
+		<div class="categories-6-inner">
+			<?php foreach ( $term_ids as $term_id ) :
+				$settings['cid'] = $term_id;
+				foxiz_category_item_6( $settings );
 			endforeach; ?>
 		</div>
 	<?php }

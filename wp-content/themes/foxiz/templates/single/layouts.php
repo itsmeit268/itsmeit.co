@@ -30,7 +30,7 @@ if ( ! function_exists( 'foxiz_single_post' ) ) {
 			if ( ! empty( foxiz_get_option( 'ajax_next_hide_sidebar' ) ) ) {
 				$class_name .= ' none-mobile-sb';
 			} ?>
-			<div id="single-post-infinite" class="<?php echo esc_attr( $class_name ); ?>" data-nextposturl="<?php echo esc_url( get_permalink( $post_prev ) ); ?>">
+			<div id="single-post-infinite" class="<?php echo strip_tags( $class_name ); ?>" data-nextposturl="<?php echo esc_url( get_permalink( $post_prev ) ); ?>">
 				<div class="single-post-outer activated" data-postid="<?php echo get_the_ID(); ?>" data-postlink="<?php echo esc_url( get_permalink() ); ?>">
 					<?php foxiz_render_single_post(); ?>
 				</div>

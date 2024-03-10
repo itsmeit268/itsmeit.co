@@ -8,7 +8,7 @@ if ( ! function_exists( 'foxiz_render_footer' ) ) :
 		if ( foxiz_is_amp() ) {
 			foxiz_footer_amp();
 
-			return false;
+			return;
 		}
 
 		foxiz_footer_top();
@@ -88,16 +88,12 @@ if ( ! function_exists( 'foxiz_footer_top' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_render_footer_widgets' ) ) {
-	/**
-	 * @param $layout
-	 *
-	 * @return false
-	 */
 	function foxiz_render_footer_widgets( $layout ) {
 
 		if ( ! foxiz_get_footer_widgets( $layout ) ) {
-			return false;
+			return;
 		}
+
 		$classes = [ 'footer-columns rb-columns is-gap-25 rb-container edge-padding' ];
 		switch ( $layout ) {
 			case 5 :
@@ -164,7 +160,7 @@ if ( ! function_exists( 'foxiz_footer_copyright' ) ) :
 	function foxiz_footer_copyright() {
 
 		if ( ! foxiz_get_footer_copyright() ) {
-			return false;
+			return;
 		}
 
 		$classes = 'footer-copyright';
@@ -224,7 +220,7 @@ if ( ! function_exists( 'foxiz_get_footer_copyright' ) ) {
 			<div class="copyright-inner">
 				<?php
 				if ( ! empty( $copyright ) ) {
-					echo '<div class="copyright">' . wp_kses( $copyright, 'foxiz' ) . '</div>';
+					echo '<div class="copyright">' . foxiz_strip_tags( $copyright ) . '</div>';
 				}
 				if ( ! empty( $menu ) && is_nav_menu( $menu ) ) {
 					wp_nav_menu( [

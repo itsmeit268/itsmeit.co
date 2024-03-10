@@ -63,11 +63,11 @@
     margin-right: 20px;
     -webkit-transition: all .25s;
     transition: all .25s;
-    color: #666666;
+    color: #666;
 }
 
 .rb-quick-links a:hover {
-    color: #333333;
+    color: #333;
 }
 
 .rb-quick-links a:last-child {
@@ -98,7 +98,7 @@
     padding: 60px 40px;
     -webkit-border-radius: 7px;
     border-radius: 7px;
-    background-color: #ffffff;
+    background-color: #fff;
 }
 
 .rb-info-header h2 {
@@ -116,7 +116,7 @@
     width: 100%;
     margin-bottom: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #eee;
 }
 
 .info-el:last-child {
@@ -135,7 +135,7 @@
     font-size: .8rem;
     display: block;
     margin-top: 12px;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
 .info-value {
@@ -165,7 +165,7 @@
     border-top: 5px solid #524cff;
     -webkit-border-radius: 7px;
     border-radius: 7px;
-    background-color: #ffffff;
+    background-color: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, .05);
 }
 
@@ -256,7 +256,7 @@ input[name='activated_purchase_code'] {
 }
 
 input.rb-panel-input-text {
-    border-color: #333333;
+    border-color: #333;
     box-shadow: none !important;
 }
 
@@ -296,7 +296,7 @@ button.rb-panel-button {
     -webkit-transition: all .3s;
     transition: all .3s;
     text-decoration: none;
-    color: #ffffff;
+    color: #fff;
     border: none;
     border-radius: 10px;
     outline: none;
@@ -329,7 +329,7 @@ button.rb-panel-button:disabled,
 }
 
 .re-fetch-translation:hover {
-    color: #ffffff;
+    color: #fff;
     border-color: #009250;
     background-color: #009250;
 }
@@ -340,7 +340,7 @@ button.rb-panel-button:disabled,
 
 .rb-panel-button:hover,
 .rb-panel-button:focus {
-    color: #ffffff;
+    color: #fff;
     outline: none;
     background-color: #1ed4a0;
     box-shadow: none;
@@ -358,7 +358,7 @@ input.rb-panel-input-text.rb-validate-error {
 .rb-panel-button.deregister-button:disabled {
     cursor: auto;
     pointer-events: none !important;
-    background: #dddddd;
+    background: #ddd;
 }
 
 .rb-error-info {
@@ -516,7 +516,7 @@ input.rb-panel-input-text.rb-validate-error {
     line-height: 1;
     margin: 0;
     padding: 0;
-    color: #ffffff;
+    color: #fff;
 }
 
 .demo-name a {
@@ -524,7 +524,7 @@ input.rb-panel-input-text.rb-validate-error {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
 .demo-name i {
@@ -536,7 +536,7 @@ input.rb-panel-input-text.rb-validate-error {
 }
 
 .demo-name a:hover {
-    color: #ffffff;
+    color: #fff;
 }
 
 .demo-content {
@@ -545,7 +545,7 @@ input.rb-panel-input-text.rb-validate-error {
     flex-flow: column nowrap;
     flex-grow: 1;
     padding: 20px 20px 30px;
-    color: #ffffff;
+    color: #fff;
     background-color: #1d2327;
 }
 
@@ -564,16 +564,18 @@ input.rb-panel-input-text.rb-validate-error {
     margin-top: 0;
     margin-bottom: 7px;
     text-transform: uppercase;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
 .demo-plugins .plugin-el {
     font-size: 12px;
     line-height: 20px;
-    display: block;
+    display: flex;
     overflow: hidden;
     margin-bottom: 7px;
     padding-left: 10px;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .demo-plugins .plugin-el:last-child {
@@ -588,7 +590,7 @@ input.rb-panel-input-text.rb-validate-error {
     -webkit-transition: all .3s;
     transition: all .3s;
     text-decoration: none;
-    color: #ffffff;
+    color: #fff;
 }
 
 .plugin-el .name a.plugin-link:hover {
@@ -600,12 +602,11 @@ input.rb-panel-input-text.rb-validate-error {
     font-weight: normal;
     display: inline-block;
     margin-left: 4px;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
 .activate-info {
-    display: inline-block;
-    float: right;
+    display: inline-flex;
 }
 
 .plugin-el .activate-info.activated {
@@ -622,7 +623,7 @@ input.rb-panel-input-text.rb-validate-error {
 }
 
 .plugin-el a.activate-info:hover {
-    color: #ffffff;
+    color: #fff;
 }
 
 .plugin-el a.activate-info {
@@ -642,7 +643,7 @@ input.rb-panel-input-text.rb-validate-error {
     font-weight: 400;
     margin-right: 4px;
     text-decoration: none;
-    color: #aaaaaa;
+    color: #aaa;
     outline: none !important;
     box-shadow: none;
 }
@@ -655,7 +656,7 @@ a.activate-info.loading {
     font-size: 11px;
     font-style: italic;
     margin: 0;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
 .reactivation-info i {
@@ -689,7 +690,7 @@ a.activate-info.loading {
     transition: all .25s;
     pointer-events: none;
     opacity: 0;
-    background-color: #eeeeee;
+    background-color: #eee;
 }
 
 .process-count {
@@ -819,7 +820,7 @@ a.activate-info.loading {
     -o-transition: all .25s;
     -webkit-transition: all .25s;
     transition: all .25s;
-    border: 2px solid #444444;
+    border: 2px solid #444;
     border-radius: 50%;
 }
 
@@ -858,11 +859,11 @@ a.activate-info.loading {
 .import-label {
     -webkit-transition: all .25s;
     transition: all .25s;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
 .checked .import-label {
-    color: #ffffff;
+    color: #fff;
 }
 
 .import-actions {
@@ -874,7 +875,7 @@ a.activate-info.loading {
 
 .rb-wait {
     display: none;
-    color: #ffffff;
+    color: #fff;
 }
 
 .rb-wait span:last-child,
@@ -884,7 +885,10 @@ a.activate-info.loading {
 }
 
 .rb-loading-info {
-    color: #ffffff;
+    color: #fff;
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
 }
 
 .is-importing:not(.just-complete) .rb-wait {
@@ -903,6 +907,8 @@ a.activate-info.loading {
 
 .rb-loading-info .rb-loading i {
     font-size: 14px;
+    height: 14px;
+    width: 14px;
 }
 
 @keyframes rbfade {
@@ -940,7 +946,7 @@ a.activate-info.loading {
     padding: 7px 20px;
     -webkit-transition: all .25s;
     transition: all .25s;
-    color: #ffffff;
+    color: #fff;
     border-radius: 7px;
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
     box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
@@ -974,7 +980,7 @@ a.activate-info.loading {
     cursor: pointer;
     -webkit-transition: all .25s;
     transition: all .25s;
-    color: #ffffff;
+    color: #fff;
     border-radius: 3px;
     background-color: #49ac7e;
 }
@@ -985,7 +991,7 @@ a.activate-info.loading {
     display: none;
     margin-left: auto;
     padding: 10px 0;
-    color: #eeeeee;
+    color: #eee;
 }
 
 .rb-do-reimport {
@@ -1024,7 +1030,7 @@ a.activate-info.loading {
 }
 
 .importer-header strong {
-    color: #333333;
+    color: #333;
 }
 
 .importer-headline {
@@ -1034,7 +1040,7 @@ a.activate-info.loading {
     margin: 40px 0 25px 0;
     padding: 20px 30px;
     border-radius: 7px;
-    background-color: #ffffff;
+    background-color: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, .07);
 }
 
@@ -1051,7 +1057,7 @@ a.activate-info.loading {
     -webkit-transition: all .25s;
     transition: all .25s;
     text-decoration: none !important;
-    color: #ffffff;
+    color: #fff;
     border: none !important;
     border-radius: 7px;
     outline: none !important;
@@ -1060,7 +1066,7 @@ a.activate-info.loading {
 }
 
 #rb-importer-reload .loading-info {
-    color: #ffffff;
+    color: #fff;
 }
 
 #rb-importer-reload .spinner {
@@ -1074,7 +1080,7 @@ a.activate-info.loading {
 }
 
 #rb-importer-reload:hover {
-    color: #ffffff;
+    color: #fff;
     background: #1ed4a0;
 }
 
@@ -1111,10 +1117,10 @@ a.activate-info.loading {
     display: block;
     margin-top: 30px;
     padding: 20px 30px;
-    color: #666666;
+    color: #666;
     border-top: 5px solid #524cff;
     border-radius: 7px;
-    background: #ffffff;
+    background: #fff;
 }
 
 .importer-tips p {
@@ -1143,7 +1149,7 @@ p.rb-notice {
     display: block;
     max-width: 1000px;
     padding: 20px;
-    color: #ffffff;
+    color: #fff;
     background-color: #ff9a5d;
 }
 
@@ -1156,7 +1162,7 @@ p.rb-notice {
     margin-top: 30px;
     border-top: 5px solid #524cff;
     border-radius: 7px;
-    background-color: #ffffff;
+    background-color: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, .05);
 }
 
@@ -1164,7 +1170,7 @@ p.rb-notice {
     display: flex;
     flex-flow: row nowrap;
     padding: 20px;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #eee;
 }
 
 .rb-translation-header > h3 {
@@ -1178,7 +1184,7 @@ p.rb-notice {
     justify-content: space-between;
     width: 100%;
     padding: 10px 20px;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #eee;
 }
 
 .rb-translation-form .item:nth-child(2n) {
@@ -1195,7 +1201,7 @@ p.rb-notice {
 
 .rb-translation-form input[type='text']::placeholder {
     font-weight: 400;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
 .rb-translation-form label {
@@ -1217,7 +1223,7 @@ p.rb-notice {
     justify-content: flex-end;
     width: 100%;
     padding: 20px 30px;
-    background-color: #ffffff;
+    background-color: #fff;
     box-shadow: 0 -5px 10px rgba(0, 0, 0, .05);
 }
 
@@ -1238,7 +1244,7 @@ p.rb-notice {
     margin-bottom: 0;
     margin-left: 0;
     padding: 7px 20px;
-    color: #ffffff;
+    color: #fff;
     border-radius: 3px;
     background-color: #524cff;
 }
@@ -1258,7 +1264,7 @@ p.rb-notice {
 }
 
 #rb-edit-project-id:not(:hover) {
-    background-color: #333333;
+    background-color: #333;
 }
 
 .rb-font-notice {
@@ -1304,11 +1310,11 @@ p.rb-notice {
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #eee;
 }
 
 .font-setting-el:nth-child(even) {
-    border-left: 1px solid #eeeeee;
+    border-left: 1px solid #eee;
 }
 
 .font-setting-title {
@@ -1327,7 +1333,7 @@ p.rb-notice {
 [disabled='disabled'].rb-panel-button:focus {
     cursor: not-allowed;
     pointer-events: none;
-    background: #aaaaaa;
+    background: #aaa;
 }
 
 .simple-gtm-wrap {
@@ -1338,7 +1344,7 @@ p.rb-notice {
     padding: 40px 40px 60px;
     border-top: 5px solid #524cff;
     border-radius: 10px;
-    background-color: #ffffff;
+    background-color: #fff;
     box-shadow: 0 4px 20px #0001;
 }
 
@@ -1346,7 +1352,7 @@ p.rb-notice {
     font-size: 18px;
     margin-top: 40px;
     margin-bottom: 40px;
-    color: #888888;
+    color: #888;
 }
 
 .rb-form-item {
@@ -1375,7 +1381,7 @@ p.rb-notice {
     width: 100%;
     padding: 0;
     border: none;
-    border-bottom: 2px solid #111111;
+    border-bottom: 2px solid #111;
     border-radius: 0;
     outline: none !important;
     background: none !important;
@@ -1383,7 +1389,7 @@ p.rb-notice {
 }
 
 .rb-form-item input::placeholder {
-    color: #eeeeee;
+    color: #eee;
 }
 
 .rb-form-item input:focus {
@@ -1397,7 +1403,7 @@ p.rb-notice {
     cursor: pointer;
     -webkit-transition: all .3s;
     transition: all .3s;
-    color: #ffffff;
+    color: #fff;
     border: none;
     border-radius: 10px;
     background-color: #78d098;
@@ -1428,7 +1434,7 @@ select.rb-selection {
     font-weight: 700;
     margin: 0;
     padding: 1px 25px;
-    color: #ffffff;
+    color: #fff;
     border-radius: 7px;
     background-color: #524cff;
 }
@@ -1444,11 +1450,11 @@ select.rb-selection {
 .rb-form-infomation {
     font-size: 15px;
     margin-top: 25px;
-    color: #888888;
+    color: #888;
 }
 
 .rb-form-infomation a {
-    color: #888888;
+    color: #888;
 }
 
 .rb-form-infomation a:hover {
@@ -1469,7 +1475,7 @@ select.rb-selection {
     -webkit-transition: all .3s;
     transition: all .3s;
     opacity: 0;
-    color: #888888;
+    color: #888;
     border-radius: 7px;
     background: #fafafa;
     box-shadow: 1px 4px 10px #0001;
@@ -1514,7 +1520,7 @@ input[type='checkbox'].rb-switch-input {
     cursor: pointer;
     transition: .4s;
     border-radius: 34px;
-    background-color: #cccccc;
+    background-color: #ccc;
 }
 
 .rb-switch-slider:before {

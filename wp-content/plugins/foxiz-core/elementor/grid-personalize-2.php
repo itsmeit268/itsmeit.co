@@ -111,6 +111,16 @@ class Grid_Personalize_2 extends Widget_Base {
 			]
 		);
 		$this->add_control(
+			'post_type',
+			[
+				'label'       => esc_html__( 'Custom Post Type', 'foxiz-core' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => Options::post_type_dropdown(),
+				'description' => Options::source_post_type_description(),
+				'default'     => '0',
+			]
+		);
+		$this->add_control(
 			'posts_per_page',
 			[
 				'label'       => esc_html__( 'Number of Posts', 'foxiz-core' ),
@@ -428,6 +438,49 @@ class Grid_Personalize_2 extends Widget_Base {
 				'description' => Options::mobile_hide_meta_description(),
 				'placeholder' => esc_html__( 'avatar, author', 'foxiz-core' ),
 				'default'     => [],
+			]
+		);
+		$this->add_control(
+			'meta_color',
+			[
+				'label'     => esc_html__( 'Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--meta-fcolor: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'meta_b_color',
+			[
+				'label'     => esc_html__( 'Bold Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'description' => Options::bold_meta_color_description(),
+				'selectors' => [
+					'{{WRAPPER}}'                  => '--meta-b-fcolor: {{VALUE}}',
+					'{{WRAPPER}} .meta-category a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'dark_meta_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme' => '--meta-fcolor: {{VALUE}};',
+				],
+			]
+		);
+		$this->add_control(
+			'dark_meta_b_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Bold Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme'                                   => '--meta-b-fcolor: {{VALUE}}',
+					'[data-theme="dark"] {{WRAPPER}} .meta-category a, {{WRAPPER}} .light-scheme .meta-category a' => 'color: {{VALUE}}',
+				],
 			]
 		);
 		$this->end_controls_section();

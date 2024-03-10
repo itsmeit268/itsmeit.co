@@ -117,6 +117,16 @@ class Overlay_Personalize extends Widget_Base {
 			]
 		);
 		$this->add_control(
+			'post_type',
+			[
+				'label'       => esc_html__( 'Custom Post Type', 'foxiz-core' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => Options::post_type_dropdown(),
+				'description' => Options::source_post_type_description(),
+				'default'     => '0',
+			]
+		);
+		$this->add_control(
 			'posts_per_page',
 			[
 				'label'       => esc_html__( 'Number of Posts', 'foxiz-core' ),

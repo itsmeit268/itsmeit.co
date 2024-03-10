@@ -51,10 +51,7 @@ if ( ! function_exists( 'foxiz_render_header_1' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
+			<?php foxiz_header_ad_widget_section(); ?>
 		</div>
 		<?php
 	}
@@ -111,10 +108,7 @@ if ( ! function_exists( 'foxiz_render_header_2' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
+			<?php foxiz_header_ad_widget_section(); ?>
 		</div>
 		<?php
 	}
@@ -171,10 +165,7 @@ if ( ! function_exists( 'foxiz_render_header_3' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
+			<?php foxiz_header_ad_widget_section(); ?>
 		</div>
 		<?php
 	}
@@ -251,10 +242,7 @@ if ( ! function_exists( 'foxiz_render_header_4' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
+			<?php foxiz_header_ad_widget_section(); ?>
 		</div>
 		<?php
 	}
@@ -338,10 +326,7 @@ if ( ! function_exists( 'foxiz_render_header_5' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
+			<?php foxiz_header_ad_widget_section(); ?>
 		</div>
 		<?php
 	}
@@ -394,15 +379,16 @@ if ( ! function_exists( 'foxiz_render_header_rb_template' ) ) {
 		}
 		?>
 		<div id="site-header" class="header-wrap rb-section header-template">
-		<?php
-		foxiz_render_top_site();
-		foxiz_reading_process_indicator(); ?>
-		<div class="navbar-outer navbar-template-outer">
-			<div id="header-template-holder"><?php
-				echo '<div class="header-template-inner">' . do_shortcode( $shortcode ) . '</div>';
-				foxiz_header_mobile( foxiz_get_option() );
-				?></div>
-		</div>
+			<?php
+			foxiz_render_top_site();
+			foxiz_reading_process_indicator(); ?>
+			<div class="navbar-outer navbar-template-outer">
+				<div id="header-template-holder"><?php
+					echo '<div class="header-template-inner">' . do_shortcode( $shortcode ) . '</div>';
+					foxiz_header_mobile( foxiz_get_option() );
+					?></div>
+			</div>
+			<?php foxiz_header_ad_widget_section(); ?>
 		</div>
 		<?php
 	}
@@ -425,5 +411,21 @@ if ( ! function_exists( 'foxiz_render_header_none_mobile' ) ) {
 	function foxiz_render_header_none_mobile() { ?>
 		<div id="site-header" class="header-none"></div>
 		<?php
+	}
+}
+
+if ( ! function_exists( 'foxiz_header_ad_widget_section' ) ) {
+	function foxiz_header_ad_widget_section() {
+
+		if ( get_the_ID() ) {
+			$disable_ad = rb_get_meta( 'disable_header_ad', get_the_ID() );
+			if ( ! empty( $disable_ad ) && '-1' === (string) $disable_ad ) {
+				return;
+			}
+		}
+
+		if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
+			dynamic_sidebar( 'foxiz_header_ad' );
+		}
 	}
 }

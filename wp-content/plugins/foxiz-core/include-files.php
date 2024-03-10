@@ -26,7 +26,8 @@ require_once FOXIZ_CORE_PATH . 'admin/core.php';
 require_once FOXIZ_CORE_PATH . 'admin/rb-meta/rb-meta.php';
 require_once FOXIZ_CORE_PATH . 'admin/fonts/init.php';
 require_once FOXIZ_CORE_PATH . 'admin/info.php';
-require_once FOXIZ_CORE_PATH . 'admin/upgrade.php';
+require_once FOXIZ_CORE_PATH . 'admin/personalize-db.php';
+require_once FOXIZ_CORE_PATH . 'admin/update.php';
 require_once FOXIZ_CORE_PATH . 'podcast/init.php';
 
 require_once FOXIZ_CORE_PATH . 'includes/helpers.php';

@@ -6,7 +6,7 @@ if ( ! function_exists( 'foxiz_register_required_plugins' ) ) {
 	function foxiz_register_required_plugins() {
 
 		if ( ! function_exists( 'tgmpa' ) ) {
-			return;
+			return false;
 		}
 
 		$plugins = [
@@ -15,7 +15,7 @@ if ( ! function_exists( 'foxiz_register_required_plugins' ) ) {
 				'slug'               => 'foxiz-core',
 				'source'             => get_theme_file_path( 'plugins/foxiz-core.zip' ),
 				'required'           => true,
-				'version'            => '2.2.4',
+				'version'            => '2.3',
 				'force_activation'   => false,
 				'force_deactivation' => false,
 				'external_url'       => '',

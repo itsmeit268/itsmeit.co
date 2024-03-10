@@ -47,7 +47,7 @@ class Hierarchical_3 extends Widget_Base {
 		if ( foxiz_is_ruby_template() ) {
 			$this->start_controls_section(
 				'dynamic_info_section', [
-					'label' => esc_html__( 'Dynamic Query Info', 'foxiz-core' ),
+					'label' => esc_html__( 'Dynamic Query Tips', 'foxiz-core' ),
 					'tab'   => Controls_Manager::TAB_CONTENT,
 				]
 			);
@@ -606,6 +606,49 @@ class Hierarchical_3 extends Widget_Base {
 				'description' => Options::mobile_hide_meta_description(),
 				'placeholder' => esc_html__( 'avatar, author', 'foxiz-core' ),
 				'default'     => [],
+			]
+		);
+		$this->add_control(
+			'meta_color',
+			[
+				'label'     => esc_html__( 'Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--meta-fcolor: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'meta_b_color',
+			[
+				'label'     => esc_html__( 'Bold Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'description' => Options::bold_meta_color_description(),
+				'selectors' => [
+					'{{WRAPPER}}'                  => '--meta-b-fcolor: {{VALUE}}',
+					'{{WRAPPER}} .meta-category a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'dark_meta_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme' => '--meta-fcolor: {{VALUE}};',
+				],
+			]
+		);
+		$this->add_control(
+			'dark_meta_b_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Bold Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme'                                   => '--meta-b-fcolor: {{VALUE}}',
+					'[data-theme="dark"] {{WRAPPER}} .meta-category a, {{WRAPPER}} .light-scheme .meta-category a' => 'color: {{VALUE}}',
+				],
 			]
 		);
 		$this->end_controls_section();

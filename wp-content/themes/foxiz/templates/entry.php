@@ -3,15 +3,9 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_get_post_classes' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return string
-	 */
 	function foxiz_get_post_classes( $settings ) {
 
-		$classes   = [];
-		$classes[] = 'p-wrap';
+		$classes = [ 'p-wrap' ];
 		if ( is_sticky() ) {
 			$classes[] = 'sticky';
 		}
@@ -49,46 +43,53 @@ if ( ! function_exists( 'foxiz_entry_title' ) ) {
 		if ( ! empty( $settings['counter'] ) ) {
 			$classes .= ' counter-el';
 		}
-
 		$classes    = apply_filters( 'foxiz_entry_title_classes', $classes, $post_id );
 		$post_title = get_the_title();
-		$rel_attr   = 'bookmark';
-		$link       = get_permalink();
-		if ( foxiz_is_sponsored_post() && foxiz_get_single_setting( 'sponsor_redirect' ) ) {
-			$rel_attr = 'noopener nofollow';
-			$link     = rb_get_meta( 'sponsor_url' );
+		if ( strlen( $post_title ) === 0 ) {
+			$post_title = get_the_date( '', $post_id );
 		}
-		echo '<' . esc_attr( $settings['title_tag'] ) . ' class="' . esc_attr( $classes ) . '">';
+
+		$link     = get_permalink();
+		$rel_attr = 'bookmark';
+		if ( foxiz_is_sponsored_post() && foxiz_get_single_setting( 'sponsor_redirect' ) ) {
+			$link     = rb_get_meta( 'sponsor_url' );
+			$rel_attr = 'noopener nofollow';
+		}
+		echo '<' . strip_tags( $settings['title_tag'] ) . ' class="' . strip_tags( $classes ) . '">';
 		if ( ! empty( $settings['title_prefix'] ) ) {
-			echo wp_kses( $settings['title_prefix'], 'foxiz' );
+			foxiz_render_inline_html( $settings['title_prefix'] );
 		} ?>
-		<a class="p-url" href="<?php echo esc_url( $link ); ?>" rel="<?php echo esc_attr( $rel_attr ); ?>"><?php
+		<a class="p-url" href="<?php echo esc_url( $link ); ?>" rel="<?php echo strip_tags( $rel_attr ); ?>"><?php
 		if ( foxiz_is_live_blog( $post_id ) ) {
 			echo '<span class="live-tag"></span>';
 		}
-		if ( ! empty( $post_title ) ) {
-			the_title();
-		} else {
-			echo get_the_date( '', $post_id );
-		} ?></a><?php
-		echo '</' . esc_attr( $settings['title_tag'] ) . '>';
+		foxiz_render_inline_html( $post_title ); ?></a><?php
+		echo '</' . strip_tags( $settings['title_tag'] ) . '>';
 	}
 }
 
 if ( ! function_exists( 'foxiz_entry_readmore' ) ) {
-	/**
-	 * @param array $settings
-	 * render read more
-	 */
+
 	function foxiz_entry_readmore( $settings = [] ) {
 
 		if ( empty( $settings['readmore'] ) ) {
 			return;
-		} ?>
+		}
+
+		$link         = get_permalink();
+		$is_sponsored = false;
+		if ( foxiz_is_sponsored_post() && foxiz_get_single_setting( 'sponsor_redirect' ) ) {
+			$link         = rb_get_meta( 'sponsor_url' );
+			$is_sponsored = true;
+		}
+		?>
 		<div class="p-link">
-			<a class="p-readmore" href="<?php echo get_permalink(); ?>" aria-label="<?php echo esc_attr( get_the_title() ); ?>"><span><?php echo apply_filters( 'foxiz_read_more', $settings['readmore'] ); ?></span><?php
-				if ( foxiz_get_option( 'readmore_icon' ) ) : ?><i class="rbi rbi-cright" aria-hidden="true"></i>
-				<?php endif; ?></a>
+			<a class="p-readmore" href="<?php echo esc_url( $link ); ?>" <?php if ( $is_sponsored ) {
+				echo ' rel="noopener nofollow" ';
+			} ?> aria-label="<?php echo wp_strip_all_tags( get_the_title() ); ?>"><span><?php
+					echo apply_filters( 'foxiz_read_more', $settings['readmore'] ); ?></span><?php if ( foxiz_get_option( 'readmore_icon' ) ) : ?>
+					<i class="rbi rbi-cright" aria-hidden="true"></i><?php endif; ?>
+			</a>
 		</div>
 		<?php
 	}
@@ -103,6 +104,7 @@ if ( ! function_exists( 'foxiz_entry_excerpt' ) ) {
 	function foxiz_entry_excerpt( $settings = [] ) {
 
 		$classes = 'entry-summary';
+
 		if ( ! empty( $settings['hide_excerpt'] ) ) {
 			switch ( $settings['hide_excerpt'] ) {
 				case 'mobile' :
@@ -119,25 +121,23 @@ if ( ! function_exists( 'foxiz_entry_excerpt' ) ) {
 
 		if ( ! empty( $settings['excerpt_source'] ) && 'moretag' === $settings['excerpt_source'] ) :
 			$classes .= ' entry-content rbct'; ?>
-			<p class="<?php echo esc_attr( $classes ); ?>"><?php the_content( '' ); ?></p>
+			<p class="<?php echo strip_tags( $classes ); ?>"><?php the_content( '' ); ?></p>
 		<?php else :
 			if ( empty( $settings['excerpt_length'] ) || 0 > $settings['excerpt_length'] ) {
 				return false;
 			}
 			if ( ! empty( $settings['excerpt_source'] ) && 'tagline' === $settings['excerpt_source'] && rb_get_meta( 'tagline' ) ) :
 				$tagline = wp_trim_words( rb_get_meta( 'tagline' ), intval( $settings['excerpt_length'] ), '<span class="summary-dot">&hellip;</span>' ); ?>
-				<p class="<?php echo esc_attr( $classes ); ?>"><?php echo wp_kses( $tagline, 'foxiz' ); ?></p>
+				<p class="<?php echo strip_tags( $classes ); ?>"><?php foxiz_render_inline_html( $tagline ); ?></p>
 			<?php else :
 				$excerpt = get_post_field( 'post_excerpt', get_the_ID() );
 				if ( ! empty( $excerpt ) ) {
 					$output = wp_trim_words( $excerpt, intval( $settings['excerpt_length'] ), '<span class="summary-dot">&hellip;</span>' );
 				}
 				if ( empty( $output ) ) {
-
 					if ( 'page' === get_post_type() && get_post_meta( get_the_ID(), '_elementor_data', true ) ) {
 						return false;
 					}
-
 					$output = get_the_content( '' );
 					$output = strip_shortcodes( $output );
 					$output = excerpt_remove_blocks( $output );
@@ -149,7 +149,7 @@ if ( ! function_exists( 'foxiz_entry_excerpt' ) ) {
 				if ( empty( $output ) ) {
 					return false;
 				}
-				?><p class="<?php echo esc_attr( $classes ); ?>"><?php echo wp_kses( $output, 'foxiz' ); ?></p>
+				?><p class="<?php echo strip_tags( $classes ); ?>"><?php foxiz_render_inline_html( $output ); ?></p>
 			<?php endif;
 		endif;
 	}
@@ -274,9 +274,6 @@ if ( ! function_exists( 'foxiz_entry_meta' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_date' ) ) {
-	/**
-	 * @param $settings
-	 */
 	function foxiz_entry_meta_date( $settings ) {
 
 		$post_id = get_the_ID();
@@ -323,7 +320,7 @@ if ( ! function_exists( 'foxiz_entry_meta_date' ) ) {
 		?>
 		<time <?php if ( ! foxiz_get_option( 'force_modified_date' ) ) {
 			echo 'class="date published"';
-		} ?> datetime="<?php echo get_the_date( DATE_W3C, $post_id ); ?>"><?php echo esc_html( $p_label . $date_string . $s_label ); ?></time>
+		} ?> datetime="<?php echo get_the_date( DATE_W3C, $post_id ); ?>"><?php foxiz_render_inline_html( $p_label . $date_string . $s_label ); ?></time>
 		</span><?php
 	}
 }
@@ -381,12 +378,12 @@ if ( ! function_exists( 'foxiz_entry_meta_author' ) ) {
 		}
 		?><span class="<?php echo join( ' ', $classes ); ?>">
 		<?php if ( $p_label ): ?>
-			<span class="meta-label"><?php echo esc_html( $p_label ); ?></span>
+			<span class="meta-label"><?php foxiz_render_inline_html( $p_label ); ?></span>
 		<?php endif; ?>
 		<a href="<?php echo get_author_posts_url( $author_id ) ?>"><?php the_author_meta( 'display_name', $author_id ); ?></a>
 		<?php
 		if ( $s_label ) : ?>
-			<span class="meta-label"><?php echo esc_html( $s_label ); ?></span>
+			<span class="meta-label"><?php foxiz_render_inline_html( $s_label ); ?></span>
 		<?php elseif ( ! empty( $settings['has_author_job'] ) && get_the_author_meta( 'job', $author_id ) ) : ?>
 			<span class="meta-label meta-job">&#45;&nbsp;<?php the_author_meta( 'job', $author_id ); ?></span>
 		<?php endif; ?>
@@ -444,7 +441,7 @@ if ( ! function_exists( 'foxiz_entry_meta_authors' ) ) {
 		}
 		?><span class="<?php echo join( ' ', $classes ); ?>">
 		<?php if ( $p_label ): ?>
-			<span class="meta-label"><?php echo esc_html( $p_label ); ?></span>
+			<span class="meta-label"><?php foxiz_render_inline_html( $p_label ); ?></span>
 		<?php endif;
 		foreach ( $author_data as $author ) : ?>
 			<span class="meta-separate">
@@ -455,7 +452,7 @@ if ( ! function_exists( 'foxiz_entry_meta_authors' ) ) {
 			</span>
 		<?php endforeach;
 		if ( $s_label ) : ?>
-			<span class="meta-label"><?php echo esc_html( $s_label ); ?></span>
+			<span class="meta-label"><?php foxiz_render_inline_html( $s_label ); ?></span>
 		<?php endif; ?>
 		</span>
 	<?php }
@@ -503,14 +500,10 @@ if ( ! function_exists( 'foxiz_entry_meta_category' ) ) {
 	/**
 	 * @param      $settings
 	 * @param bool $primary
-	 *
-	 * @return false|void
 	 */
 	function foxiz_entry_meta_category( $settings, $primary = true ) {
 
-		$classes  = [];
 		$taxonomy = 'category';
-
 		if ( 'podcast' === get_post_type() ) {
 			$taxonomy = 'series';
 		}
@@ -522,16 +515,18 @@ if ( ! function_exists( 'foxiz_entry_meta_category' ) ) {
 		$categories = get_the_terms( get_the_ID(), $taxonomy );
 
 		if ( empty( $categories ) || is_wp_error( $categories ) ) {
-			return false;
+			return;
 		}
+
+		$classes = [ 'meta-el meta-category meta-bold' ];
+		$limit   = absint( foxiz_get_option( 'max_entry_meta', 999 ) );
+		$index   = 1;
 
 		if ( $primary && 'category' === $taxonomy ) {
 			$primary_category = rb_get_meta( 'primary_category' );
 		}
-
 		$s_label = ! empty( $settings['s_label_category'] ) ? $settings['s_label_category'] : '';
 
-		$classes[] = 'meta-el meta-category meta-bold';
 		if ( ! empty( $settings['tablet_hide_meta'] ) && is_array( $settings['tablet_hide_meta'] ) && in_array( 'category', $settings['tablet_hide_meta'] ) ) {
 			$classes[] = 'tablet-hide';
 		}
@@ -554,43 +549,42 @@ if ( ! function_exists( 'foxiz_entry_meta_category' ) ) {
 				echo '<i class="rbi rbi-archive" aria-hidden="true"></i>';
 			}
 			if ( ! empty( $settings['p_label_category'] ) ) : ?>
-				<span class="meta-label"><?php echo esc_html( $settings['p_label_category'] ); ?></span>
+				<span class="meta-label"><?php foxiz_render_inline_html( $settings['p_label_category'] ); ?></span>
 			<?php endif;
 			if ( ! empty( $primary_category ) ) : ?>
-				<a class="category-<?php echo esc_attr( $primary_category ); ?>" href="<?php echo foxiz_get_term_link( $primary_category ); ?>"><?php echo get_cat_name( $primary_category ); ?></a>
+				<a class="category-<?php echo strip_tags( $primary_category ); ?>" href="<?php echo foxiz_get_term_link( $primary_category ); ?>"><?php echo get_cat_name( $primary_category ); ?></a>
 			<?php else :
 				foreach ( $categories as $category ) : ?>
-					<a class="meta-separate category-<?php echo esc_attr( $category->term_id ); ?>" href="<?php echo foxiz_get_term_link( $category->term_id ); ?>"><?php echo esc_html( $category->name ); ?></a>
-				<?php endforeach;
+					<a class="meta-separate category-<?php echo strip_tags( $category->term_id ); ?>" href="<?php echo foxiz_get_term_link( $category->term_id ); ?>"><?php foxiz_render_inline_html( $category->name ); ?></a>
+					<?php
+					if ( $index >= $limit ) {
+						break;
+					}
+					$index ++;
+				endforeach;
 			endif;
 			if ( $s_label ) : ?>
-				<span class="meta-label"><?php echo esc_html( $s_label ); ?></span>
+				<span class="meta-label"><?php foxiz_render_inline_html( $s_label ); ?></span>
 			<?php endif; ?>
 			</span>
 		<?php
 	}
 }
 
-/**
- * @param $settings
- */
 if ( ! function_exists( 'foxiz_entry_meta_tag' ) ) {
 	function foxiz_entry_meta_tag( $settings ) {
 
 		$tags = get_the_tags( get_the_ID() );
-		if ( ! $tags ) {
-			return false;
+		if ( empty( $tags ) || is_wp_error( $tags ) ) {
+			return;
 		}
 
-		if ( ! empty( $settings['p_label_tag'] ) ) {
-			$p_label = $settings['p_label_tag'];
-		} else {
-			$p_label = foxiz_html__( 'Tags:', 'foxiz' ) . ' ';
-		}
-		$s_label = ! empty( $settings['s_label_tag'] ) ? $settings['s_label_tag'] : '';
+		$limit   = absint( foxiz_get_option( 'max_entry_meta', 999 ) );
+		$index   = 1;
+		$p_label = isset( $settings['p_label_tag'] ) ? $settings['p_label_tag'] : foxiz_html__( 'Tags:', 'foxiz' ) . ' ';
+		$s_label = isset( $settings['s_label_tag'] ) ? $settings['s_label_tag'] : '';
 
-		$classes   = [];
-		$classes[] = 'meta-el meta-tag';
+		$classes = [ 'meta-el meta-tag' ];
 
 		if ( ! empty( $settings['tablet_hide_meta'] ) && is_array( $settings['tablet_hide_meta'] ) && in_array( 'tag', $settings['tablet_hide_meta'] ) ) {
 			$classes[] = 'tablet-hide';
@@ -608,14 +602,19 @@ if ( ! function_exists( 'foxiz_entry_meta_tag' ) ) {
 			$classes[] = 'has-suffix';
 		}
 		?><span class="<?php echo join( ' ', $classes ); ?>">
-		<?php if ( $p_label ): ?>
-			<span class="meta-label"><?php echo esc_html( $p_label ); ?></span>
+		<?php if ( ! empty( $p_label ) ): ?>
+			<span class="meta-label"><?php foxiz_render_inline_html( $p_label ); ?></span>
 		<?php endif;
 		foreach ( $tags as $tag ) : ?>
-			<a class="meta-separate" href="<?php echo esc_url( get_tag_link( $tag->term_id ) ); ?>" rel="tag"><?php echo esc_attr( $tag->name ); ?></a>
-		<?php endforeach;
-		if ( $s_label ) : ?>
-			<span class="meta-label"><?php echo esc_html( $s_label ); ?></span>
+			<a class="meta-separate" href="<?php echo esc_url( get_tag_link( $tag->term_id ) ); ?>" rel="tag"><?php echo strip_tags( $tag->name ); ?></a>
+			<?php
+			if ( $index >= $limit ) {
+				break;
+			}
+			$index ++;
+		endforeach;
+		if ( ! empty( $s_label ) ) : ?>
+			<span class="meta-label"><?php foxiz_render_inline_html( $s_label ); ?></span>
 		<?php endif; ?>
 		</span>
 		<?php
@@ -664,22 +663,17 @@ if ( ! function_exists( 'foxiz_entry_meta_comment' ) ) {
 		<?php if ( foxiz_get_option( 'meta_comment_icon' ) ) : ?>
 			<i class="rbi rbi-comment" aria-hidden="true"></i>
 		<?php endif; ?>
-		<a href="<?php echo get_comments_link( $post_id ); ?>"><?php echo esc_html( $p_label . $comment_string . $s_label ); ?></a>
+		<a href="<?php echo get_comments_link( $post_id ); ?>"><?php foxiz_render_inline_html( $p_label . $comment_string . $s_label ); ?></a>
 		</span>
 		<?php
 	}
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_view' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false|void
-	 */
 	function foxiz_entry_meta_view( $settings ) {
 
 		if ( ! function_exists( 'pvc_get_post_views' ) || ! class_exists( 'Post_Views_Counter' ) ) {
-			return false;
+			return;
 		}
 
 		$post_id = get_the_ID();
@@ -691,7 +685,7 @@ if ( ! function_exists( 'foxiz_entry_meta_view' ) ) {
 			$count = intval( $count ) + intval( $fake_view );
 		}
 		if ( empty( $count ) ) {
-			return false;
+			return;
 		}
 
 		$p_label = ! empty( $settings['p_label_view'] ) ? $settings['p_label_view'] : '';
@@ -725,7 +719,7 @@ if ( ! function_exists( 'foxiz_entry_meta_view' ) ) {
 		if ( foxiz_get_option( 'meta_view_icon' ) ) {
 			echo '<i class="rbi rbi-chart" aria-hidden="true"></i>';
 		}
-		echo esc_html( $p_label . $view_string . $s_label );
+		foxiz_render_inline_html( $p_label . $view_string . $s_label );
 		?>
 		</span>
 		<?php
@@ -733,9 +727,6 @@ if ( ! function_exists( 'foxiz_entry_meta_view' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_updated' ) ) {
-	/**
-	 * @param $settings
-	 */
 	function foxiz_entry_meta_updated( $settings ) {
 
 		$post_id = get_the_ID();
@@ -760,7 +751,6 @@ if ( ! function_exists( 'foxiz_entry_meta_updated' ) ) {
 		} else {
 			$date_string = get_the_modified_date( '', $post_id );
 		}
-
 		if ( ! empty( $settings['tablet_hide_meta'] ) && is_array( $settings['tablet_hide_meta'] ) && in_array( 'update', $settings['tablet_hide_meta'] ) ) {
 			$classes[] = 'tablet-hide';
 		}
@@ -779,7 +769,7 @@ if ( ! function_exists( 'foxiz_entry_meta_updated' ) ) {
 		} ?>
 		<time <?php if ( ! foxiz_get_option( 'force_modified_date' ) ) {
 			echo 'class="updated"';
-		} ?> datetime="<?php echo get_the_modified_date( DATE_W3C, $post_id ); ?>"><?php echo esc_html( $p_label . $date_string . $s_label ); ?></time>
+		} ?> datetime="<?php echo get_the_modified_date( DATE_W3C, $post_id ); ?>"><?php foxiz_render_inline_html( $p_label . $date_string . $s_label ); ?></time>
 		</span>
 		<?php
 	}
@@ -794,9 +784,10 @@ if ( ! function_exists( 'foxiz_entry_meta_read_time' ) ) {
 		$read_speed = intval( foxiz_get_option( 'read_speed' ) );
 		if ( empty( $count ) && function_exists( 'foxiz_update_word_count' ) ) {
 			$count = foxiz_update_word_count( $post_id );
-		};
+		}
+
 		if ( empty( $count ) ) {
-			return false;
+			return;
 		}
 		if ( empty( $read_speed ) ) {
 			$read_speed = 130;
@@ -833,7 +824,7 @@ if ( ! function_exists( 'foxiz_entry_meta_read_time' ) ) {
 		<span class="<?php echo join( ' ', $classes ); ?>"><?php if ( foxiz_get_option( 'meta_read_icon', false ) ) {
 				echo '<i class="rbi rbi-watch" aria-hidden="true"></i>';
 			}
-			echo esc_html( $p_label . $read_string . $s_label ) ?></span>
+			foxiz_render_inline_html( $p_label . $read_string . $s_label ) ?></span>
 		<?php
 	}
 }
@@ -871,7 +862,6 @@ if ( ! function_exists( 'foxiz_entry_meta_user_custom' ) ) {
 		}
 
 		$classes[] = 'meta-el meta-custom';
-
 		if ( foxiz_get_option( 'meta_custom_important' ) ) {
 			$classes[] = 'meta-bold';
 		}
@@ -889,28 +879,23 @@ if ( ! function_exists( 'foxiz_entry_meta_user_custom' ) ) {
 		}
 		?><span class="<?php echo join( ' ', $classes ); ?>">
 		<?php if ( ! empty( $meta_custom_icon ) ) : ?>
-			<i class="<?php echo esc_attr( $meta_custom_icon ); ?>" aria-hidden="true"></i>
+			<i class="<?php echo strip_tags( $meta_custom_icon ); ?>" aria-hidden="true"></i>
 		<?php endif;
-		echo esc_html( $p_label . $custom_string . $s_label );
-		?>
+		foxiz_render_inline_html( $p_label . $custom_string . $s_label ); ?>
 		</span>
 		<?php
 	}
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_duration' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false|void
-	 */
 	function foxiz_entry_meta_duration( $settings ) {
 
 		$post_id  = get_the_ID();
 		$classes  = [];
 		$duration = rb_get_meta( 'duration', $post_id );
+
 		if ( empty( $duration ) ) {
-			return false;
+			return;
 		}
 
 		$p_label = ! empty( $settings['p_label_duration'] ) ? $settings['p_label_duration'] : '';
@@ -921,8 +906,7 @@ if ( ! function_exists( 'foxiz_entry_meta_duration' ) ) {
 		}
 
 		$duration_string = ltrim( $duration, '00:' );
-
-		$classes[] = 'meta-el meta-duration';
+		$classes[]       = 'meta-el meta-duration';
 		if ( ! empty( $settings['tablet_hide_meta'] ) && is_array( $settings['tablet_hide_meta'] ) && in_array( 'duration', $settings['tablet_hide_meta'] ) ) {
 			$classes[] = 'tablet-hide';
 		}
@@ -936,24 +920,19 @@ if ( ! function_exists( 'foxiz_entry_meta_duration' ) ) {
 			$classes[] = 'tablet-last-meta';
 		}
 		?>
-		<span class="<?php echo join( ' ', $classes ); ?>"><?php echo esc_html( $p_label . $duration_string . $s_label ); ?></span>
+		<span class="<?php echo join( ' ', $classes ); ?>"><?php foxiz_render_inline_html( $p_label . $duration_string . $s_label ); ?></span>
 		<?php
 	}
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_index' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false|void
-	 */
 	function foxiz_entry_meta_index( $settings ) {
 
 		$post_id    = get_the_ID();
 		$classes    = [];
 		$post_index = rb_get_meta( 'post_index', $post_id );
 		if ( empty( $post_index ) ) {
-			return false;
+			return;
 		}
 		$p_label = ! empty( $settings['p_label_index'] ) ? $settings['p_label_index'] : '';
 		$s_label = ! empty( $settings['s_label_index'] ) ? $settings['s_label_index'] : '';
@@ -972,25 +951,19 @@ if ( ! function_exists( 'foxiz_entry_meta_index' ) ) {
 			$classes[] = 'tablet-last-meta';
 		}
 		?>
-		<span class="<?php echo join( ' ', $classes ); ?>"><?php echo esc_html( $p_label . $post_index . $s_label ); ?></span>
+		<span class="<?php echo join( ' ', $classes ); ?>"><?php foxiz_render_inline_html( $p_label . $post_index . $s_label ); ?></span>
 		<?php
 	}
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_bookmark' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false|void
-	 */
 	function foxiz_entry_meta_bookmark( $settings ) {
 
 		if ( foxiz_is_amp() ) {
-			return false;
+			return;
 		}
 
-		$classes   = [];
-		$classes[] = 'meta-el meta-bookmark';
+		$classes = [ 'meta-el meta-bookmark' ];
 
 		if ( ! empty( $settings['tablet_hide_meta'] ) && is_array( $settings['tablet_hide_meta'] ) && in_array( 'bookmark', $settings['tablet_hide_meta'] ) ) {
 			$classes[] = 'tablet-hide';
@@ -1029,17 +1002,14 @@ if ( ! function_exists( 'foxiz_entry_meta_play' ) ) {
  * @return false
  */
 if ( ! function_exists( 'foxiz_entry_meta_user_custom_fallback' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_entry_meta_user_custom_fallback( $settings ) {
 
 		$meta = foxiz_get_option( 'meta_custom_fallback' );
+
 		if ( empty( $meta ) ) {
-			return false;
+			return;
 		}
+
 		switch ( $meta ) {
 			case 'date' :
 				foxiz_entry_meta_date( $settings );
@@ -1221,11 +1191,6 @@ if ( ! function_exists( 'foxiz_get_entry_format' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_entry_categories( $settings ) {
 
 		if ( empty( $settings['entry_category'] ) ) {
@@ -1247,22 +1212,21 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 			$taxonomy = $settings['entry_tax'];
 		}
 
-		$categories = get_the_terms( get_the_ID(), $taxonomy );
-
-		$primary_category      = '';
-		$primary_category_name = '';
+		$categories   = get_the_terms( get_the_ID(), $taxonomy );
+		$primary_id   = '';
+		$primary_name = '';
 
 		if ( ! isset( $settings['is_singular'] ) ) {
 			if ( 'category' === $taxonomy ) {
-				$primary_category      = rb_get_meta( 'primary_category' );
-				$primary_category_name = get_cat_name( $primary_category );
+				$primary_id   = rb_get_meta( 'primary_category' );
+				$primary_name = get_cat_name( $primary_id );
 			} elseif ( 'post_tag' == $taxonomy ) {
-				$primary_category = rb_get_meta( 'primary_tag' );
-				$tag              = get_term( $primary_category, 'post_tag' );
-				if ( ! is_wp_error( $tag ) ) {
-					$primary_category_name = $tag->name;
+				$primary_id = rb_get_meta( 'primary_tag' );
+				$tag        = get_term( $primary_id, 'post_tag' );
+				if ( ! empty( $tag ) && ! is_wp_error( $tag ) ) {
+					$primary_name = $tag->name;
 				} else {
-					$primary_category_name = '';
+					$primary_name = '';
 				}
 			}
 		}
@@ -1277,7 +1241,7 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 		$index = 1;
 
 		$classes[] = 'p-categories';
-		if ( ! empty( $primary_category_name ) ) {
+		if ( ! empty( $primary_name ) ) {
 			$classes[] = 'is-primary';
 		}
 		if ( ! empty( $settings['category_classes'] ) ) {
@@ -1288,12 +1252,12 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 			$rel = 'rel="category"';
 		}
 
-		$output .= '<div class="' . esc_attr( $classes ) . '">';
-		if ( empty( $primary_category ) || empty ( $primary_category_name ) ) :
+		$output .= '<div class="' . strip_tags( $classes ) . '">';
+		if ( empty( $primary_id ) || empty ( $primary_name ) ) :
 			if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) :
 				foreach ( $categories as $category ) :
-					$output .= '<a class="p-category category-id-' . esc_attr( $category->term_id ) . '" href="' . foxiz_get_term_link( $category->term_id ) . '" ' . $rel . '>';
-					$output .= esc_html( $category->name );
+					$output .= '<a class="p-category category-id-' . strip_tags( $category->term_id ) . '" href="' . foxiz_get_term_link( $category->term_id ) . '" ' . $rel . '>';
+					$output .= strip_tags( $category->name );
 					$output .= '</a>';
 
 					$index ++;
@@ -1303,8 +1267,8 @@ if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
 				endforeach;
 			endif;
 		else :
-			$output .= '<a class="p-category category-id-' . esc_attr( $primary_category ) . '" href="' . foxiz_get_term_link( $primary_category ) . '" ' . $rel . '>';
-			$output .= esc_html( $primary_category_name );
+			$output .= '<a class="p-category category-id-' . strip_tags( $primary_id ) . '" href="' . foxiz_get_term_link( $primary_id ) . '" ' . $rel . '>';
+			$output .= strip_tags( $primary_name );
 			$output .= '</a>';
 		endif;
 		$output .= '</div>';
@@ -1371,7 +1335,7 @@ if ( ! function_exists( 'foxiz_get_entry_top' ) ) {
 			}
 		}
 		if ( ! empty ( $entry_format_buffer ) ) {
-			$output = '<div class="' . esc_attr( $settings['top_classes'] ) . '">';
+			$output = '<div class="' . strip_tags( $settings['top_classes'] ) . '">';
 			$output .= foxiz_get_entry_categories( $settings );
 			$output .= '<aside class="p-format-inline">' . foxiz_get_entry_format( $settings ) . '</aside>';
 			$output .= '</div>';
@@ -1395,24 +1359,16 @@ if ( ! function_exists( 'foxiz_entry_top' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_entry_divider' ) ) {
-	/**
-	 * @param array $settings
-	 */
 	function foxiz_entry_divider( $settings = [] ) {
 
 		if ( empty( $settings['divider_style'] ) ) {
 			$settings['divider_style'] = 'solid';
 		}
-		echo '<div class="p-divider is-divider-' . esc_attr( $settings['divider_style'] ) . '"></div>';
+		echo '<div class="p-divider is-divider-' . strip_tags( $settings['divider_style'] ) . '"></div>';
 	}
 }
 
 if ( ! function_exists( 'foxiz_entry_review' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false|void
-	 */
 	function foxiz_entry_review( $settings ) {
 
 		if ( empty( $settings['review'] ) || 'replace' === $settings['review'] ) {
@@ -1423,11 +1379,6 @@ if ( ! function_exists( 'foxiz_entry_review' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_entry_review' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_entry_review( $settings ) {
 
 		$review = foxiz_get_review_settings();
@@ -1474,14 +1425,14 @@ if ( ! function_exists( 'foxiz_get_entry_review' ) ) {
 			$buffer_2 = $review['average'] . '</strong> ' . foxiz_html__( 'out of 5', 'foxiz ' );
 		}
 
-		$output = '<div class="' . esc_attr( $class_name ) . '">';
+		$output = '<div class="' . strip_tags( $class_name ) . '">';
 		$output .= '<div class="review-meta-inner">' . $buffer_1;
 
 		if ( ! empty( $settings['review_meta'] ) && '-1' !== $settings['review_meta'] ) {
 			$output .= '<div class="review-extra">';
 			$output .= '<span class="review-description"><strong class="meta-bold">' . $buffer_2 . '</span>';
 			if ( ! empty( $review['meta'] ) ) {
-				$output .= '<span class="extra-meta meta-bold">' . esc_html( $review['meta'] ) . '</span>';
+				$output .= '<span class="extra-meta meta-bold">' . foxiz_strip_tags( $review['meta'] ) . '</span>';
 			}
 			$output .= '</div>';
 		}
@@ -1496,11 +1447,6 @@ if ( ! function_exists( 'foxiz_get_entry_review' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_review_line' ) ) {
-	/**
-	 * @param int $average
-	 *
-	 * @return string
-	 */
 	function foxiz_get_review_line( $average = 0 ) {
 
 		$output = '<span class="rline-wrap">';
@@ -1560,7 +1506,7 @@ if ( ! function_exists( 'foxiz_get_author_info' ) ) {
 					</div>
 				<?php endif; ?>
 			</div>
-			<div class="ubio description-text"><?php echo wp_kses( get_the_author_meta( 'description', $author_id ), 'foxiz' ); ?></div>
+			<div class="ubio description-text"><?php foxiz_render_inline_html( get_the_author_meta( 'description', $author_id ) ); ?></div>
 		</div>
 		<?php
 		return ob_get_clean();
@@ -1607,10 +1553,10 @@ if ( ! function_exists( 'foxiz_get_entry_sponsored' ) ) {
 			<div class="sponsor-inner">
 				<?php if ( ! empty( $label ) ) : ?>
 					<span class="sponsor-icon"><i class="rbi rbi-notification" aria-hidden="true"></i></span>
-					<span class="sponsor-label"><?php echo esc_html( $label ); ?></span>
+					<span class="sponsor-label"><?php foxiz_render_inline_html( $label ); ?></span>
 				<?php endif; ?>
 				<span class="sponlogo-wrap meta-bold">
-                <a class="sponsor-link" href="<?php echo esc_url( $sponsor_url ); ?>" target="_blank" rel="noopener nofollow" aria-label="<?php echo esc_attr( $sponsor_name ); ?>">
+                <a class="sponsor-link" href="<?php echo esc_url( $sponsor_url ); ?>" target="_blank" rel="noopener nofollow" aria-label="<?php echo strip_tags( $sponsor_name ); ?>">
                     <?php if ( ! empty( $sponsor_attachment[0] ) ) :
 	                    ?>
 	                    <img <?php if ( ! foxiz_is_amp() ) {
@@ -1620,13 +1566,13 @@ if ( ! function_exists( 'foxiz_get_entry_sponsored' ) ) {
 		                    echo esc_url( $sponsor_attachment[0] );
 	                    } ?>" width="<?php
 	                    if ( ! empty( $sponsor_attachment[1] ) ) {
-		                    echo esc_attr( $sponsor_attachment[1] );
+		                    echo strip_tags( $sponsor_attachment[1] );
 	                    } ?>" height="<?php
 	                    if ( ! empty( $sponsor_attachment[2] ) ) {
-		                    echo esc_attr( $sponsor_attachment[2] );
-	                    } ?>" alt="<?php echo esc_attr( $sponsor_name ); ?>"/>
+		                    echo strip_tags( $sponsor_attachment[2] );
+	                    } ?>" alt="<?php echo strip_tags( $sponsor_name ); ?>"/>
                     <?php else :
-	                    echo '<span class="sponsor-brand-default is-text" data-mode="default">' . esc_html( $sponsor_name ) . '</span>';
+	                    echo '<span class="sponsor-brand-default is-text" data-mode="default">' . foxiz_strip_tags( $sponsor_name ) . '</span>';
                     endif;
                     if ( ! empty( $sponsor_light_attachment[0] ) ) :
 	                    ?>
@@ -1637,13 +1583,13 @@ if ( ! function_exists( 'foxiz_get_entry_sponsored' ) ) {
 		                    echo esc_url( $sponsor_light_attachment[0] );
 	                    } ?>" width="<?php
 	                    if ( ! empty( $sponsor_light_attachment[1] ) ) {
-		                    echo esc_attr( $sponsor_light_attachment[1] );
+		                    echo strip_tags( $sponsor_light_attachment[1] );
 	                    } ?>" height="<?php
 	                    if ( ! empty( $sponsor_light_attachment[2] ) ) {
-		                    echo esc_attr( $sponsor_light_attachment[2] );
-	                    } ?>" alt="<?php echo esc_attr( $sponsor_name ); ?>"/>
+		                    echo strip_tags( $sponsor_light_attachment[2] );
+	                    } ?>" alt="<?php echo strip_tags( $sponsor_name ); ?>"/>
                     <?php else :
-	                    echo '<span class="sponsor-brand-light is-text" data-mode="dark">' . esc_html( $sponsor_name ) . '</span>';
+	                    echo '<span class="sponsor-brand-light is-text" data-mode="dark">' . foxiz_strip_tags( $sponsor_name ) . '</span>';
                     endif; ?>
                  </a>
                 </span>
@@ -1731,11 +1677,11 @@ if ( ! function_exists( 'foxiz_get_audio_embed' ) ) {
 			$audio_url = trim( $audio_url );
 			$embed     = wp_oembed_get( $audio_url, [ 'height' => 400, 'width' => 900 ] );
 			if ( ! empty( $embed ) ) {
-				return '<div class="' . esc_attr( $classes ) . '">' . $embed . '</div>';
+				return '<div class="' . strip_tags( $classes ) . '">' . $embed . '</div>';
 			} else {
 				$embed = rb_get_meta( 'audio_embed', $post_id );
 				if ( ! empty( $embed ) ) {
-					return '<div ="' . esc_attr( $classes ) . '">' . $embed . '</div>';
+					return '<div ="' . strip_tags( $classes ) . '">' . $embed . '</div>';
 				} else {
 					return false;
 				}
@@ -1761,7 +1707,7 @@ if ( ! function_exists( 'foxiz_get_attachment_caption' ) ) {
 			$class_name .= ' ' . $classes;
 		}
 
-		return '<div class="' . esc_attr( $class_name ) . '"><span class="caption-text meta-bold">' . wp_get_attachment_caption( $attachment_id ) . '</span></div>';
+		return '<div class="' . strip_tags( $class_name ) . '"><span class="caption-text meta-bold">' . wp_get_attachment_caption( $attachment_id ) . '</span></div>';
 	}
 }
 
@@ -1793,7 +1739,7 @@ if ( ! function_exists( 'foxiz_get_audio_hosted' ) ) {
 		$settings      = shortcode_atts( $defaults_atts, $settings );
 		foreach ( $settings as $k => $v ) {
 			if ( ! empty( $v ) ) {
-				$attrs_string .= $k . '="' . esc_attr( $v ) . '" ';
+				$attrs_string .= $k . '="' . strip_tags( $v ) . '" ';
 			}
 		}
 		$output .= '<audio ' . $attrs_string . ' controls="controls">';
@@ -1809,11 +1755,11 @@ if ( ! function_exists( 'foxiz_entry_meta_like' ) ) {
 	function foxiz_entry_meta_like( $settings ) {
 
 		if ( foxiz_is_amp() ) {
-			return false;
+			return;
 		}
 
-		$classes[] = 'meta-el meta-like';
-		$post_id   = get_the_ID();
+		$classes = [ 'meta-el meta-like' ];
+		$post_id = get_the_ID();
 
 		if ( ! empty( $settings['tablet_hide_meta'] ) && is_array( $settings['tablet_hide_meta'] ) && in_array( 'date', $settings['tablet_hide_meta'] ) ) {
 			$classes[] = 'tablet-hide';
@@ -1828,7 +1774,7 @@ if ( ! function_exists( 'foxiz_entry_meta_like' ) ) {
 			$classes[] = 'tablet-last-meta';
 		}
 		?>
-		<span class="<?php echo join( ' ', $classes ); ?>" data-like="<?php echo esc_attr( $post_id ); ?>">
+		<span class="<?php echo join( ' ', $classes ); ?>" data-like="<?php echo strip_tags( $post_id ); ?>">
             <span class="el-like like-trigger" data-title="<?php foxiz_html_e( 'Like', 'foxiz' ); ?>"><i class="rbi rbi-like"></i><span class="like-count"><?php echo foxiz_get_post_likes( $post_id ); ?></span></span>
             <span class="el-dislike dislike-trigger" data-title="<?php foxiz_html_e( 'Dislike', 'foxiz' ); ?>"><i class="rbi rbi-dislike"></i><span class="dislike-count"><?php echo foxiz_get_post_dislikes( $post_id ); ?></span></span>
         </span>
@@ -1836,18 +1782,11 @@ if ( ! function_exists( 'foxiz_entry_meta_like' ) ) {
 	}
 }
 
-/**
- * @param        $settings
- * @param string $key
- *
- * @return false
- */
-
 if ( ! function_exists( 'foxiz_entry_meta_flex' ) ) {
 	function foxiz_entry_meta_flex( $settings, $key = '' ) {
 
 		if ( empty( $key ) ) {
-			return false;
+			return;
 		}
 
 		$meta_value = get_post_meta( get_the_ID(), $key, true );
@@ -1856,8 +1795,6 @@ if ( ! function_exists( 'foxiz_entry_meta_flex' ) ) {
 				$settings['meta_custom_field_value'] = $meta_value;
 				foxiz_entry_meta_custom_field( $settings, $key );
 			}
-
-			return false;
 		} else {
 			foxiz_entry_meta_tax( $settings, $key );
 		}
@@ -1865,13 +1802,11 @@ if ( ! function_exists( 'foxiz_entry_meta_flex' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_custom_field' ) ) {
-	/**
-	 * @param $settings
-	 * @param $key
-	 *
-	 * @return false
-	 */
 	function foxiz_entry_meta_custom_field( $settings, $key ) {
+
+		if ( empty( $settings['meta_custom_field_value'] ) ) {
+			return;
+		}
 
 		$p_label = ! empty( $settings[ 'p_label_' . $key ] ) ? $settings[ 'p_label_' . $key ] : '';
 		$s_label = ! empty( $settings[ 's_label_' . $key ] ) ? $settings[ 's_label_' . $key ] : '';
@@ -1895,30 +1830,25 @@ if ( ! function_exists( 'foxiz_entry_meta_custom_field' ) ) {
 			$classes[] = 'tablet-last-meta';
 		}
 
-		echo '<span class="' . join( ' ', $classes ) . '">';
-		echo esc_html( $p_label ) . wp_kses( $settings['meta_custom_field_value'], 'foxiz' ) . esc_html( $s_label );
-		echo '</span>';
+		echo '<span class="' . join( ' ', $classes ) . '">' . foxiz_strip_tags( $p_label . $settings['meta_custom_field_value'] . $s_label ) . '</span>';
 	}
 }
 
 if ( ! function_exists( 'foxiz_entry_meta_tax' ) ) {
-	/**
-	 * @param $settings
-	 * @param $key
-	 *
-	 * @return false
-	 */
 	function foxiz_entry_meta_tax( $settings, $key ) {
 
 		$terms = get_the_terms( get_the_ID(), $key );
 
 		if ( empty( $terms ) || is_wp_error( $terms ) ) {
-			return false;
+			return;
 		}
+		$limit = absint( foxiz_get_option( 'max_entry_meta', 999 ) );
+		$index = 1;
+
 		$s_label = ! empty( $settings[ 's_label_' . $key ] ) ? $settings[ 's_label_' . $key ] : '';
 
-		$classes   = [];
-		$classes[] = 'meta-el meta-category meta-bold meta-tax-' . $key;
+		$classes   = [ 'meta-el meta-category meta-bold' ];
+		$classes[] = 'meta-tax-' . $key;
 
 		$tablet_hide_meta = ! empty( $settings['tablet_hide_meta'] ) && is_array( $settings['tablet_hide_meta'] ) && in_array( $key, $settings['tablet_hide_meta'] );
 		$mobile_hide_meta = ! empty( $settings['mobile_hide_meta'] ) && is_array( $settings['mobile_hide_meta'] ) && in_array( $key, $settings['mobile_hide_meta'] );
@@ -1940,13 +1870,17 @@ if ( ! function_exists( 'foxiz_entry_meta_tax' ) ) {
 		}
 		echo '<span class="' . join( ' ', $classes ) . '">';
 		if ( ! empty( $settings[ 'p_label_' . $key ] ) ) {
-			echo '<span class="meta-label">' . esc_html( $settings[ 'p_label_' . $key ] ) . '</span>';
+			echo '<span class="meta-label">' . foxiz_strip_tags( $settings[ 'p_label_' . $key ] ) . '</span>';
 		}
 		foreach ( $terms as $category ) {
-			echo '<a class="meta-separate category-' . esc_attr( $category->term_id ) . '" href="' . esc_url( foxiz_get_term_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>';
+			echo '<a class="meta-separate category-' . strip_tags( $category->term_id ) . '" href="' . foxiz_get_term_link( $category->term_id ) . '">' . foxiz_strip_tags( $category->name ) . '</a>';
+			if ( $index >= $limit ) {
+				break;
+			}
+			$index ++;
 		}
 		if ( $s_label ) {
-			echo '<span class="meta-label">' . esc_html( $s_label ) . '</span>';
+			echo '<span class="meta-label">' . foxiz_strip_tags( $s_label ) . '</span>';
 		}
 		echo '</span>';
 	}
@@ -1956,34 +1890,25 @@ if ( ! function_exists( 'foxiz_entry_teaser_images' ) ) {
 	function foxiz_entry_teaser_images( $settings ) {
 
 		$post_id        = get_the_ID();
-		$is_clickable   = false;
 		$attachment_ids = foxiz_get_content_images( $post_id );
-		$flag           = 1;
 
 		if ( empty( $attachment_ids ) || ! is_array( $attachment_ids ) ) {
-			return false;
+			return;
 		}
 
+		$flag  = 1;
 		$attrs = [];
-
 		if ( empty( $settings['teaser_size'] ) ) {
 			$settings['teaser_size'] = 'thumbnail';
 		}
 		if ( empty( $settings['teaser_col'] ) ) {
 			$settings['teaser_col'] = 3;
 		}
-		if ( ! empty( $settings['feat_lazyload'] ) && 'none' === $settings['feat_lazyload'] ) {
-			$attrs['loading'] = 'eager';
-		} else {
-			$attrs['loading'] = 'lazy';
-		}
-
-		if ( ! empty( $settings['teaser_link'] ) && 'yes' === $settings['teaser_link'] ) {
-			$is_clickable = true;
-		}
+		$attrs['loading'] = ( ! empty( $settings['feat_lazyload'] ) && 'none' === $settings['feat_lazyload'] ) ? 'eager' : 'lazy';
+		$is_clickable     = ! empty( $settings['teaser_link'] ) && 'yes' === $settings['teaser_link'];
 
 		if ( $is_clickable ) {
-			echo '<a class="p-teaser" href="' . esc_url( get_permalink( $post_id ) ) . '">';
+			echo '<a class="p-teaser" href="' . get_permalink( $post_id )  . '">';
 		} else {
 			echo '<div class="p-teaser">';
 		}
@@ -1992,15 +1917,9 @@ if ( ! function_exists( 'foxiz_entry_teaser_images' ) ) {
 			if ( $is_image ) {
 				echo '<div class="teaser-item">' . wp_get_attachment_image( $id, $settings['teaser_size'], false, $attrs ) . '</div>';
 			} elseif ( ! empty( $image_link ) ) {
-				/** fallback */
-				echo '<div class="teaser-item"><img decoding="async" src="' . esc_url( $image_link ) . '" alt="' . esc_attr( 'Teaser', 'foxiz' ) . '" loading="' . $attrs['loading'] . '"/></div>';
+				echo '<div class="teaser-item"><img decoding="async" src="' . esc_url( $image_link ) . '" alt="' . strip_tags( 'Teaser', 'foxiz' ) . '" loading="' . $attrs['loading'] . '"/></div>';
 			}
 			if ( intval( $settings['teaser_col'] ) <= $flag ) {
-
-				/** remove old data */
-				if ( is_numeric( $image_link ) ) {
-					delete_post_meta( $post_id, 'rb_content_images' );
-				}
 				break;
 			}
 			$flag ++;

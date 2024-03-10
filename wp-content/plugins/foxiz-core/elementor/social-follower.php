@@ -10,11 +10,11 @@ use foxizElementorControl\Options;
 use function rb_social_follower;
 
 /**
- * Class Foxiz_Heading
+ * Class Social_Follower
  *
  * @package foxizElementor\Widgets
  */
-class Block_Social_Follower extends Widget_Base {
+class Social_Follower extends Widget_Base {
 
 	public function get_name() {
 
@@ -524,7 +524,6 @@ class Block_Social_Follower extends Widget_Base {
 			]
 		);
 		$this->end_controls_section();
-
 		$this->start_controls_section(
 			'section_quora', [
 				'label' => esc_html__( 'Quora', 'foxiz-core' ),
@@ -578,7 +577,57 @@ class Block_Social_Follower extends Widget_Base {
 			]
 		);
 		$this->end_controls_section();
-
+		$this->start_controls_section(
+			'section_threads', [
+				'label' => esc_html__( 'Threads', 'foxiz-core' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'threads_link',
+			[
+				'label'       => esc_html__( 'Threads URL', 'foxiz-core' ),
+				'placeholder' => 'https://www.threads.net/...',
+				'type'        => Controls_Manager::TEXTAREA,
+				'ai'          => [ 'active' => false ],
+				'rows'        => 1,
+			]
+		);
+		$this->add_control(
+			'threads_count',
+			[
+				'label' => esc_html__( 'Followers Value', 'foxiz-core' ),
+				'type'  => Controls_Manager::TEXTAREA,
+				'ai'    => [ 'active' => false ],
+				'rows'  => 1,
+			]
+		);
+		$this->end_controls_section();
+		$this->start_controls_section(
+			'section_rss', [
+				'label' => esc_html__( 'RSS', 'foxiz-core' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'rss_link',
+			[
+				'label' => esc_html__( 'RSS Feed URL', 'foxiz-core' ),
+				'type'  => Controls_Manager::TEXTAREA,
+				'ai'    => [ 'active' => false ],
+				'rows'  => 1,
+			]
+		);
+		$this->add_control(
+			'rss_count',
+			[
+				'label' => esc_html__( 'Readers Value', 'foxiz-core' ),
+				'type'  => Controls_Manager::TEXTAREA,
+				'ai'    => [ 'active' => false ],
+				'rows'  => 1,
+			]
+		);
+		$this->end_controls_section();
 		$this->start_controls_section(
 			'style_section', [
 				'label' => esc_html__( 'Widget Style', 'foxiz-core' ),

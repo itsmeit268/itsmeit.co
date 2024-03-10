@@ -3,31 +3,39 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_render_header' ) ) {
-	/**
-	 * @return mixed
-	 */
 	function foxiz_render_header() {
+
+		foxiz_render_header_template();
+
+		/** Start tracking queried posts after header */
+		$GLOBALS['foxiz_queried_ids'] = [];
+	}
+}
+
+if ( ! function_exists( 'foxiz_render_header_template' ) ) {
+
+	function foxiz_render_header_template() {
 
 		if ( foxiz_is_amp() ) {
 			foxiz_render_header_amp();
 
-			return false;
+			return;
 		}
 
 		if ( is_singular( 'web-story' ) ) {
-			return false;
+			return;
 		}
 
 		$header = foxiz_get_header_style();
 		if ( ! empty( $header['style'] ) && 'rb_template' === $header['style'] ) {
 			foxiz_render_header_rb_template( $header['shortcode'] );
 
-			return false;
+			return;
 		}
 
 		$func = 'foxiz_render_header_' . $header['style'];
 		if ( function_exists( $func ) ) {
-			return call_user_func( $func );
+			call_user_func( $func );
 		} else {
 			foxiz_render_header_1();
 		}
@@ -35,9 +43,6 @@ if ( ! function_exists( 'foxiz_render_header' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_render_text_logo' ) ) {
-	/**
-	 * @param array $settings
-	 */
 	function foxiz_render_text_logo( $settings = [] ) {
 
 		$blog_name  = get_bloginfo( 'name' );
@@ -46,14 +51,14 @@ if ( ! function_exists( 'foxiz_render_text_logo' ) ) {
 			$class_name = ' is-logo-transparent';
 		}
 		?>
-	<div class="<?php echo esc_attr( $class_name ); ?>">
+	<div class="<?php echo strip_tags( $class_name ); ?>">
 		<?php if ( is_front_page() ) : ?>
 			<h1 class="logo-title">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( $blog_name ) ?>"><?php echo esc_html( $blog_name ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo strip_tags( $blog_name ) ?>"><?php foxiz_render_inline_html( $blog_name ); ?></a>
 			</h1>
 		<?php else: ?>
 			<p class="logo-title h1">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( $blog_name ) ?>"><?php echo esc_html( $blog_name ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo strip_tags( $blog_name ) ?>"><?php foxiz_render_inline_html( $blog_name ); ?></a>
 			</p>
 		<?php endif;
 		if ( get_bloginfo( 'description' ) ) : ?>
@@ -81,15 +86,15 @@ if ( ! function_exists( 'foxiz_get_logo_html' ) ) {
 
 		if ( empty( $retina_logo['url'] ) ) {
 
-			$output = '<img class="' . esc_attr( $classes ) . '"';
+			$output = '<img class="' . strip_tags( $classes ) . '"';
 			if ( ! empty( $mode ) && 'disabled' !== $mode ) {
-				$output .= ' data-mode="' . esc_attr( $mode ) . '"';
+				$output .= ' data-mode="' . strip_tags( $mode ) . '"';
 			}
 			if ( ! empty( $logo['height'] ) ) {
-				$output .= ' height="' . esc_attr( $logo['height'] ) . '"';
+				$output .= ' height="' . strip_tags( $logo['height'] ) . '"';
 			}
 			if ( ! empty( $logo['width'] ) ) {
-				$output .= ' width="' . esc_attr( $logo['width'] ) . '"';
+				$output .= ' width="' . strip_tags( $logo['width'] ) . '"';
 			}
 
 			$output .= ' src="' . esc_url( $logo['url'] ) . '"';
@@ -105,9 +110,9 @@ if ( ! function_exists( 'foxiz_get_logo_html' ) ) {
 
 			$logo = $retina_logo;
 
-			$output = '<img class="' . esc_attr( $classes ) . '"';
+			$output = '<img class="' . strip_tags( $classes ) . '"';
 			if ( ! empty( $mode ) ) {
-				$output .= ' data-mode="' . esc_attr( $mode ) . '"';
+				$output .= ' data-mode="' . strip_tags( $mode ) . '"';
 			}
 			if ( ! empty( $logo['height'] ) ) {
 				$output .= ' height="' . intval( $logo['height'] / 2 ) . '"';
@@ -126,15 +131,15 @@ if ( ! function_exists( 'foxiz_get_logo_html' ) ) {
 			return $output;
 		}
 
-		$output = '<img class="' . esc_attr( $classes ) . '"';
+		$output = '<img class="' . strip_tags( $classes ) . '"';
 		if ( ! empty( $mode ) ) {
-			$output .= ' data-mode="' . esc_attr( $mode ) . '"';
+			$output .= ' data-mode="' . strip_tags( $mode ) . '"';
 		}
 		if ( ! empty( $logo['height'] ) ) {
-			$output .= ' height="' . esc_attr( $logo['height'] ) . '"';
+			$output .= ' height="' . strip_tags( $logo['height'] ) . '"';
 		}
 		if ( ! empty( $logo['width'] ) ) {
-			$output .= ' width="' . esc_attr( $logo['width'] ) . '"';
+			$output .= ' width="' . strip_tags( $logo['width'] ) . '"';
 		}
 		$output .= ' src="' . esc_url( $logo['url'] ) . '" srcset="' . esc_url( $logo['url'] ) . ' 1x,' . esc_url( $retina_logo['url'] ) . ' 2x"';
 		$output .= ' alt="' . get_bloginfo( 'name' ) . '"';
@@ -149,48 +154,41 @@ if ( ! function_exists( 'foxiz_get_logo_html' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_render_logo' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_render_logo( $settings = [] ) {
 
 		if ( empty( $settings['logo']['url'] ) && empty( $settings['retina_logo']['url'] ) ) {
 			foxiz_render_text_logo();
 
-			return false;
+			return;
 		}
 
-		$blog_name    = get_bloginfo( 'name' );
-		$class_name   = [];
-		$class_name[] = 'logo-wrap';
+		$blog_name = get_bloginfo( 'name' );
+		$classes   = [];
+		$classes[] = 'logo-wrap';
 		if ( ! empty( $settings['classes'] ) ) {
-			$class_name[] = $settings['classes'];
+			$classes[] = $settings['classes'];
 		}
-		$class_name[] = 'is-image-logo site-branding';
+		$classes[] = 'is-image-logo site-branding';
 		if ( foxiz_is_svg( $settings['logo']['url'] ) ) {
-			$class_name[] = 'is-logo-svg';
+			$classes[] = 'is-logo-svg';
 		}
 		?>
-		<div class="<?php echo implode( ' ', $class_name ); ?>">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo" title="<?php echo esc_attr( $blog_name ); ?>">
+		<div class="<?php echo implode( ' ', $classes ); ?>">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo" title="<?php echo strip_tags( $blog_name ); ?>">
 				<?php
 				if ( empty( $settings['dark_logo']['url'] ) ) {
 					$settings['dark_logo'] = $settings['logo'];
 				}
-
 				if ( empty( $settings['dark_retina_logo']['url'] ) ) {
 					$settings['dark_retina_logo'] = $settings['retina_logo'];
 				}
-
 				echo foxiz_get_logo_html( $settings['logo'], $settings['retina_logo'] );
 				echo foxiz_get_logo_html( $settings['dark_logo'], $settings['dark_retina_logo'], 'logo-dark', 'dark' );
 				if ( ! empty( $settings['transparent_logo']['url'] ) ) {
 					echo foxiz_get_logo_html( $settings['transparent_logo'], $settings['transparent_retina_logo'], 'logo-transparent', false );
 				}
 				if ( is_front_page() && empty( $settings['disable_info'] ) ) : ?>
-					<h1 class="logo-title hidden"><?php echo esc_html( $blog_name ); ?></h1>
+					<h1 class="logo-title hidden"><?php foxiz_render_inline_html( $blog_name ); ?></h1>
 					<?php if ( get_bloginfo( 'description' ) ) : ?>
 						<p class="site-description hidden"><?php bloginfo( 'description' ); ?></p>
 					<?php endif;
@@ -202,18 +200,13 @@ if ( ! function_exists( 'foxiz_render_logo' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_render_mobile_logo' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_render_mobile_logo( $settings = [] ) {
 
 		if ( empty( $settings['mobile_logo']['url'] ) ) {
 			$settings['classes'] = 'mobile-logo-wrap';
 			foxiz_render_logo( $settings );
 
-			return false;
+			return;
 		}
 
 		$blog_name    = get_bloginfo( 'name' );
@@ -224,7 +217,7 @@ if ( ! function_exists( 'foxiz_render_mobile_logo' ) ) {
 		}
 		?>
 		<div class="<?php echo implode( ' ', $class_name ); ?>">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( $blog_name ) ?>">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo strip_tags( $blog_name ) ?>">
 				<?php
 				if ( empty( $settings['dark_mobile_logo']['url'] ) ) {
 					if ( ! empty( $settings['dark_logo']['url'] ) ) {
@@ -281,7 +274,7 @@ if ( ! function_exists( 'foxiz_render_main_menu' ) ) {
 			$args['sub_scheme'] = 'light-scheme';
 		}
 		?>
-		<nav id="site-navigation" class="<?php echo esc_attr( $class_name ); ?>" aria-label="<?php esc_attr_e( 'main menu', 'foxiz' ); ?>"><?php wp_nav_menu( $args ); ?></nav>
+		<nav id="site-navigation" class="<?php echo strip_tags( $class_name ); ?>" aria-label="<?php esc_attr_e( 'main menu', 'foxiz' ); ?>"><?php wp_nav_menu( $args ); ?></nav>
 		<?php
 	}
 }
@@ -298,9 +291,7 @@ if ( ! function_exists( 'foxiz_render_nav_right' ) ) {
 		if ( ! empty( $settings['header_socials'] ) ) {
 			foxiz_header_socials( $settings );
 		}
-
 		foxiz_header_mini_cart();
-
 		if ( ! empty( $settings['header_notification'] ) ) {
 			foxiz_header_notification( $settings );
 		}
@@ -342,7 +333,7 @@ if ( ! function_exists( 'foxiz_header_user' ) ) {
 				global $current_user; ?>
 				<a class="dropdown-trigger is-logged header-element" href="#">
 					<span class="logged-avatar"><?php echo get_avatar( $current_user->ID, 60 ); ?></span>
-					<span class="logged-welcome"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . esc_html( $current_user->display_name ) . '</strong>'; ?></span>
+					<span class="logged-welcome"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . foxiz_strip_tags( $current_user->display_name ) . '</strong>'; ?></span>
 				</a>
 				<div class="header-dropdown user-dropdown">
 					<?php if ( ! empty( $settings['header_login_menu'] ) ) {
@@ -389,7 +380,7 @@ if ( ! function_exists( 'foxiz_header_search' ) ) {
 	 */
 	function foxiz_header_search( $settings = [] ) {
 
-		$classes       = [];
+		$classes       = [ 'icon-holder header-element search-btn' ];
 		$form_settings = [
 			'placeholder'  => '',
 			'icon'         => [],
@@ -402,21 +393,15 @@ if ( ! function_exists( 'foxiz_header_search' ) ) {
 		} elseif ( ! empty( $settings['ajax_search'] ) ) {
 			$form_settings['ajax_search'] = true;
 		}
-
 		if ( ! empty( $settings['limit'] ) ) {
 			$form_settings['limit'] = $settings['limit'];
 		}
-
 		if ( ! empty( $settings['header_search_custom_icon']['url'] ) ) {
 			$form_settings['icon']['url'] = $settings['header_search_custom_icon']['url'];
 		}
-
 		if ( ! empty( $settings['header_search_placeholder'] ) ) {
 			$form_settings['placeholder'] = $settings['header_search_placeholder'];
 		}
-
-		$classes[]        = 'icon-holder header-element search-btn';
-		$dropdown_classes = 'header-dropdown';
 
 		if ( empty( $settings['header_search_mode'] ) || 'search' === $settings['header_search_mode'] ) {
 			$classes[] = 'search-trigger';
@@ -426,7 +411,6 @@ if ( ! function_exists( 'foxiz_header_search' ) ) {
 		if ( ! empty( $settings['search_label'] ) ) {
 			$classes[] = 'has-label';
 		}
-
 		if ( isset( $settings['header_search_scheme'] ) ) {
 			$settings['sub_scheme'] = $settings['header_search_scheme'];
 		}
@@ -435,18 +419,18 @@ if ( ! function_exists( 'foxiz_header_search' ) ) {
 		}
 		?>
 		<div class="wnav-holder w-header-search header-dropdown-outer">
-			<a href="#" data-title="<?php foxiz_html_e( 'Search', 'foxiz' ); ?>" class="<?php echo join( ' ', $classes ); ?>" aria-label="<?php esc_attr_e( 'search', 'foxiz' ); ?>">
+			<a href="#" data-title="<?php foxiz_html_e( 'Search', 'foxiz' ); ?>" class="<?php echo strip_tags( join( ' ', $classes ) ); ?>" aria-label="<?php esc_attr_e( 'search', 'foxiz' ); ?>">
 				<?php if ( ! empty( $form_settings['icon']['url'] ) ) {
 					echo '<span class="search-icon-svg"></span>';
 				} else {
 					echo '<i class="rbi rbi-search wnav-icon" aria-hidden="true"></i>';
 				} ?>
 				<?php if ( ! empty( $settings['search_label'] ) ) : ?>
-					<span class="header-search-label meta-text"><?php echo esc_attr( $settings['search_label'] ); ?></span>
+					<span class="header-search-label meta-text"><?php echo strip_tags( $settings['search_label'] ); ?></span>
 				<?php endif; ?>
 			</a>
 			<?php if ( empty( $settings['header_search_mode'] ) || 'search' === $settings['header_search_mode'] ) : ?>
-				<div class="<?php echo esc_attr( $dropdown_classes ); ?>">
+				<div class="header-dropdown">
 					<div class="header-search-form is-icon-layout">
 						<?php foxiz_search_form( $form_settings ); ?>
 					</div>
@@ -478,6 +462,9 @@ if ( ! function_exists( 'foxiz_header_search_form' ) ) {
 		if ( ! empty( $settings['limit'] ) ) {
 			$form_settings['limit'] = $settings['limit'];
 		}
+		if ( ! empty( $settings['taxonomies'] ) ) {
+			$form_settings['taxonomies'] = $settings['taxonomies'];
+		}
 		if ( ! empty( $settings['search_type'] ) ) {
 			$form_settings['search_type'] = $settings['search_type'];
 			$class_name                   .= ' is-search-' . $settings['search_type'];
@@ -500,10 +487,16 @@ if ( ! function_exists( 'foxiz_header_search_form' ) ) {
 		if ( ! empty( $settings['sub_scheme'] ) ) {
 			$form_settings['color_scheme'] = true;
 		}
+		if ( isset( $settings['desc_source'] ) ) {
+			$form_settings['desc_source'] = $settings['desc_source'];
+		}
+		if ( ! empty( $settings['search_type'] ) && 'category' === $settings['search_type'] ) {
+			$form_settings['no_submit'] = true;
+		}
 		?>
-		<div class="<?php echo esc_attr( $class_name ); ?>">
+		<div class="<?php echo strip_tags( $class_name ); ?>">
 			<?php if ( ! empty( $settings['header_search_heading'] ) ) : ?>
-				<span class="h5"><?php echo esc_html( $settings['header_search_heading'] ); ?></span>
+				<span class="h5"><?php foxiz_render_inline_html( $settings['header_search_heading'] ); ?></span>
 			<?php endif;
 			foxiz_search_form( $form_settings );
 			?>
@@ -560,7 +553,7 @@ if ( ! function_exists( 'foxiz_header_more' ) ) {
 									?></div>
 							<?php endif;
 							if ( ! empty( $settings['more_footer_copyright'] ) ) : ?>
-								<div class="collapse-copyright"><?php echo wp_kses( $settings['more_footer_copyright'], 'foxiz' ); ?></div>
+								<div class="collapse-copyright"><?php foxiz_render_inline_html( $settings['more_footer_copyright'] ); ?></div>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
@@ -576,6 +569,12 @@ if ( ! function_exists( 'foxiz_header_mobile' ) ) {
 
 		$layout = '';
 
+		if ( is_singular() ) {
+			$page_mh_template = trim( rb_get_meta( 'mh_template' ) );
+			if ( ! empty( $page_mh_template ) ) {
+				$settings['mh_template'] = $page_mh_template;
+			}
+		}
 		if ( ! empty( $settings['mh_template'] ) && ! foxiz_is_amp() ) {
 			$layout = 'template';
 		} elseif ( ! empty( $settings['mh_layout'] ) ) {
@@ -770,7 +769,7 @@ if ( ! function_exists( 'foxiz_mobile_collapse' ) ) {
 								<?php if ( ! is_user_logged_in() ) : ?>
 									<span class="mobile-login-title h6"><?php
 										if ( foxiz_get_option( 'mobile_login_label' ) ) {
-											echo esc_html( foxiz_get_option( 'mobile_login_label' ) );
+											foxiz_render_inline_html( foxiz_get_option( 'mobile_login_label' ) );
 										} else {
 											foxiz_html_e( 'Have an existing account?', 'foxiz' );
 										} ?></span>
@@ -782,7 +781,7 @@ if ( ! function_exists( 'foxiz_mobile_collapse' ) ) {
 										$logout_redirect = foxiz_get_current_permalink();
 									}
 									?>
-									<span class="mobile-login-title"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . esc_html( $current_user->display_name ) . '</strong>'; ?></span>
+									<span class="mobile-login-title"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . foxiz_strip_tags( $current_user->display_name ) . '</strong>'; ?></span>
 									<a class="mobile-logout-btn is-btn" href="<?php echo wp_logout_url( $logout_redirect ); ?>"><?php echo foxiz_html__( 'Sign Out', 'foxiz' ); ?></a>
 								<?php endif; ?>
 							</div>
@@ -826,7 +825,7 @@ if ( ! function_exists( 'foxiz_mobile_collapse' ) ) {
 									?></div>
 							<?php endif;
 							if ( ! empty( $settings['mobile_copyright'] ) ) : ?>
-								<div class="collapse-copyright"><?php echo wp_kses( $settings['mobile_copyright'], 'foxiz' ); ?></div>
+								<div class="collapse-copyright"><?php foxiz_render_inline_html( $settings['mobile_copyright'] ); ?></div>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
@@ -908,7 +907,7 @@ if ( ! function_exists( 'foxiz_header_notification' ) ) {
 								<i class="rbi rbi-cright" aria-hidden="true"></i></a>
 						<?php endif; ?>
 					</div>
-					<div class="<?php echo esc_attr( $class_name ); ?>">
+					<div class="<?php echo strip_tags( $class_name ); ?>">
 						<div class="scroll-holder">
 							<div class="rb-notification ecat-l-dot is-feat-right" data-interval="<?php echo foxiz_get_option( 'notification_reload', 6 ); ?>"></div>
 						</div>
@@ -979,8 +978,8 @@ if ( ! function_exists( 'foxiz_get_header_alert' ) ) {
 		if ( ! empty( $settings['alert_sticky_hide'] ) ) {
 			$class_name .= ' is-sticky-hide';
 		}
-		$output = '<a id="header-alert" class="' . esc_attr( $class_name ) . '" href="' . esc_url( $settings['alert_url'] ) . '" target="_blank" rel="noreferrer nofollow">';
-		$output .= esc_html( trim( $settings['alert_content'] ) );
+		$output = '<a id="header-alert" class="' . strip_tags( $class_name ) . '" href="' . esc_url( $settings['alert_url'] ) . '" target="_blank" rel="noreferrer nofollow">';
+		$output .= foxiz_strip_tags( $settings['alert_content'] );
 		$output .= '</a>';
 
 		return $output;
@@ -997,10 +996,11 @@ if ( ! function_exists( 'foxiz_top_ad' ) ) {
 			return false;
 		}
 
-		$disable_top_ad = rb_get_meta( 'disable_top_ad', get_the_ID() );
-
-		if ( ! empty( $disable_top_ad ) && '-1' === (string) $disable_top_ad ) {
-			return false;
+		if ( get_the_ID() ) {
+			$disable_top_ad = rb_get_meta( 'disable_top_ad', get_the_ID() );
+			if ( ! empty( $disable_top_ad ) && '-1' === (string) $disable_top_ad ) {
+				return;
+			}
 		}
 
 		$classes = 'top-site-ad';
@@ -1021,7 +1021,7 @@ if ( ! function_exists( 'foxiz_top_ad' ) ) {
 			];
 			if ( foxiz_get_adsense( $settings ) ) {
 				$classes .= ' is-code';
-				echo '<div class="' . esc_attr( $classes ) . '">' . foxiz_get_adsense( $settings ) . '</div>';
+				echo '<div class="' . strip_tags( $classes ) . '">' . foxiz_get_adsense( $settings ) . '</div>';
 			}
 		} else {
 			$settings = [
@@ -1033,7 +1033,7 @@ if ( ! function_exists( 'foxiz_top_ad' ) ) {
 
 			if ( foxiz_get_ad_image( $settings ) ) {
 				$classes .= ' is-image';
-				echo '<div class="' . esc_attr( $classes ) . '">' . foxiz_get_ad_image( $settings ) . '</div>';
+				echo '<div class="' . strip_tags( $classes ) . '">' . foxiz_get_ad_image( $settings ) . '</div>';
 			}
 		}
 	}
@@ -1063,13 +1063,10 @@ if ( ! function_exists( 'foxiz_header_mini_cart' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_mobile_header_mini_cart' ) ) {
-	/**
-	 * @return false
-	 */
 	function foxiz_mobile_header_mini_cart() {
 
 		if ( ! foxiz_get_option( 'wc_mobile_mini_cart' ) ) {
-			return false;
+			return;
 		}
 
 		foxiz_header_mini_cart_html( false );
@@ -1080,7 +1077,7 @@ if ( ! function_exists( 'foxiz_header_mini_cart_html' ) ) {
 	function foxiz_header_mini_cart_html( $dropdown_section = true ) {
 
 		if ( ! class_exists( 'Woocommerce' ) || foxiz_is_amp() ) {
-			return false;
+			return;
 		}
 
 		$class_name = 'cart-link';
@@ -1092,7 +1089,7 @@ if ( ! function_exists( 'foxiz_header_mini_cart_html' ) ) {
 		$cart = WC()->cart;
 		?>
 		<aside class="header-mini-cart wnav-holder header-dropdown-outer">
-			<a class="<?php echo esc_attr( $class_name ); ?>" href="<?php echo esc_url( wc_get_cart_url() ) ?>" data-title="<?php foxiz_attr_e( 'View Cart', 'foxiz' ); ?>" aria-label="<?php esc_attr_e( 'mini cart', 'foxiz' ); ?>">
+			<a class="<?php echo strip_tags( $class_name ); ?>" href="<?php echo esc_url( wc_get_cart_url() ) ?>" data-title="<?php foxiz_attr_e( 'View Cart', 'foxiz' ); ?>" aria-label="<?php esc_attr_e( 'mini cart', 'foxiz' ); ?>">
                 <span class="cart-icon"><?php
 	                if ( ! empty( $cart_icon['url'] ) ) : ?><span class="cart-icon-svg"></span><?php
 	                else: ?><i class="wnav-icon rbi rbi-cart" aria-hidden="true"></i><?php
@@ -1102,7 +1099,7 @@ if ( ! function_exists( 'foxiz_header_mini_cart_html' ) ) {
 			                <?php if ( ! $cart || ! $cart instanceof \WC_Cart ) {
 				                echo '0';
 			                } else {
-				                echo esc_html( $cart->get_cart_contents_count() );
+				                foxiz_render_inline_html( $cart->get_cart_contents_count() );
 			                } ?></span>
 	                <?php endif; ?></span>
 				<?php if ( foxiz_get_option( 'total_amount' ) ) : ?>

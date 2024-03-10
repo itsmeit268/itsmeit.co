@@ -1,16 +1,12 @@
 <?php
+/** Don't load directly */
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_elementor_main_menu' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_elementor_main_menu( $settings = [] ) {
 
 		if ( empty( $settings['main_menu'] ) || ! is_nav_menu( $settings['main_menu'] ) ) {
-			return false;
+			return;
 		}
 		$args = [
 			'menu'          => $settings['main_menu'],
@@ -41,37 +37,36 @@ if ( ! function_exists( 'foxiz_elementor_single_sticky_html' ) ) {
 	function foxiz_elementor_single_sticky_html( $settings = [] ) {
 
 		if ( ! function_exists( 'foxiz_single_sticky_html' ) || empty( $settings['is_main_menu'] ) ) {
-			return false;
+			return;
 		}
 
 		if ( foxiz_get_option( 'single_post_sticky_title' ) && is_single() && ! foxiz_is_amp() ) {
 			foxiz_single_sticky_html();
 		}
-
-		return false;
 	}
 }
 
 if ( ! function_exists( 'foxiz_elementor_social_list' ) ) {
-	function foxiz_elementor_social_list() { ?>
-		<div class="header-social-list wnav-holder"><?php
-			if ( function_exists( 'foxiz_get_social_list' ) ) {
-				echo foxiz_get_social_list( foxiz_get_option() );
-			}
-			?></div>
-	<?php }
+	function foxiz_elementor_social_list() {
+
+		if ( ! function_exists( 'foxiz_get_social_list' ) ) {
+			return;
+		}
+		?>
+		<div class="header-social-list">
+			<div class="e-social-holder">
+				<?php echo foxiz_get_social_list( foxiz_get_option() ); ?>
+			</div>
+		</div>
+		<?php
+	}
 }
 
 if ( ! function_exists( 'foxiz_elementor_header_search' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_elementor_header_search( $settings = [] ) {
 
 		if ( ! function_exists( 'foxiz_header_search' ) || ! function_exists( 'foxiz_header_search_form' ) ) {
-			return false;
+			return;
 		}
 
 		if ( empty( $settings['search_layout'] ) || 'form' !== $settings['search_layout'] ) {
@@ -83,15 +78,10 @@ if ( ! function_exists( 'foxiz_elementor_header_search' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_elementor_mini_cart' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_elementor_mini_cart( $settings = [] ) {
 
 		if ( ! function_exists( 'foxiz_header_mini_cart_html' ) ) {
-			return false;
+			return;
 		}
 
 		foxiz_header_mini_cart_html();
@@ -99,15 +89,10 @@ if ( ! function_exists( 'foxiz_elementor_mini_cart' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_elementor_sidebar_menu' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_elementor_sidebar_menu( $settings = [] ) {
 
 		if ( empty( $settings['menu'] ) || ! is_nav_menu( $settings['menu'] ) ) {
-			return false;
+			return;
 		}
 
 		$classes = 'sidebar-menu';
@@ -129,11 +114,6 @@ if ( ! function_exists( 'foxiz_elementor_sidebar_menu' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_elementor_single_category' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|void
-	 */
 	function foxiz_elementor_single_category( $settings = [] ) {
 
 		if ( ! function_exists( 'foxiz_get_entry_categories' ) ) {
@@ -145,7 +125,7 @@ if ( ! function_exists( 'foxiz_elementor_single_category' ) ) {
 		}
 
 		if ( empty( $settings['entry_category'] ) && '-1' === (string) $settings['entry_category'] ) {
-			return false;
+			return;
 		}
 
 		$classes = 's-cats';
@@ -179,7 +159,7 @@ if ( ! function_exists( 'foxiz_elementor_single_category' ) ) {
 			$settings['is_singular'] = true;
 		}
 		?>
-		<div class="<?php echo esc_attr( $classes ); ?>">
+		<div class="<?php echo strip_tags( $classes ); ?>">
 			<?php if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 				echo '<div class="p-categories"><a href="#" class="p-category">' . esc_html__( 'Dynamic Category', 'foxiz-core' ) . '</a></div>';
 			} else {
@@ -191,15 +171,10 @@ if ( ! function_exists( 'foxiz_elementor_single_category' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_elementor_single_featured' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|void
-	 */
 	function foxiz_elementor_single_featured( $settings = [] ) {
 
 		if ( ! function_exists( 'foxiz_single_standard_featured' ) ) {
-			return false;
+			return;
 		}
 
 		if ( empty( $settings['crop_size'] ) ) {
@@ -218,7 +193,7 @@ if ( ! function_exists( 'foxiz_elementor_single_featured' ) ) {
 			$class_name .= ' i-ratio';
 		}
 		?>
-		<div class="<?php echo esc_attr( $class_name ); ?>">
+		<div class="<?php echo strip_tags( $class_name ); ?>">
 			<?php
 			if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) :
 				echo '<div class="s-feat-placeholder"></div>';
@@ -234,14 +209,12 @@ if ( ! function_exists( 'foxiz_elementor_single_featured' ) ) {
 						foxiz_single_audio_embed( $post_id );
 						break;
 					case 'gallery':
-
 						if ( empty( $settings['gallery_layout'] ) ) {
 							$settings['gallery_layout'] = 'gallery_1';
 						}
 						if ( empty( $settings['gallery_crop_size'] ) ) {
 							$settings['gallery_crop_size'] = 'full';
 						}
-
 						switch ( $settings['gallery_layout'] ) {
 							case 'gallery_1' :
 								foxiz_single_gallery_slider( $settings['gallery_crop_size'], $post_id );
@@ -265,15 +238,10 @@ if ( ! function_exists( 'foxiz_elementor_single_featured' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_elementor_custom_field_meta' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_elementor_custom_field_meta( $settings = [] ) {
 
 		if ( empty( $settings['meta_id'] ) ) {
-			return false;
+			return;
 		}
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
@@ -283,7 +251,7 @@ if ( ! function_exists( 'foxiz_elementor_custom_field_meta' ) ) {
 		}
 
 		if ( empty( $value ) ) {
-			return false;
+			return;
 		}
 		if ( empty( $settings['label_position'] ) ) {
 			$settings['icon_position'] = 'end';
@@ -300,11 +268,10 @@ if ( ! function_exists( 'foxiz_elementor_custom_field_meta' ) ) {
 		if ( 'begin' === $settings['label_position'] ) {
 			foxiz_elementor_custom_field_label( $settings );
 		}
-		echo '<span class="meta-value">' . esc_html( $value ) . '</span>';
+		echo '<span class="meta-value">' . foxiz_strip_tags( $value ) . '</span>';
 		if ( 'end' === $settings['label_position'] ) {
 			foxiz_elementor_custom_field_label( $settings );
 		}
-
 		if ( 'end' === $settings['icon_position'] ) {
 			foxiz_elementor_custom_field_icon( $settings );
 		}
@@ -313,31 +280,20 @@ if ( ! function_exists( 'foxiz_elementor_custom_field_meta' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_elementor_custom_field_label' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_elementor_custom_field_label( $settings ) {
 
 		if ( empty( $settings['meta_label'] ) ) {
-			return false;
+			return;
 		}
-		?>
-		<span class="meta-tagline"><?php echo esc_html( $settings['meta_label'] ); ?></span>
+		?><span class="meta-tagline"><?php foxiz_render_inline_html( $settings['meta_label'] ); ?></span>
 	<?php }
 }
 
 if ( ! function_exists( 'foxiz_elementor_custom_field_icon' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_elementor_custom_field_icon( $settings ) {
 
 		if ( empty( $settings['meta_icon'] ) ) {
-			return false;
+			return;
 		}
 		?>
 		<span class="meta-icon"><?php \Elementor\Icons_Manager::render_icon( $settings['meta_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
@@ -367,7 +323,7 @@ if ( ! function_exists( 'foxiz_elementor_cta' ) ) {
 			$class_name .= ' m-cta-img-' . trim( $settings['position_mobile'] );
 		}
 		?>
-		<div class="<?php echo esc_attr( $class_name ); ?>">
+		<div class="<?php echo strip_tags( $class_name ); ?>">
 			<?php foxiz_elementor_cta_featured( $settings );
 			if ( empty( $settings['title_tag'] ) ) {
 				$settings['title_tag'] = 'h2';
@@ -379,10 +335,10 @@ if ( ! function_exists( 'foxiz_elementor_cta' ) ) {
 			<div class="cta-content">
 				<?php
 				if ( ! empty( $settings['title'] ) ) {
-					echo '<' . esc_attr( $settings['title_tag'] ) . ' class="cta-title">' . wp_kses( $settings['title'], 'foxiz' ) . '</' . esc_attr( $settings['title_tag'] ) . '>';
+					echo '<' . strip_tags( $settings['title_tag'] ) . ' class="cta-title">' . foxiz_strip_tags( $settings['title'] ) . '</' . strip_tags( $settings['title_tag'] ) . '>';
 				}
 				if ( ! empty( $settings['description'] ) ) {
-					echo '<' . esc_attr( $settings['description_tag'] ) . ' class="cta-description">' . wp_kses( $settings['description'], 'foxiz' ) . '</' . esc_attr( $settings['description_tag'] ) . '>';
+					echo '<' . strip_tags( $settings['description_tag'] ) . ' class="cta-description">' . foxiz_strip_tags( $settings['description'], '<strong><b><em><i><a><code><p><div><ol><ul><li><br><img><h2><h3><h4><h5><h6>' ) . '</' . strip_tags( $settings['description_tag'] ) . '>';
 				} ?><?php foxiz_elementor_cta_buttons( $settings ); ?>
 			</div>
 		</div>
@@ -394,7 +350,7 @@ if ( ! function_exists( 'foxiz_elementor_cta_featured' ) ) {
 	function foxiz_elementor_cta_featured( $settings = [] ) {
 
 		if ( empty( $settings['image']['id'] ) ) {
-			return false;
+			return;
 		}
 
 		$size  = ! empty( $settings['image_size'] ) ? $settings['image_size'] : 'full';
@@ -425,7 +381,7 @@ if ( ! function_exists( 'foxiz_elementor_cta_buttons' ) ) {
 	function foxiz_elementor_cta_buttons( $settings = [] ) {
 
 		if ( empty( $settings['btn_link_1']['url'] ) && empty( $settings['btn_link_2']['url'] ) ) {
-			return false;
+			return;
 		}
 
 		$btn_1_classes = 'cta-btn cta-btn-1';
@@ -447,10 +403,10 @@ if ( ! function_exists( 'foxiz_elementor_cta_buttons' ) ) {
 		<div class="cta-buttons">
 			<?php
 			if ( ! empty( $settings['btn_link_1'] ) ) {
-				echo foxiz_get_elementor_open_link( $settings['btn_link_1'], $btn_1_classes ) . esc_html( $settings['btn_label_1'] ) . foxiz_get_elementor_close_link( $settings['btn_link_1'] );
+				echo foxiz_get_elementor_open_link( $settings['btn_link_1'], $btn_1_classes ) . foxiz_strip_tags( $settings['btn_label_1'] ) . foxiz_get_elementor_close_link( $settings['btn_link_1'] );
 			}
 			if ( ! empty( $settings['btn_link_2'] ) ) {
-				echo foxiz_get_elementor_open_link( $settings['btn_link_2'], $btn_2_classes ) . esc_html( $settings['btn_label_2'] ) . foxiz_get_elementor_close_link( $settings['btn_link_2'] );
+				echo foxiz_get_elementor_open_link( $settings['btn_link_2'], $btn_2_classes ) . foxiz_strip_tags( $settings['btn_label_2'] ) . foxiz_get_elementor_close_link( $settings['btn_link_2'] );
 			}
 			?>
 		</div>
@@ -467,7 +423,7 @@ if ( ! function_exists( 'foxiz_get_elementor_open_link' ) ) {
 
 		$output = '<a href="' . esc_url( $link['url'] ) . '"';
 		if ( ! empty( $classes ) ) {
-			$output .= ' class="' . esc_attr( $classes ) . '"';
+			$output .= ' class="' . strip_tags( $classes ) . '"';
 		}
 		if ( ! empty( $link['is_external'] ) ) {
 			$output .= ' target="_blank"';
@@ -494,11 +450,6 @@ if ( ! function_exists( 'foxiz_get_elementor_close_link' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_elementor_archive_title' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_elementor_archive_title( $settings = [] ) {
 
 		$output = '';
@@ -580,7 +531,7 @@ if ( ! function_exists( 'foxiz_current_date' ) ) {
 	function foxiz_current_date( $settings ) {
 
 		if ( empty( $settings['format'] ) ) {
-			return false;
+			return;
 		}
 
 		echo '<span class="current-date">' . date_i18n( trim( $settings['format'] ) ) . '</span>';
@@ -635,7 +586,7 @@ if ( ! function_exists( 'foxiz_render_login_form' ) ) {
 		} else {
 			$args['redirect'] = foxiz_get_current_permalink();
 		} ?>
-		<div class="<?php echo esc_attr( $classes ); ?>">
+		<div class="<?php echo strip_tags( $classes ); ?>">
 			<?php wp_login_form( $args ); ?>
 			<div class="login-form-footer is-meta">
 				<?php if ( ! empty( $tops['login_register'] ) ) {
@@ -668,26 +619,54 @@ if ( ! function_exists( 'foxiz_render_mini_profile' ) ) {
 
 		if ( '2' === (string) $settings['logged_status'] ) : ?>
 			<div class="logged-status">
-				<span class="logged-welcome"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . esc_html( $current_user->display_name ) . '</strong>'; ?></span>
+				<span class="logged-welcome"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . foxiz_strip_tags( $current_user->display_name ) . '</strong>'; ?></span>
 				<a class="s-logout-link" href="<?php echo wp_logout_url( $logout_redirect ); ?>"><?php echo foxiz_html__( 'Sign Out', 'foxiz' ); ?>
 					<i class="rbi rbi-logout"></i></a>
 			</div>
 		<?php else :
 			if ( ! empty( $current_user->roles[0] ) ) {
-			$role = translate_user_role( $current_user->roles[0] );
-		} ?>
+				$role = translate_user_role( $current_user->roles[0] );
+			} ?>
 			<div class="logged-status">
 				<div class="logged-status-inner">
 					<div class="logged-status-avatar"><?php echo get_avatar( $current_user->ID ); ?></div>
 					<div class=logged-status-info>
-						<span class="logged-welcome"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . esc_html( $current_user->display_name ) . '</strong>'; ?></span>
+						<span class="logged-welcome"><?php echo foxiz_html__( 'Hi,', 'foxiz' ) . '<strong>' . foxiz_strip_tags( $current_user->display_name ) . '</strong>'; ?></span>
 						<?php if ( ! empty( $role ) ) : ?>
-							<span class="status-role"><?php echo esc_html( $role ); ?></span><?php endif; ?>
+							<span class="status-role"><?php foxiz_render_inline_html( $role ); ?></span><?php endif; ?>
 					</div>
 				</div>
 				<a class="s-logout-link" href="<?php echo wp_logout_url( $logout_redirect ); ?>"><?php echo foxiz_html__( 'Sign Out', 'foxiz' ); ?>
 					<i class="rbi rbi-logout"></i></a>
 			</div>
 		<?php endif;
+	}
+}
+
+if ( ! function_exists( 'foxiz_elementor_tax_featured' ) ) {
+	function foxiz_elementor_tax_featured( $settings = [] ) {
+
+		if ( ! is_archive() ) {
+			return;
+		}
+
+		$data = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
+		if ( empty( $data['featured_image'][0] ) ) {
+			return;
+		}
+
+		$attrs = [];
+		if ( ! empty( $settings['feat_lazyload'] ) && '1' === (string) $settings['feat_lazyload'] ) {
+			$attrs['loading'] = 'lazy';
+		} else {
+			$attrs['loading'] = 'eager';
+		}
+
+		$class_name = 'e-tax-feat';
+		if ( ! empty( $settings['image_ratio'] ) ) {
+			$class_name .= ' i-ratio';
+		}
+
+		echo '<div class="' . $class_name . '"><div class="s-feat">' . wp_get_attachment_image( $data['featured_image'][0], $settings['crop_size'], false, $attrs ) . '</div></div>';
 	}
 }

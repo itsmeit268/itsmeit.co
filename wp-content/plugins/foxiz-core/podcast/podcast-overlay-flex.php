@@ -1,14 +1,14 @@
 <?php
 
 namespace foxizElementor\Widgets;
+defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
 use foxizElementorControl\Options;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+use function foxiz_get_podcast_overlay_flex_1;
+use function foxiz_is_ruby_template;
 
 class Podcast_Overlay_Flex_1 extends Widget_Base {
 
@@ -39,158 +39,7 @@ class Podcast_Overlay_Flex_1 extends Widget_Base {
 
 	protected function register_controls() {
 
-		$this->start_controls_section(
-			'query_filters', [
-				'label' => esc_html__( 'Query Settings', 'foxiz-core' ),
-				'tab'   => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		if ( \foxiz_is_ruby_template() ) {
-			$this->add_control(
-				'dynamic_query_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::dynamic_query_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-				]
-			);
-			$this->add_control(
-				'dynamic_render_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::dynamic_render_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-				]
-			);
-			$this->add_control(
-				'category',
-				[
-					'label'       => esc_html__( 'Show Filter', 'foxiz-core' ),
-					'type'        => Controls_Manager::SELECT,
-					'description' => Options::category_description(),
-					'options'     => Options::cat_dropdown( true, 'series' ),
-					'default'     => '0',
-				]
-			);
-		} else {
-			$this->add_control(
-				'category',
-				[
-					'label'       => esc_html__( 'Show Filter', 'foxiz-core' ),
-					'type'        => Controls_Manager::SELECT,
-					'description' => Options::category_description(),
-					'options'     => Options::cat_dropdown( false, 'series' ),
-					'default'     => '0',
-				]
-			);
-		}
-		$this->add_control(
-			'categories',
-			[
-				'label'       => esc_html__( 'Multiple Shows Filter', 'foxiz-core' ),
-				'type'        => Controls_Manager::TEXT,
-				'ai'          => [ 'active' => false ],
-				'description' => Options::categories_description(),
-				'default'     => '',
-			]
-		);
-		$this->add_control(
-			'category_not_in',
-			[
-				'label'       => esc_html__( 'Exclude Show IDs', 'foxiz-core' ),
-				'type'        => Controls_Manager::TEXT,
-				'ai'          => [ 'active' => false ],
-				'description' => Options::category_not_in_description(),
-				'placeholder' => esc_html__( '1,2,3', 'foxiz-core' ),
-				'default'     => '',
-			]
-		);
-		$this->add_control(
-			'tags',
-			[
-				'label'       => esc_html__( 'Tags Slug Filter', 'foxiz-core' ),
-				'type'        => Controls_Manager::TEXT,
-				'ai'          => [ 'active' => false ],
-				'description' => Options::tags_description(),
-				'placeholder' => esc_html__( 'tag1,tag2,tag3', 'foxiz-core' ),
-				'default'     => '',
-			]
-		);
-		$this->add_control(
-			'tag_not_in',
-			[
-				'label'       => esc_html__( 'Exclude Tags Slug', 'foxiz-core' ),
-				'type'        => Controls_Manager::TEXT,
-				'ai'          => [ 'active' => false ],
-				'description' => Options::tag_not_in_description(),
-				'placeholder' => esc_html__( 'tag1,tag2,tag3', 'foxiz-core' ),
-				'default'     => '',
-			]
-		);
-		$this->add_control(
-			'author',
-			[
-				'label'       => esc_html__( 'Host Filter', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => Options::author_description(),
-				'options'     => Options::author_dropdown(),
-				'default'     => '0',
-			]
-		);
-		$this->add_control(
-			'post_not_in',
-			[
-				'label'       => esc_html__( 'Exclude Episode IDs', 'foxiz-core' ),
-				'type'        => Controls_Manager::TEXT,
-				'ai'          => [ 'active' => false ],
-				'description' => Options::post_not_in_description(),
-				'default'     => '',
-			]
-		);
-		$this->add_control(
-			'post_in',
-			[
-				'label'       => esc_html__( 'Episode IDs Filter', 'foxiz-core' ),
-				'type'        => Controls_Manager::TEXT,
-				'ai'          => [ 'active' => false ],
-				'description' => Options::post_in_description(),
-				'default'     => '',
-			]
-		);
-		$this->add_control(
-			'order',
-			[
-				'label'       => esc_html__( 'Sort Order', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => Options::order_description(),
-				'options'     => Options::order_dropdown( [
-					'post_index'      => esc_html__( 'Episode Index ASC', 'foxiz-core' ),
-					'post_index_desc' => esc_html__( 'Episode Index DECS', 'foxiz-core' ),
-				] ),
-				'default'     => 'date_post',
-			]
-		);
-		$this->add_control(
-			'posts_per_page',
-			[
-				'label'       => esc_html__( 'Number of Episodes', 'foxiz-core' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => Options::posts_per_page_description(),
-				'default'     => '3',
-			]
-		);
-		$this->add_control(
-			'offset',
-			[
-				'label'       => esc_html__( 'Episode Offset', 'foxiz-core' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => Options::offset_description(),
-				'default'     => '',
-			]
-		);
-		$this->end_controls_section();
-		if ( \foxiz_is_ruby_template() ) {
+		if ( foxiz_is_ruby_template() ) {
 			$this->start_controls_section(
 				'template-builder-section', [
 					'label' => esc_html__( 'Template Builder - Global Query', 'foxiz-core' ),
@@ -277,7 +126,159 @@ class Podcast_Overlay_Flex_1 extends Widget_Base {
 				]
 			);
 			$this->end_controls_section();
+			$this->start_controls_section(
+				'dynamic_info_section', [
+					'label' => esc_html__( 'Dynamic Query Tips', 'foxiz-core' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				]
+			);
+			$this->add_control(
+				'dynamic_query_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::dynamic_query_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				]
+			);
+			$this->add_control(
+				'dynamic_tag_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::dynamic_tag_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				]
+			);
+			$this->add_control(
+				'dynamic_render_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::dynamic_render_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				]
+			);
+			$this->end_controls_section();
 		}
+		$this->start_controls_section(
+			'query_filters', [
+				'label' => esc_html__( 'Query Settings', 'foxiz-core' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'category',
+			[
+				'label'       => esc_html__( 'Show Filter', 'foxiz-core' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => Options::category_description(),
+				'options'     => ( foxiz_is_ruby_template() ) ? Options::cat_dropdown( true, 'series' ) : Options::cat_dropdown( false, 'series' ),
+				'default'     => '0',
+			]
+		);
+		$this->add_control(
+			'categories',
+			[
+				'label'       => esc_html__( 'Multiple Shows Filter', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXT,
+				'ai'          => [ 'active' => false ],
+				'description' => Options::categories_description(),
+				'default'     => '',
+			]
+		);
+		$this->add_control(
+			'category_not_in',
+			[
+				'label'       => esc_html__( 'Exclude Show IDs', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXT,
+				'ai'          => [ 'active' => false ],
+				'description' => Options::category_not_in_description(),
+				'placeholder' => esc_html__( '1,2,3', 'foxiz-core' ),
+				'default'     => '',
+			]
+		);
+		$this->add_control(
+			'tags',
+			[
+				'label'       => esc_html__( 'Tags Slug Filter', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXT,
+				'ai'          => [ 'active' => false ],
+				'description' => Options::tags_description(),
+				'placeholder' => esc_html__( 'tag1,tag2,tag3', 'foxiz-core' ),
+				'default'     => '',
+			]
+		);
+		$this->add_control(
+			'tag_not_in',
+			[
+				'label'       => esc_html__( 'Exclude Tags Slug', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXT,
+				'ai'          => [ 'active' => false ],
+				'description' => Options::tag_not_in_description(),
+				'placeholder' => esc_html__( 'tag1,tag2,tag3', 'foxiz-core' ),
+				'default'     => '',
+			]
+		);
+		$this->add_control(
+			'author',
+			[
+				'label'       => esc_html__( 'Host Filter', 'foxiz-core' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => Options::author_description(),
+				'options'     => ( foxiz_is_ruby_template() ) ? Options::author_dropdown( true ) : Options::author_dropdown(),
+				'default'     => '0',
+			]
+		);
+		$this->add_control(
+			'post_not_in',
+			[
+				'label'       => esc_html__( 'Exclude Episode IDs', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXT,
+				'ai'          => [ 'active' => false ],
+				'description' => Options::post_not_in_description(),
+				'default'     => '',
+			]
+		);
+		$this->add_control(
+			'post_in',
+			[
+				'label'       => esc_html__( 'Episode IDs Filter', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXT,
+				'ai'          => [ 'active' => false ],
+				'description' => Options::post_in_description(),
+				'default'     => '',
+			]
+		);
+		$this->add_control(
+			'order',
+			[
+				'label'       => esc_html__( 'Sort Order', 'foxiz-core' ),
+				'type'        => Controls_Manager::SELECT,
+				'description' => Options::order_description(),
+				'options'     => Options::order_dropdown( [
+					'post_index'      => esc_html__( 'Episode Index ASC', 'foxiz-core' ),
+					'post_index_desc' => esc_html__( 'Episode Index DECS', 'foxiz-core' ),
+				] ),
+				'default'     => 'date_post',
+			]
+		);
+		$this->add_control(
+			'posts_per_page',
+			[
+				'label'       => esc_html__( 'Number of Episodes', 'foxiz-core' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => Options::posts_per_page_description(),
+				'default'     => '3',
+			]
+		);
+		$this->add_control(
+			'offset',
+			[
+				'label'       => esc_html__( 'Episode Offset', 'foxiz-core' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => Options::offset_description(),
+				'default'     => '',
+			]
+		);
+		$this->end_controls_section();
 		$this->start_controls_section(
 			'extend_query_section', [
 				'label' => esc_html__( 'Taxonomies', 'foxiz-core' ),
@@ -297,7 +298,7 @@ class Podcast_Overlay_Flex_1 extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Define Taxonomy', 'foxiz-core' ),
 				'description' => Options::taxonomy_query_description(),
-				'placeholder' => esc_html__( 'series', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'genre', 'foxiz-core' ),
 				'type'        => Controls_Manager::TEXT,
 				'ai'          => [ 'active' => false ],
 				'default'     => '',
@@ -306,11 +307,12 @@ class Podcast_Overlay_Flex_1 extends Widget_Base {
 		$this->add_control(
 			'tax_slugs',
 			[
-				'label'       => esc_html__( 'Taxonomy Slugs', 'foxiz-core' ),
-				'description' => Options::tax_slugs_description(),
-				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Term Slugs', 'foxiz-core' ),
+				'description' => Options::term_slugs_description(),
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 1,
 				'ai'          => [ 'active' => false ],
-				'placeholder' => esc_html__( 'tax1, tax2, tax3', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'termslug1, termslug2, termslug3', 'foxiz-core' ),
 				'default'     => '',
 			]
 		);
@@ -571,7 +573,7 @@ class Podcast_Overlay_Flex_1 extends Widget_Base {
 			]
 		);
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'label'    => esc_html__( 'Custom Entry Show Font', 'foxiz-core' ),
 				'name'     => 'category_font',
@@ -624,7 +626,7 @@ class Podcast_Overlay_Flex_1 extends Widget_Base {
 			]
 		);
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'label'    => esc_html__( 'Custom Episode Title Font', 'foxiz-core' ),
 				'name'     => 'title_font',
@@ -1344,7 +1346,7 @@ class Podcast_Overlay_Flex_1 extends Widget_Base {
 			$settings['post_type'] = 'podcast';
 
 			$settings['uuid'] = 'uid_' . $this->get_id();
-			echo \foxiz_get_podcast_overlay_flex_1( $settings );
+			echo foxiz_get_podcast_overlay_flex_1( $settings );
 		}
 	}
 }

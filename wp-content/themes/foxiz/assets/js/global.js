@@ -1536,7 +1536,6 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
             if (self.crwDetect()) {
                 return false;
             }
-
             var checktag = $('#rb-checktag');
             var placebo = $('.rb-adbanner');
 
@@ -1858,7 +1857,9 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
                 const animation = liveSearchEl.find('.live-search-animation');
                 const limit = liveSearchEl.data('limit');
                 const search = liveSearchEl.data('search');
-                const follow = liveSearchEl.data('follow')
+                const follow = liveSearchEl.data('follow');
+                const tax = liveSearchEl.data('tax');
+                const dsource = liveSearchEl.data('dsource');
 
                 input.attr('autocomplete', 'off');
 
@@ -1895,6 +1896,8 @@ var FOXIZ_MAIN_SCRIPT = (function (Module, $) {
                                     limit: limit,
                                     search: search,
                                     follow: follow,
+                                    tax: tax,
+                                    dsource: dsource
                                 },
                                 success: function (data) {
                                     data = $.parseJSON(JSON.stringify(data));

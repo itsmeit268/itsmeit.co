@@ -27,7 +27,7 @@ if ( ! empty( $type ) && 'hidden' === $type ) {
 	$foxiz_classes .= ' is-hidden';
 }
 ?>
-	<div class="<?php echo esc_attr( $foxiz_classes ); ?>">
+	<div class="<?php echo strip_tags( $foxiz_classes ); ?>">
 		<?php
 		/**
 		 * Hook to output something before the quantity input field.

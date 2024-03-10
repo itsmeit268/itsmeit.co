@@ -54,7 +54,7 @@ if ( ! function_exists( 'foxiz_register_options_logo_global' ) ) {
 					'preview'     => true,
 					'title'       => esc_html__( 'Main Logo', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Select or upload a logo for your site.', 'foxiz' ),
-					'description' => esc_html__( 'IMPORTANT NOTE: Please ensure that this setting is configured for schema markup. The recommended height value is 60px.', 'foxiz' ),
+					'description' => esc_html__( 'The recommended height value is 60px.', 'foxiz' ),
 				],
 				[
 					'id'          => 'dark_logo',

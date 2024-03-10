@@ -80,8 +80,8 @@ class Social_List extends Widget_Base {
 			'item_spacing', [
 				'label'       => esc_html__( 'Item Spacing', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Input a custom spacing between social list item (in px). Default is 5.', 'foxiz-core' ),
-				'selectors'   => [ '{{WRAPPER}} .header-social-list > a' => 'padding-left: {{VALUE}}px; padding-right: {{VALUE}}px;' ],
+				'description' => esc_html__( 'Input custom spacing (in pixels) between social list items. Please note: The icon has left and right padding of 5 pixels for ease of targeting.', 'foxiz-core' ),
+				'selectors'   => [ '{{WRAPPER}}' => '--icon-spacing: {{VALUE}}px;' ],
 			]
 		);
 		$this->add_responsive_control(

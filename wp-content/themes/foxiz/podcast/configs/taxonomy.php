@@ -3,6 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 	function foxiz_register_term_series_settings( $configs ) {
 
@@ -16,6 +17,11 @@ if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 					'title' => esc_html__( 'Entry Show', 'foxiz' ),
 					'id'    => 'entry-category',
 					'icon'  => 'dashicons-art',
+				],
+				[
+					'title' => esc_html__( 'Featured Image', 'foxiz' ),
+					'id'    => 'show-featured',
+					'icon'  => 'dashicons-format-gallery',
 				],
 				[
 					'title' => esc_html__( 'Show Header', 'foxiz' ),
@@ -41,6 +47,11 @@ if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 					'title' => esc_html__( 'Queries', 'foxiz' ),
 					'id'    => 'query',
 					'icon'  => 'dashicons-database',
+				],
+				[
+					'title' => esc_html__( 'Podcast RSS', 'foxiz' ),
+					'id'    => 'show-rss',
+					'icon'  => 'dashicons-rss',
 				],
 			],
 			'fields'     => [
@@ -109,10 +120,9 @@ if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 				],
 				[
 					'id'   => 'featured_image',
-					'name' => esc_html__( 'Featured Images', 'foxiz' ),
+					'name' => esc_html__( 'Featured Image', 'foxiz' ),
 					'desc' => esc_html__( 'Upload featured images for this show.', 'foxiz' ),
-					'info' => esc_html__( 'You can set 1 or 2 feature images for a show.', 'foxiz' ),
-					'tab'  => 'category-header',
+					'tab'  => 'show-featured',
 					'type' => 'image',
 				],
 				[
@@ -139,8 +149,8 @@ if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 				],
 				[
 					'id'   => 'featured_file',
-					'name' => esc_html__( 'Intro Podcast File', 'foxiz' ),
-					'desc' => esc_html__( 'Upload an intro podcast for this show.', 'foxiz' ),
+					'name' => esc_html__( 'Audio Intro Podcast File', 'foxiz' ),
+					'desc' => esc_html__( 'Upload an introductory podcast (audio file) for this show.', 'foxiz' ),
 					'tab'  => 'podcast',
 					'type' => 'file',
 				],
@@ -180,7 +190,7 @@ if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 					'id'          => 'template_global',
 					'name'        => esc_html__( 'Global WP Query Template Shortcode', 'foxiz' ),
 					'desc'        => esc_html__( 'Input a "Ruby Template" shortcode to make it as the main blog listing.', 'foxiz' ),
-					'info'        => esc_html__( 'Build the main blog listing by Ruby Template.', 'foxiz' ),
+					'info'        => esc_html__( 'Build the main blog listing using the Ruby template.', 'foxiz' ),
 					'tab'         => 'global-template',
 					'type'        => 'textarea',
 					'rows'        => '2',
@@ -201,7 +211,7 @@ if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 					'id'      => 'order_by',
 					'name'    => esc_html__( 'Order Episodes', 'foxiz' ),
 					'desc'    => esc_html__( 'Order by episode index for this show', 'foxiz' ),
-					'info'    => esc_html__( 'As default, the show will order episodes by publish date.', 'foxiz' ),
+					'info'    => esc_html__( 'By default, the show will order episodes by publish date.', 'foxiz' ),
 					'tab'     => 'query',
 					'type'    => 'select',
 					'options' => [
@@ -215,11 +225,28 @@ if ( ! function_exists( 'foxiz_register_term_series_settings' ) ) {
 					'id'          => 'tag_not_in',
 					'name'        => esc_html__( 'Exclude Tags Slug', 'foxiz' ),
 					'desc'        => esc_html__( 'Remove episodes with this tag from the global blog query.', 'foxiz' ),
-					'info'        => esc_html__( 'Separated by commas. This setting will also apply the Global WP Query Template.', 'foxiz' ),
+					'info'        => esc_html__( 'Separated by commas, this setting will also apply to the Global WP Query Template.', 'foxiz' ),
 					'tab'         => 'query',
 					'placeholder' => 'tag1,tag2,tag3',
 					'type'        => 'text',
 					'std'         => '',
+				],
+				[
+					'id'   => 'featured_rss',
+					'name' => esc_html__( 'RSS Feature Image', 'foxiz' ),
+					'desc' => esc_html__( 'Upload an RSS featured image for this show.', 'foxiz' ),
+					'info' => esc_html__( 'The image should be square, with a size between 1400 and 3000px.', 'foxiz' ),
+					'tab'  => 'show-rss',
+					'type' => 'image',
+				],
+				[
+					'id'          => 'itunes_category',
+					'name'        => esc_html__( 'Apple Podcasts Categories', 'foxiz' ),
+					'desc'        => esc_html__( 'Input the Apple Podcasts Categories (RSS supported), separated by commas.', 'foxiz' ),
+					'placeholder' => 'News',
+					'info'        => esc_html__( 'List of Categories: https://podcasters.apple.com/support/1691-apple-podcasts-categories', 'foxiz' ),
+					'tab'         => 'show-rss',
+					'type'        => 'text',
 				],
 			],
 		];

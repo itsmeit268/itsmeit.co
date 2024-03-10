@@ -59,7 +59,7 @@ class Header_Notification extends Widget_Base {
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'style-section', [
-				'label' => esc_html__( 'Style Settings', 'foxiz-core' ),
+				'label' => esc_html__( 'Style', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -149,13 +149,22 @@ class Header_Notification extends Widget_Base {
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
-		$this->add_control(
+		$this->add_responsive_control(
 			'form_position',
 			[
 				'label'       => esc_html__( 'Dropdown Right Position', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'input a right relative position for notification dropdown, e.g. -200', 'foxiz-core' ),
+				'description' => esc_html__( 'Input the right relative position (in px) for the notification dropdown, e.g., -200.', 'foxiz-core' ),
 				'selectors'   => [ '{{WRAPPER}} .header-dropdown' => 'right: {{VALUE}}px; left: auto;' ],
+			]
+		);
+		$this->add_responsive_control(
+			'dropdown_width',
+			[
+				'label'       => esc_html__( 'Dropdown Width', 'foxiz-core' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => esc_html__( 'Input the width values for the dropdown section.', 'foxiz-core' ),
+				'selectors'   => [ '{{WRAPPER}}' => '--dropdown-w: {{VALUE}}px;' ],
 			]
 		);
 		$this->add_control(
@@ -234,9 +243,6 @@ class Header_Notification extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	/**
-	 * render layout
-	 */
 	protected function render() {
 
 		if ( function_exists( 'foxiz_header_notification' ) ) {

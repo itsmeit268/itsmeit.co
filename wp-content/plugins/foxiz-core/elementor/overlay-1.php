@@ -46,9 +46,10 @@ class Overlay_1 extends Widget_Base {
 	protected function register_controls() {
 
 		if ( foxiz_is_ruby_template() ) {
+
 			$this->start_controls_section(
 				'dynamic_info_section', [
-					'label' => esc_html__( 'Dynamic Query Info', 'foxiz-core' ),
+					'label' => esc_html__( 'Dynamic Query Tips', 'foxiz-core' ),
 					'tab'   => Controls_Manager::TAB_CONTENT,
 				]
 			);
@@ -210,7 +211,7 @@ class Overlay_1 extends Widget_Base {
 
 		$this->start_controls_section(
 			'extend_query_section', [
-				'label' => esc_html__( 'Post Type & Taxonomies', 'foxiz-core' ),
+				'label' => esc_html__( 'Query for Post Type & Taxonomies', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -245,7 +246,7 @@ class Overlay_1 extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Define Taxonomy', 'foxiz-core' ),
 				'description' => Options::taxonomy_query_description(),
-				'placeholder' => esc_html__( 'series', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'genre', 'foxiz-core' ),
 				'type'        => Controls_Manager::TEXT,
 				'ai'          => [ 'active' => false ],
 				'default'     => '',
@@ -254,11 +255,12 @@ class Overlay_1 extends Widget_Base {
 		$this->add_control(
 			'tax_slugs',
 			[
-				'label'       => esc_html__( 'Taxonomy Slugs', 'foxiz-core' ),
-				'description' => Options::tax_slugs_description(),
-				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Term Slugs', 'foxiz-core' ),
+				'description' => Options::term_slugs_description(),
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 1,
 				'ai'          => [ 'active' => false ],
-				'placeholder' => esc_html__( 'tax1, tax2, tax3', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'termslug1, termslug2, termslug3', 'foxiz-core' ),
 				'default'     => '',
 			]
 		);
@@ -1098,8 +1100,28 @@ class Overlay_1 extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Next/Prev Icons Top Position', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Input a position (percent) from the top for the next and prev slider buttons.', 'foxiz-core' ),
+				'description' => esc_html__( 'Input a position (percentage) from the top for the next and previous slider buttons', 'foxiz-core' ),
 				'selectors'   => [ '{{WRAPPER}} .slider-prev, {{WRAPPER}} .slider-next' => 'top: {{VALUE}}%;' ],
+			]
+		);
+		$this->add_control(
+			'slider_nav_color',
+			[
+				'label'       => esc_html__( 'Nav, Dots Color', 'foxiz-core' ),
+				'type'        => Controls_Manager::COLOR,
+				'description' => esc_html__( 'Select a color for the slider dots and navigation controls of this slider.', 'foxiz-core' ),
+				'selectors'   => [ '{{WRAPPER}}' => '--slider-nav-color: {{VALUE}};' ],
+				'default'     => '',
+			]
+		);
+		$this->add_control(
+			'dark_slider_nav_color',
+			[
+				'label'       => esc_html__( 'Dark Mode - Nav, Dots Color', 'foxiz-core' ),
+				'type'        => Controls_Manager::COLOR,
+				'description' => esc_html__( 'Select a color for the slider dots and navigation controls of this slider in the dark mode.', 'foxiz-core' ),
+				'selectors'   => [ '[data-theme="dark"] {{WRAPPER}}' => '--slider-nav-color: {{VALUE}};' ],
+				'default'     => '',
 			]
 		);
 		$this->add_responsive_control(

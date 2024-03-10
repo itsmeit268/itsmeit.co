@@ -47,7 +47,7 @@ class List_Small_3 extends Widget_Base {
 		if ( foxiz_is_ruby_template() ) {
 			$this->start_controls_section(
 				'dynamic_info_section', [
-					'label' => esc_html__( 'Dynamic Query Info', 'foxiz-core' ),
+					'label' => esc_html__( 'Dynamic Query Tips', 'foxiz-core' ),
 					'tab'   => Controls_Manager::TAB_CONTENT,
 				]
 			);
@@ -209,7 +209,7 @@ class List_Small_3 extends Widget_Base {
 
 		$this->start_controls_section(
 			'extend_query_section', [
-				'label' => esc_html__( 'Post Type & Taxonomies', 'foxiz-core' ),
+				'label' => esc_html__( 'Query for Post Type & Taxonomies', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -244,7 +244,7 @@ class List_Small_3 extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Define Taxonomy', 'foxiz-core' ),
 				'description' => Options::taxonomy_query_description(),
-				'placeholder' => esc_html__( 'series', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'genre', 'foxiz-core' ),
 				'type'        => Controls_Manager::TEXT,
 				'ai'          => [ 'active' => false ],
 				'default'     => '',
@@ -253,11 +253,12 @@ class List_Small_3 extends Widget_Base {
 		$this->add_control(
 			'tax_slugs',
 			[
-				'label'       => esc_html__( 'Taxonomy Slugs', 'foxiz-core' ),
-				'description' => Options::tax_slugs_description(),
-				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Term Slugs', 'foxiz-core' ),
+				'description' => Options::term_slugs_description(),
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 1,
 				'ai'          => [ 'active' => false ],
-				'placeholder' => esc_html__( 'tax1, tax2, tax3', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'termslug1, termslug2, termslug3', 'foxiz-core' ),
 				'default'     => '',
 			]
 		);
@@ -692,8 +693,10 @@ class List_Small_3 extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Bold Meta Color', 'foxiz-core' ),
 				'type'      => Controls_Manager::COLOR,
+				'description' => Options::bold_meta_color_description(),
 				'selectors' => [
-					'{{WRAPPER}}' => '--meta-b-fcolor: {{VALUE}}',
+					'{{WRAPPER}}'                  => '--meta-b-fcolor: {{VALUE}}',
+					'{{WRAPPER}} .meta-category a' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -713,7 +716,8 @@ class List_Small_3 extends Widget_Base {
 				'label'     => esc_html__( 'Dark Mode - Bold Meta Color', 'foxiz-core' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme' => '--meta-b-fcolor: {{VALUE}}',
+					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme'                                   => '--meta-b-fcolor: {{VALUE}}',
+					'[data-theme="dark"] {{WRAPPER}} .meta-category a, {{WRAPPER}} .light-scheme .meta-category a' => 'color: {{VALUE}}',
 				],
 			]
 		);

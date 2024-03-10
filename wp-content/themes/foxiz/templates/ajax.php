@@ -114,6 +114,10 @@ if ( ! class_exists( 'Foxiz_Ajax', false ) ) {
 					$key = sanitize_text_field( $key );
 					if ( ! is_array( $settings[ $key ] ) ) {
 						$settings[ $key ] = sanitize_text_field( $val );
+					} else {
+						foreach ( $settings[ $key ] as $index => $item ) {
+							$settings[ $key ][ $index ] = foxiz_strip_tags( stripslashes( $item ) );
+						}
 					}
 				}
 			} elseif ( is_string( $settings ) ) {
@@ -286,25 +290,46 @@ if ( ! class_exists( 'Foxiz_Ajax', false ) ) {
 				$limit = absint( $_GET['limit'] );
 			}
 
+			if ( ! empty( $_GET['follow'] ) ) {
+				$follow = 1;
+			} else {
+				$follow = 0;
+			}
+			if ( isset( $_GET['dsource'] ) ) {
+				$desc_source = sanitize_text_field( $_GET['dsource'] );
+			} else {
+				$desc_source = 0;
+			}
 			if ( empty( $limit ) || $limit > 6 ) {
 				$limit = 4;
 			}
 
-			$taxonomies = get_terms( [
-				'taxonomy'   => [ 'category' ],
+			$params = [
 				'search'     => $input,
 				'number'     => $limit,
 				'hide_empty' => true,
-			] );
+			];
 
-			$response = '<div class="block-inner live-search-inner">';
+			if ( ! empty( $_GET['tax'] ) ) {
+				$taxonomies = sanitize_text_field( $_GET['tax'] );
+				if ( 'all' !== $taxonomies ) {
+					$taxonomies         = explode( ',', $taxonomies );
+					$taxonomies         = array_map( 'trim', $taxonomies );
+					$params['taxonomy'] = $taxonomies;
+				}
+			} else {
+				$params['taxonomy'] = [ 'category' ];
+			}
+			$taxonomies = get_terms( $params );
+			$response   = '<div class="block-inner live-search-inner">';
 			if ( ! empty( $taxonomies ) ) {
 				ob_start();
 				foreach ( $taxonomies as $category ) {
-					foxiz_category_item_6( [
+					foxiz_category_item_search( [
 						'cid'         => $category->term_id,
-						'follow'      => 1,
+						'follow'      => $follow,
 						'count_posts' => 1,
+						'desc_source' => $desc_source,
 					] );
 				}
 				$response .= ob_get_clean();
@@ -316,7 +341,6 @@ if ( ! class_exists( 'Foxiz_Ajax', false ) ) {
 			wp_send_json( $response );
 		}
 
-		/** load personalize block in ajax */
 		public function personalize_block() {
 
 			if ( empty( $_GET['data'] ) || empty( $_GET['data']['name'] ) ) {

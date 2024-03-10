@@ -79,7 +79,7 @@ class CTA extends Widget_Base {
 				'label'       => esc_html__( 'Description', 'foxiz-core' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 4,
-				'description' => esc_html__( 'Input a description for this block', 'foxiz-core' ),
+				'description' => esc_html__( 'Input a description for the call to action, allowing limited HTML tags (a, strong, p).', 'foxiz-core' ),
 				'default'     => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
 			]
 		);

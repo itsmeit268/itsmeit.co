@@ -260,7 +260,6 @@ if ( ! class_exists( 'Foxiz_Walker_Nav_Menu', false ) ) {
 
 				$output .= foxiz_get_grid_small_1( [
 					'uuid'              => 'mega-listing-' . $item->ID,
-					'duplicate_allowed' => 1,
 					'columns'           => 5,
 					'posts_per_page'    => 5,
 					'title_tag'         => 'span',
@@ -318,7 +317,6 @@ if ( ! class_exists( 'Foxiz_Walker_Nav_Menu', false ) ) {
 
 				$output .= foxiz_get_list_small_2( [
 					'uuid'              => 'mega-listing-trending-' . $item->ID,
-					'duplicate_allowed' => 1,
 					'posts_per_page'    => 3,
 					'title_tag'         => 'span',
 					'title_classes'     => 'h4',
@@ -341,7 +339,6 @@ if ( ! class_exists( 'Foxiz_Walker_Nav_Menu', false ) ) {
 
 				$output .= foxiz_get_list_small_1( [
 					'uuid'               => 'mega-listing-latest-' . $item->ID,
-					'duplicate_allowed'  => 1,
 					'posts_per_page'     => 4,
 					'title_tag'          => 'span',
 					'title_classes'      => 'h4',
@@ -370,8 +367,6 @@ if ( ! class_exists( 'Foxiz_Walker_Nav_Menu', false ) ) {
 		 * @return false|string
 		 */
 		public function column_mega_menu( $item, $settings ) {
-
-			$GLOBALS['foxiz_no_unique'] = true;
 			ob_start();
 			if ( ! empty( $settings['mega_shortcode'] ) ) : ?>
 				<?php echo do_shortcode( stripslashes( $settings['mega_shortcode'] ) ); ?>
@@ -380,8 +375,6 @@ if ( ! class_exists( 'Foxiz_Walker_Nav_Menu', false ) ) {
 					<?php dynamic_sidebar( $settings['columns'] ); ?>
 				</div>
 			<?php endif;
-			$GLOBALS['foxiz_no_unique'] = false;
-
 			return ob_get_clean();
 		}
 	}

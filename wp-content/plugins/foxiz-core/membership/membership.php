@@ -53,11 +53,11 @@ if ( ! class_exists( 'Foxiz_Membership', false ) ) {
 			$output = '';
 			$output .= '<div class="restrict-box"><div class="restrict-box-inner">';
 
-			$output .= '<h2 class="restrict-title">' . wp_kses( $restrict_title, 'foxiz' ) . '</h2>';
-			$output .= '<p class="restrict-desc">' . wp_kses( $restrict_desc, 'foxiz' ) . '</p>';
+			$output .= '<h2 class="restrict-title">' . foxiz_strip_tags( $restrict_title ) . '</h2>';
+			$output .= '<p class="restrict-desc">' . foxiz_strip_tags( $restrict_desc ) . '</p>';
 			$output .= '<div class="restrict-button-wrap"><a href="' . $joinus_url . '" class="restrict-button is-btn">' . $join_us_label . '</a></div>';
 			$output .= '<div class="restrict-login">';
-			$output .= '<span class="restrict-login-description">' . wp_kses( $login_desc, 'foxiz' ) . '</span>';
+			$output .= '<span class="restrict-login-description">' . foxiz_strip_tags( $login_desc ) . '</span>';
 			$output .= '<a class="restrict-login-link" href="' . $login_url . '">' . $login_label . '</a>';
 			$output .= '</div>';
 
@@ -86,8 +86,8 @@ if ( ! class_exists( 'Foxiz_Membership', false ) ) {
 			$output = '';
 			$output .= '<div class="restrict-box"><div class="restrict-box-inner">';
 
-			$output .= '<h2 class="restrict-title">' . wp_kses( $restrict_title, 'foxiz' ) . '</h2>';
-			$output .= '<p class="restrict-desc">' . wp_kses( $restrict_desc, 'foxiz' ) . '</p>';
+			$output .= '<h2 class="restrict-title">' . foxiz_strip_tags( $restrict_title ) . '</h2>';
+			$output .= '<p class="restrict-desc">' . foxiz_strip_tags( $restrict_desc ) . '</p>';
 			$output .= '<div class="restrict-button-wrap"><a href="' . $joinus_url . '" class="restrict-button is-btn">' . $join_us_label . '</a></div>';
 
 			$output .= '</div></div>';
@@ -117,8 +117,8 @@ if ( ! class_exists( 'Foxiz_Membership', false ) ) {
 			$output = '';
 			$output .= '<div class="restrict-box"><div class="restrict-box-inner">';
 
-			$output .= '<h2 class="restrict-title">' . wp_kses( $restrict_title, 'foxiz' ) . '</h2>';
-			$output .= '<p class="restrict-desc">' . wp_kses( $restrict_desc, 'foxiz' ) . '</p>';
+			$output .= '<h2 class="restrict-title">' . foxiz_strip_tags( $restrict_title ) . '</h2>';
+			$output .= '<p class="restrict-desc">' . foxiz_strip_tags( $restrict_desc ) . '</p>';
 			$output .= '<div class="restrict-button-wrap"><a href="' . $renewal . '" class="restrict-button is-btn">' . $renewal_label . '</a></div>';
 
 			$output .= '</div></div>';

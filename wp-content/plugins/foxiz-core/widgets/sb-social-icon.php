@@ -290,7 +290,7 @@ if ( ! class_exists( 'Foxiz_W_Social_Icon', false ) ) {
 			}
 
 			$bio_class_name    = 'about-bio';
-			$social_class_name = 'social-icon-wrap clearfix tooltips-n';
+			$social_class_name = 'social-icon-wrap tooltips-n';
 
 			if ( ! empty( $instance['style'] ) && '2' === (string) $instance['style'] ) {
 				$bio_class_name    .= ' is-centered';
@@ -299,15 +299,15 @@ if ( ! class_exists( 'Foxiz_W_Social_Icon', false ) ) {
 
 			echo $args['before_widget'];
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . $instance['title'] . $args['after_title'];
+				echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 			} ?>
 			<div class="about-content-wrap">
 				<?php if ( ! empty( $instance['content'] ) ) : ?>
-					<div class="<?php echo esc_attr( $bio_class_name ); ?>">
-						<?php echo html_entity_decode( esc_html( $instance['content'] ) ); ?>
+					<div class="<?php echo strip_tags( $bio_class_name ); ?>">
+						<?php echo foxiz_strip_tags( $instance['content'] ); ?>
 					</div>
 				<?php endif; ?>
-				<div class="<?php echo esc_attr( $social_class_name ); ?>"><?php
+				<div class="<?php echo strip_tags( $social_class_name ); ?>"><?php
 					if ( function_exists( 'foxiz_get_social_list' ) ) {
 						echo foxiz_get_social_list( $data_social, $instance['new_tab'] );
 					}

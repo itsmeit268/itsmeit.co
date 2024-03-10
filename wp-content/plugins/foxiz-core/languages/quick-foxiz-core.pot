@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Foxiz Core\n"
-"POT-Creation-Date: 2023-12-19 13:26+0700\n"
+"POT-Creation-Date: 2024-02-18 11:08+0700\n"
 "PO-Revision-Date: 2017-07-16 09:08+0700\n"
 "Last-Translator: \n"
 "Language-Team: Theme-Ruby <themeruby@gmail.com>\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-3: plugins/foxiz-core/lib/simple-gtm-ga4\n"
 
 #: plugins/foxiz-core/elementor/templates.php:570
-#: themes/foxiz/templates/blog.php:269
+#: themes/foxiz/templates/blog.php:272
 #, php-format
 msgid "Showing %s results for your search"
 msgstr ""
@@ -35,35 +35,34 @@ msgid "Register"
 msgstr ""
 
 #: plugins/foxiz-core/elementor/templates.php:644
-#: plugins/foxiz-core/includes/login-screen.php:70
 #: themes/foxiz/templates/popup.php:186
 msgid "Lost your password?"
 msgstr ""
 
 #: plugins/foxiz-core/elementor/templates.php:671
 #: plugins/foxiz-core/elementor/templates.php:683
-#: themes/foxiz/templates/header/templates.php:347
-#: themes/foxiz/templates/header/templates.php:793
+#: themes/foxiz/templates/header/templates.php:350
+#: themes/foxiz/templates/header/templates.php:797
 msgid "Hi,"
 msgstr ""
 
 #: plugins/foxiz-core/elementor/templates.php:672
 #: plugins/foxiz-core/elementor/templates.php:688
-#: themes/foxiz/templates/header/templates.php:363
-#: themes/foxiz/templates/header/templates.php:794
+#: themes/foxiz/templates/header/templates.php:366
+#: themes/foxiz/templates/header/templates.php:798
 msgid "Sign Out"
 msgstr ""
 
-#: plugins/foxiz-core/includes/actions.php:204
+#: plugins/foxiz-core/includes/actions.php:205
 #: themes/foxiz/templates/single/review-comment.php:92
 msgid "Your Rating"
 msgstr ""
 
-#: plugins/foxiz-core/includes/extras.php:73
+#: plugins/foxiz-core/includes/extras.php:72
 msgid "Confirmed"
 msgstr ""
 
-#: plugins/foxiz-core/includes/extras.php:74
+#: plugins/foxiz-core/includes/extras.php:73
 msgid "Death"
 msgstr ""
 
@@ -77,89 +76,94 @@ msgstr ""
 msgid "k"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:32
+#: plugins/foxiz-core/includes/shares.php:29
 #: plugins/foxiz-core/includes/socials.php:81
-#: themes/foxiz/templates/parts.php:736
+#: themes/foxiz/templates/parts.php:750
 msgid "Facebook"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:39
+#: plugins/foxiz-core/includes/shares.php:36
 #: plugins/foxiz-core/includes/socials.php:102
-#: themes/foxiz/templates/parts.php:739
+#: themes/foxiz/templates/parts.php:753
 msgid "Twitter"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:46
+#: plugins/foxiz-core/includes/shares.php:43
 msgid "Flipboard"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:60
+#: plugins/foxiz-core/includes/shares.php:57
 #: plugins/foxiz-core/includes/socials.php:125
-#: themes/foxiz/templates/parts.php:748
+#: themes/foxiz/templates/parts.php:762
 msgid "Pinterest"
 msgstr ""
 
+#: plugins/foxiz-core/includes/shares.php:63
 #: plugins/foxiz-core/includes/shares.php:66
-#: plugins/foxiz-core/includes/shares.php:69
 msgid "Whatsapp"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:75
+#: plugins/foxiz-core/includes/shares.php:72
 #: plugins/foxiz-core/includes/socials.php:261
-#: themes/foxiz/templates/parts.php:754
+#: themes/foxiz/templates/parts.php:768
 msgid "LinkedIn"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:81
-#: themes/foxiz/templates/parts.php:757
+#: plugins/foxiz-core/includes/shares.php:78
+#: themes/foxiz/templates/parts.php:771
 msgid "Tumblr"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:87
-#: themes/foxiz/templates/parts.php:787
+#: plugins/foxiz-core/includes/shares.php:84
+#: themes/foxiz/templates/parts.php:801
 msgid "Reddit"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:93
+#: plugins/foxiz-core/includes/shares.php:90
 msgid "VKontakte"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:99
+#: plugins/foxiz-core/includes/shares.php:96
 #: plugins/foxiz-core/includes/socials.php:217
-#: themes/foxiz/templates/parts.php:793
+#: themes/foxiz/templates/parts.php:807
 msgid "Telegram"
 msgstr ""
 
 #: plugins/foxiz-core/includes/shares.php:104
+#: plugins/foxiz-core/includes/socials.php:528
+msgid "Threads"
+msgstr ""
+
+#: plugins/foxiz-core/includes/shares.php:109
 #, php-format
 msgid "I found this article interesting and thought of sharing it with you. Check it out: %s"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:108
+#: plugins/foxiz-core/includes/shares.php:113
 msgid "Email"
 msgstr ""
 
-#: plugins/foxiz-core/includes/shares.php:112
+#: plugins/foxiz-core/includes/shares.php:117
 msgid "Copied!"
-msgstr ""
-
-#: plugins/foxiz-core/includes/shares.php:112
-#: plugins/foxiz-core/includes/shares.php:113
-msgid "Copy Link"
 msgstr ""
 
 #: plugins/foxiz-core/includes/shares.php:117
 #: plugins/foxiz-core/includes/shares.php:118
-msgid "Print"
+msgid "Copy Link"
 msgstr ""
 
 #: plugins/foxiz-core/includes/shares.php:122
-#: themes/foxiz/templates/header/templates.php:535
+#: plugins/foxiz-core/includes/shares.php:123
+msgid "Print"
+msgstr ""
+
+#: plugins/foxiz-core/includes/shares.php:127
+#: themes/foxiz/templates/header/templates.php:545
 msgid "More"
 msgstr ""
 
 #: plugins/foxiz-core/includes/shortcodes.php:78
-#: themes/foxiz/templates/single/footer.php:51
+#: themes/foxiz/templates/single/footer.php:44
 msgid "You Might Also Like"
 msgstr ""
 
@@ -178,12 +182,13 @@ msgstr ""
 #: plugins/foxiz-core/includes/socials.php:435
 #: plugins/foxiz-core/includes/socials.php:480
 #: plugins/foxiz-core/includes/socials.php:502
+#: plugins/foxiz-core/includes/socials.php:524
 msgid "Followers"
 msgstr ""
 
 #: plugins/foxiz-core/includes/socials.php:79
 #: plugins/foxiz-core/includes/socials.php:82
-#: themes/foxiz/templates/entry.php:1812
+#: themes/foxiz/templates/entry.php:1832
 msgid "Like"
 msgstr ""
 
@@ -217,7 +222,11 @@ msgstr ""
 #: plugins/foxiz-core/includes/socials.php:485
 #: plugins/foxiz-core/includes/socials.php:504
 #: plugins/foxiz-core/includes/socials.php:507
-#: themes/foxiz/personalize/template-helpers.php:163
+#: plugins/foxiz-core/includes/socials.php:526
+#: plugins/foxiz-core/includes/socials.php:529
+#: plugins/foxiz-core/includes/socials.php:548
+#: plugins/foxiz-core/includes/socials.php:551
+#: themes/foxiz/personalize/template-helpers.php:166
 msgid "Follow"
 msgstr ""
 
@@ -227,7 +236,7 @@ msgid "Pin"
 msgstr ""
 
 #: plugins/foxiz-core/includes/socials.php:148
-#: themes/foxiz/templates/parts.php:751
+#: themes/foxiz/templates/parts.php:765
 msgid "Instagram"
 msgstr ""
 
@@ -258,7 +267,7 @@ msgid "Members"
 msgstr ""
 
 #: plugins/foxiz-core/includes/socials.php:239
-#: themes/foxiz/templates/parts.php:745
+#: themes/foxiz/templates/parts.php:759
 msgid "Google News"
 msgstr ""
 
@@ -288,17 +297,17 @@ msgid "Patreon"
 msgstr ""
 
 #: plugins/foxiz-core/includes/socials.php:394
-#: themes/foxiz/templates/parts.php:781
+#: themes/foxiz/templates/parts.php:795
 msgid "SoundCloud"
 msgstr ""
 
 #: plugins/foxiz-core/includes/socials.php:417
-#: themes/foxiz/templates/parts.php:784
+#: themes/foxiz/templates/parts.php:798
 msgid "Vimeo"
 msgstr ""
 
 #: plugins/foxiz-core/includes/socials.php:440
-#: themes/foxiz/templates/parts.php:778
+#: themes/foxiz/templates/parts.php:792
 msgid "Dribbble"
 msgstr ""
 
@@ -314,6 +323,14 @@ msgstr ""
 msgid "Truth"
 msgstr ""
 
+#: plugins/foxiz-core/includes/socials.php:546
+msgid "Readers"
+msgstr ""
+
+#: plugins/foxiz-core/includes/socials.php:550
+msgid "RSS Feed"
+msgstr ""
+
 #: plugins/foxiz-core/lib/foxiz-elements/includes/download.php:183
 msgid "Your download will start in a few seconds, If your download does not start, please click here."
 msgstr ""
@@ -322,73 +339,73 @@ msgstr ""
 msgid "Sorry, File not found."
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:90
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:192
 msgid "A few seconds ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:96
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:198
 #, php-format
 msgid "%s min ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:106
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:208
 #, php-format
 msgid "%s hr ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:108
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:210
 #, php-format
 msgid "%s hr %s min ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:116
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:218
 msgid "1 day ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:118
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:220
 #, php-format
 msgid "1 day %s hr ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:122
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:224
 #, php-format
 msgid "%s days ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:124
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:226
 #, php-format
 msgid "%s days %s hr ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:130
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:232
 msgid "1 week ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:132
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:234
 #, php-format
 msgid "%s weeks ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:137
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:239
 msgid "1 month ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:139
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:241
 #, php-format
 msgid "%s months ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:144
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:246
 msgid "1 year ago"
 msgstr ""
 
-#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:146
+#: plugins/foxiz-core/lib/foxiz-elements/includes/live.php:248
 #, php-format
 msgid "%s years ago"
 msgstr ""
 
 #: plugins/foxiz-core/lib/foxiz-elements/includes/review.php:56
-#: themes/foxiz/templates/entry.php:1449
+#: themes/foxiz/templates/entry.php:1474
 #: themes/foxiz/templates/single/reviews.php:101
 msgid "out of 5"
 msgstr ""
@@ -446,16 +463,16 @@ msgstr ""
 msgid "Surprise"
 msgstr ""
 
-#: themes/foxiz/backend/panels/reaction.php:32
+#: themes/foxiz/backend/panels/design.php:1127
 msgid "Live: "
 msgstr ""
 
-#: themes/foxiz/backend/panels/reaction.php:64
+#: themes/foxiz/backend/panels/design.php:1159
 msgid "Live Updates"
 msgstr ""
 
-#: themes/foxiz/backend/panels/single-post.php:1556
-#: themes/foxiz/templates/entry.php:1568
+#: themes/foxiz/backend/panels/single-post.php:1667
+#: themes/foxiz/templates/entry.php:1588
 msgid "Sponsored by"
 msgstr ""
 
@@ -471,36 +488,36 @@ msgstr ""
 msgid "Comments are closed."
 msgstr ""
 
-#: themes/foxiz/includes/actions.php:32
+#: themes/foxiz/includes/actions.php:31
 #: themes/foxiz/templates/single/review-comment.php:62
 msgid "Your name"
 msgstr ""
 
-#: themes/foxiz/includes/actions.php:35
+#: themes/foxiz/includes/actions.php:34
 msgid "Your email"
 msgstr ""
 
-#: themes/foxiz/includes/actions.php:39
+#: themes/foxiz/includes/actions.php:38
 msgid "Your Website"
 msgstr ""
 
-#: themes/foxiz/includes/actions.php:43
+#: themes/foxiz/includes/actions.php:42
 #: themes/foxiz/templates/single/review-comment.php:102
-#: themes/foxiz/templates/single/templates.php:987
+#: themes/foxiz/templates/single/templates.php:982
 msgid "Leave a comment"
 msgstr ""
 
-#: themes/foxiz/includes/menu.php:258 themes/foxiz/includes/menu.php:311
-#: themes/foxiz/templates/header/templates.php:915
+#: themes/foxiz/includes/menu.php:258 themes/foxiz/includes/menu.php:310
+#: themes/foxiz/templates/header/templates.php:919
 #: themes/foxiz/templates/parts.php:432
 msgid "Show More"
 msgstr ""
 
-#: themes/foxiz/includes/menu.php:316
+#: themes/foxiz/includes/menu.php:315
 msgid "Top News"
 msgstr ""
 
-#: themes/foxiz/includes/menu.php:339
+#: themes/foxiz/includes/menu.php:337
 msgid "Latest News"
 msgstr ""
 
@@ -509,25 +526,25 @@ msgid "Product added to cart!"
 msgstr ""
 
 #: themes/foxiz/includes/woocommerce.php:316
-#: themes/foxiz/templates/header/templates.php:1103
+#: themes/foxiz/templates/header/templates.php:1107
 msgid "View Cart"
 msgstr ""
 
-#: themes/foxiz/personalize/personalize.php:118
+#: themes/foxiz/personalize/personalize.php:111
 msgid "This article has been added to reading list"
 msgstr ""
 
-#: themes/foxiz/personalize/personalize.php:122
+#: themes/foxiz/personalize/personalize.php:115
 msgid "This article was removed from your bookmark"
+msgstr ""
+
+#: themes/foxiz/personalize/personalize.php:139
+#: themes/foxiz/personalize/personalize.php:162
+msgid "You are now following"
 msgstr ""
 
 #: themes/foxiz/personalize/personalize.php:146
 #: themes/foxiz/personalize/personalize.php:169
-msgid "You are now following"
-msgstr ""
-
-#: themes/foxiz/personalize/personalize.php:153
-#: themes/foxiz/personalize/personalize.php:176
 msgid "You are no longer following"
 msgstr ""
 
@@ -540,23 +557,23 @@ msgstr ""
 msgid "Start saving your interested articles by clicking the %s icon and you'll find them all here."
 msgstr ""
 
-#: themes/foxiz/personalize/template-helpers.php:153
+#: themes/foxiz/personalize/template-helpers.php:156
 msgid "Save it"
 msgstr ""
 
-#: themes/foxiz/personalize/template-helpers.php:154
+#: themes/foxiz/personalize/template-helpers.php:157
 msgid "Undo Save"
 msgstr ""
 
-#: themes/foxiz/personalize/template-helpers.php:157
+#: themes/foxiz/personalize/template-helpers.php:160
 msgid "Sign In to Save"
 msgstr ""
 
-#: themes/foxiz/personalize/template-helpers.php:160
+#: themes/foxiz/personalize/template-helpers.php:163
 msgid "Sign In to Follow"
 msgstr ""
 
-#: themes/foxiz/personalize/template-helpers.php:164
+#: themes/foxiz/personalize/template-helpers.php:167
 msgid "Unfollow"
 msgstr ""
 
@@ -573,7 +590,7 @@ msgstr ""
 msgid "LISTEN"
 msgstr ""
 
-#: themes/foxiz/searchform.php:9 themes/foxiz/templates/parts.php:575
+#: themes/foxiz/searchform.php:9 themes/foxiz/templates/parts.php:581
 msgid "Search Headlines, News..."
 msgstr ""
 
@@ -582,8 +599,8 @@ msgid "Search for:"
 msgstr ""
 
 #: themes/foxiz/searchform.php:18
-#: themes/foxiz/templates/header/templates.php:439
-#: themes/foxiz/templates/parts.php:579
+#: themes/foxiz/templates/header/templates.php:443
+#: themes/foxiz/templates/parts.php:585
 msgid "Search"
 msgstr ""
 
@@ -595,12 +612,12 @@ msgstr ""
 msgid "More Results"
 msgstr ""
 
-#: themes/foxiz/templates/ajax.php:274 themes/foxiz/templates/ajax.php:312
-#: themes/foxiz/templates/blog.php:561
+#: themes/foxiz/templates/ajax.php:274 themes/foxiz/templates/ajax.php:328
+#: themes/foxiz/templates/blog.php:569
 msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
 msgstr ""
 
-#: themes/foxiz/templates/ajax.php:411
+#: themes/foxiz/templates/ajax.php:426
 msgid "Stay Tuned! Check back later for the latest updates."
 msgstr ""
 
@@ -629,38 +646,38 @@ msgstr ""
 msgid "Find More:"
 msgstr ""
 
-#: themes/foxiz/templates/blog.php:268
+#: themes/foxiz/templates/blog.php:271
 #, php-format
 msgid "Search Results for: %s"
 msgstr ""
 
-#: themes/foxiz/templates/blog.php:506 themes/foxiz/templates/entry.php:1539
+#: themes/foxiz/templates/blog.php:514 themes/foxiz/templates/entry.php:1559
 msgid "Follow: "
 msgstr ""
 
-#: themes/foxiz/templates/blog.php:517
-#: themes/foxiz/templates/modules/author.php:39
-#: themes/foxiz/templates/modules/author.php:101
-#: themes/foxiz/templates/modules/category.php:122
+#: themes/foxiz/templates/blog.php:525
+#: themes/foxiz/templates/modules/author.php:37
+#: themes/foxiz/templates/modules/author.php:99
+#: themes/foxiz/templates/modules/category.php:48
 msgid "Article"
 msgstr ""
 
-#: themes/foxiz/templates/blog.php:519
-#: themes/foxiz/templates/modules/author.php:41
-#: themes/foxiz/templates/modules/author.php:103
-#: themes/foxiz/templates/modules/category.php:120
+#: themes/foxiz/templates/blog.php:527
+#: themes/foxiz/templates/modules/author.php:39
+#: themes/foxiz/templates/modules/author.php:101
+#: themes/foxiz/templates/modules/category.php:46
 msgid "Articles"
 msgstr ""
 
-#: themes/foxiz/templates/blog.php:535
+#: themes/foxiz/templates/blog.php:543
 msgid "Oops! Nothing here"
 msgstr ""
 
-#: themes/foxiz/templates/blog.php:542
+#: themes/foxiz/templates/blog.php:550
 msgid "It seems we can’t find what you’re looking for. Perhaps searching can help."
 msgstr ""
 
-#: themes/foxiz/templates/blog.php:546 themes/foxiz/templates/page.php:212
+#: themes/foxiz/templates/blog.php:554 themes/foxiz/templates/page.php:207
 msgid "Return to Homepage"
 msgstr ""
 
@@ -674,7 +691,7 @@ msgid "%s ago"
 msgstr ""
 
 #: themes/foxiz/templates/entry.php:365 themes/foxiz/templates/entry.php:422
-#: themes/foxiz/templates/entry.php:1528
+#: themes/foxiz/templates/entry.php:1548
 msgid "By"
 msgstr ""
 
@@ -705,7 +722,7 @@ msgid "%s Views"
 msgstr ""
 
 #: themes/foxiz/templates/entry.php:752
-#: themes/foxiz/templates/single/templates.php:463
+#: themes/foxiz/templates/single/templates.php:458
 msgid "Last updated:"
 msgstr ""
 
@@ -714,61 +731,61 @@ msgstr ""
 msgid "%s Min Read"
 msgstr ""
 
-#: themes/foxiz/templates/entry.php:1446
+#: themes/foxiz/templates/entry.php:1471
 #: themes/foxiz/templates/single/reviews.php:58
 msgid "out of 10"
 msgstr ""
 
-#: themes/foxiz/templates/entry.php:1813
+#: themes/foxiz/templates/entry.php:1833
 msgid "Dislike"
 msgstr ""
 
 #: themes/foxiz/templates/footer.php:217
-#: themes/foxiz/templates/header/templates.php:816
+#: themes/foxiz/templates/header/templates.php:820
 msgid "Follow US"
 msgstr ""
 
-#: themes/foxiz/templates/header/templates.php:367
-#: themes/foxiz/templates/header/templates.php:374
-#: themes/foxiz/templates/header/templates.php:381
-#: themes/foxiz/templates/header/templates.php:785
+#: themes/foxiz/templates/header/templates.php:371
+#: themes/foxiz/templates/header/templates.php:378
+#: themes/foxiz/templates/header/templates.php:385
+#: themes/foxiz/templates/header/templates.php:789
 msgid "Sign In"
 msgstr ""
 
-#: themes/foxiz/templates/header/templates.php:783
+#: themes/foxiz/templates/header/templates.php:787
 msgid "Have an existing account?"
 msgstr ""
 
-#: themes/foxiz/templates/header/templates.php:867
+#: themes/foxiz/templates/header/templates.php:871
 msgid "Switch to Light"
 msgstr ""
 
-#: themes/foxiz/templates/header/templates.php:868
+#: themes/foxiz/templates/header/templates.php:872
 msgid "Switch to Dark"
 msgstr ""
 
-#: themes/foxiz/templates/header/templates.php:900
-#: themes/foxiz/templates/header/templates.php:913
+#: themes/foxiz/templates/header/templates.php:904
+#: themes/foxiz/templates/header/templates.php:917
 msgid "Notification"
 msgstr ""
 
-#: themes/foxiz/templates/header/templates.php:940
+#: themes/foxiz/templates/header/templates.php:944
 msgid "Font Resizer"
 msgstr ""
 
-#: themes/foxiz/templates/header/templates.php:940
+#: themes/foxiz/templates/header/templates.php:944
 msgid "Aa"
 msgstr ""
 
-#: themes/foxiz/templates/modules/category.php:101
+#: themes/foxiz/templates/modules/category.php:98
 msgid "Add More"
 msgstr ""
 
-#: themes/foxiz/templates/page.php:188
+#: themes/foxiz/templates/page.php:183
 msgid "Something's wrong here..."
 msgstr ""
 
-#: themes/foxiz/templates/page.php:191
+#: themes/foxiz/templates/page.php:186
 msgid "It looks like nothing was found at this location. The page you were looking for does not exist or was loading incorrectly."
 msgstr ""
 
@@ -788,47 +805,47 @@ msgstr ""
 msgid "Older Articles"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:733
+#: themes/foxiz/templates/parts.php:747
 msgid "Website"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:742
+#: themes/foxiz/templates/parts.php:756
 msgid "YouTube"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:760
+#: themes/foxiz/templates/parts.php:774
 msgid "Flickr"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:763
+#: themes/foxiz/templates/parts.php:777
 msgid "Skype"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:766
+#: themes/foxiz/templates/parts.php:780
 msgid "SnapChat"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:769
+#: themes/foxiz/templates/parts.php:783
 msgid "Myspace"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:772
+#: themes/foxiz/templates/parts.php:786
 msgid "Bloglovin"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:775
+#: themes/foxiz/templates/parts.php:789
 msgid "Digg"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:790
+#: themes/foxiz/templates/parts.php:804
 msgid "Vkontakte"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:796
+#: themes/foxiz/templates/parts.php:810
 msgid "WhatsApp"
 msgstr ""
 
-#: themes/foxiz/templates/parts.php:799
+#: themes/foxiz/templates/parts.php:813
 msgid "Rss"
 msgstr ""
 
@@ -857,7 +874,7 @@ msgid "Review Closed!"
 msgstr ""
 
 #: themes/foxiz/templates/single/review-comment.php:54
-#: themes/foxiz/templates/single/templates.php:964
+#: themes/foxiz/templates/single/templates.php:959
 msgid "Leave a review"
 msgstr ""
 
@@ -909,24 +926,24 @@ msgstr ""
 msgid "votes"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:333
+#: themes/foxiz/templates/single/templates.php:327
 msgid "SHARE"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:390
-#: themes/foxiz/templates/single/templates.php:1711
+#: themes/foxiz/templates/single/templates.php:385
+#: themes/foxiz/templates/single/templates.php:1708
 msgid "Share"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:629
+#: themes/foxiz/templates/single/templates.php:622
 msgid "Previous Page"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:645
+#: themes/foxiz/templates/single/templates.php:638
 msgid "Next Page"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:705
+#: themes/foxiz/templates/single/templates.php:709
 msgid "TAGGED:"
 msgstr ""
 
@@ -934,81 +951,81 @@ msgstr ""
 msgid "SOURCES:"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:767
+#: themes/foxiz/templates/single/templates.php:762
 msgid "VIA:"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:826
+#: themes/foxiz/templates/single/templates.php:820
 msgid "What do you think?"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:885
+#: themes/foxiz/templates/single/templates.php:880
 msgid "Share This Episode"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:887
+#: themes/foxiz/templates/single/templates.php:882
 msgid "Share This Article"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:967
+#: themes/foxiz/templates/single/templates.php:962
 #, php-format
 msgid "%s Reviews"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:969
+#: themes/foxiz/templates/single/templates.php:964
 msgid "1 Review"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:991
+#: themes/foxiz/templates/single/templates.php:986
 #, php-format
 msgid "%s Comments"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:993
+#: themes/foxiz/templates/single/templates.php:988
 msgid "1 Comment"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1023
+#: themes/foxiz/templates/single/templates.php:1018
 msgid "Your review is awaiting moderation."
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1025
+#: themes/foxiz/templates/single/templates.php:1020
 msgid "Your review is awaiting moderation. This is a preview, your review will be visible after it has been approved."
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1051
+#: themes/foxiz/templates/single/templates.php:1046
 msgid "Edit"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1104
+#: themes/foxiz/templates/single/templates.php:1099
 msgid "Previous Article"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1115
+#: themes/foxiz/templates/single/templates.php:1110
 msgid "Next Article"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1442
+#: themes/foxiz/templates/single/templates.php:1438
 msgid "List of Images"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1661
+#: themes/foxiz/templates/single/templates.php:1657
 msgid "Reading:"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1764
+#: themes/foxiz/templates/single/templates.php:1761
 msgid "Section"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1960
+#: themes/foxiz/templates/single/templates.php:1957
 msgid "Post"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1962
+#: themes/foxiz/templates/single/templates.php:1959
 msgid "Posts"
 msgstr ""
 
-#: themes/foxiz/templates/single/templates.php:1969
+#: themes/foxiz/templates/single/templates.php:1967
 msgid "Auto Updates"
 msgstr ""
 

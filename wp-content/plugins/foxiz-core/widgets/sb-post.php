@@ -164,6 +164,8 @@ if ( ! class_exists( 'Foxiz_W_Post', false ) ) {
 
 			$instance           = wp_parse_args( (array) $instance, $this->params );
 			$instance['review'] = 'replace';
+			$instance['unique'] = '1';
+
 			if ( empty( $instance['entry_meta'] ) ) {
 				$instance['entry_meta'] = [ 'category' ];
 			} else {
@@ -172,12 +174,12 @@ if ( ! class_exists( 'Foxiz_W_Post', false ) ) {
 			}
 
 			if ( ! function_exists( 'foxiz_query' ) || ! function_exists( 'foxiz_loop_list_small_2' ) ) {
-				return false;
+				return;
 			}
 
 			echo $args['before_widget'];
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . esc_html( $instance['title'] ) . $args['after_title'];
+				echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 			}
 
 			$_query = foxiz_query( $instance );

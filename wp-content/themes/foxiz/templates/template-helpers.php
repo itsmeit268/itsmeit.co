@@ -231,7 +231,7 @@ if ( ! function_exists( 'foxiz_get_header_style' ) ) {
 			}
 		} elseif ( is_tag() ) {
 
-			$tag_data = rb_get_term_meta( 'foxiz_tag_meta', get_queried_object_id() );
+			$tag_data = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
 			if ( ! empty( $tag_data['header_template'] ) ) {
 				return [
 					'style'     => 'rb_template',
@@ -685,6 +685,7 @@ if ( ! function_exists( 'foxiz_detect_dynamic_query' ) ) {
 	function foxiz_detect_dynamic_query( $settings ) {
 
 		if ( ! is_admin() ) {
+
 			if ( is_category() ) {
 				if ( ! empty( $settings['category'] ) && 'dynamic' === $settings['category'] ) {
 					$settings['category'] = get_queried_object_id();
@@ -694,8 +695,17 @@ if ( ! function_exists( 'foxiz_detect_dynamic_query' ) ) {
 					$settings['author'] = get_queried_object_id();
 				}
 			} elseif ( is_tag() ) {
-				if ( ! empty( $settings['tags'] ) && '_dynamic_tag' === strtolower( trim( $settings['tags'] ) ) ) {
+				if ( ! empty( $settings['tags'] ) && in_array( strtolower( trim( $settings['tags'] ) ), [
+						'_dynamic_tag',
+						'{dynamic}',
+					] )
+				) {
 					$settings['tags'] = get_queried_object()->slug;
+				}
+			} elseif ( is_tax() ) {
+				if ( ! empty( $settings['taxonomy'] ) && '{dynamic}' === strtolower( trim( $settings['taxonomy'] ) ) ) {
+					$settings['taxonomy']  = get_queried_object()->taxonomy;
+					$settings['tax_slugs'] = get_queried_object()->slug;
 				}
 			}
 		} else {
@@ -706,8 +716,16 @@ if ( ! function_exists( 'foxiz_detect_dynamic_query' ) ) {
 			if ( ! empty( $settings['category'] ) && 'dynamic' === $settings['category'] ) {
 				$settings['category'] = '';
 			}
-			if ( ! empty( $settings['tags'] ) && '_dynamic_tag' === strtolower( trim( $settings['tags'] ) ) ) {
+			if ( ! empty( $settings['tags'] ) && in_array( strtolower( trim( $settings['tags'] ) ), [
+					'_dynamic_tag',
+					'{dynamic}',
+				] )
+			) {
 				$settings['tags'] = '';
+			}
+			if ( ! empty( $settings['taxonomy'] ) && '{dynamic}' === strtolower( trim( $settings['taxonomy'] ) ) ) {
+				$settings['taxonomy']  = '';
+				$settings['tax_slugs'] = '';
 			}
 		}
 
@@ -841,11 +859,11 @@ if ( ! function_exists( 'foxiz_get_single_sidebar_position' ) ) {
 		if ( empty( $post_id ) ) {
 			$post_id = get_the_ID();
 		}
+
 		$setting = '';
 		if ( ! empty( $name ) ) {
 			$setting = rb_get_meta( $name, $post_id );
 		}
-
 		if ( empty( $setting ) || 'default' === $setting ) {
 			if ( empty( $opt_name ) ) {
 				$opt_name = 'single_post_' . $name;
@@ -1025,13 +1043,13 @@ if ( ! function_exists( 'foxiz_get_related_data' ) ) {
 			$params['posts_per_page'] = $settings['total'];
 		}
 		if ( ! empty( $settings['ids'] ) ) {
-			$params['post_in'] = esc_attr( $settings['ids'] );
+			$params['post_in'] = strip_tags( $settings['ids'] );
 		}
 		if ( ! empty( $settings['post_id'] ) ) {
-			$params['related_id'] = esc_attr( $settings['post_id'] );
+			$params['related_id'] = strip_tags( $settings['post_id'] );
 		}
 		if ( ! empty( $settings['where'] ) ) {
-			$params['where'] = esc_attr( $settings['where'] );
+			$params['where'] = strip_tags( $settings['where'] );
 		}
 
 		return foxiz_query_related( $params );
@@ -1275,6 +1293,19 @@ if ( ! function_exists( 'foxiz_get_archive_page_settings' ) ) {
 			if ( empty( $settings['template_global'] ) ) {
 				$settings['template_global'] = foxiz_get_option( $prefix . 'template_global' );
 			}
+			$tag_header = foxiz_get_option( 'tag_header' );
+			if ( ! empty( $tag_header ) ) {
+				$settings['archive_header'] = $tag_header;
+			}
+		} elseif ( is_tax() ) {
+			$settings['template_global'] = trim( foxiz_get_option( 'tax_template_global' ) );
+			if ( empty( $settings['template_global'] ) ) {
+				$settings['template_global'] = foxiz_get_option( $prefix . 'template_global' );
+			}
+			$tax_header = foxiz_get_option( 'tax_header' );
+			if ( ! empty( $tax_header ) ) {
+				$settings['archive_header'] = $tax_header;
+			}
 		} else {
 			$settings['template_global'] = foxiz_get_option( $prefix . 'template_global' );
 		}
@@ -1363,7 +1394,7 @@ if ( ! function_exists( 'foxiz_get_tag_page_settings' ) ) {
 	function foxiz_get_tag_page_settings() {
 
 		$tag_id   = get_queried_object_id();
-		$data     = rb_get_term_meta( 'foxiz_tag_meta', $tag_id );
+		$data     = rb_get_term_meta( 'foxiz_category_meta', $tag_id );
 		$settings = foxiz_get_archive_page_settings();
 
 		$settings['uuid'] = 'uid_tag_' . $tag_id;
@@ -1511,7 +1542,7 @@ if ( ! function_exists( 'foxiz_carousel_footer' ) ) {
 			if ( ! empty( $settings['color_scheme'] ) ) {
 				$classes .= ' light-scheme';
 			} ?>
-			<div class="<?php echo esc_attr( $classes ); ?>">
+			<div class="<?php echo strip_tags( $classes ); ?>">
 				<?php if ( ! empty( $settings['carousel_nav'] ) ) : ?>
 					<div class="slider-prev rbi rbi-cleft"></div>
 				<?php endif;
@@ -1580,10 +1611,10 @@ if ( ! function_exists( 'foxiz_carousel_attrs' ) ) {
 			$settings['slider_play']  = '';
 		}
 
-		echo ' data-wcol="' . esc_attr( $settings['carousel_wide_columns'] ) . '"';
-		echo ' data-col="' . esc_attr( $settings['columns'] ) . '" data-tcol="' . esc_attr( $settings['columns_tablet'] ) . '" data-mcol="' . esc_attr( $settings['columns_mobile'] ) . '"';
-		echo ' data-gap="' . esc_attr( $settings['carousel_gap'] ) . '" data-tgap="' . esc_attr( $settings['carousel_gap_tablet'] ) . '" data-mgap="' . esc_attr( $settings['carousel_gap_mobile'] ) . '"';
-		echo ' data-play="' . esc_attr( $settings['slider_play'] ) . '" data-speed="' . esc_attr( $settings['slider_speed'] ) . '" data-fmode="' . esc_attr( $settings['slider_fmode'] ) . '" data-centered="' . esc_attr( $settings['slider_centered'] ) . '" ';
+		echo ' data-wcol="' . strip_tags( $settings['carousel_wide_columns'] ) . '"';
+		echo ' data-col="' . strip_tags( $settings['columns'] ) . '" data-tcol="' . strip_tags( $settings['columns_tablet'] ) . '" data-mcol="' . strip_tags( $settings['columns_mobile'] ) . '"';
+		echo ' data-gap="' . strip_tags( $settings['carousel_gap'] ) . '" data-tgap="' . strip_tags( $settings['carousel_gap_tablet'] ) . '" data-mgap="' . strip_tags( $settings['carousel_gap_mobile'] ) . '"';
+		echo ' data-play="' . strip_tags( $settings['slider_play'] ) . '" data-speed="' . strip_tags( $settings['slider_speed'] ) . '" data-fmode="' . strip_tags( $settings['slider_fmode'] ) . '" data-centered="' . strip_tags( $settings['slider_centered'] ) . '" ';
 	}
 }
 
@@ -1601,7 +1632,7 @@ if ( ! function_exists( 'foxiz_slider_attrs' ) ) {
 			$settings['slider_speed'] = 5000;
 		}
 
-		echo ' data-play="' . esc_attr( $settings['slider_play'] ) . '" data-speed="' . esc_attr( $settings['slider_speed'] ) . '"';
+		echo ' data-play="' . strip_tags( $settings['slider_play'] ) . '" data-speed="' . strip_tags( $settings['slider_speed'] ) . '"';
 	}
 }
 
@@ -1776,34 +1807,34 @@ if ( ! function_exists( 'foxiz_get_content_images' ) ) {
 	/**
 	 * @param string $post_id
 	 *
-	 * @return array|false|mixed
+	 * @return array|mixed|string
 	 */
 	function foxiz_get_content_images( $post_id = '' ) {
 
 		if ( empty( $post_id ) ) {
-			return false;
+			$post_id = get_the_ID();
+		}
+
+		$images = get_post_meta( $post_id, 'rb_content_images', true );
+		if ( ! empty( $images ) ) {
+			return $images;
 		}
 
 		/** gallery $images */
 		$gallery_images = rb_get_meta( 'gallery_data', $post_id );
-		if ( ! empty( $gallery_images ) ) {
-			return array_fill_keys( array_map( 'trim', explode( ',', $gallery_images ) ), 1 );
-		}
+		if ( 'gallery' === get_post_format( $post_id ) && ! empty( $gallery_images ) ) {
+			$images = array_fill_keys( array_map( 'trim', explode( ',', $gallery_images ) ), '#' );
+			update_post_meta( $post_id, 'rb_content_images', $images );
 
-		$images = get_post_meta( $post_id, 'rb_content_images', true );
-		if ( is_array( $images ) ) {
 			return $images;
-		} elseif ( 'none' === $images ) {
-			return false;
 		}
 
 		/** get images in post_content */
+		$images       = [];
+		$counter      = 1;
 		$post_content = get_post_field( 'post_content', $post_id );
-
-		$pattern = '/<!--\s*wp:image\s*({.*?})\s*-->.*?<img src="(.*?)"/s';
+		$pattern      = '/<!--\s*wp:image\s*({.*?})\s*-->.*?<img src="(.*?)"/s';
 		preg_match_all( $pattern, $post_content, $matches, PREG_SET_ORDER );
-		$images  = [];
-		$counter = 1;
 		foreach ( $matches as $match ) {
 			$data = json_decode( $match[1], true );
 			if ( ! empty( $data ) && is_array( $data ) && ! empty( $match[2] ) ) {
@@ -1814,48 +1845,36 @@ if ( ! function_exists( 'foxiz_get_content_images' ) ) {
 				}
 				$counter ++;
 			}
-
 			/** limit images */
 			if ( $counter > 5 ) {
 				break;
 			}
 		}
 
-		if ( empty( $images ) ) {
+		if ( ! count( $images ) ) {
 			$images = 'none';
 		}
+
 		update_post_meta( $post_id, 'rb_content_images', $images );
 
 		return $images;
 	}
 }
 
-/**
- * @param array $settings
- * @param       $input_meta
- *
- * @return string
- */
 if ( ! function_exists( 'foxiz_extra_meta_labels' ) ) {
-
 	function foxiz_extra_meta_labels( $settings = [] ) {
 
 		if ( empty( $settings['entry_meta'] ) || ! is_array( $settings['entry_meta'] ) || ! array_filter( $settings['entry_meta'] ) ) {
 			return false;
 		}
-
 		foreach ( $settings['entry_meta'] as $key => $input_meta ) {
 			if ( preg_match( '/\{[^}]*\}/', $input_meta, $matches ) ) {
 				$meta_key = trim( str_replace( [ '{', '}' ], '', $matches[0] ) );
 				$labels   = explode( $matches[0], $input_meta );
 
-				if ( ! empty( $labels[0] ) ) {
-					$settings[ 'p_label_' . $meta_key ] = $labels[0];
-				}
-				if ( ! empty( $labels[1] ) ) {
-					$settings[ 's_label_' . $meta_key ] = $labels[1];
-				}
-				$settings['entry_meta'][ $key ] = $meta_key;
+				$settings[ 'p_label_' . $meta_key ] = ! empty( $labels[0] ) ? $labels[0] : '';
+				$settings[ 's_label_' . $meta_key ] = ! empty( $labels[1] ) ? $labels[1] : '';
+				$settings['entry_meta'][ $key ]     = $meta_key;
 			}
 		}
 

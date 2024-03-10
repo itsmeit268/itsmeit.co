@@ -41,8 +41,94 @@ class Classic_1 extends Widget_Base {
 
 		if ( foxiz_is_ruby_template() ) {
 			$this->start_controls_section(
+				'template-builder-section', [
+					'label' => esc_html__( 'Template Builder - Global Query', 'foxiz-core' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				]
+			);
+			$this->add_control(
+				'template_builder_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::template_builder_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				]
+			);
+			$this->add_control(
+				'template_builder_unique_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::template_builder_unique_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				]
+			);
+			$this->add_control(
+				'template_builder_available_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::template_builder_available_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				]
+			);
+			$this->add_control(
+				'template_builder_pagination_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::template_builder_pagination_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				]
+			);
+			$this->add_control(
+				'template_builder_posts_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::template_builder_posts_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				]
+			);
+			$this->add_control(
+				'template_builder_total_posts_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::template_builder_total_posts_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				]
+			);
+			$this->add_control(
+				'template_builder_admin_info',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => Options::template_builder_admin_info(),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				]
+			);
+			$this->add_control(
+				'query_mode',
+				[
+					'label'       => esc_html__( 'Query Mode', 'foxiz-core' ),
+					'type'        => Controls_Manager::SELECT,
+					'description' => Options::query_mode_description(),
+					'options'     => [
+						'0'      => esc_html__( 'Use Custom Query (default)', 'foxiz-core' ),
+						'global' => esc_html__( 'Use WP Global Query', 'foxiz-core' ),
+					],
+					'default'     => '0',
+				]
+			);
+			$this->add_control(
+				'builder_pagination',
+				[
+					'label'       => esc_html__( 'WP Global Query Pagination', 'foxiz-core' ),
+					'type'        => Controls_Manager::SELECT,
+					'description' => Options::template_pagination_description(),
+					'options'     => Options::template_builder_pagination_dropdown(),
+					'default'     => '0',
+				]
+			);
+			$this->end_controls_section();
+			$this->start_controls_section(
 				'dynamic_info_section', [
-					'label' => esc_html__( 'Dynamic Query Info', 'foxiz-core' ),
+					'label' => esc_html__( 'Dynamic Query Tips', 'foxiz-core' ),
 					'tab'   => Controls_Manager::TAB_CONTENT,
 				]
 			);
@@ -202,98 +288,10 @@ class Classic_1 extends Widget_Base {
 			]
 		);
 		$this->end_controls_section();
-		if ( foxiz_is_ruby_template() ) {
-			$this->start_controls_section(
-				'template-builder-section', [
-					'label' => esc_html__( 'Template Builder - Global Query', 'foxiz-core' ),
-					'tab'   => Controls_Manager::TAB_CONTENT,
-				]
-			);
-			$this->add_control(
-				'template_builder_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::template_builder_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-				]
-			);
-			$this->add_control(
-				'template_builder_unique_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::template_builder_unique_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-				]
-			);
-			$this->add_control(
-				'template_builder_available_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::template_builder_available_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-				]
-			);
-			$this->add_control(
-				'template_builder_pagination_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::template_builder_pagination_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-				]
-			);
-			$this->add_control(
-				'template_builder_posts_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::template_builder_posts_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-				]
-			);
-			$this->add_control(
-				'template_builder_total_posts_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::template_builder_total_posts_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-				]
-			);
-			$this->add_control(
-				'template_builder_admin_info',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => Options::template_builder_admin_info(),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-				]
-			);
-			$this->add_control(
-				'query_mode',
-				[
-					'label'       => esc_html__( 'Query Mode', 'foxiz-core' ),
-					'type'        => Controls_Manager::SELECT,
-					'description' => Options::query_mode_description(),
-					'options'     => [
-						'0'      => esc_html__( 'Use Custom Query (default)', 'foxiz-core' ),
-						'global' => esc_html__( 'Use WP Global Query', 'foxiz-core' ),
-					],
-					'default'     => '0',
-				]
-			);
-			$this->add_control(
-				'builder_pagination',
-				[
-					'label'       => esc_html__( 'WP Global Query Pagination', 'foxiz-core' ),
-					'type'        => Controls_Manager::SELECT,
-					'description' => Options::template_pagination_description(),
-					'options'     => Options::template_builder_pagination_dropdown(),
-					'default'     => '0',
-				]
-			);
-			$this->end_controls_section();
-		}
 
 		$this->start_controls_section(
 			'extend_query_section', [
-				'label' => esc_html__( 'Post Type & Taxonomies', 'foxiz-core' ),
+				'label' => esc_html__( 'Query for Post Type & Taxonomies', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -328,7 +326,7 @@ class Classic_1 extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Define Taxonomy', 'foxiz-core' ),
 				'description' => Options::taxonomy_query_description(),
-				'placeholder' => esc_html__( 'series', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'genre', 'foxiz-core' ),
 				'type'        => Controls_Manager::TEXT,
 				'ai'          => [ 'active' => false ],
 				'default'     => '',
@@ -337,11 +335,12 @@ class Classic_1 extends Widget_Base {
 		$this->add_control(
 			'tax_slugs',
 			[
-				'label'       => esc_html__( 'Taxonomy Slugs', 'foxiz-core' ),
-				'description' => Options::tax_slugs_description(),
-				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Term Slugs', 'foxiz-core' ),
+				'description' => Options::term_slugs_description(),
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 1,
 				'ai'          => [ 'active' => false ],
-				'placeholder' => esc_html__( 'tax1, tax2, tax3', 'foxiz-core' ),
+				'placeholder' => esc_html__( 'termslug1, termslug2, termslug3', 'foxiz-core' ),
 				'default'     => '',
 			]
 		);
@@ -763,6 +762,49 @@ class Classic_1 extends Widget_Base {
 				'description' => Options::mobile_hide_meta_description(),
 				'placeholder' => esc_html__( 'avatar, author', 'foxiz-core' ),
 				'default'     => [],
+			]
+		);
+		$this->add_control(
+			'meta_color',
+			[
+				'label'     => esc_html__( 'Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--meta-fcolor: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'meta_b_color',
+			[
+				'label'       => esc_html__( 'Bold Meta Color', 'foxiz-core' ),
+				'type'        => Controls_Manager::COLOR,
+				'description' => Options::bold_meta_color_description(),
+				'selectors'   => [
+					'{{WRAPPER}}'                  => '--meta-b-fcolor: {{VALUE}}',
+					'{{WRAPPER}} .meta-category a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'dark_meta_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme' => '--meta-fcolor: {{VALUE}};',
+				],
+			]
+		);
+		$this->add_control(
+			'dark_meta_b_color',
+			[
+				'label'     => esc_html__( 'Dark Mode - Bold Meta Color', 'foxiz-core' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'[data-theme="dark"] {{WRAPPER}}, {{WRAPPER}} .light-scheme'                                   => '--meta-b-fcolor: {{VALUE}}',
+					'[data-theme="dark"] {{WRAPPER}} .meta-category a, {{WRAPPER}} .light-scheme .meta-category a' => 'color: {{VALUE}}',
+				],
 			]
 		);
 		$this->end_controls_section();

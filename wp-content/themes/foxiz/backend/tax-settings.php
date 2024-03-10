@@ -17,6 +17,11 @@ if ( ! function_exists( 'foxiz_get_category_config' ) ) {
 					'icon'  => 'dashicons-art',
 				],
 				[
+					'title' => esc_html__( 'Featured Images', 'foxiz' ),
+					'id'    => 'category-featured',
+					'icon'  => 'dashicons-format-gallery',
+				],
+				[
 					'title' => esc_html__( 'Category Header', 'foxiz' ),
 					'id'    => 'category-header',
 					'icon'  => 'dashicons-editor-justify',
@@ -88,6 +93,14 @@ if ( ! function_exists( 'foxiz_get_category_config' ) ) {
 					'std'  => '',
 				],
 				[
+					'id'   => 'featured_image',
+					'name' => esc_html__( 'Featured Images', 'foxiz' ),
+					'desc' => esc_html__( 'Upload featured images for this category, these images will appear in all "Taxonomies List" blocks and the category header.', 'foxiz' ),
+					'info' => esc_html__( 'You can set 1 or 2 feature images for a category.', 'foxiz' ),
+					'tab'  => 'category-featured',
+					'type' => 'image',
+				],
+				[
 					'id'      => 'header_style',
 					'name'    => esc_html__( 'Site Header', 'foxiz' ),
 					'desc'    => esc_html__( 'Select a site header for this category.', 'foxiz' ),
@@ -117,14 +130,6 @@ if ( ! function_exists( 'foxiz_get_category_config' ) ) {
 					'std'     => '0',
 				],
 				[
-					'id'   => 'featured_image',
-					'name' => esc_html__( 'Featured Images', 'foxiz' ),
-					'desc' => esc_html__( 'Upload featured images for this category.', 'foxiz' ),
-					'info' => esc_html__( 'You can set 1 or 2 feature images for a category.', 'foxiz' ),
-					'tab'  => 'category-header',
-					'type' => 'image',
-				],
-				[
 					'id'      => 'pattern',
 					'name'    => esc_html__( 'Background Pattern', 'foxiz' ),
 					'desc'    => esc_html__( 'Select a pattern style for the header background.', 'foxiz' ),
@@ -149,7 +154,7 @@ if ( ! function_exists( 'foxiz_get_category_config' ) ) {
 				[
 					'id'      => 'subcategory',
 					'name'    => esc_html__( 'Sub Categories List', 'foxiz' ),
-					'desc'    => esc_html__( 'Enable or disable the sub category list in this category header.', 'foxiz' ),
+					'desc'    => esc_html__( 'Enable or disable the display of subcategories in this category header.', 'foxiz' ),
 					'tab'     => 'category-header',
 					'type'    => 'select',
 					'options' => [
@@ -651,12 +656,17 @@ if ( ! function_exists( 'foxiz_get_post_tag_config' ) ) {
 			'title'      => esc_html__( 'Foxiz Tag Settings', 'foxiz' ),
 			'info'       => esc_html__( 'The settings will apply to this tag only, and the ones below will take priority over other settings in the "Theme Options > Blog & Archive" settings.', 'foxiz' ),
 			'taxonomies' => [ 'post_tag' ],
-			'id'         => 'foxiz_tag_meta',
+			'id'         => 'foxiz_category_meta',
 			'tabs'       => [
 				[
 					'title' => esc_html__( 'Entry Post Tags', 'foxiz' ),
 					'id'    => 'entry-tax',
 					'icon'  => 'dashicons-art',
+				],
+				[
+					'title' => esc_html__( 'Featured Image', 'foxiz' ),
+					'id'    => 'tag-featured',
+					'icon'  => 'dashicons-format-gallery',
 				],
 				[
 					'title' => esc_html__( 'Tag Header', 'foxiz' ),
@@ -711,6 +721,13 @@ if ( ! function_exists( 'foxiz_get_post_tag_config' ) ) {
 					'tab'  => 'entry-tax',
 					'type' => 'color',
 					'std'  => '',
+				],
+				[
+					'id'   => 'featured_image',
+					'name' => esc_html__( 'Featured Image', 'foxiz' ),
+					'desc' => esc_html__( 'Upload featured images for this tag, these images will appear in all "Taxonomies List" blocks.', 'foxiz' ),
+					'tab'  => 'tag-featured',
+					'type' => 'image',
 				],
 				[
 					'id'      => 'header_style',
@@ -821,6 +838,11 @@ if ( ! function_exists( 'foxiz_register_default_term_settings' ) ) {
 					'icon'  => 'dashicons-art',
 				],
 				[
+					'title' => esc_html__( 'Featured Image', 'foxiz' ),
+					'id'    => 'tax-featured',
+					'icon'  => 'dashicons-format-gallery',
+				],
+				[
 					'title' => esc_html__( 'Taxonomy Header', 'foxiz' ),
 					'id'    => 'tax-header',
 					'icon'  => 'dashicons-editor-justify',
@@ -875,6 +897,13 @@ if ( ! function_exists( 'foxiz_register_default_term_settings' ) ) {
 					'tab'  => 'entry-tax',
 					'type' => 'color',
 					'std'  => '',
+				],
+				[
+					'id'   => 'featured_image',
+					'name' => esc_html__( 'Featured Images', 'foxiz' ),
+					'desc' => esc_html__( 'Upload a featured image for this taxonomy, this image will appear in all "Taxonomies List" blocks.', 'foxiz' ),
+					'tab'  => 'tax-featured',
+					'type' => 'image',
 				],
 				[
 					'id'      => 'header_style',

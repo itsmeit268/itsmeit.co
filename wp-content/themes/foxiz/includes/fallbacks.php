@@ -64,12 +64,6 @@ if ( ! function_exists( 'rb_get_term_meta' ) ) {
 		// get meta fields from option table
 		$metas = get_metadata( 'term', $term_id, $key, true );
 
-		/** fallback */
-		if ( empty( $metas ) ) {
-			$metas = get_option( $key );
-			$metas = isset( $metas[ $term_id ] ) ? $metas[ $term_id ] : [];
-		}
-
 		if ( empty( $metas ) || ! is_array( $metas ) ) {
 			return [];
 		}
@@ -326,15 +320,14 @@ if ( ! function_exists( 'foxiz_navigation_fallback' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_twitter_name' ) ) {
-	/**
-	 * @return array|string|string[]|void
-	 */
 	function foxiz_get_twitter_name() {
 
 		if ( is_single() ) {
 			global $post;
 			$name = get_the_author_meta( 'twitter_url', $post->post_author );
-		} else {
+		}
+
+		if ( empty( $name ) ) {
 			$name = foxiz_get_option( 'twitter' );
 		}
 

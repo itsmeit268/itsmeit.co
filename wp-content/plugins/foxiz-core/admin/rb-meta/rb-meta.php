@@ -34,7 +34,7 @@ if ( ! class_exists( 'RB_META' ) ) {
 			self::$instance = $this;
 
 			add_action( 'add_meta_boxes', [ $this, 'register_meta_boxes' ], 20 );
-			add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts' ] );
+			add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts' ], PHP_INT_MAX );
 			add_action( 'save_post', [ $this, 'save' ], 0 );
 			add_action( 'edit_form_top', [ $this, 'create_nonce' ] );
 			add_action( 'block_editor_meta_box_hidden_fields', [ $this, 'create_nonce' ] );
@@ -96,14 +96,19 @@ if ( ! class_exists( 'RB_META' ) ) {
 
 		public function register_scripts( $hook ) {
 
-			wp_register_style( 'select2-css', FOXIZ_CORE_URL . 'lib/redux-framework/assets/css/select2.css', [], self::RB_META_VERSION, 'all' );
-			wp_register_style( 'rb-meta-style', plugin_dir_url( __FILE__ ) . '/assets/meta.css', [ 'select2-css' ], self::RB_META_VERSION );
-
-			wp_register_script( 'select2-js', FOXIZ_CORE_URL . 'lib/redux-framework/assets/js/select2.min.js', [ 'jquery' ], self::RB_META_VERSION, true );
+			$current_screen = get_current_screen();
+			if ( ! empty( $current_screen->post_type ) && strpos( $current_screen->post_type, 'acf-' ) === 0 ) {
+				return;
+			}
+			wp_register_style( 'select2', FOXIZ_CORE_URL . 'lib/redux-framework/assets/css/select2.css', [], self::RB_META_VERSION, 'all' );
+			wp_register_style( 'rb-meta-style', plugin_dir_url( __FILE__ ) . '/assets/meta.css', [ 'select2' ], self::RB_META_VERSION );
+			if ( ! wp_script_is( 'select2', 'registered' ) ) {
+				wp_register_script( 'select2', FOXIZ_CORE_URL . 'lib/redux-framework/assets/js/select2.min.js', [ 'jquery' ], self::RB_META_VERSION, true );
+			}
 			wp_register_script( 'rb-meta-script', plugin_dir_url( __FILE__ ) . '/assets/meta.js', [
 				'jquery',
 				'jquery-ui-datepicker',
-				'select2-js',
+				'select2',
 			], self::RB_META_VERSION, true );
 
 			if ( $hook === 'post.php' || $hook === 'post-new.php' ) {
@@ -645,6 +650,7 @@ if ( ! class_exists( 'RB_META' ) ) {
 		}
 
 		function input_tag_select( $params ) {
+
 			$defaults = [
 				'id'      => '',
 				'name'    => '',

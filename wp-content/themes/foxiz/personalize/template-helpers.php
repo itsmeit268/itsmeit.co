@@ -67,14 +67,16 @@ if ( ! function_exists( 'foxiz_get_follow_trigger' ) ) {
 
 		$classes   = [];
 		$classes[] = 'rb-follow follow-trigger';
+		$name = ! empty( $settings['name'] ) ? $settings['name'] : get_cat_name( $settings['id'] );
 
 		if ( ! empty( $settings['classes'] ) ) {
 			$classes[] = $settings['classes'];
 		}
+
 		if ( ! empty( $settings['type'] ) && 'author' === $settings['type'] ) {
-			$attrs = 'data-uid="' . $settings['id'] . '" data-name="' . esc_attr( get_the_author_meta( 'display_name', $settings['id'] ) ) . '"';
+			$attrs = 'data-uid="' . $settings['id'] . '" data-name="' . get_the_author_meta( 'display_name', $settings['id'] ) . '"';
 		} else {
-			$attrs = 'data-cid="' . $settings['id'] . '" data-name="' . esc_attr( get_cat_name( $settings['id'] ) ) . '"';
+			$attrs = 'data-cid="' . $settings['id'] . '" data-name="' . strip_tags( $name ) . '"';
 		}
 
 		return '<span class="' . join( ' ', $classes ) . '" ' . $attrs . '></span>';
@@ -83,7 +85,6 @@ if ( ! function_exists( 'foxiz_get_follow_trigger' ) ) {
 
 if ( ! function_exists( 'foxiz_saved_empty' ) ) {
 	function foxiz_saved_empty() {
-
 		?>
 		<div class="empty-saved">
 			<div class="rb-container edge-padding">
@@ -95,9 +96,6 @@ if ( ! function_exists( 'foxiz_saved_empty' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_saved_restrict_info' ) ) {
-	/**
-	 * @return false
-	 */
 	function foxiz_saved_restrict_info() {
 
 		$title = foxiz_get_option( 'bookmark_restrict_title' );
@@ -108,9 +106,9 @@ if ( ! function_exists( 'foxiz_saved_restrict_info' ) ) {
 		?>
 		<div class="empty-saved restricted">
 			<div class="rb-container edge-padding">
-				<h4 class="empty-saved-title"><?php echo esc_html( $title ); ?></h4>
+				<h4 class="empty-saved-title"><?php foxiz_render_inline_html( $title ); ?></h4>
 				<?php if ( ! empty( $desc ) ) : ?>
-					<p class="empty-saved-desc"><?php echo esc_html( $desc ); ?></p>
+					<p class="empty-saved-desc"><?php foxiz_render_inline_html( $desc ); ?></p>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -132,11 +130,11 @@ if ( ! function_exists( 'foxiz_reading_history_empty' ) ) {
 		<div class="empty-saved restricted">
 			<div class="rb-container edge-padding">
 				<?php if ( current_user_can( 'manage_options' ) && ! foxiz_get_option( 'reading_history' ) ) : ?>
-					<p class="rb-error"><?php esc_html_e('Reading history is disabled. Please navigate to Theme Options > Personalized System > Reading History to turn it on and activate this feature.', 'foxiz'); ?></p>
+					<p class="rb-error"><?php esc_html_e( 'Reading history is disabled. Please navigate to Theme Options > Personalized System > Reading History to turn it on and activate this feature.', 'foxiz' ); ?></p>
 				<?php endif; ?>
-				<h4 class="empty-saved-title"><?php echo esc_html( $title ); ?></h4>
+				<h4 class="empty-saved-title"><?php foxiz_render_inline_html( $title ); ?></h4>
 				<?php if ( ! empty( $desc ) ) : ?>
-					<p class="empty-saved-desc"><?php echo esc_html( $desc ); ?></p>
+					<p class="empty-saved-desc"><?php foxiz_render_inline_html( $desc ); ?></p>
 				<?php endif; ?>
 			</div>
 		</div>

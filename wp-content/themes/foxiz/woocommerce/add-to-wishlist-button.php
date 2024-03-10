@@ -12,12 +12,12 @@ if ( ! defined( 'YITH_WCWL' ) ) {
 } // Exit if accessed directly
 
 global $product; ?>
-<a href="<?php echo esc_url( add_query_arg( 'add_to_wishlist', $product_id ) ) ?>" rel="nofollow" data-product-id="<?php echo esc_attr( $product_id ) ?>" data-product-type="<?php echo esc_attr( $product_type ); ?>" class="<?php echo esc_attr( $link_classes ); ?>">
+<a href="<?php echo esc_url( add_query_arg( 'add_to_wishlist', $product_id ) ) ?>" rel="nofollow" data-product-id="<?php echo strip_tags( $product_id ) ?>" data-product-type="<?php echo strip_tags( $product_type ); ?>" class="<?php echo strip_tags( $link_classes ); ?>">
 	<?php if ( isset( $icon ) ) {
-		echo html_entity_decode( $icon );
-	};
+		foxiz_render_inline_html( $icon );
+	}
 	if ( isset( $label ) ) {
-		echo esc_html( $label );
+		foxiz_render_inline_html( $label );
 	}
 	?>
 </a>

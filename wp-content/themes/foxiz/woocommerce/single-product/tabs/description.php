@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $post;
-$heading = esc_html( apply_filters( 'woocommerce_product_description_heading', esc_html__( 'Description', 'foxiz' ), 10 ) ); ?>
+$heading = apply_filters( 'woocommerce_product_description_heading', esc_html__( 'Description', 'foxiz' ), 10 ); ?>
 <div class="entry entry-content rbct clearfix">
 	<?php the_content(); ?>
 </div>

@@ -38,7 +38,7 @@ class Archive_Description extends Widget_Base {
 
 	public function get_keywords() {
 
-		return [ 'foxiz', 'ruby', 'header', 'archive', 'category', 'tag', 'description' ];
+		return [ 'foxiz', 'ruby', 'header', 'archive', 'category', 'tag', 'description', 'taxonomy' ];
 	}
 
 	protected function register_controls() {
@@ -47,6 +47,14 @@ class Archive_Description extends Widget_Base {
 			'style_section', [
 				'label' => esc_html__( 'Style', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+		$this->add_control(
+			'template_info',
+			[
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => esc_html__( 'This block is only used to build category, tag, search, taxonomy and archive templates. It displays the description based on the current page.', 'foxiz-core' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
 			]
 		);
 		$this->add_control(
@@ -106,7 +114,23 @@ class Archive_Description extends Widget_Base {
 				'selector' => '{{WRAPPER}}',
 			]
 		);
-
+		$this->add_responsive_control(
+			'excerpt_columns',
+			[
+				'label'       => esc_html__( 'Description Columns', 'foxiz-core' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => esc_html__( 'Select the number of columns for displaying the description text. This is helpful when you have a lengthy description.' ),
+				'selectors'   => [ '{{WRAPPER}}' => '--excerpt-columns: {{VALUE}};' ],
+			]
+		);
+		$this->add_responsive_control(
+			'excerpt_gap',
+			[
+				'label'     => esc_html__( 'Column Gap', 'foxiz-core' ),
+				'type'      => Controls_Manager::NUMBER,
+				'selectors' => [ '{{WRAPPER}}' => '--excerpt-gap: {{VALUE}}px;' ],
+			]
+		);
 		$this->end_controls_section();
 	}
 

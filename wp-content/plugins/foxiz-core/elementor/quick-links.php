@@ -92,8 +92,8 @@ class Quick_links extends Widget_Base {
 		);
 		$this->add_control(
 			'source_tax', [
-				'label'       => esc_html__( 'Taxonomies', 'foxiz-core' ),
-				'description' => esc_html__( 'Input taxonomy slugs you want to collect, separated by commas if you want to display multiple taxonomies, e.g., category, post_tag', 'foxiz-core' ),
+				'label'       => esc_html__( 'Taxonomy Keys', 'foxiz-core' ),
+				'description' => esc_html__( 'Input the taxonomy slugs/names/keys you want to collect, separated by commas if you want to display multiple taxonomies (e.g., category, post_tag, genre).', 'foxiz-core' ),
 				'placeholder' => 'category, post_tag',
 				'type'        => Controls_Manager::TEXTAREA,
 				'ai'          => [ 'active' => false ],
@@ -336,6 +336,32 @@ class Quick_links extends Widget_Base {
 					'3' => esc_html__( 'Horizontal Scroll', 'foxiz-core' ),
 				],
 				'default' => '0',
+			]
+		);
+		$this->add_responsive_control(
+			'align',
+			[
+				'label'     => esc_html__( 'Alignment', 'foxiz-core' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'condition' => [
+					'overflow' => [ '0', '2' ],
+				],
+				'options'   => [
+					'flex-start' => [
+						'title' => esc_html__( 'Left', 'foxiz-core' ),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center'     => [
+						'title' => esc_html__( 'Center', 'foxiz-core' ),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'flex-end'   => [
+						'title' => esc_html__( 'Right', 'foxiz-core' ),
+						'icon'  => 'eicon-text-align-right',
+					],
+				],
+				'default'   => '',
+				'selectors' => [ '{{WRAPPER}} .qlinks-inner' => 'justify-content: {{VALUE}};' ],
 			]
 		);
 		$this->end_controls_section();

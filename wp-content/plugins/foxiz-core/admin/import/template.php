@@ -28,7 +28,9 @@ $nonce = wp_create_nonce( 'rb-core' );
 		</div>
 	</div>
 	<div class="rb-demos">
-		<?php foreach ( $demos as $directory => $demo ) :
+		<?php
+		if ( ! empty( $demos ) && is_array( $demos ) ) :
+			foreach ( $demos as $directory => $demo ) :
 			if ( ! empty( $demo['imported'] ) && is_array( $demo['imported'] ) ) {
 				$imported       = true;
 				$item_classes   = 'rb-demo-item active is-imported';
@@ -80,6 +82,9 @@ $nonce = wp_create_nonce( 'rb-core' );
 				</div>
 			</div>
 		<?php
-		endforeach; ?>
+		endforeach;
+		else: ?>
+			<p>Something was wrong. Please click the "Update Demos" button to reload the data or contact the support team for assistance.</p>
+		<?php endif; ?>
 	</div>
 </div>

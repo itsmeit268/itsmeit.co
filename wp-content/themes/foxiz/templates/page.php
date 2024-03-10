@@ -25,7 +25,7 @@ if ( ! function_exists( 'foxiz_single_page' ) ) {
 				$content_classes = 'rb-small-container edge-padding';
 			}
 		} else {
-			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
+			$classes[] = 'is-sidebar-' . $sidebar_position;
 			$classes[] = foxiz_get_single_sticky_sidebar( 'page' );
 		}
 		if ( foxiz_is_wc_pages() ) {

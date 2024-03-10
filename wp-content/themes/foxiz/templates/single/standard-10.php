@@ -16,7 +16,7 @@ if ( ! function_exists( 'foxiz_render_single_standard_10' ) ) {
 		if ( empty( $sidebar_name ) || ! is_active_sidebar( $sidebar_name ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
-			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
+			$classes[] = 'is-sidebar-' . $sidebar_position;
 			$classes[] = foxiz_get_single_sticky_sidebar();
 		}
 		if ( foxiz_get_option( 'single_10_ratio' ) ) {

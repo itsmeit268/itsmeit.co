@@ -16,10 +16,10 @@ if ( ! function_exists( 'foxiz_get_privacy' ) ) {
 			$class_name .= ' ' . $classes;
 		}
 
-		$output = '<aside id="rb-privacy" class="' . esc_attr( $class_name ) . '">';
+		$output = '<aside id="rb-privacy" class="' . strip_tags( $class_name ) . '">';
 		$output .= '<div class="privacy-inner">';
 		$output .= '<div class="privacy-content">';
-		$output .= wp_kses( $text, 'foxiz' );
+		$output .= foxiz_strip_tags( $text );
 		$output .= '</div>';
 		$output .= '<div class="privacy-dismiss">';
 		$output .= '<a id="privacy-trigger" href="#" class="privacy-dismiss-btn is-btn"><span>' . foxiz_html__( 'Accept', 'foxiz' ) . '</span></a>';
@@ -84,13 +84,13 @@ if ( ! function_exists( 'foxiz_get_popup_newsletter' ) ) {
 		$delay       = foxiz_get_option( 'newsletter_popup_delay' );
 		$expired     = foxiz_get_option( 'newsletter_popup_expired' );
 
-		$output = '<aside id="rb-popup-newsletter" class="popup-newsletter mfp-animation mfp-hide light-scheme" data-display="' . esc_attr( $display ) . '" data-delay="' . absint( $delay ) . '" data-expired="' . absint( $expired ) . '" data-offset="' . absint( $offset ) . '">';
+		$output = '<aside id="rb-popup-newsletter" class="popup-newsletter mfp-animation mfp-hide light-scheme" data-display="' . strip_tags( $display ) . '" data-delay="' . absint( $delay ) . '" data-expired="' . absint( $expired ) . '" data-offset="' . absint( $offset ) . '">';
 		$output .= '<div class="popup-newsletter-inner">';
 		$output .= '<div class="popup-newsletter-cover">';
 		$output .= '<div class="popup-newsletter-cover-holder">';
 		if ( ! empty( $cover['url'] ) ) {
 			$cover_size = foxiz_get_image_size( $cover['url'] );
-			$output     .= '<img loading="lazy" decoding="async" class="popup-newsletter-img" src="' . esc_url( $cover['url'] ) . '" alt="' . ( ! empty( $cover['alt'] ) ? esc_attr( $cover['alt'] ) : '' ) . '" ';
+			$output     .= '<img loading="lazy" decoding="async" class="popup-newsletter-img" src="' . esc_url( $cover['url'] ) . '" alt="' . ( ! empty( $cover['alt'] ) ? strip_tags( $cover['alt'] ) : '' ) . '" ';
 			if ( ! empty( $cover_size[3] ) ) {
 				$output .= $cover_size[3];
 			}
@@ -99,8 +99,8 @@ if ( ! function_exists( 'foxiz_get_popup_newsletter' ) ) {
 		$output .= '</div></div>';
 		$output .= '<div class="popup-newsletter-content">';
 		$output .= '<div class="popup-newsletter-header">';
-		$output .= '<h6 class="popup-newsletter-heading h1">' . esc_html( $title ) . '<span class="popup-newsletter-icon"><i class="rbi rbi-plane"></i></span></h6>';
-		$output .= '<p class="popup-newsletter-description">' . wp_kses( $description, 'foxiz' ) . '</p>';
+		$output .= '<h6 class="popup-newsletter-heading h1">' . foxiz_strip_tags( $title ) . '<span class="popup-newsletter-icon"><i class="rbi rbi-plane"></i></span></h6>';
+		$output .= '<p class="popup-newsletter-description">' . foxiz_strip_tags( $description ) . '</p>';
 		$output .= '';
 		$output .= '</div>';
 		$output .= '<div class="popup-newsletter-shortcode">';
@@ -113,9 +113,9 @@ if ( ! function_exists( 'foxiz_get_popup_newsletter' ) ) {
 		if ( ! empty( $footer ) ) {
 			$output .= '<div class="popup-newsletter-footer">';
 			if ( ! empty( $footer_url ) ) {
-				$output .= '<a class="is-meta" href="' . esc_url( $footer_url ) . '">' . esc_html( $footer ) . '</a>';
+				$output .= '<a class="is-meta" href="' . esc_url( $footer_url ) . '">' . foxiz_strip_tags( $footer ) . '</a>';
 			} else {
-				$output .= '<span class="is-meta">' . esc_html( $footer ) . '</span>';
+				$output .= '<span class="is-meta">' . foxiz_strip_tags( $footer ) . '</span>';
 			}
 			$output .= '</div>';
 		}
@@ -164,21 +164,21 @@ if ( ! function_exists( 'foxiz_render_popup_login_form' ) ) {
 						<?php if ( ! empty( $settings['header_login_logo']['url'] ) ) : ?>
 							<div class="logo-popup-logo">
 								<?php if ( ! empty( $settings['header_login_dark_logo']['url'] ) ) : ?>
-									<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $settings['header_login_logo']['url'] ); ?>" alt="<?php echo esc_attr( $settings['header_login_logo']['alt'] ) ?>" height="<?php echo esc_attr( $settings['header_login_logo']['height'] ) ?>" width="<?php echo esc_attr( $settings['header_login_logo']['width'] ) ?>"/>
-									<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $settings['header_login_dark_logo']['url'] ); ?>" alt="<?php echo esc_attr( $settings['header_login_dark_logo']['alt'] ) ?>" height="<?php echo esc_attr( $settings['header_login_dark_logo']['height'] ) ?>" width="<?php echo esc_attr( $settings['header_login_dark_logo']['width'] ) ?>"/>
+									<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $settings['header_login_logo']['url'] ); ?>" alt="<?php echo strip_tags( $settings['header_login_logo']['alt'] ) ?>" height="<?php echo strip_tags( $settings['header_login_logo']['height'] ) ?>" width="<?php echo strip_tags( $settings['header_login_logo']['width'] ) ?>"/>
+									<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $settings['header_login_dark_logo']['url'] ); ?>" alt="<?php echo strip_tags( $settings['header_login_dark_logo']['alt'] ) ?>" height="<?php echo strip_tags( $settings['header_login_dark_logo']['height'] ) ?>" width="<?php echo strip_tags( $settings['header_login_dark_logo']['width'] ) ?>"/>
 								<?php else : ?>
-									<img loading="lazy" decoding="async" src="<?php echo esc_url( $settings['header_login_logo']['url'] ); ?>" alt="<?php echo ! empty( $settings['header_login_logo']['alt'] ) ? esc_attr( $settings['header_login_logo']['alt'] ) : ''; ?>" height="<?php echo esc_attr( $settings['header_login_logo']['height'] ) ?>" width="<?php echo esc_attr( $settings['header_login_logo']['width'] ) ?>"/>
+									<img loading="lazy" decoding="async" src="<?php echo esc_url( $settings['header_login_logo']['url'] ); ?>" alt="<?php echo ! empty( $settings['header_login_logo']['alt'] ) ? strip_tags( $settings['header_login_logo']['alt'] ) : ''; ?>" height="<?php echo strip_tags( $settings['header_login_logo']['height'] ) ?>" width="<?php echo strip_tags( $settings['header_login_logo']['width'] ) ?>"/>
 								<?php endif; ?>
 							</div>
 						<?php endif;
 						if ( ! empty( $settings['header_login_heading'] ) ) : ?>
-							<span class="logo-popup-heading h3"><?php echo esc_html( $settings['header_login_heading'] ); ?></span>
+							<span class="logo-popup-heading h3"><?php foxiz_render_inline_html( $settings['header_login_heading'] ); ?></span>
 						<?php endif;
 						if ( ! empty( $settings['header_login_description'] ) ) : ?>
-							<p class="logo-popup-description is-meta"><?php echo esc_html( $settings['header_login_description'] ); ?></p>
+							<p class="logo-popup-description is-meta"><?php foxiz_render_inline_html( $settings['header_login_description'] ); ?></p>
 						<?php endif; ?>
 					</div>
-					<div class="<?php echo esc_attr( $classes ); ?>"><?php wp_login_form( $args ); ?>
+					<div class="<?php echo strip_tags( $classes ); ?>"><?php wp_login_form( $args ); ?>
 						<div class="login-form-footer is-meta">
 							<?php if ( ! empty( $settings['login_register'] ) ) {
 								printf( '<a href="%s">%s</a>', esc_url( $settings['login_register'] ), foxiz_html__( 'Register', 'foxiz' ) );
@@ -191,7 +191,6 @@ if ( ! function_exists( 'foxiz_render_popup_login_form' ) ) {
 		</div>
 	<?php }
 }
-
 
 if ( ! function_exists( 'foxiz_adblock_popup' ) ) {
 	function foxiz_adblock_popup() {
@@ -213,15 +212,15 @@ if ( ! function_exists( 'foxiz_get_adblock_popup' ) ) {
 		$title       = foxiz_get_option( 'adblock_title' );
 		$description = foxiz_get_option( 'adblock_description' );
 
-		$output = '<div id="rb-checktag"><div id="google_ads_iframe_checktag" class="adbanner rb-adbanner"><img loading="lazy" decoding="async" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="adbanner"/></div></div>';
+		$output = '<div id="rb-checktag"><div id="google_ads_iframe_checktag" class="ad__slot ad__slot--hero adbanner ad-wrap rb-adbanner"><img loading="lazy" decoding="async" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="adbanner"/></div></div>';
 		$output .= '<aside id="rb-site-access" class="site-access-popup mfp-animation mfp-hide light-scheme">';
 		$output .= '<div class="site-access-inner">';
 		$output .= '<div class="site-access-image"><i class="rbi rbi-lock"></i></div>';
 		if ( ! empty( $title ) ) {
-			$output .= '<div class="site-access-title h2">' . esc_html( $title ) . '</div>';
+			$output .= '<div class="site-access-title h2">' . foxiz_strip_tags( $title ) . '</div>';
 		}
 		if ( ! empty( $description ) ) {
-			$output .= '<div class="site-access-description">' . wp_kses( $description, 'foxiz' ) . '</div>';
+			$output .= '<div class="site-access-description">' . foxiz_strip_tags( $description ) . '</div>';
 		}
 		$output .= '<div class="site-access-btn"><a class="is-btn" href="' . foxiz_get_current_permalink() . '">' . foxiz_html__( 'Okay, I\'ll Whitelist' ) . '</a>' . '</div>';
 		$output .= '</div>';

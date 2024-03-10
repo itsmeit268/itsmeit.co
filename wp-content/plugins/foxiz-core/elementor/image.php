@@ -648,7 +648,7 @@ class Image extends Widget_Base {
 		</a>
 	<?php endif; ?><?php if ( $has_caption ) : ?>
 			<figcaption class="widget-image-caption wp-caption-text"><?php
-				echo wp_kses_post( $this->get_caption( $settings ) );
+				echo foxiz_strip_tags( $this->get_caption( $settings ) );
 				?></figcaption>
 		<?php endif; ?><?php if ( $has_caption ) : ?>
 			</figure>

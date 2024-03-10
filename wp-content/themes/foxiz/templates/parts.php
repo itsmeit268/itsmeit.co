@@ -3,13 +3,6 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_get_block_open_tag' ) ) {
-	/**
-	 * @param array $settings
-	 * @param null  $_query
-	 *
-	 * @return string
-	 * get block open tag
-	 */
 	function foxiz_get_block_open_tag( $settings = [], $_query = null ) {
 
 		$uuid    = '';
@@ -115,17 +108,17 @@ if ( ! function_exists( 'foxiz_get_block_open_tag' ) ) {
 			}
 		}
 		if ( ! empty( $settings['featured_position'] ) ) {
-			$classes[] = 'is-feat-' . esc_attr( $settings['featured_position'] );
+			$classes[] = 'is-feat-' . $settings['featured_position'];
 		}
 
 		if ( ! empty( $settings[' mobile_layout'] ) ) {
-			$classes[] = 'is-m-' . esc_attr( $settings[' mobile_layout'] );
+			$classes[] = 'is-m-' . $settings[' mobile_layout'];
 
 			if ( 'list' === $settings[' mobile_layout'] ) {
 				if ( ! empty( $settings['featured_list_position'] ) ) {
-					$classes[] = 'res-feat-' . esc_attr( $settings['featured_list_position'] );
+					$classes[] = 'res-feat-' . $settings['featured_list_position'];
 				} elseif ( ! empty( $settings['featured_position'] ) ) {
-					$classes[] = 'res-feat-' . esc_attr( $settings['featured_position'] );
+					$classes[] = 'res-feat-' . $settings['featured_position'];
 				}
 			}
 		}
@@ -133,21 +126,21 @@ if ( ! function_exists( 'foxiz_get_block_open_tag' ) ) {
 			$classes[] = 'is-counter-' . $settings['counter_style'];
 		}
 
-		if ( empty( $settings['meta_divider'] ) ) {
-			$settings['meta_divider'] = foxiz_get_option( 'meta_divider' );
-		}
-		$classes[] = 'meta-s-' . $settings['meta_divider'];
+		$settings['meta_divider'] = ! empty( $settings['meta_divider'] ) ? $settings['meta_divider'] : foxiz_get_option( 'meta_divider', 'default' );
+		$classes[]                = 'meta-s-' . $settings['meta_divider'];
 
-		return '<' . $tag . ' id="' . $uuid . '" class="' . join( ' ', $classes ) . '">';
+		return '<' . $tag . ' id="' . $uuid . '" class="' . strip_tags( join( ' ', $classes ) ) . '">';
+	}
+}
+
+if ( ! function_exists( 'foxiz_render_inline_html' ) ) {
+	function foxiz_render_inline_html( $content ) {
+
+		echo foxiz_strip_tags( $content );
 	}
 }
 
 if ( ! function_exists( 'foxiz_block_open_tag' ) ) {
-	/**
-	 * @param array $settings
-	 * @param null  $_query
-	 * render block open tag
-	 */
 	function foxiz_block_open_tag( $settings = [], $_query = null ) {
 
 		echo foxiz_get_block_open_tag( $settings, $_query );
@@ -155,10 +148,6 @@ if ( ! function_exists( 'foxiz_block_open_tag' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_block_close_tag' ) ) {
-	/**
-	 * @param array $settings
-	 * render block close tag
-	 */
 	function foxiz_block_close_tag( $settings = [] ) {
 
 		$tag = 'div';
@@ -166,16 +155,11 @@ if ( ! function_exists( 'foxiz_block_close_tag' ) ) {
 		if ( ! empty( $settings['block_tag'] ) ) {
 			$tag = $settings['block_tag'];
 		}
-		echo '</' . esc_attr( $tag ) . '>';
+		echo '</' . strip_tags( $tag ) . '>';
 	}
 }
 
 if ( ! function_exists( 'foxiz_error_posts' ) ) {
-	/**
-	 * @param null   $_query
-	 * @param string $min
-	 * render error posts
-	 */
 	function foxiz_error_posts( $_query = null, $min = '' ) {
 
 		if ( current_user_can( 'edit_pages' ) ) :
@@ -185,7 +169,7 @@ if ( ! function_exists( 'foxiz_error_posts' ) ) {
 				$messenger = sprintf( esc_html__( 'This block requests at least %s posts, Please add new posts for this query or change the block settings: ', 'foxiz' ), $min );
 			} ?>
 			<p class="rb-error"><?php
-				echo esc_html( $messenger );
+				foxiz_render_inline_html( $messenger );
 				edit_post_link( esc_html__( 'Edit Page', 'foxiz' ), null, null, null, 'page-edit-link' );
 				?></p>
 		<?php
@@ -207,7 +191,7 @@ if ( ! function_exists( 'foxiz_block_inner_open_tag' ) ) {
 		if ( ! empty( $settings['scroll_height'] ) ) {
 			echo '<div class="scroll-holder">';
 		}
-		echo '<div class="' . esc_attr( $classes ) . '">';
+		echo '<div class="' . strip_tags( $classes ) . '">';
 	}
 }
 
@@ -566,10 +550,16 @@ if ( ! function_exists( 'foxiz_render_pagination_number' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_search_form' ) ) {
-	/**
-	 * @param array $settings
-	 */
 	function foxiz_search_form( $settings = [] ) {
+
+		echo foxiz_render_search_form( $settings );
+	}
+}
+
+if ( ! function_exists( 'foxiz_render_search_form' ) ) {
+	function foxiz_render_search_form( $settings = [] ) {
+
+		$output = '';
 
 		if ( empty( $settings['placeholder'] ) ) {
 			$settings['placeholder'] = foxiz_get_option( 'search_placeholder' );
@@ -587,39 +577,51 @@ if ( ! function_exists( 'foxiz_search_form' ) ) {
 		if ( ! empty( $settings['ajax_search'] ) ) {
 			$classes .= ' live-search-form';
 		}
-		?>
-		<form method="get" action="<?php echo esc_url( home_url( '/' ) ) ?>" class="<?php echo esc_attr( $classes ); ?>" <?php foxiz_search_attributes( $settings ); ?>>
-			<div class="search-form-inner">
-				<?php if ( ! empty( $settings['icon']['url'] ) ) : ?>
-					<span class="search-icon"><span class="search-icon-svg"></span></span>
-				<?php else : ?>
-					<span class="search-icon"><i class="rbi rbi-search" aria-hidden="true"></i></span>
-				<?php endif; ?>
-				<span class="search-text"><input type="text" class="field" placeholder="<?php echo esc_html( $settings['placeholder'] ) ?>" value="<?php echo get_search_query(); ?>" name="s"/></span>
-				<span class="rb-search-submit"><input type="submit" value="<?php echo esc_html( $settings['label'] ); ?>"/><i class="rbi rbi-cright" aria-hidden="true"></i></span>
-				<?php if ( ! empty( $settings['ajax_search'] ) ) : ?>
-					<span class="live-search-animation rb-loader"></span>
-				<?php endif; ?>
-			</div>
-			<?php if ( ! empty( $settings['ajax_search'] ) ) {
-				$response_classes = 'live-search-response';
-				if ( ! empty( $settings['color_scheme'] ) ) {
-					$response_classes .= ' light-scheme';
-				}
-				echo '<div class="' . esc_attr( $response_classes ) . '"></div>';
-			} ?>
-		</form>
-	<?php }
+
+		if ( ! empty( $settings['no_submit'] ) ) {
+			$output .= '<div class="' . strip_tags( $classes ) . '" ' . foxiz_search_attributes( $settings ) . '>';
+		} else {
+			$output .= '<form method="get" action="' . esc_url( home_url( '/' ) ) . '" class="' . strip_tags( $classes ) . '" ' . foxiz_search_attributes( $settings ) . '>';
+		}
+
+		$output .= '<div class="search-form-inner">';
+		if ( ! empty( $settings['icon']['url'] ) ) {
+			$output .= '<span class="search-icon"><span class="search-icon-svg"></span></span>';
+		} else {
+			$output .= '<span class="search-icon"><i class="rbi rbi-search" aria-hidden="true"></i></span>';
+		}
+		$output .= '<span class="search-text"><input type="text" class="field" placeholder="' . strip_tags( $settings['placeholder'] ) . '" value="' . strip_tags( get_search_query() ) . '" name="s"/></span>';
+
+		if ( empty( $settings['no_submit'] ) ) {
+			$output .= '<span class="rb-search-submit"><input type="submit" value="' . strip_tags( $settings['label'] ) . '"/><i class="rbi rbi-cright" aria-hidden="true"></i></span>';
+		}
+		if ( ! empty( $settings['ajax_search'] ) ) {
+			$output .= '<span class="live-search-animation rb-loader"></span>';
+		}
+		$output .= '</div>';
+
+		if ( ! empty( $settings['ajax_search'] ) ) {
+			$output .= '<div class="live-search-response' . ( ! empty( $settings['color_scheme'] ) ? ' light-scheme' : '' ) . '"></div>';
+		}
+		if ( ! empty( $settings['no_submit'] ) ) {
+			$output .= '</div>';
+		} else {
+			$output .= '</form>';
+		}
+
+		return $output;
+	}
 }
 
 if ( ! function_exists( 'foxiz_search_attributes' ) ) {
-	/**
-	 * @param $settings
-	 */
 	function foxiz_search_attributes( $settings ) {
 
 		if ( empty( $settings['limit'] ) ) {
 			$settings['limit'] = '0';
+		}
+
+		if ( empty( $settings['taxonomies'] ) ) {
+			$settings['taxonomies'] = 'category';
 		}
 
 		if ( empty( $settings['search_type'] ) ) {
@@ -630,7 +632,11 @@ if ( ! function_exists( 'foxiz_search_attributes' ) ) {
 			$settings['follow'] = '0';
 		}
 
-		echo ' data-search="' . esc_attr( $settings['search_type'] ) . '" data-limit="' . absint( $settings['limit'] ) . '" data-follow="' . esc_attr( $settings['follow'] ) . '"';
+		if ( empty( $settings['desc_source'] ) ) {
+			$settings['desc_source'] = '0';
+		}
+
+		return ' data-search="' . strip_tags( $settings['search_type'] ) . '" data-limit="' . absint( $settings['limit'] ) . '" data-follow="' . strip_tags( $settings['follow'] ) . '" data-tax="' . $settings['taxonomies'] . '" data-dsource="' . $settings['desc_source'] . '"';
 	}
 }
 
@@ -648,7 +654,7 @@ if ( ! function_exists( 'foxiz_render_elementor_link' ) ) {
 		$output = '';
 		$output .= '<a';
 		if ( ! empty( $classes ) ) {
-			$output .= ' class="' . esc_attr( $classes ) . '"';
+			$output .= ' class="' . strip_tags( $classes ) . '"';
 		}
 		if ( ! empty( $link['is_external'] ) ) {
 			$output .= ' target="_blank"';
@@ -661,7 +667,7 @@ if ( ! function_exists( 'foxiz_render_elementor_link' ) ) {
 			foreach ( $attrs as $attr ) {
 				$attr = explode( '|', $attr );
 				if ( ! empty( $attr[0] && ! empty( $attr[1] ) ) ) {
-					$output .= ' ' . esc_attr( $attr[0] ) . '="' . esc_attr( $attr[1] ) . '"';
+					$output .= ' ' . strip_tags( $attr[0] ) . '="' . strip_tags( $attr[1] ) . '"';
 				}
 			}
 		}
@@ -670,10 +676,10 @@ if ( ! function_exists( 'foxiz_render_elementor_link' ) ) {
 		}
 
 		if ( ! empty( $label ) ) {
-			$output .= ' aria-label="' . esc_attr( $label ) . '"';
+			$output .= ' aria-label="' . strip_tags( $label ) . '"';
 		}
 
-		$output .= '>' . wp_kses( $content, 'foxiz' ) . '</a>';
+		$output .= '>' . foxiz_strip_tags( $content ) . '</a>';
 
 		return $output;
 	}
@@ -812,13 +818,13 @@ if ( ! function_exists( 'foxiz_get_social_list' ) ) {
 			$social_3_icon = foxiz_get_option( 'custom_social_3_icon' );
 
 			if ( ! empty( $social_1_url ) && ! empty( $social_1_name ) ) {
-				$output .= '<a class="social-link-custom social-link-1 social-link-' . esc_attr( $social_1_name ) . '" data-title="' . esc_attr( $social_1_name ) . '" aria-label="' . esc_attr( $social_1_name ) . '" href="' . esc_url( $social_1_url ) . '" ' . $new_tab . '><i class="' . esc_attr( $social_1_icon ) . '" aria-hidden="true"></i></a>';
+				$output .= '<a class="social-link-custom social-link-1 social-link-' . strip_tags( $social_1_name ) . '" data-title="' . strip_tags( $social_1_name ) . '" aria-label="' . strip_tags( $social_1_name ) . '" href="' . esc_url( $social_1_url ) . '" ' . $new_tab . '><i class="' . strip_tags( $social_1_icon ) . '" aria-hidden="true"></i></a>';
 			}
 			if ( ! empty( $social_2_url ) && ! empty( $social_2_name ) ) {
-				$output .= '<a class="social-link-custom social-link-2 social-link-' . esc_attr( $social_2_name ) . '" data-title="' . esc_attr( $social_2_name ) . '" aria-label="' . esc_attr( $social_1_name ) . '" href="' . esc_url( $social_2_url ) . '" ' . $new_tab . '><i class="' . esc_attr( $social_2_icon ) . '" aria-hidden="true"></i></a>';
+				$output .= '<a class="social-link-custom social-link-2 social-link-' . strip_tags( $social_2_name ) . '" data-title="' . strip_tags( $social_2_name ) . '" aria-label="' . strip_tags( $social_1_name ) . '" href="' . esc_url( $social_2_url ) . '" ' . $new_tab . '><i class="' . strip_tags( $social_2_icon ) . '" aria-hidden="true"></i></a>';
 			}
 			if ( ! empty( $social_3_url ) && ! empty( $social_3_name ) ) {
-				$output .= '<a class="social-link-custom social-link-3 social-link-' . esc_attr( $social_3_name ) . '" data-title="' . esc_attr( $social_3_name ) . '" aria-label="' . esc_attr( $social_1_name ) . '" href="' . esc_url( $social_3_url ) . '" ' . $new_tab . '><i class="' . esc_attr( $social_3_icon ) . '" aria-hidden="true"></i></a>';
+				$output .= '<a class="social-link-custom social-link-3 social-link-' . strip_tags( $social_3_name ) . '" data-title="' . strip_tags( $social_3_name ) . '" aria-label="' . strip_tags( $social_1_name ) . '" href="' . esc_url( $social_3_url ) . '" ' . $new_tab . '><i class="' . strip_tags( $social_3_icon ) . '" aria-hidden="true"></i></a>';
 			}
 		}
 
@@ -844,19 +850,20 @@ if ( ! function_exists( 'foxiz_get_category_hero' ) ) {
 		if ( 1 === count( $featured_array ) ) {
 			$featured_array[1] = $featured_array[0];
 		}
+
 		$counter = 0;
 		$output  = '';
 
 		foreach ( $featured_array as $index => $id ) {
 
-			if ( 0 === $counter && ! $lazy ) {
-				$loading = 'loading="eager" decoding="async" ';
-			} else {
-				$loading = 'loading="lazy" decoding="async" ';
-			}
-
 			if ( foxiz_is_amp() ) {
 				$loading = '';
+			} else {
+				if ( 0 === $counter && ! $lazy ) {
+					$loading = 'loading="eager" decoding="async" ';
+				} else {
+					$loading = 'loading="lazy" decoding="async" ';
+				}
 			}
 
 			$url = wp_get_attachment_image_url( $id, $size );
@@ -866,7 +873,7 @@ if ( ! function_exists( 'foxiz_get_category_hero' ) ) {
 			}
 			$output .= '<div class="category-hero-item">';
 			$output .= '<div class="category-hero-item-inner">';
-			$output .= '<img ' . $loading . 'src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '"/>';
+			$output .= '<img ' . $loading . 'src="' . esc_url( $url ) . '" alt="' . strip_tags( $alt ) . '"/>';
 			$output .= '</div>';
 			$output .= '</div>';
 
@@ -893,43 +900,34 @@ if ( ! function_exists( 'foxiz_render_category_hero' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_get_category_featured' ) ) {
-	/**
-	 * @param array  $featured_array
-	 * @param array  $featured_urls_array
-	 * @param string $size
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_category_featured( $featured_array = [], $featured_urls_array = [], $size = 'foxiz_crop_g1' ) {
 
-		$output = '<span class="category-feat">';
-
 		if ( ! empty( $featured_array[0] ) ) {
-			$output .= wp_get_attachment_image( $featured_array[0], $size );
+			return '<span class="category-feat">' . wp_get_attachment_image( $featured_array[0], $size ) . '</span>';
 		} elseif ( ! empty( $featured_urls_array[0] ) ) {
-			$output .= '<img ';
 
+			$output = '<img ';
 			if ( ! foxiz_is_amp() ) {
 				$output .= 'loading="lazy" decoding="async" ';
 			}
-
 			$output .= 'src="' . esc_url( $featured_urls_array[0] ) . ' alt="' . esc_html__( 'category featured', 'foxiz' ) . '"/>';
-		}
-		$output .= '</span>';
 
-		return $output;
+			return '<span class="category-feat">' . $output . '</span>';
+		}
+
+		return false;
 	}
 }
 
 if ( ! function_exists( 'foxiz_render_category_featured' ) ) {
 	/**
 	 * @param array  $featured_array
-	 * @param array  $featured_urls_image
+	 * @param array  $featured_urls_array
 	 * @param string $size
 	 */
-	function foxiz_render_category_featured( $featured_array = [], $featured_urls_image = [], $size = '' ) {
+	function foxiz_render_category_featured( $featured_array = [], $featured_urls_array = [], $size = '' ) {
 
-		echo foxiz_get_category_featured( $featured_array, $featured_urls_image, $size );
+		echo foxiz_get_category_featured( $featured_array, $featured_urls_array, $size );
 	}
 }
 
@@ -953,11 +951,11 @@ if ( ! function_exists( 'foxiz_single_category_title' ) ) {
 
 		if ( ! empty( $settings['follow_category_header'] ) ) : ?>
 			<div class="archive-title b-follow">
-				<h1><?php single_cat_title(); ?></h1>
-				<span class="rb-follow follow-trigger" data-name="<?php single_cat_title(); ?>" data-cid="<?php echo get_queried_object_id() ?>"></span>
+				<h1><?php single_term_title(); ?></h1>
+				<span class="rb-follow follow-trigger" data-name="<?php single_term_title(); ?>" data-cid="<?php echo get_queried_object_id() ?>"></span>
 			</div>
 		<?php else : ?>
-			<h1 class="archive-title"><?php single_cat_title(); ?></h1>
+			<h1 class="archive-title"><?php single_term_title(); ?></h1>
 		<?php endif;
 	}
 }

@@ -24,7 +24,7 @@ class Categories_List_5 extends Widget_Base {
 
 	public function get_title() {
 
-		return esc_html__( 'Foxiz - Categories List 5', 'foxiz-core' );
+		return esc_html__( 'Foxiz - Taxonomies List 5', 'foxiz-core' );
 	}
 
 	public function get_icon() {
@@ -34,7 +34,7 @@ class Categories_List_5 extends Widget_Base {
 
 	public function get_keywords() {
 
-		return [ 'foxiz', 'ruby', 'category', 'follow', 'bookmark', 'interest' ];
+		return [ 'foxiz', 'ruby', 'category', 'follow', 'bookmark', 'interest', 'tag', 'tax' ];
 	}
 
 	public function get_categories() {
@@ -59,13 +59,33 @@ class Categories_List_5 extends Widget_Base {
 			]
 		);
 		$this->add_control(
+			'tax_slug_info',
+			[
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => Options::tax_name_description(),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+		$this->add_control(
 			'followed',
 			[
-				'label'       => esc_html__( 'Followed Categories', 'foxiz-core' ),
+				'label'       => esc_html__( 'Show Followed', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
-				'description' => Options::categories_followed_description(),
-				'options'     => Options::switch_dropdown( false ),
+				'description' => Options::taxonomies_followed_description(),
+				'options'     => Options::followed_dropdown(),
 				'default'     => '-1',
+			]
+		);
+		$this->add_control(
+			'tax_followed',
+			[
+				'label'       => esc_html__( 'or Show Followed by Taxonomy Keys', 'foxiz-core' ),
+				'description' => Options::tax_slug_followed_description(),
+				'type'        => Controls_Manager::TEXTAREA,
+				'placeholder' => 'category, post_tag, genre',
+				'ai'          => [ 'active' => false ],
+				'rows'        => 2,
+				'default'     => '',
 			]
 		);
 		$this->add_control(
@@ -84,15 +104,15 @@ class Categories_List_5 extends Widget_Base {
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'general', [
-				'label' => esc_html__( 'Categories', 'foxiz-core' ),
+				'label' => esc_html__( 'Manually Add', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
 		$this->add_control(
-			'category_list_info',
+			'tax_featured_info',
 			[
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => esc_html__( 'To set featured images for each category, navigate to "Posts > Categories > Edit > Featured Images".', 'foxiz-core' ),
+				'raw'             => Options::tax_featured_info(),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -103,23 +123,34 @@ class Categories_List_5 extends Widget_Base {
 				'label'   => esc_html__( 'Select a Category', 'foxiz-core' ),
 				'type'    => Controls_Manager::SELECT,
 				'options' => Options::cat_slug_dropdown( 'post', esc_html__( '- Select a category -', 'foxiz-core' ) ),
-				'default' => '',
+				'default' => 0,
+			]
+		);
+		$categories->add_control(
+			'tax_id',
+			[
+				'label'       => esc_html__( 'or Term ID', 'foxiz-core' ),
+				'description' => esc_html__( 'Input the tag or taxonomy Term ID; ensure that the featured image for this taxonomy is set for display in Posts > Edit "your taxonomy".', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXT,
+				'ai'          => [ 'active' => false ],
+				'default'     => '',
 			]
 		);
 		$this->add_control(
 			'categories',
 			[
-				'label'       => esc_html__( 'Add Categories', 'foxiz-core' ),
+				'label'       => esc_html__( 'Add Taxonomies', 'foxiz-core' ),
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $categories->get_controls(),
 				'default'     => [
-					[ 'category' => '' ],
+					[
+						'category' => '',
+						'tax_id'   => '',
+					],
 				],
-				'title_field' => '{{{ category }}}',
-
+				'title_field' => '{{{ tax_id ? "Term ID: " + tax_id : "Category: " + category }}}',
 			]
 		);
-
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'design_section', [
@@ -176,8 +207,8 @@ class Categories_List_5 extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Count Posts', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
-				'description' => esc_html__( 'Enable or disable total posts information of each category.', 'foxiz-core' ),
-				'options'     => Options::switch_dropdown( false ),
+				'description' => Options::count_posts_description(),
+				'options'     => Options::count_posts_dropdown(),
 				'default'     => '1',
 			]
 		);
@@ -195,7 +226,7 @@ class Categories_List_5 extends Widget_Base {
 				'label'       => esc_html__( 'Follow Button', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => Options::switch_dropdown( false ),
-				'description' => esc_html__( 'Enable or disable follow button.', 'foxiz-core' ),
+				'description' => esc_html__( 'Enable or disable the follow button.', 'foxiz-core' ),
 				'default'     => '-1',
 			]
 		);
@@ -298,7 +329,7 @@ class Categories_List_5 extends Widget_Base {
 			'bottom_margin', [
 				'label'       => esc_html__( 'Custom Bottom Margin', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Input custom bottom margin values (in pixels) between category items.', 'foxiz-core' ),
+				'description' => esc_html__( 'Input custom bottom margin values (in pixels) between items.', 'foxiz-core' ),
 				'selectors'   => [ '{{WRAPPER}} .block-wrap' => '--bottom-spacing: {{VALUE}}px;' ],
 			]
 		);
@@ -308,14 +339,6 @@ class Categories_List_5 extends Widget_Base {
 			'mobile_scroll_section', [
 				'label' => esc_html__( 'Tablet/Mobile Horizontal Scroll', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_LAYOUT,
-			]
-		);
-		$this->add_control(
-			'horizontal_scroll_info',
-			[
-				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => Options::horizontal_scroll_info(),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
 			]
 		);
 		$this->add_control(

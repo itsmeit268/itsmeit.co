@@ -35,7 +35,7 @@ class Archive_Title extends Widget_Base {
 
 	public function get_keywords() {
 
-		return [ 'foxiz', 'ruby', 'header', 'category', 'tag', 'heading' ];
+		return [ 'foxiz', 'ruby', 'header', 'category', 'tag', 'heading', 'taxonomy' ];
 	}
 
 	public function get_categories() {
@@ -49,6 +49,14 @@ class Archive_Title extends Widget_Base {
 			'content_section', [
 				'label' => esc_html__( 'General', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'template_info',
+			[
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => esc_html__( 'This block is only used to build category, tag, search, taxonomy and archive templates. It displays the title based on the current page.', 'foxiz-core' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
 			]
 		);
 		$this->add_control(

@@ -54,8 +54,8 @@ if ( ! function_exists( 'foxiz_single_review_score' ) ) {
 							} ?>
 							<div class="review-el">
 								<div class="review-label">
-									<span class="review-label-info h4"><?php echo esc_html( $element['label'] ); ?></span>
-									<span class="rating-info is-meta"><?php echo esc_html( $element['rating'] ) . ' ' . foxiz_html__( 'out of 10', 'foxiz' ); ?></span>
+									<span class="review-label-info h4"><?php foxiz_render_inline_html( $element['label'] ); ?></span>
+									<span class="rating-info is-meta"><?php foxiz_render_inline_html( $element['rating'] ) . ' ' . foxiz_html__( 'out of 10', 'foxiz' ); ?></span>
 								</div>
 								<span class="review-rating">
                                     <?php echo foxiz_get_review_line( $element['rating'] ); ?>
@@ -97,8 +97,8 @@ if ( ! function_exists( 'foxiz_single_review_star' ) ) {
 							} ?>
 							<div class="review-el">
 								<div class="review-label">
-									<span class="review-label-info h4"><?php echo esc_html( $element['label'] ); ?></span>
-									<span class="rating-info is-meta"><?php echo esc_html( $element['rating'] ) . ' ' . foxiz_html__( 'out of 5', 'foxiz' ); ?></span>
+									<span class="review-label-info h4"><?php foxiz_render_inline_html( $element['label'] ); ?></span>
+									<span class="rating-info is-meta"><?php foxiz_render_inline_html( $element['rating'] ) . ' ' . foxiz_html__( 'out of 5', 'foxiz' ); ?></span>
 								</div>
 								<span class="review-rating">
                                     <?php echo foxiz_get_review_stars( $element['rating'] ); ?>
@@ -130,14 +130,14 @@ if ( ! function_exists( 'foxiz_render_review_header' ) ) {
 					<?php if ( ! is_array( $settings['image'] ) ) : ?>
 						<?php echo wp_get_attachment_image( $settings['image'], 'full' ); ?>
 					<?php elseif ( ! empty( $settings['image']['url'] ) ) : ?>
-						<img src="<?php echo esc_url( $settings['image']['url'] ); ?>" alt="<?php echo esc_attr( $settings['image']['url'] ); ?>" height="<?php echo esc_attr( $settings['image']['height'] ); ?>" width="<?php echo esc_attr( $settings['image']['width'] ); ?>">
+						<img src="<?php echo esc_url( $settings['image']['url'] ); ?>" alt="<?php echo strip_tags( $settings['image']['alt'] ); ?>" height="<?php echo strip_tags( $settings['image']['height'] ); ?>" width="<?php echo strip_tags( $settings['image']['width'] ); ?>">
 					<?php endif ?>
 				</div>
 			<?php endif; ?>
 			<div class="inner white-text">
 				<?php if ( ! empty( $settings['title'] ) ) : ?>
 					<div class="review-heading">
-						<span class="h2"><?php echo esc_html( $settings['title'] ); ?></span>
+						<span class="h2"><?php foxiz_render_inline_html( $settings['title'] ); ?></span>
 					</div>
 				<?php endif; ?>
 				<div class="meta-info">
@@ -148,8 +148,9 @@ if ( ! function_exists( 'foxiz_render_review_header' ) ) {
 							echo foxiz_get_review_line( $settings['average'] );
 						endif;
 						?><span class="average"><?php if ( ! empty( $settings['meta'] ) ) : ?>
-						<span class="meta-text"><span class="meta-description"><?php echo wp_kses( $settings['meta'], 'foxiz' ); ?></span></span>
-					<?php endif; ?><span class="h1"><?php echo esc_html( $settings['average'] ); ?></span></span>
+						<span class="meta-text"><span class="meta-description"><?php foxiz_render_inline_html( $settings['meta'] ); ?></span></span>
+					<?php endif; ?><span class="h1"><?php foxiz_render_inline_html( $settings['average'] ); ?></span>
+						</span>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -159,15 +160,10 @@ if ( ! function_exists( 'foxiz_render_review_header' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_render_review_pros_cons' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_render_review_pros_cons( $settings = [] ) {
 
 		if ( empty( $settings['pros'] ) && empty( $settings['cons'] ) ) {
-			return false;
+			return;
 		}
 
 		$pros_label = ! empty( $settings['pros_label'] ) ? $settings['pros_label'] : foxiz_html__( 'Good Stuff', 'foxiz' );
@@ -175,15 +171,15 @@ if ( ! function_exists( 'foxiz_render_review_pros_cons' ) ) {
 		$class_name = 'pros-cons' . ( ! empty( $settings['classes'] ) ? ' ' . $settings['classes'] : '' );
 
 		?>
-		<div class="<?php echo esc_attr( $class_name ); ?>">
+		<div class="<?php echo strip_tags( $class_name ); ?>">
 			<div class="pros-cons-holder">
 				<?php if ( is_array( $settings['pros'] ) ) : ?>
 					<div class="pros-list-wrap">
 						<div class="pros-cons-list-inner">
-							<span class="pros-cons-title h4"><i class="rbi rbi-like"></i><?php echo esc_attr( $pros_label ); ?></span>
+							<span class="pros-cons-title h4"><i class="rbi rbi-like"></i><?php echo strip_tags( $pros_label ); ?></span>
 							<?php foreach ( $settings['pros'] as $item ) :
 								if ( ! empty( $item['pros_item'] ) ) :?>
-									<span class="pros-cons-el"><?php echo esc_html( $item['pros_item'] ); ?></span>
+									<span class="pros-cons-el"><?php foxiz_render_inline_html( $item['pros_item'] ); ?></span>
 								<?php endif;
 							endforeach; ?>
 						</div>
@@ -192,10 +188,10 @@ if ( ! function_exists( 'foxiz_render_review_pros_cons' ) ) {
 				if ( is_array( $settings['cons'] ) ) : ?>
 					<div class="cons-list-wrap">
 						<div class="pros-cons-list-inner">
-							<span class="pros-cons-title h4"><i class="rbi rbi-dislike"></i><?php echo esc_attr( $cons_label ); ?></span>
+							<span class="pros-cons-title h4"><i class="rbi rbi-dislike"></i><?php echo strip_tags( $cons_label ); ?></span>
 							<?php foreach ( $settings['cons'] as $item ) :
 								if ( ! empty( $item['cons_item'] ) ) :?>
-									<span class="pros-cons-el"><?php echo esc_html( $item['cons_item'] ); ?></span>
+									<span class="pros-cons-el"><?php foxiz_render_inline_html( $item['cons_item'] ); ?></span>
 								<?php endif;
 							endforeach; ?>
 						</div>
@@ -208,37 +204,29 @@ if ( ! function_exists( 'foxiz_render_review_pros_cons' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_render_review_summary' ) ) {
-	/**
-	 * @param array $settings
-	 */
 	function foxiz_render_review_summary( $settings = [] ) {
 
 		if ( ! empty( $settings['summary'] ) )  : ?>
 			<div class="summary-wrap">
 				<span class="h3 review-summary-title"><?php foxiz_html_e( 'Summary', 'foxiz' ); ?></span>
 				<div class="summary-content">
-					<?php echo wp_kses( $settings['summary'], 'foxiz' ); ?>
+					<?php foxiz_render_inline_html( $settings['summary'] ); ?>
 				</div>
 			</div>
 		<?php endif;
 		if ( ! empty( $settings['button'] ) && ! empty( $settings['destination'] ) ) : ?>
 			<div class="review-action">
-				<a class="review-btn is-btn" href="<?php echo esc_url( $settings['destination'] ); ?>" target="_blank" rel="nofollow noreferrer"><?php echo wp_kses( $settings['button'], 'foxiz' ); ?></a>
+				<a class="review-btn is-btn" href="<?php echo esc_url( $settings['destination'] ); ?>" target="_blank" rel="nofollow noreferrer"><?php foxiz_render_inline_html( $settings['button'] ); ?></a>
 			</div>
 		<?php endif;
 	}
 }
 
 if ( ! function_exists( 'foxiz_render_review_rating' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_render_review_rating( $settings = [] ) {
 
 		if ( empty( $settings['user_rating']['count'] ) || empty( $settings['user_rating']['average'] ) || empty( $settings['type'] ) ) {
-			return false;
+			return;
 		} ?>
 		<div class="user-rating">
 			<div class="rating-header">
@@ -249,7 +237,7 @@ if ( ! function_exists( 'foxiz_render_review_rating' ) ) {
 					} else {
 						$vote_output = $settings['user_rating']['count'] . ' ' . foxiz_html__( 'votes', 'foxiz' );
 					}
-					?><span class="total-vote is-meta"><?php echo '(' . esc_html( $vote_output ) . ')'; ?></span>
+					?><span class="total-vote is-meta"><?php echo '(' . strip_tags( $vote_output ) . ')'; ?></span>
 				<?php endif; ?>
 			</div>
 			<div class="average-info">

@@ -21,7 +21,8 @@ if ( ! function_exists( 'foxiz_get_quick_links' ) ) {
 			'source'       => '',
 		] );
 
-		$settings['classes'] = 'block-qlinks qlayout-' . esc_attr( $settings['layout'] );
+		$settings['classes'] = 'block-qlinks qlayout-' . $settings['layout'];
+
 		if ( '3' === (string) $settings['layout'] ) {
 			$settings['classes'] .= ' qlayout-1';
 			$settings['classes'] .= ' effect-' . $settings['hover_effect'];
@@ -45,7 +46,7 @@ if ( ! function_exists( 'foxiz_get_quick_links' ) ) {
 		<ul class="qlinks-inner">
 			<?php if ( ! empty( $settings['header'] ) ) : ?>
 				<li class="qlink qlinks-heading">
-					<div class="qlink-label"><?php echo wp_kses( $settings['header'], 'foxiz' ); ?></div>
+					<div class="qlink-label"><?php foxiz_render_inline_html( $settings['header'] ); ?></div>
 				</li>
 			<?php endif;
 

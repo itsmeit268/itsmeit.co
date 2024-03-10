@@ -3,12 +3,15 @@
 namespace foxizElementor\Widgets;
 defined( 'ABSPATH' ) || exit;
 
-use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Typography;
+use Elementor\Widget_Base;
 use foxizElementorControl\Options;
+use function foxiz_render_covid_data;
 
 /**
- * Class Foxiz_Heading
+ * Class Covid_Data
+ *
  * @package foxizElementor\Widgets
  */
 class Covid_Data extends Widget_Base {
@@ -177,7 +180,7 @@ class Covid_Data extends Widget_Base {
 			]
 		);
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'label'    => esc_html__( 'Label Text Font', 'foxiz-core' ),
 				'name'     => 'label_font',
@@ -185,7 +188,7 @@ class Covid_Data extends Widget_Base {
 			]
 		);
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'label'    => esc_html__( 'Total Number Font', 'foxiz-core' ),
 				'name'     => 'count_font',
@@ -204,7 +207,7 @@ class Covid_Data extends Widget_Base {
 			$settings         = $this->get_settings();
 			$settings['uuid'] = 'uid_' . $this->get_id();
 
-			echo \foxiz_render_covid_data( $settings );
+			echo foxiz_render_covid_data( $settings );
 		}
 	}
 }

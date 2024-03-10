@@ -206,7 +206,7 @@ if ( ! function_exists( 'foxiz_podcast_single_metaboxes' ) ) {
 						[
 							'id'      => 'layout',
 							'name'    => esc_html__( 'Episode Layout', 'foxiz' ),
-							'desc'    => esc_html__( 'Select a layout for this single episode.', 'foxiz' ),
+							'desc'    => esc_html__( 'Select a layout for this episode.', 'foxiz' ),
 							'info'    => esc_html__( 'This setting will override on the Theme Option setting.', 'foxiz' ),
 							'type'    => 'image_select',
 							'class'   => 'big',
@@ -254,6 +254,117 @@ if ( ! function_exists( 'foxiz_podcast_single_metaboxes' ) ) {
 					],
 				],
 				[
+					'id'     => 'section-widget',
+					'title'  => esc_html__( 'Widgets & Ads', 'foxiz' ),
+					'desc'   => esc_html__( 'Manage ad sections and top/bottom content widgets for this episode.', 'foxiz' ),
+					'icon'   => 'dashicons-editor-insertmore',
+					'fields' => [
+						[
+							'id'      => 'disable_top_ad',
+							'name'    => esc_html__( 'Top Site Advert', 'foxiz' ),
+							'desc'    => esc_html__( 'Enable or disable the top ad site for this episode.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'default' => esc_html__( '- Default -', 'foxiz' ),
+								'-1'      => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => 'default',
+						],
+						[
+							'id'      => 'disable_header_ad',
+							'name'    => esc_html__( 'Header Advertising Widget Section', 'foxiz' ),
+							'desc'    => esc_html__( 'Enable or disable all widgets in the header advertising widget section (Appearance > Widgets) for this episode.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'default' => esc_html__( '- Default -', 'foxiz' ),
+								'-1'      => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => 'default',
+						],
+						[
+							'id'      => 'alert_bar',
+							'name'    => esc_html__( 'Header Alert Bar', 'foxiz' ),
+							'desc'    => esc_html__( 'Enable or disable the alert bar below the header.', 'foxiz' ),
+							'info'    => esc_html__( 'This setting will apply only to pre-defined header styles.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'default' => esc_html__( '- Default -', 'foxiz' ),
+								'1'       => esc_html__( 'Enable', 'foxiz' ),
+								'-1'      => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => 'default',
+						],
+						[
+							'id'      => 'entry_top',
+							'name'    => esc_html__( 'Top Content -  Widgets Area', 'foxiz' ),
+							'desc'    => esc_html__( 'Show widgets at the top of the post content.', 'foxiz' ),
+							'info'    => esc_html__( 'Navigate to "Appearance > Widgets > Single Content - Top Area" to add your widgets.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'1'  => esc_html__( 'Enable', 'foxiz' ),
+								'-1' => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => '1',
+						],
+						[
+							'id'      => 'entry_bottom',
+							'name'    => esc_html__( 'Bottom Content - Widgets Area', 'foxiz' ),
+							'desc'    => esc_html__( 'Show widgets at the bottom of the post content.', 'foxiz' ),
+							'info'    => esc_html__( 'Navigate to "Appearance > Widgets > Single Content - Bottom Area" to add your widgets.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'1'  => esc_html__( 'Enable', 'foxiz' ),
+								'-1' => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => '1',
+						],
+						[
+							'id'      => 'entry_ad_1',
+							'name'    => esc_html__( 'Inline Ad 1', 'foxiz' ),
+							'desc'    => esc_html__( 'Choose to disable inline content ad 1 for this episode.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'default' => esc_html__( '- Default -', 'foxiz' ),
+								'-1'      => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => 'default',
+						],
+						[
+							'id'      => 'entry_ad_2',
+							'name'    => esc_html__( 'Inline Ad 2', 'foxiz' ),
+							'desc'    => esc_html__( 'Choose to disable inline content ad 2 for this episode.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'default' => esc_html__( '- Default -', 'foxiz' ),
+								'-1'      => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => 'default',
+						],
+						[
+							'id'      => 'entry_ad_3',
+							'name'    => esc_html__( 'Inline Ad 3', 'foxiz' ),
+							'desc'    => esc_html__( 'Choose to disable inline content ad 3 for this episode.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'default' => esc_html__( '- Default -', 'foxiz' ),
+								'-1'      => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => 'default',
+						],
+						[
+							'id'      => 'auto_ads',
+							'name'    => esc_html__( 'Auto Ads', 'foxiz' ),
+							'desc'    => esc_html__( 'Choose to disable auto Ads for this episode.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'default' => esc_html__( '- Default -', 'foxiz' ),
+								'-1'      => esc_html__( 'Disable', 'foxiz' ),
+							],
+							'default' => 'default',
+						],
+					],
+				],
+				[
 					'id'     => 'section-toc',
 					'title'  => esc_html__( 'Table of Content', 'foxiz' ),
 					'desc'   => esc_html__( 'The settings below will take priority over other settings in "Theme Options > Table of Content".', 'foxiz' ),
@@ -262,7 +373,7 @@ if ( ! function_exists( 'foxiz_podcast_single_metaboxes' ) ) {
 						[
 							'id'      => 'table_contents_post',
 							'name'    => esc_html__( 'Table of Contents', 'foxiz' ),
-							'desc'    => esc_html__( 'Enable or disable the table content for this post.', 'foxiz' ),
+							'desc'    => esc_html__( 'Enable or disable the table content for this episode.', 'foxiz' ),
 							'type'    => 'select',
 							'options' => [
 								'default' => esc_html__( '- Default -', 'foxiz' ),
@@ -274,7 +385,7 @@ if ( ! function_exists( 'foxiz_podcast_single_metaboxes' ) ) {
 						[
 							'id'      => 'table_contents_layout',
 							'name'    => esc_html__( 'Layout', 'foxiz' ),
-							'desc'    => esc_html__( 'Select a layout for the table of contents of this post.', 'foxiz' ),
+							'desc'    => esc_html__( 'Select a layout for the table of contents of this episode.', 'foxiz' ),
 							'type'    => 'select',
 							'options' => [
 								'default' => esc_html__( '- Default -', 'foxiz' ),
@@ -330,6 +441,26 @@ if ( ! function_exists( 'foxiz_podcast_single_metaboxes' ) ) {
 							'placeholder' => '[Ruby_E_Template id="1"]',
 							'type'        => 'textarea',
 							'default'     => '',
+						],
+					],
+				],
+				[
+					'id'     => 'section-rss',
+					'title'  => 'Podcast RSS',
+					'icon'   => 'dashicons-rss',
+					'desc'   => esc_html__( 'To enable Podcast RSS, make sure to use self-hosted audio files as they are the only supported format.', 'foxiz' ),
+					'fields' => [
+						[
+							'id'      => 'episode_type',
+							'name'    => esc_html__( 'Episode Type', 'foxiz' ),
+							'desc'    => esc_html__( 'Select a type for this episode.', 'foxiz' ),
+							'info'    => esc_html__( 'This info will display in podcast RSS.', 'foxiz' ),
+							'type'    => 'select',
+							'options' => [
+								'full'    => esc_html__( '- Full -', 'foxiz' ),
+								'trailer' => esc_html__( 'Trailer', 'foxiz' ),
+							],
+							'default' => 'full',
 						],
 					],
 				],

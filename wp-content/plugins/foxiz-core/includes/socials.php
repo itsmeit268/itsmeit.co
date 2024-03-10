@@ -511,6 +511,50 @@ if ( ! function_exists( 'rb_social_follower' ) ) {
 			$output .= '</div>';
 		}
 
+		if ( ! empty( $instance['threads_link'] ) ) {
+			$output .= '<div class="follower-el threads-follower">';
+			$output .= '<a target="_blank" href="' . esc_url( $instance['threads_link'] ) . '" class="threads" aria-label="Threads" rel="noopener nofollow"></a>';
+			$output .= '<span class="follower-inner">';
+			$output .= '<span class="fnicon"><i class="rbi rbi-threads" aria-hidden="true"></i></span>';
+
+			if ( ! empty( $instance['threads_count'] ) ) {
+				$output .= '<span class="fntotal">' . foxiz_pretty_number( $instance['threads_count'] ) . '</span>';
+
+				if ( $style === 10 || $style === 11 || $style === 12 || $style === 13 || $style === 14 || $style === 15 ) {
+					$output .= '<span class="fnlabel">' . foxiz_html__( 'Followers', 'foxiz-core' ) . '</span>';
+				}
+				$output .= '<span class="text-count">' . foxiz_html__( 'Follow', 'foxiz-core' ) . '</span>';
+			} else {
+				$output .= '<span class="fnlabel">' . foxiz_html__( 'Threads', 'foxiz-core' ) . '</span>';
+				$output .= '<span class="text-count">' . foxiz_html__( 'Follow', 'foxiz-core' ) . '</span>';
+			}
+
+			$output .= '</span>';
+			$output .= '</div>';
+		}
+
+		if ( ! empty( $instance['rss_link'] ) ) {
+			$output .= '<div class="follower-el rss-follower">';
+			$output .= '<a target="_blank" href="' . esc_url( $instance['rss_link'] ) . '" class="rss" aria-label="rss" rel="noopener nofollow"></a>';
+			$output .= '<span class="follower-inner">';
+			$output .= '<span class="fnicon"><i class="rbi rbi-rss" aria-hidden="true"></i></span>';
+
+			if ( ! empty( $instance['rss_count'] ) ) {
+				$output .= '<span class="fntotal">' . foxiz_pretty_number( $instance['rss_count'] ) . '</span>';
+
+				if ( $style === 10 || $style === 11 || $style === 12 || $style === 13 || $style === 14 || $style === 15 ) {
+					$output .= '<span class="fnlabel">' . foxiz_html__( 'Readers', 'foxiz-core' ) . '</span>';
+				}
+				$output .= '<span class="text-count">' . foxiz_html__( 'Follow', 'foxiz-core' ) . '</span>';
+			} else {
+				$output .= '<span class="fnlabel">' . foxiz_html__( 'RSS Feed', 'foxiz-core' ) . '</span>';
+				$output .= '<span class="text-count">' . foxiz_html__( 'Follow', 'foxiz-core' ) . '</span>';
+			}
+
+			$output .= '</span>';
+			$output .= '</div>';
+		}
+
 		$output .= '</div>';
 		$output .= '</div>';
 

@@ -165,10 +165,10 @@ if ( ! function_exists( 'rb_weather_data' ) ) {
 				$classes .= ' light-scheme';
 			}
 			?>
-			<div class="<?php echo esc_attr( $classes ); ?>">
+			<div class="<?php echo strip_tags( $classes ); ?>">
 				<?php if ( ! empty( $title ) ) : ?>
 					<div class="rb-w-title h4">
-						<?php echo esc_html( $title ) ?>
+						<?php foxiz_render_inline_html( $title ) ?>
 					</div>
 				<?php endif; ?>
 				<div class="rb-w-header">
@@ -179,41 +179,41 @@ if ( ! function_exists( 'rb_weather_data' ) ) {
 					</div>
 					<div class="col-right">
 						<div class="rb-w-units h6">
-							<span><?php echo esc_html( $ruby_today_temp ) ?></span><span class="ruby-degrees"><sup><?php echo '&deg;' . esc_html( $units_display ) ?></sup></span>
+							<span><?php echo strip_tags( $ruby_today_temp ) ?></span><span class="ruby-degrees"><sup><?php echo '&deg;' . foxiz_strip_tags( $units_display ) ?></sup></span>
 						</div>
 					</div>
 				</div>
 				<div class="rb-w-stats">
 					<div class="col-left">
 						<div class="rb-header-name h6">
-							<?php echo esc_html( $name_country ) ?>
+							<?php echo strip_tags( $name_country ) ?>
 						</div>
 						<div class="rb-w-desc">
-							<?php echo esc_html( $weather_description ) ?>
+							<?php echo strip_tags( $weather_description ) ?>
 						</div>
 					</div>
 					<div class="col-right">
 						<div class="rb-weather-highlow">
 							<?php if ( ! empty( $ruby_today_high ) ) : ?>
 								<span class="icon-high"><?php echo Foxiz_SVG_Icons::get_weather_icon( 'high' ); ?></span>
-								<span class="text-high"><?php echo esc_html( $ruby_today_high ) ?><sup><?php echo '&deg;'; ?></sup></span>
+								<span class="text-high"><?php echo strip_tags( $ruby_today_high ) ?><sup><?php echo '&deg;'; ?></sup></span>
 							<?php endif; ?>
 							<?php if ( ! empty( $ruby_today_low ) ) : ?>
 								<span>&lowbar;</span>
 								<span class="icon-low"><?php echo Foxiz_SVG_Icons::get_weather_icon( 'low' ); ?></span>
-								<span class="text-low"><?php echo esc_html( $ruby_today_low ) ?><sup><?php echo '&deg;'; ?></sup></span>
+								<span class="text-low"><?php echo strip_tags( $ruby_today_low ) ?><sup><?php echo '&deg;'; ?></sup></span>
 							<?php endif; ?>
 						</div>
 						<div class="rb-w-humidity">
 							<?php if ( ! empty( $weather_humidity ) ) : ?>
 								<span class="icon-humidity"><?php echo Foxiz_SVG_Icons::get_weather_icon( 'raindrop' ); ?></span>
-								<span><?php echo esc_html( $weather_humidity ) ?></span>
+								<span><?php echo strip_tags( $weather_humidity ) ?></span>
 							<?php endif; ?>
 						</div>
 						<div class="ruby-weather-wind">
 							<?php if ( ! empty( $weather_speed ) ) : ?>
 								<span class="icon-windy"><?php echo Foxiz_SVG_Icons::get_weather_icon( 'windy' ); ?></span>
-								<span><?php echo esc_html( $weather_speed ) ?></span>
+								<span><?php echo strip_tags( $weather_speed ) ?></span>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -259,11 +259,11 @@ if ( ! function_exists( 'rb_weather_data' ) ) {
 						foreach ( $rb_forecast_days as $rb_forecast_day ) :
 							$forecast_icon = rb_weather_icon( $rb_forecast_day['icon'] );
 							$rb_the_day = date_i18n( 'D', $rb_forecast_day['utc'] ); ?>
-							<div class="w-forecast-day forecast-day-<?php echo esc_html( $days_to_show ) ?>">
-								<div class="w-forecast-day h6"><?php echo esc_html( $rb_the_day ) ?></div>
+							<div class="w-forecast-day forecast-day-<?php echo strip_tags( $days_to_show ) ?>">
+								<div class="w-forecast-day h6"><?php echo strip_tags( $rb_the_day ) ?></div>
 								<div class="w-forecast-icon"><?php echo Foxiz_SVG_Icons::get_weather_icon( $forecast_icon, $forecast_icon . '-' . $count ) ?></div>
-								<div class="w-forecast-temp"><?php echo esc_html( $rb_forecast_day['temp'] ) ?>
-									<sup><?php echo '&deg;' . esc_html( $units_display ) ?></sup>
+								<div class="w-forecast-temp"><?php echo strip_tags( $rb_forecast_day['temp'] ) ?>
+									<sup><?php echo '&deg;' . strip_tags( $units_display ) ?></sup>
 								</div>
 							</div>
 							<?php
@@ -366,10 +366,10 @@ if ( ! function_exists( 'rb_sidebar_banner' ) ) {
 						if ( empty( $dark_image[0] ) ) {
 							$dark_image = [ '', 0, 0 ];
 						} ?>
-						<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $image[0] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' ); ?>" width="<?php echo esc_attr( $image[1] ); ?>" height="<?php echo esc_attr( $image[2] ); ?>"/>
-						<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $dark_image[0] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' ); ?>" width="<?php echo esc_attr( $dark_image[1] ); ?>" height="<?php echo esc_attr( $dark_image[2] ); ?>"/>
+						<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $image[0] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' ); ?>" width="<?php echo strip_tags( $image[1] ); ?>" height="<?php echo strip_tags( $image[2] ); ?>"/>
+						<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $dark_image[0] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' ); ?>" width="<?php echo strip_tags( $dark_image[1] ); ?>" height="<?php echo strip_tags( $dark_image[2] ); ?>"/>
 					<?php else : ?>
-						<img loading="lazy" decoding="async" src="<?php echo esc_url( $image[0] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' ); ?>" width="<?php echo esc_attr( $image[1] ); ?>" height="<?php echo esc_attr( $image[2] ); ?>"/>
+						<img loading="lazy" decoding="async" src="<?php echo esc_url( $image[0] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' ); ?>" width="<?php echo strip_tags( $image[1] ); ?>" height="<?php echo strip_tags( $image[2] ); ?>"/>
 					<?php endif;
 				else :
 					if ( ! empty( $instance['image'] ) ) :
@@ -379,37 +379,37 @@ if ( ! function_exists( 'rb_sidebar_banner' ) ) {
 							?>
 							<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $instance['image'] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' );
 							?>" width="<?php if ( ! empty( $image_size[0] ) ) {
-								echo esc_attr( $image_size[0] );
+								echo strip_tags( $image_size[0] );
 							} ?>" height="<?php if ( ! empty( $image_size[1] ) ) {
-								echo esc_attr( $image_size[1] );
+								echo strip_tags( $image_size[1] );
 							} ?>">
 							<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $instance['dark_image'] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' );
 							?>" width="<?php if ( ! empty( $dark_image_size[0] ) ) {
-								echo esc_attr( $dark_image_size[0] );
+								echo strip_tags( $dark_image_size[0] );
 							} ?>" height="<?php if ( ! empty( $dark_image_size[1] ) ) {
-								echo esc_attr( $dark_image_size[1] );
+								echo strip_tags( $dark_image_size[1] );
 							} ?>">
 						<?php else : ?>
 							<img loading="lazy" decoding="async" src="<?php echo esc_url( $instance['image'] ); ?>" alt="<?php echo esc_attr__( 'banner', 'foxiz-core' );
 							?>" width="<?php if ( ! empty( $image_size[0] ) ) {
-								echo esc_attr( $image_size[0] );
+								echo strip_tags( $image_size[0] );
 							} ?>" height="<?php if ( ! empty( $image_size[1] ) ) {
-								echo esc_attr( $image_size[1] );
+								echo strip_tags( $image_size[1] );
 							} ?>"/>
 						<?php endif;
 					endif;
 				endif; ?>
 			</div>
-			<div class="<?php echo esc_attr( $inner_classes ); ?>">
+			<div class="<?php echo strip_tags( $inner_classes ); ?>">
 				<div class="content-inner">
 					<?php if ( ! empty( $instance['title'] ) ) : ?>
-						<h5 class="w-banner-title h2"><?php echo html_entity_decode( $instance['title'] ); ?></h5>
+						<h5 class="w-banner-title h2"><?php foxiz_render_inline_html( $instance['title'] ); ?></h5>
 					<?php endif;
 					if ( ! empty( $instance['description'] ) ) : ?>
-						<div class="w-banner-desc element-desc"><?php echo html_entity_decode( $instance['description'] ); ?></div>
+						<div class="w-banner-desc element-desc"><?php foxiz_render_inline_html( $instance['description'] ); ?></div>
 					<?php endif;
 					if ( ! empty( $instance['url'] ) ) : ?>
-						<a class="banner-btn is-btn" href="<?php echo esc_url( $instance['url'] ) ?>" target="_blank" rel="noopener nofollow"><?php echo esc_html( $instance['submit'] ) ?></a>
+						<a class="banner-btn is-btn" href="<?php echo esc_url( $instance['url'] ) ?>" target="_blank" rel="noopener nofollow"><?php foxiz_render_inline_html( $instance['submit'] ) ?></a>
 					<?php endif; ?>
 				</div>
 			</div>

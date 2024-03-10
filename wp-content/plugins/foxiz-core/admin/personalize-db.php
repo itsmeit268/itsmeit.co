@@ -2,8 +2,8 @@
 /** Don't load directly */
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'Foxiz_Upgrade_Db' ) ) {
-	class Foxiz_Upgrade_Db {
+if ( ! class_exists( 'Foxiz_Personalize_Db' ) ) {
+	class Foxiz_Personalize_Db {
 
 		protected static $instance = null;
 		private $wpdb;

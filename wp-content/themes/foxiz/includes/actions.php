@@ -256,13 +256,11 @@ if ( ! function_exists( 'foxiz_widget_tag_cloud_args' ) ) {
 if ( ! function_exists( 'foxiz_update_post_data' ) ) {
 	/**
 	 * @param $post_id
-	 *
-	 * @return false
 	 */
 	function foxiz_update_post_data( $post_id ) {
 
 		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
-			return false;
+			return;
 		}
 
 		if ( foxiz_is_sponsored_post( $post_id ) ) {
@@ -272,6 +270,7 @@ if ( ! function_exists( 'foxiz_update_post_data' ) ) {
 		}
 
 		$review = foxiz_get_review_settings( $post_id );
+
 		if ( ! empty( $review['average'] ) ) {
 			if ( empty( $review['type'] ) || 'score' === $review['type'] ) {
 				update_post_meta( $post_id, 'foxiz_review_average', floatval( $review['average'] ) );
@@ -282,7 +281,6 @@ if ( ! function_exists( 'foxiz_update_post_data' ) ) {
 			delete_post_meta( $post_id, 'foxiz_review_average' );
 		}
 
-		/** remove content images */
 		delete_post_meta( $post_id, 'rb_content_images' );
 	}
 }

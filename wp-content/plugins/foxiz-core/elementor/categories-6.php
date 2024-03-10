@@ -8,33 +8,33 @@ use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
 use Elementor\Widget_Base;
 use foxizElementorControl\Options;
-use function foxiz_get_categories_2;
+use function foxiz_get_categories_6;
 
 /**
- * Class Categories_List_2
+ * Class Categories_List_6
  *
  * @package foxizElementor\Widgets
  */
-class Categories_List_2 extends Widget_Base {
+class Categories_List_6 extends Widget_Base {
 
 	public function get_name() {
 
-		return 'foxiz-categories-2';
+		return 'foxiz-categories-6';
 	}
 
 	public function get_title() {
 
-		return esc_html__( 'Foxiz - Taxonomies List 2', 'foxiz-core' );
-	}
-
-	public function get_icon() {
-
-		return 'eicon-folder-o';
+		return esc_html__( 'Foxiz - Taxonomies List 6', 'foxiz-core' );
 	}
 
 	public function get_keywords() {
 
 		return [ 'foxiz', 'ruby', 'category', 'follow', 'bookmark', 'interest', 'tag', 'tax' ];
+	}
+
+	public function get_icon() {
+
+		return 'eicon-folder-o';
 	}
 
 	public function get_categories() {
@@ -103,7 +103,7 @@ class Categories_List_2 extends Widget_Base {
 		);
 		$this->end_controls_section();
 		$this->start_controls_section(
-			'general', [
+			'general_section', [
 				'label' => esc_html__( 'Manually Add', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
@@ -159,22 +159,22 @@ class Categories_List_2 extends Widget_Base {
 			]
 		);
 		$this->add_control(
-			'crop_size',
+			'feat',
 			[
-				'label'       => esc_html__( 'Featured Image Size', 'foxiz-core' ),
+				'label'       => esc_html__( 'Featured Image', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
-				'description' => Options::crop_size(),
-				'options'     => Options::crop_size_dropdown(),
-				'default'     => '0',
+				'description' => esc_html__( 'Enable or disable the featured image.', 'foxiz-core' ),
+				'options'     => Options::switch_dropdown( false ),
+				'default'     => '1',
 			]
 		);
 		$this->add_responsive_control(
-			'display_ratio', [
-				'label'       => esc_html__( 'Custom Featured Ratio', 'foxiz-core' ),
+			'featured_width', [
+				'label'       => esc_html__( 'Featured Image Width', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => Options::display_ratio_description(),
+				'description' => esc_html__( 'Input custom width values (in pixels) for the taxonomy featured image.', 'foxiz-core' ),
 				'selectors'   => [
-					'{{WRAPPER}}' => '--feat-ratio: {{VALUE}}',
+					'{{WRAPPER}}' => '--featured-width: {{VALUE}}px',
 				],
 			]
 		);
@@ -186,14 +186,6 @@ class Categories_List_2 extends Widget_Base {
 				'description' => Options::heading_html_description(),
 				'options'     => Options::heading_html_dropdown(),
 				'default'     => '0',
-			]
-		);
-		$this->add_responsive_control(
-			'title_tag_size', [
-				'label'       => esc_html__( 'Title Font Size', 'foxiz-core' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => Options::title_size_description(),
-				'selectors'   => [ '{{WRAPPER}}' => '--ctitle-size: {{VALUE}}px;' ],
 			]
 		);
 		$this->add_group_control(
@@ -232,16 +224,6 @@ class Categories_List_2 extends Widget_Base {
 				'default'     => '-1',
 			]
 		);
-		$this->add_control(
-			'gradient',
-			[
-				'label'       => esc_html__( 'Colorful Gradient', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => esc_html__( 'Enable or disable overlay color gradient style for this block.', 'foxiz-core' ),
-				'options'     => Options::switch_dropdown( false ),
-				'default'     => '1',
-			]
-		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'rounded_section', [
@@ -260,71 +242,33 @@ class Categories_List_2 extends Widget_Base {
 				],
 			]
 		);
-		$this->end_controls_section();
-		$this->start_controls_section(
-			'block_columns', [
-				'label' => esc_html__( 'Columns', 'foxiz-core' ),
-				'tab'   => Controls_Manager::TAB_LAYOUT,
-			]
-		);
 		$this->add_control(
-			'columns',
+			'featured_border',
 			[
-				'label'       => esc_html__( 'Columns on Desktop', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => Options::columns_description(),
-				'options'     => Options::columns_dropdown(),
-				'default'     => '0',
-			]
-		);
-		$this->add_control(
-			'columns_tablet',
-			[
-				'label'       => esc_html__( 'Columns on Tablet', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => Options::columns_tablet_description(),
-				'options'     => Options::columns_dropdown(),
-				'default'     => '0',
-			]
-		);
-		$this->add_control(
-			'columns_mobile',
-			[
-				'label'       => esc_html__( 'Columns on Mobile', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => Options::columns_mobile_description(),
-				'options'     => Options::columns_dropdown( [ 0, 1, 2, 3, 4 ] ),
-				'default'     => '0',
-			]
-		);
-		$this->add_control(
-			'column_gap',
-			[
-				'label'       => esc_html__( 'Column Gap', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => Options::column_gap_description(),
-				'options'     => Options::column_gap_dropdown(),
-				'default'     => '0',
-			]
-		);
-		$this->add_responsive_control(
-			'column_gap_custom', [
-				'label'       => esc_html__( '1/2 Custom Gap Value', 'foxiz-core' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => Options::column_gap_custom_description(),
-				'selectors'   => [
-					'{{WRAPPER}} .is-gap-custom'                  => 'margin-left: -{{VALUE}}px; margin-right: -{{VALUE}}px; --column-gap: {{VALUE}}px;',
-					'{{WRAPPER}} .is-gap-custom .block-inner > *' => 'padding-left: {{VALUE}}px; padding-right: {{VALUE}}px;',
+				'label'     => esc_html__( 'Featured Image Border Radius', 'foxiz-core' ),
+				'type'      => Controls_Manager::NUMBER,
+				'selectors' => [
+					'{{WRAPPER}}' => '--featured-border: {{VALUE}}px;',
 				],
 			]
 		);
+		$this->end_controls_section();
+		$this->start_controls_section(
+			'color_section', [
+				'label' => esc_html__( 'Text Color Scheme', 'foxiz-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
 		$this->add_control(
-			'column_border',
+			'color_scheme',
 			[
-				'label'       => esc_html__( 'Column Border', 'foxiz-core' ),
+				'label'       => esc_html__( 'Text Color Scheme', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
-				'description' => Options::column_border_description(),
-				'options'     => Options::column_border_dropdown(),
+				'description' => Options::color_scheme_description(),
+				'options'     => [
+					'0' => esc_html__( 'Default (Dark Text)', 'foxiz-core' ),
+					'1' => esc_html__( 'Light Text', 'foxiz-core' ),
+				],
 				'default'     => '0',
 			]
 		);
@@ -336,47 +280,30 @@ class Categories_List_2 extends Widget_Base {
 			]
 		);
 		$this->add_responsive_control(
-			'bottom_margin', [
-				'label'       => esc_html__( 'Custom Bottom Margin', 'foxiz-core' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Input custom bottom margin values (in pixels) between items.', 'foxiz-core' ),
-				'selectors'   => [ '{{WRAPPER}} .block-wrap' => '--bottom-spacing: {{VALUE}}px;' ],
-			]
-		);
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'mobile_scroll_section', [
-				'label' => esc_html__( 'Tablet/Mobile Horizontal Scroll', 'foxiz-core' ),
-				'tab'   => Controls_Manager::TAB_LAYOUT,
-			]
-		);
-		$this->add_control(
-			'horizontal_scroll',
+			'item_padding',
 			[
-				'label'       => esc_html__( 'Horizontal Scroll', 'foxiz-core' ),
-				'type'        => Controls_Manager::SELECT,
-				'description' => Options::horizontal_scroll_description(),
-				'options'     => Options::horizontal_scroll_dropdown(),
-				'default'     => '0',
+				'label'      => esc_html__( 'Inner Padding', 'foxiz-core' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .cbox' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
-		$this->add_control(
-			'scroll_width_tablet', [
-				'label'       => esc_html__( 'Tablet - Post Module Width', 'foxiz-core' ),
+		$this->add_responsive_control(
+			'gap', [
+				'label'       => esc_html__( 'Gap', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'placeholder' => '300',
-				'description' => Options::scroll_width_tablet_description(),
-				'selectors'   => [ '{{WRAPPER}}' => '--tablet-scroll-width: {{VALUE}}px;' ],
+				'description' => esc_html__( 'Input custom margin values (in pixels) between items.', 'foxiz-core' ),
+				'selectors'   => [ '{{WRAPPER}}' => '--item-gap: {{VALUE}}px;' ],
 			]
 		);
-		$this->add_control(
-			'scroll_width_mobile', [
-				'label'       => esc_html__( 'Mobile - Post Module Width', 'foxiz-core' ),
+		$this->add_responsive_control(
+			'item_width', [
+				'label'       => esc_html__( 'Item Min Width', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'placeholder' => '300',
-				'description' => Options::scroll_width_mobile_description(),
-				'selectors'   => [ '{{WRAPPER}}' => '--mobile-scroll-width: {{VALUE}}px;' ],
+				'description' => esc_html__( 'Input a minimum width (in pixels) for the item.', 'foxiz-core' ),
+				'selectors'   => [ '{{WRAPPER}}' => '--cbox-width: {{VALUE}}px;' ],
 			]
 		);
 		$this->end_controls_section();
@@ -384,10 +311,10 @@ class Categories_List_2 extends Widget_Base {
 
 	protected function render() {
 
-		if ( function_exists( 'foxiz_get_categories_2' ) ) {
+		if ( function_exists( 'foxiz_get_categories_6' ) ) {
 			$settings         = $this->get_settings();
 			$settings['uuid'] = 'uid_' . $this->get_id();
-			echo foxiz_get_categories_2( $settings );
+			echo foxiz_get_categories_6( $settings );
 		}
 	}
 }

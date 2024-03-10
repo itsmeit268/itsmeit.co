@@ -10,7 +10,6 @@ add_action( 'wp_head', 'foxiz_bookmarklet_icons', 1 );
 add_action( 'wp_head', 'foxiz_pingback_supported', 5 );
 add_action( 'wp_head', 'foxiz_embed_dark_mode', 100 );
 add_action( 'wp_footer', 'foxiz_footer_inline_script', 0 );
-remove_filter( 'pre_term_description', 'wp_filter_kses' );
 add_filter( 'upload_mimes', 'foxiz_svg_upload_supported', 10, 1 );
 add_filter( 'wp_get_attachment_image_src', 'foxiz_gif_supported', 10, 4 );
 add_filter( 'edit_comment_misc_actions', 'foxiz_edit_comment_review_form', 10, 2 );
@@ -22,6 +21,11 @@ add_filter( 'single_product_archive_thumbnail_size', 'foxiz_product_archive_thum
 add_filter( 'the_content', 'foxiz_add_elements_to_content', 999 );
 add_filter( 'get_the_archive_title_prefix', 'foxiz_archive_title_prefix', 10 );
 add_filter( 'wp_kses_allowed_html', 'foxiz_kses_allowed_html', 10, 2 );
+add_filter( 'the_excerpt_rss', 'foxiz_rss_tagline_supported', 0, 1 );
+add_action( 'rss2_ns', 'foxiz_podcast_rss2_ns', 0 );
+add_action( 'rss2_head', 'foxiz_podcast_rss2_head', 0 );
+add_action( 'rss2_item', 'foxiz_podcast_rss2_item', 0 );
+remove_filter( 'pre_term_description', 'wp_filter_kses' );
 
 if ( ! function_exists( 'foxiz_pingback_supported' ) ):
 	function foxiz_pingback_supported() {
@@ -277,11 +281,7 @@ if ( ! function_exists( 'foxiz_get_query_settings' ) ) {
 			$query->set( 'post_status', 'publish' );
 			$data = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
 
-			if ( ! empty( $data['posts_per_page'] ) ) {
-				$posts_per_page = $data['posts_per_page'];
-			} else {
-				$posts_per_page = foxiz_get_option( 'category_posts_per_page' );
-			}
+			$posts_per_page = ! empty( $data['posts_per_page'] ) ? $data['posts_per_page'] : foxiz_get_option( 'category_posts_per_page' );
 			if ( ! empty( $posts_per_page ) ) {
 				$query->set( 'posts_per_page', absint( $posts_per_page ) );
 			}
@@ -301,19 +301,20 @@ if ( ! function_exists( 'foxiz_get_query_settings' ) ) {
 				}
 			}
 		} elseif ( $query->is_author() ) {
-			$author_posts_per_page = foxiz_get_option( 'author_posts_per_page' );
-			if ( ! empty( $author_posts_per_page ) ) {
-				$query->set( 'posts_per_page', intval( $author_posts_per_page ) );
+			$posts_per_page = foxiz_get_option( 'author_posts_per_page' );
+			if ( ! empty( $posts_per_page ) ) {
+				$query->set( 'posts_per_page', intval( $posts_per_page ) );
 			}
 		} elseif ( is_tag() ) {
 
-			$data = rb_get_term_meta( 'foxiz_tag_meta', get_queried_object_id() );
-
-			if ( ! empty( $data['posts_per_page'] ) ) {
-				$posts_per_page = $data['posts_per_page'];
-			} else {
-				$posts_per_page = foxiz_get_option( 'archive_posts_per_page' );
+			$data           = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
+			$posts_per_page = ! empty( $data['posts_per_page'] ) ? $data['posts_per_page'] : foxiz_get_option( 'tag_posts_per_page', foxiz_get_option( 'archive_posts_per_page' ) );
+			if ( ! empty( $posts_per_page ) ) {
+				$query->set( 'posts_per_page', absint( $posts_per_page ) );
 			}
+		} elseif ( $query->is_tax() ) {
+			$data           = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
+			$posts_per_page = ! empty( $data['posts_per_page'] ) ? $data['posts_per_page'] : foxiz_get_option( 'tax_posts_per_page', foxiz_get_option( 'archive_posts_per_page' ) );
 			if ( ! empty( $posts_per_page ) ) {
 				$query->set( 'posts_per_page', absint( $posts_per_page ) );
 			}
@@ -328,7 +329,6 @@ if ( ! function_exists( 'foxiz_get_query_settings' ) ) {
 			} else {
 				$posts_per_page = foxiz_get_option( 'archive_posts_per_page' );
 			}
-
 			if ( ! empty( $posts_per_page ) ) {
 				$query->set( 'posts_per_page', absint( $posts_per_page ) );
 			}
@@ -394,8 +394,8 @@ if ( ! function_exists( 'foxiz_dark_mode_inline_script' ) ) {
                         localStorage.setItem(darkModeID, currentMode);
                     }
 					<?php else : ?>
-                    currentMode = '<?php echo esc_attr( $first_visit_mode ); ?>';
-                    localStorage.setItem(darkModeID, '<?php echo esc_attr( $first_visit_mode ); ?>');
+                    currentMode = '<?php echo strip_tags( $first_visit_mode ); ?>';
+                    localStorage.setItem(darkModeID, '<?php echo strip_tags( $first_visit_mode ); ?>');
 					<?php endif; ?>
                 }
                 document.body.setAttribute('data-theme', currentMode === 'dark' ? 'dark' : 'default');
@@ -427,7 +427,7 @@ if ( ! function_exists( 'foxiz_footer_inline_script' ) ) {
 			return false;
 		}
 
-		if ( ! empty( $GLOBALS['foxiz_yes_recommended'] ) && ! empty( $GLOBALS['foxiz_queried_ids'] ) ) {
+		if ( ! empty( $GLOBALS['foxiz_yes_recommended'] ) && ! empty( $GLOBALS['foxiz_queried_ids'] ) && is_array( $GLOBALS['foxiz_queried_ids'] ) ) {
 			wp_localize_script( 'foxiz-core', 'foxizQueriedIDs', [ 'data' => implode( ',', $GLOBALS['foxiz_queried_ids'] ) ] );
 		}
 
@@ -658,5 +658,103 @@ if ( ! function_exists( 'foxiz_kses_allowed_html' ) ) {
 			default:
 				return $tags;
 		}
+	}
+}
+
+if ( ! function_exists( 'foxiz_rss_tagline_supported' ) ) {
+	function foxiz_rss_tagline_supported( $output ) {
+
+		$tagline = rb_get_meta( 'tagline' );
+		if ( ! empty( $tagline ) ) {
+			return $tagline;
+		}
+
+		return $output;
+	}
+}
+
+/** support RSS feed for show */
+if ( ! function_exists( 'foxiz_podcast_rss2_ns' ) ) {
+	function foxiz_podcast_rss2_ns() {
+
+		if ( is_tax( 'series' ) ) {
+			echo PHP_EOL . "\t" . 'xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"';
+			echo PHP_EOL . "\t";
+		}
+	}
+}
+
+if ( ! function_exists( 'foxiz_podcast_rss2_head' ) ) {
+	function foxiz_podcast_rss2_head() {
+
+		if ( is_tax( 'series' ) ) {
+			$tax_id   = get_queried_object_id();
+			$settings = rb_get_term_meta( 'foxiz_category_meta', $tax_id );
+
+			if ( ! empty( $settings['featured_rss'][0] ) ) {
+				echo "\t\t<itunes:image href=\"" . wp_get_attachment_image_url( $settings['featured_rss'][0], 'full' ) . "\" />" . PHP_EOL;
+			}
+			if ( ! empty( $settings['itunes_category'] ) ) {
+				$categories = explode( ',', $settings['itunes_category'] );
+				foreach ( $categories as $category ) {
+					echo "\t\t\t<itunes:category text=\"" . htmlspecialchars( trim( strip_tags( $category ) ), ENT_QUOTES ) . "\" />" . PHP_EOL;
+				}
+			} else {
+				echo "\t\t\t<itunes:category text=\"News\" />" . PHP_EOL;
+			}
+			echo "\t\t<itunes:type>serial</itunes:type>" . PHP_EOL;
+			echo "\t\t<itunes:explicit>false</itunes:explicit>" . PHP_EOL;
+		}
+	}
+}
+
+if ( ! function_exists( 'foxiz_podcast_rss2_item' ) ) {
+	function foxiz_podcast_rss2_item() {
+
+		global $post;
+
+		if ( empty( $post ) || 'podcast' !== get_post_type( $post ) ) {
+			return;
+		}
+
+		/** only support RSS for hosted audio */
+		$file_id = rb_get_meta( 'audio_hosted', $post->ID );
+		if ( empty( $file_id ) ) {
+			return;
+		}
+
+		global $post;
+
+		$file_url  = wp_get_attachment_url( $file_id );
+		$file_path = get_attached_file( $file_id );
+
+		if ( ! empty( $file_path ) ) {
+			$file_size = filesize( $file_path );
+		} else {
+			$file_size = 1;
+		}
+
+		$summary      = rb_get_meta( 'tagline', $post->ID );
+		$duration     = rb_get_meta( 'duration', $post->ID );
+		$episode_type = rb_get_meta( 'episode_type', $post->ID );
+		if ( empty( $episode_type ) ) {
+			$episode_type = 'full';
+		}
+		if ( function_exists( 'mime_content_type' ) && ! empty( $file_path ) ) {
+			$type = mime_content_type( $file_path );
+		} else {
+			$type = 'audio/mpeg';
+		}
+		if ( empty( $summary ) ) {
+			$summary = get_the_excerpt();
+		}
+
+		echo "\t\t<enclosure url=\"" . $file_url . "\" type=\"" . $type . "\" length=\"" . $file_size . "\" />" . PHP_EOL;
+		echo "\t\t<itunes:episodeType>" . $episode_type . "</itunes:episodeType>" . PHP_EOL;
+		echo "\t\t<itunes:author>" . get_the_author_meta( 'display_name', $post->post_author ) . "</itunes:author>" . PHP_EOL;
+		echo "\t\t<itunes:summary>" . strip_tags( $summary ) . "</itunes:summary>" . PHP_EOL;
+		echo "\t\t<itunes:image href=\"" . get_the_post_thumbnail_url( $post->ID, 'full' ) . "\" />" . PHP_EOL;
+		echo "\t\t<itunes:explicit>false</itunes:explicit>" . PHP_EOL;
+		echo "\t\t<itunes:duration>" . strip_tags( $duration ) . "</itunes:duration>" . PHP_EOL;
 	}
 }

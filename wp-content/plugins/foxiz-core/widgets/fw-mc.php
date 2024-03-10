@@ -118,10 +118,10 @@ if ( ! class_exists( 'Foxiz_Fw_Mc' ) ) {
 					<?php if ( ! empty( $instance['title'] ) || ! empty( $instance['description'] ) ) : ?>
 						<div class="newsletter-content">
 							<?php if ( ! empty( $instance['title'] ) ) : ?>
-								<span class="h2 newsletter-title"><?php echo esc_html( $instance['title'] ); ?></span>
+								<span class="h2 newsletter-title"><?php foxiz_render_inline_html( $instance['title'] ); ?></span>
 							<?php endif;
 							if ( ! empty( $instance['description'] ) ) : ?>
-								<p class="newsletter-description"><?php echo wp_kses( $instance['description'], 'foxiz' ); ?></p>
+								<p class="newsletter-description"><?php foxiz_render_inline_html($instance['description']); ?></p>
 							<?php endif; ?>
 						</div>
 					<?php endif;

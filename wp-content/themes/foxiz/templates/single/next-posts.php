@@ -37,7 +37,7 @@ if ( have_posts() ) :
 			<link rel="canonical" href="<?php echo esc_url( $foxiz_current_url ); ?>" />
 		</head>
 		<body>
-		<div class="<?php echo esc_attr( $foxiz_classes ); ?>" data-postid="<?php echo esc_attr( $foxiz_post_id ); ?>" data-postlink="<?php echo esc_url( get_permalink() ); ?>" data-nextposturl="<?php echo esc_url( $foxiz_next_url ); ?>">
+		<div class="<?php echo strip_tags( $foxiz_classes ); ?>" data-postid="<?php echo esc_attr( $foxiz_post_id ); ?>" data-postlink="<?php echo esc_url( get_permalink() ); ?>" data-nextposturl="<?php echo esc_url( $foxiz_next_url ); ?>">
 			<?php foxiz_render_single_post(); ?>
 			<?php if ( ! empty( $foxiz_next_button ) ) : ?>
 				<div class="continue-reading">

@@ -3,24 +3,17 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_get_hierarchical_3' ) ) {
-	/**
-	 * @param array $settings
-	 * @param null  $_query
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_hierarchical_3( $settings = [], $_query = null ) {
 
 		$settings = wp_parse_args( $settings, [
 			'uuid' => '',
 			'name' => 'hierarchical_3',
 		] );
+		$settings = foxiz_detect_dynamic_query( $settings );
 
-		$settings['classes'] = 'block-hrc hrc-3 p-gradient';
-
-		$settings                  = foxiz_detect_dynamic_query( $settings );
 		$settings['no_found_rows'] = true;
 		$min_posts                 = 2;
+		$settings['classes']       = 'block-hrc hrc-3 p-gradient';
 
 		if ( ! $_query ) {
 			$_query = foxiz_query( $settings );

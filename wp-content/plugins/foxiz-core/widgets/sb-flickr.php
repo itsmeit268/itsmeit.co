@@ -101,21 +101,19 @@ if ( ! class_exists( 'Foxiz_W_Flickr' ) ) {
 
 			if ( ! empty( $flickr_data['error'] ) ) :
 				if ( current_user_can( 'manage_options' ) ) :
-					echo '<div class="rb-error"><strong>' . esc_html__( 'Flickr Error: ', 'foxiz-core' ) . '</strong>' . esc_html( $flickr_data['error'] ) . '</div>';
+					echo '<div class="rb-error"><strong>' . esc_html__( 'Flickr Error: ', 'foxiz-core' ) . '</strong>' . foxiz_strip_tags( $flickr_data['error'] ) . '</div>';
 				endif;
 			else :
 				if ( ! empty( $instance['title'] ) ) {
-					echo $args['before_title'] . esc_html( $instance['title'] ) . $args['after_title'];
+					echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 				} ?>
 				<div class="flickr-grid layout-default clearfix">
-					<div class="grid-holder <?php echo esc_attr( $instance['total_cols'] ) ?>">
+					<div class="grid-holder <?php echo strip_tags( $instance['total_cols'] ) ?>">
 						<?php $flickr_data = array_slice( $flickr_data, 0, $instance['total_images'] );
 						if ( ! empty( $flickr_data ) && is_array( $flickr_data ) ) :
 							foreach ( $flickr_data as $item ): ?>
 								<div class="grid-el">
-									<a href="<?php echo esc_url( $item['link'] ); ?>">
-										<img src="<?php echo esc_url( $item['media'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>"/>
-									</a>
+									<a href="<?php echo esc_url( $item['link'] ); ?>"><img src="<?php echo esc_url( $item['media'] ); ?>" alt="<?php echo strip_tags( $item['title'] ); ?>"/></a>
 								</div>
 							<?php endforeach;
 						endif; ?>

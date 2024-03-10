@@ -48,6 +48,26 @@ if ( ! function_exists( 'foxiz_get_option' ) ) {
 	}
 }
 
+if ( ! function_exists( 'foxiz_strip_tags' ) ) {
+	/**
+	 * @param        $content
+	 * @param string $allowed_tags
+	 *
+	 * @return string
+	 */
+	function foxiz_strip_tags( $content, $allowed_tags = '<h1><h2><h3><h4><h5><h6><strong><b><em><i><a><code><p><div><ol><ul><li><br><img>' ) {
+
+		return strip_tags( $content, $allowed_tags );
+	}
+}
+
+if ( ! function_exists( 'foxiz_render_inline_html' ) ) {
+	function foxiz_render_inline_html( $content ) {
+
+		echo foxiz_strip_tags( $content );
+	}
+}
+
 if ( ! function_exists( 'foxiz_count_content' ) ) {
 	/**
 	 * @param string $content
@@ -933,23 +953,12 @@ if ( ! function_exists( 'foxiz_wc_strip_wrapper' ) ) {
 	}
 }
 
-/**
- * @param        $id
- * @param string $taxonomy
- *
- * @return array|false|int|string|WP_Error|WP_Term|null
- */
 if ( ! function_exists( 'foxiz_get_term_link' ) ) {
-	function foxiz_get_term_link( $id, $taxonomy = '' ) {
+	function foxiz_get_term_link( $term, $taxonomy = '' ) {
 
-		if ( ! is_object( $id ) ) {
-			$id = (int) $id;
-		}
-
-		$link = get_term_link( $id, $taxonomy );
-
-		if ( is_wp_error( $link ) ) {
-			return '';
+		$link = get_term_link( $term, $taxonomy );
+		if ( empty( $link ) || is_wp_error( $link ) ) {
+			return '#';
 		}
 
 		return $link;
@@ -977,7 +986,9 @@ if ( ! function_exists( 'foxiz_get_twitter_name' ) ) {
 		if ( is_single() ) {
 			global $post;
 			$name = get_the_author_meta( 'twitter_url', $post->post_author );
-		} else {
+		}
+
+		if ( empty( $name ) ) {
 			$name = foxiz_get_option( 'twitter' );
 		}
 

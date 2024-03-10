@@ -104,7 +104,7 @@ if ( ! class_exists( 'Rb_E_Template' ) ) {
 				$shortcodes['footer_template'] = foxiz_get_option( 'footer_template_shortcode' );
 			}
 			if ( foxiz_get_option( 'mh_template' ) ) {
-				$shortcodes[] = foxiz_get_option( 'mh_template' );
+				$shortcodes['mh_template'] = foxiz_get_option( 'mh_template' );
 			}
 			if ( foxiz_get_option( 'collapse_template' ) ) {
 				$shortcodes[] = foxiz_get_option( 'collapse_template' );
@@ -244,11 +244,10 @@ if ( ! class_exists( 'Rb_E_Template' ) ) {
 				}
 			} elseif ( is_tag() ) {
 
-				$tag_settings = rb_get_term_meta( 'foxiz_tag_meta', get_queried_object_id() );
+				$tag_settings = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
 				if ( ! empty( $tag_settings['header_template'] ) ) {
 					$shortcodes['header_template'] = $tag_settings['header_template'];
 				}
-
 				if ( ! empty( $tag_settings['template_global'] ) ) {
 					$shortcodes[] = $tag_settings['template_global'];
 				} else {
@@ -264,11 +263,13 @@ if ( ! class_exists( 'Rb_E_Template' ) ) {
 				if ( ! empty( $tax_settings['header_template'] ) ) {
 					$shortcodes['header_template'] = $tax_settings['header_template'];
 				}
-
 				if ( ! empty( $tax_settings['template_global'] ) ) {
 					$shortcodes[] = $tax_settings['template_global'];
 				} else {
-					$tax_template = foxiz_get_option( 'archive_template_global' );
+					$tax_template = foxiz_get_option( 'tax_template_global' );
+					if ( empty( $tax_template ) ) {
+						$tax_template = foxiz_get_option( 'archive_template_global' );
+					}
 					$shortcodes[] = $tax_template;
 				}
 			} elseif ( is_archive() ) {
@@ -291,8 +292,12 @@ if ( ! class_exists( 'Rb_E_Template' ) ) {
 				}
 				$header = rb_get_meta( 'header_template', get_the_ID() );
 				$footer = rb_get_meta( 'footer_template', get_the_ID() );
+				$mobile = rb_get_meta( 'mh_template', get_the_ID() );
 				if ( ! empty( $header ) ) {
 					$shortcodes['header_template'] = $header;
+				}
+				if ( $mobile ) {
+					$shortcodes['mh_template'] = foxiz_get_option( 'mh_template' );
 				}
 				if ( ! empty( $footer ) ) {
 					$shortcodes['footer_template'] = $footer;

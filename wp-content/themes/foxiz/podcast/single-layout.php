@@ -33,7 +33,7 @@ if ( ! function_exists( 'foxiz_podcast_render_single_1' ) ) {
 		if ( empty( $sidebar_name ) || ! is_active_sidebar( $sidebar_name ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
-			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
+			$classes[] = 'is-sidebar-' . $sidebar_position;
 			$classes[] = foxiz_get_single_sticky_sidebar( 'single_podcast' );
 		} ?>
 		<div class="<?php echo join( ' ', $classes ); ?>">
@@ -102,7 +102,7 @@ if ( ! function_exists( 'foxiz_podcast_render_single_2' ) ) {
 		if ( empty( $sidebar_name ) || ! is_active_sidebar( $sidebar_name ) ) {
 			$classes[] = 'without-sidebar';
 		} else {
-			$classes[] = 'is-sidebar-' . esc_attr( $sidebar_position );
+			$classes[] = 'is-sidebar-' . $sidebar_position;
 			$classes[] = foxiz_get_single_sticky_sidebar( 'single_podcast' );
 		} ?>
 		<div class="<?php echo join( ' ', $classes ); ?>">

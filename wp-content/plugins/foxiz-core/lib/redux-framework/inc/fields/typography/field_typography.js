@@ -329,10 +329,7 @@
 
         var parent = $( selector ).parents( '.redux-container-typography:first' );
         var data = [];
-        //$.each(parent.find('.redux-typography-field'), function() {
-        //    console.log();
-        //});
-        //console.log( selector );
+
         // Set all the variables to be checked against
         var family = $( '#' + mainID + ' #' + mainID + '-family' ).val();
 
@@ -353,10 +350,6 @@
         var script = $( '#' + mainID + ' select.redux-typography-subsets' ).val();
         var color = $( '#' + mainID + ' .redux-typography-color' ).val();
         var units = $( '#' + mainID ).data( 'units' );
-        //console.log('here3');
-        //console.log(color);
-
-        //var output = family;
 
         // Is selected font a google font?
         var google;

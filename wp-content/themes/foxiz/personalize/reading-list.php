@@ -31,27 +31,27 @@ if ( ! function_exists( 'foxiz_my_saved' ) ) {
 
 		$heading_classes = 'bookmark-section-header';
 		if ( ! empty( $pattern ) && '-1' !== (string) $pattern ) {
-			$heading_classes .= ' is-pattern pattern-' . esc_attr( $pattern );
+			$heading_classes .= ' is-pattern pattern-' . $pattern;
 		} else {
 			$heading_classes .= ' solid-bg';
 		} ?>
 		<div class="saved-section">
-			<div class="<?php echo esc_attr( $heading_classes ); ?>">
+			<div class="<?php echo strip_tags( $heading_classes ); ?>">
 				<div class="rb-container edge-padding">
 					<?php if ( ! empty( $image_description['url'] ) ) : ?>
 						<div class="bookmark-section-header-image">
 							<?php if ( ! empty( $image_description_dark['url'] ) ) : ?>
-								<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo esc_attr( $image_description['alt'] ); ?>" height="<?php echo esc_attr( $image_description['height'] ); ?>" width="<?php echo esc_attr( $image_description['width'] ); ?>">
-								<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $image_description_dark['url'] ); ?>" alt="<?php echo esc_attr( $image_description_dark['alt'] ); ?>" height="<?php echo esc_attr( $image_description_dark['height'] ); ?>" width="<?php echo esc_attr( $image_description_dark['width'] ); ?>">
+								<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo strip_tags( $image_description['alt'] ); ?>" height="<?php echo strip_tags( $image_description['height'] ); ?>" width="<?php echo strip_tags( $image_description['width'] ); ?>">
+								<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $image_description_dark['url'] ); ?>" alt="<?php echo strip_tags( $image_description_dark['alt'] ); ?>" height="<?php echo strip_tags( $image_description_dark['height'] ); ?>" width="<?php echo strip_tags( $image_description_dark['width'] ); ?>">
 							<?php else : ?>
-								<img loading="lazy" decoding="async" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo esc_attr( $image_description['alt'] ); ?>" height="<?php echo esc_attr( $image_description['height'] ); ?>" width="<?php echo esc_attr( $image_description['width'] ); ?>">
+								<img loading="lazy" decoding="async" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo strip_tags( $image_description['alt'] ); ?>" height="<?php echo strip_tags( $image_description['height'] ); ?>" width="<?php echo strip_tags( $image_description['width'] ); ?>">
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
 					<div class="bookmark-section-header-inner">
-						<h2 class="bookmark-section-title"><?php echo esc_html( foxiz_get_option( 'saved_heading' ) ); ?></h2>
+						<h2 class="bookmark-section-title"><?php foxiz_render_inline_html( foxiz_get_option( 'saved_heading' ) ); ?></h2>
 						<?php if ( foxiz_get_option( 'saved_description' ) ) : ?>
-							<p class="bookmark-section-decs is-meta"><?php echo esc_html( foxiz_get_option( 'saved_description' ) ); ?></p>
+							<p class="bookmark-section-decs is-meta"><?php foxiz_render_inline_html( foxiz_get_option( 'saved_description' ) ); ?></p>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -77,7 +77,7 @@ if ( ! function_exists( 'foxiz_my_categories' ) ) {
 		$heading_classes = 'bookmark-section-header';
 		$pattern         = foxiz_get_option( 'interest_pattern' );
 		if ( ! empty( $pattern ) && ( '-1' !== (string) $pattern ) ) {
-			$heading_classes .= ' is-pattern pattern-' . esc_attr( $pattern );
+			$heading_classes .= ' is-pattern pattern-' . $pattern;
 		} else {
 			$heading_classes .= ' solid-bg';
 		}
@@ -85,22 +85,22 @@ if ( ! function_exists( 'foxiz_my_categories' ) ) {
 		$image_description_dark = foxiz_get_option( 'interest_image_dark' );
 		?>
 		<div class="interest-section">
-			<div class="<?php echo esc_attr( $heading_classes ); ?>">
+			<div class="<?php echo strip_tags( $heading_classes ); ?>">
 				<div class="rb-container edge-padding">
 					<?php if ( ! empty( $image_description['url'] ) ) : ?>
 						<div class="bookmark-section-header-image">
 							<?php if ( ! empty( $image_description_dark['url'] ) ) : ?>
-								<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo esc_attr( $image_description['alt'] ); ?>" height="<?php echo esc_attr( $image_description['height'] ); ?>" width="<?php echo esc_attr( $image_description['width'] ); ?>">
-								<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $image_description_dark['url'] ); ?>" alt="<?php echo esc_attr( $image_description_dark['alt'] ); ?>" height="<?php echo esc_attr( $image_description_dark['height'] ); ?>" width="<?php echo esc_attr( $image_description_dark['width'] ); ?>">
+								<img loading="lazy" decoding="async" data-mode="default" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo strip_tags( $image_description['alt'] ); ?>" height="<?php echo strip_tags( $image_description['height'] ); ?>" width="<?php echo strip_tags( $image_description['width'] ); ?>">
+								<img loading="lazy" decoding="async" data-mode="dark" src="<?php echo esc_url( $image_description_dark['url'] ); ?>" alt="<?php echo strip_tags( $image_description_dark['alt'] ); ?>" height="<?php echo strip_tags( $image_description_dark['height'] ); ?>" width="<?php echo strip_tags( $image_description_dark['width'] ); ?>">
 							<?php else : ?>
-								<img loading="lazy" decoding="async" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo esc_attr( $image_description['alt'] ); ?>" height="<?php echo esc_attr( $image_description['height'] ); ?>" width="<?php echo esc_attr( $image_description['width'] ); ?>">
+								<img loading="lazy" decoding="async" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo strip_tags( $image_description['alt'] ); ?>" height="<?php echo strip_tags( $image_description['height'] ); ?>" width="<?php echo strip_tags( $image_description['width'] ); ?>">
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
 					<div class="bookmark-section-header-inner">
-						<h2 class="bookmark-section-title"><?php echo esc_html( foxiz_get_option( 'interest_heading' ) ); ?></h2>
+						<h2 class="bookmark-section-title"><?php foxiz_render_inline_html( foxiz_get_option( 'interest_heading' ) ); ?></h2>
 						<?php if ( foxiz_get_option( 'saved_description' ) ) : ?>
-							<p class="bookmark-section-decs is-meta"><?php echo esc_html( foxiz_get_option( 'interest_description' ) ); ?></p>
+							<p class="bookmark-section-decs is-meta"><?php foxiz_render_inline_html( foxiz_get_option( 'interest_description' ) ); ?></p>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -128,7 +128,7 @@ if ( ! function_exists( 'foxiz_my_writers' ) ) {
 		$heading_classes = 'bookmark-section-header';
 		$pattern         = foxiz_get_option( 'interest_pattern' );
 		if ( ! empty( $pattern ) && ( '-1' !== (string) $pattern ) ) {
-			$heading_classes .= ' is-pattern pattern-' . esc_attr( $pattern );
+			$heading_classes .= ' is-pattern pattern-' . $pattern;
 		} else {
 			$heading_classes .= ' solid-bg';
 		}
@@ -136,22 +136,22 @@ if ( ! function_exists( 'foxiz_my_writers' ) ) {
 		$image_description_dark = foxiz_get_option( 'interest_author_image_dark' );
 		?>
 		<div class="interest-section">
-			<div class="<?php echo esc_attr( $heading_classes ); ?>">
+			<div class="<?php echo strip_tags( $heading_classes ); ?>">
 				<div class="rb-container edge-padding">
 					<?php if ( ! empty( $image_description['url'] ) ) : ?>
 						<div class="bookmark-section-header-image">
 							<?php if ( ! empty( $image_description_dark['url'] ) ) : ?>
-								<img data-mode="default" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo esc_attr( $image_description['alt'] ); ?>" height="<?php echo esc_attr( $image_description['height'] ); ?>" width="<?php echo esc_attr( $image_description['width'] ); ?>">
-								<img data-mode="dark" src="<?php echo esc_url( $image_description_dark['url'] ); ?>" alt="<?php echo esc_attr( $image_description_dark['alt'] ); ?>" height="<?php echo esc_attr( $image_description_dark['height'] ); ?>" width="<?php echo esc_attr( $image_description_dark['width'] ); ?>">
+								<img data-mode="default" src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo strip_tags( $image_description['alt'] ); ?>" height="<?php echo strip_tags( $image_description['height'] ); ?>" width="<?php echo strip_tags( $image_description['width'] ); ?>">
+								<img data-mode="dark" src="<?php echo esc_url( $image_description_dark['url'] ); ?>" alt="<?php echo strip_tags( $image_description_dark['alt'] ); ?>" height="<?php echo strip_tags( $image_description_dark['height'] ); ?>" width="<?php echo strip_tags( $image_description_dark['width'] ); ?>">
 							<?php else : ?>
-								<img src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo esc_attr( $image_description['alt'] ); ?>" height="<?php echo esc_attr( $image_description['height'] ); ?>" width="<?php echo esc_attr( $image_description['width'] ); ?>">
+								<img src="<?php echo esc_url( $image_description['url'] ); ?>" alt="<?php echo strip_tags( $image_description['alt'] ); ?>" height="<?php echo strip_tags( $image_description['height'] ); ?>" width="<?php echo strip_tags( $image_description['width'] ); ?>">
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
 					<div class="bookmark-section-header-inner">
-						<h2 class="bookmark-section-title"><?php echo esc_html( foxiz_get_option( 'interest_author_heading' ) ); ?></h2>
+						<h2 class="bookmark-section-title"><?php foxiz_render_inline_html( foxiz_get_option( 'interest_author_heading' ) ); ?></h2>
 						<?php if ( foxiz_get_option( 'saved_description' ) ) : ?>
-							<p class="bookmark-section-decs is-meta"><?php echo esc_html( foxiz_get_option( 'interest_author_description' ) ); ?></p>
+							<p class="bookmark-section-decs is-meta"><?php foxiz_render_inline_html( foxiz_get_option( 'interest_author_description' ) ); ?></p>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -243,10 +243,13 @@ if ( ! function_exists( 'foxiz_my_categories_listing' ) ) {
 		if ( empty( $data ) || ! count( $data ) ) {
 			return false;
 		}
+
 		$settings = [
 			'uuid'           => 'my-categories',
 			'classes'        => 'block-categories block-categories-1',
 			'url'            => foxiz_get_option( 'interest_url' ),
+			'allowed_tax'    => [ 'category' ],
+			'selected_ids'   => [],
 			'follow'         => true,
 			'title_tag'      => 'h4',
 			'count_posts'    => true,
@@ -261,10 +264,6 @@ if ( ! function_exists( 'foxiz_my_categories_listing' ) ) {
 			<?php
 			foreach ( $data as $index => $id ) {
 				$settings['cid'] = $id;
-				if ( ! get_category( $settings['cid'] ) ) {
-					unset( $data[ $index ] );
-					continue;
-				}
 				foxiz_category_item_1( $settings );
 			}
 			foxiz_render_follow_redirect( $settings ); ?>

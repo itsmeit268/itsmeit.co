@@ -1290,16 +1290,11 @@ if ( ! class_exists( 'Foxiz_Css' ) ) {
 			foreach ( $term_ids as $id ) {
 				$values = rb_get_term_meta( 'foxiz_category_meta', $id );
 				if ( empty( $values ) || ! is_array( $values ) ) {
-					/** try post tag */
-					$values = rb_get_term_meta( 'foxiz_tag_meta', $id );
-					if ( empty( $values ) || ! is_array( $values ) ) {
-
-						/** fallback old versions */
-						if ( ! empty( $old_data[ $id ] ) && is_array( $old_data[ $id ] ) ) {
-							$values = $old_data[ $id ];
-						} else {
-							continue;
-						}
+					/** fallback old versions */
+					if ( ! empty( $old_data[ $id ] ) && is_array( $old_data[ $id ] ) ) {
+						$values = $old_data[ $id ];
+					} else {
+						continue;
 					}
 				}
 

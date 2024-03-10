@@ -82,7 +82,7 @@ if ( ! class_exists( 'Foxiz_Ad_Image' ) ) :
 			$instance['id'] = $args['widget_id'];
 
 			if ( ! empty( $instance['title'] ) ) : ?>
-				<span class="ad-description is-meta"><?php echo esc_html( $instance['title'] ); ?></span>
+				<span class="ad-description is-meta"><?php foxiz_render_inline_html( $instance['title'] ); ?></span>
 			<?php endif;
 			if ( ! empty( $instance['image'] ) ) : ?>
 				<aside class="advert-wrap advert-image">

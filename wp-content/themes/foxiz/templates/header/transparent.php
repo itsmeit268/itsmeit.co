@@ -12,7 +12,7 @@ if ( ! function_exists( 'foxiz_render_header_t1' ) ) {
 			$classes .= ' header-fw';
 		}
 		?>
-		<div id="site-header" class="<?php echo esc_attr( $classes ); ?>">
+		<div id="site-header" class="<?php echo strip_tags( $classes ); ?>">
 			<?php foxiz_render_top_site();
 			foxiz_reading_process_indicator();
 			?>
@@ -41,10 +41,6 @@ if ( ! function_exists( 'foxiz_render_header_t1' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
 		</div>
 		<?php
 	}
@@ -60,7 +56,7 @@ if ( ! function_exists( 'foxiz_render_header_t2' ) ) {
 			$classes .= ' header-fw';
 		}
 		?>
-		<div id="site-header" class="<?php echo esc_attr( $classes ); ?>">
+		<div id="site-header" class="<?php echo strip_tags( $classes ); ?>">
 			<?php foxiz_render_top_site();
 			foxiz_reading_process_indicator();
 			?>
@@ -91,10 +87,6 @@ if ( ! function_exists( 'foxiz_render_header_t2' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
 		</div>
 		<?php
 	}
@@ -110,7 +102,7 @@ if ( ! function_exists( 'foxiz_render_header_t3' ) ) {
 			$classes .= ' header-fw';
 		}
 		?>
-		<div id="site-header" class="<?php echo esc_attr( $classes ); ?>">
+		<div id="site-header" class="<?php echo strip_tags( $classes ); ?>">
 			<?php foxiz_render_top_site();
 			foxiz_reading_process_indicator();
 			?>
@@ -143,10 +135,6 @@ if ( ! function_exists( 'foxiz_render_header_t3' ) ) {
 					?>
 				</div>
 			</div>
-			<?php
-			if ( is_active_sidebar( 'foxiz_header_ad' ) ) {
-				dynamic_sidebar( 'foxiz_header_ad' );
-			} ?>
 		</div>
 		<?php
 	}

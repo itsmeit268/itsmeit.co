@@ -712,7 +712,7 @@ if ( ! class_exists( 'Foxiz_Personalize_Helper' ) ) {
 			$track_ip   = foxiz_get_option( 'reaction_ip' );
 
 			$action_key   = 'reaction';
-			$action_value = esc_attr( $reaction );
+			$action_value = strip_tags( $reaction );
 
 			$identifier = $this->get_identifier();
 			$user_id    = $this->get_user_id();
@@ -763,7 +763,7 @@ if ( ! class_exists( 'Foxiz_Personalize_Helper' ) ) {
 			}
 
 			if ( $query ) {
-				$this->update_reactions( '', esc_attr( $reaction ), $post_id );
+				$this->update_reactions( '', strip_tags( $reaction ), $post_id );
 			}
 
 			return true;

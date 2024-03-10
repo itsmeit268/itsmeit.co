@@ -27,26 +27,28 @@ if ( ! function_exists( 'foxiz_get_heading' ) ) {
 		}
 
 		/** dynamic title */
-		if ( is_search() ) {
-			$settings['title'] = str_replace( [
-				'{search}',
-				'{archive}',
-			], get_search_query( 's' ), $settings['title'] );
-		} elseif ( is_author() ) {
-			if ( ! empty( get_queried_object()->display_name ) ) {
+		if ( strpos( $settings['title'], '{' ) !== false && strpos( $settings['title'], '}' ) !== false ) {
+			if ( is_search() ) {
 				$settings['title'] = str_replace( [
-					'{author}',
+					'{search}',
 					'{archive}',
-				], get_queried_object()->display_name, $settings['title'] );
-			}
-		} elseif ( is_archive() ) {
-			if ( ! empty( get_queried_object()->name ) ) {
-				$settings['title'] = str_replace( [
-					'{archive}',
-					'{category}',
-					'{tag}',
-					'{taxonomy}',
-				], get_queried_object()->name, $settings['title'] );
+				], get_search_query( 's' ), $settings['title'] );
+			} elseif ( is_author() ) {
+				if ( ! empty( get_queried_object()->display_name ) ) {
+					$settings['title'] = str_replace( [
+						'{author}',
+						'{archive}',
+					], get_queried_object()->display_name, $settings['title'] );
+				}
+			} elseif ( is_archive() ) {
+				if ( ! empty( get_queried_object()->name ) ) {
+					$settings['title'] = str_replace( [
+						'{archive}',
+						'{category}',
+						'{tag}',
+						'{taxonomy}',
+					], get_queried_object()->name, $settings['title'] );
+				}
 			}
 		}
 
@@ -75,18 +77,23 @@ if ( ! function_exists( 'foxiz_get_heading' ) ) {
 		$output .= '<div class="heading-inner">';
 		$output .= '<' . $settings['html_tag'] . ' class="' . esc_attr( $title_class_name ) . '">';
 		if ( ! empty( $settings['link']['url'] ) ) {
-			$output .= foxiz_render_elementor_link( $settings['link'], wp_kses( $settings['title'], 'foxiz' ) );
+			$output .= foxiz_render_elementor_link( $settings['link'], $settings['title'] );
 		} else {
-			$output .= '<span>' . wp_kses( $settings['title'], 'foxiz' ) . '</span>';
+			$output .= '<span>' . foxiz_strip_tags( $settings['title'] ) . '</span>';
 		}
 		$output .= '</' . $settings['html_tag'] . '>';
 
 		if ( ! empty( $settings['tagline'] ) ) {
 			$output .= '<div class="heading-tagline h6">';
-			if ( ! empty( $settings['link']['url'] ) ) {
-				$output .= foxiz_render_elementor_link( $settings['link'], esc_html( $settings['tagline'] ), 'heading-tagline-label' );
+			if ( ! empty( $settings['link']['url'] ) && ! in_array( (string) $settings['layout'], [
+					'c11',
+					'11',
+					'19',
+				] )
+			) {
+				$output .= foxiz_render_elementor_link( $settings['link'], $settings['tagline'], 'heading-tagline-label' );
 			} else {
-				$output .= '<span class="heading-tagline-label">' . esc_html( $settings['tagline'] ) . '</span>';
+				$output .= '<span class="heading-tagline-label">' . foxiz_strip_tags( $settings['tagline'] ) . '</span>';
 			}
 			if ( ! empty( $settings['tagline_arrow'] ) ) {
 				$output .= '<i class="rbi rbi-cright heading-tagline-icon" aria-hidden="true"></i>';
@@ -121,7 +128,7 @@ if ( ! function_exists( 'foxiz_get_start_widget_heading' ) ) {
 		}
 
 		$output = '<div';
-		$output .= ' class="' . esc_attr( $class_name ) . '">';
+		$output .= ' class="' . strip_tags( $class_name ) . '">';
 		$output .= '<div class="heading-inner">';
 		$output .= '<' . $settings['html_tag'] . ' class="heading-title"><span>';
 

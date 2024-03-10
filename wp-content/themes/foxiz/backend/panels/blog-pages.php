@@ -88,11 +88,12 @@ if ( ! function_exists( 'foxiz_register_options_category' ) ) {
 					'indent' => false,
 				],
 				[
-					'id'     => 'section_start_category_header',
-					'type'   => 'section',
-					'class'  => 'ruby-section-start',
-					'title'  => esc_html__( 'Category Header', 'foxiz' ),
-					'indent' => true,
+					'id'       => 'section_start_category_header',
+					'type'     => 'section',
+					'class'    => 'ruby-section-start',
+					'title'    => esc_html__( 'Category Header', 'foxiz' ),
+					'subtitle' => esc_html__( 'Please ensure that you construct the header template or add an H1 tag somewhere if you choose to disable the header to avoid SEO issues.', 'foxiz' ),
+					'indent'   => true,
 				],
 				[
 					'id'       => $prefix . 'category_header',
@@ -578,35 +579,17 @@ if ( ! function_exists( 'foxiz_register_options_category' ) ) {
 	}
 }
 
-if ( ! function_exists( 'foxiz_register_options_blog_pages' ) ) {
-	/**
-	 * @return array
-	 */
-	function foxiz_register_options_blog_pages() {
-
-		return [
-			'title' => esc_html__( 'Blog & Archive', 'foxiz' ),
-			'id'    => 'foxiz_config_section_blog_archives',
-			'icon'  => 'el el-hdd',
-		];
-	}
-}
-
 if ( ! function_exists( 'foxiz_register_options_blog' ) ) {
-	/**
-	 * @return array
-	 */
 	function foxiz_register_options_blog() {
 
 		$prefix = 'blog_';
 
 		return [
-			'id'         => 'foxiz_config_section_blog',
-			'title'      => esc_html__( 'Blog Index', 'foxiz' ),
-			'icon'       => 'el el-bold',
-			'desc'       => esc_html__( 'Customize the appearance and layout of the blog.', 'foxiz' ),
-			'subsection' => true,
-			'fields'     => [
+			'id'     => 'foxiz_config_section_blog',
+			'title'  => esc_html__( 'Blog Index', 'foxiz' ),
+			'icon'   => 'el el-bold',
+			'desc'   => esc_html__( 'Customize the appearance and layout of the blog.', 'foxiz' ),
+			'fields' => [
 				[
 					'id'     => 'section_start_blog_header',
 					'type'   => 'section',
@@ -1078,12 +1061,11 @@ if ( ! function_exists( 'foxiz_register_options_author' ) ) {
 		$prefix = 'author_';
 
 		return [
-			'id'         => 'foxiz_config_section_author',
-			'title'      => esc_html__( 'Author', 'foxiz' ),
-			'icon'       => 'el el-user',
-			'subsection' => true,
-			'desc'       => esc_html__( 'The settings below apply to the author pages.', 'foxiz' ),
-			'fields'     => [
+			'id'     => 'foxiz_config_section_author',
+			'title'  => esc_html__( 'Author Page', 'foxiz' ),
+			'icon'   => 'el el-user',
+			'desc'   => esc_html__( 'The settings below apply to the author pages.', 'foxiz' ),
+			'fields' => [
 				[
 					'id'     => 'section_start_author_header',
 					'type'   => 'section',
@@ -1495,27 +1477,42 @@ if ( ! function_exists( 'foxiz_register_options_archive' ) ) {
 		$prefix = 'archive_';
 
 		return [
-			'id'         => 'foxiz_config_section_archive',
-			'title'      => esc_html__( 'Tags & Archive', 'foxiz' ),
-			'icon'       => 'el el-inbox-box',
-			'subsection' => true,
-			'desc'       => esc_html__( 'The settings below apply to the tags and other archive pages.', 'foxiz' ),
-			'fields'     => [
+			'id'     => 'foxiz_config_section_archive',
+			'title'  => esc_html__( 'Tags & Archive', 'foxiz' ),
+			'icon'   => 'el el-inbox-box',
+			'desc'   => esc_html__( 'The settings below apply to the tags and other archive pages.', 'foxiz' ),
+			'fields' => [
 				[
-					'id'     => 'section_start_archive_header',
-					'type'   => 'section',
-					'class'  => 'ruby-section-start',
-					'title'  => esc_html__( 'Archive Header', 'foxiz' ),
-					'indent' => true,
+					'id'       => 'section_start_archive_header',
+					'type'     => 'section',
+					'class'    => 'ruby-section-start',
+					'title'    => esc_html__( 'Archive Header', 'foxiz' ),
+					'subtitle' => esc_html__( 'Please ensure that you construct the header template or add an H1 tag somewhere if you choose to disable the header to avoid SEO issues.', 'foxiz' ),
+					'indent'   => true,
 				],
 				[
-					'id'          => $prefix . 'archive_header',
-					'title'       => esc_html__( 'Header Style', 'foxiz' ),
-					'subtitle'    => esc_html__( 'Disable or select a style for the tag and archive headers.', 'foxiz' ),
-					'description' => esc_html__( 'Ensure the H1 tag will be added somewhere if you disable the header to avoid SEO issues.', 'foxiz' ),
-					'type'        => 'select',
-					'options'     => foxiz_config_archive_header(),
-					'default'     => '1',
+					'id'       => 'tag_header',
+					'title'    => esc_html__( 'Post Tags Header', 'foxiz' ),
+					'subtitle' => esc_html__( 'Disable or select a style for the tag headers.', 'foxiz' ),
+					'type'     => 'select',
+					'options'  => foxiz_config_archive_header( true ),
+					'default'  => '0',
+				],
+				[
+					'id'       => 'tax_header',
+					'title'    => esc_html__( 'Taxonomy Header', 'foxiz' ),
+					'subtitle' => esc_html__( 'Disable or select a style for the taxonomy headers.', 'foxiz' ),
+					'type'     => 'select',
+					'options'  => foxiz_config_archive_header( true ),
+					'default'  => '0',
+				],
+				[
+					'id'       => $prefix . 'archive_header',
+					'title'    => esc_html__( 'Archive Header', 'foxiz' ),
+					'subtitle' => esc_html__( 'Disable or select a style for the archive headers.', 'foxiz' ),
+					'type'     => 'select',
+					'options'  => foxiz_config_archive_header(),
+					'default'  => '1',
 				],
 				[
 					'id'       => $prefix . 'pattern',
@@ -1563,6 +1560,15 @@ if ( ! function_exists( 'foxiz_register_options_archive' ) ) {
 					'default'     => '',
 				],
 				[
+					'id'          => 'tax_template_global',
+					'title'       => esc_html__( 'Taxonomy - Global WP Query Template Shortcode', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Input a "Ruby Template" shortcode to display as the main blog posts for the custom taxonomy. e.g: [Ruby_E_Template id="1"]', 'foxiz' ),
+					'type'        => 'textarea',
+					'rows'        => '2',
+					'placeholder' => '[Ruby_E_Template id="1"]',
+					'default'     => '',
+				],
+				[
 					'id'          => $prefix . 'template_global',
 					'title'       => esc_html__( 'Archive - Global WP Query Template Shortcode', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Input a "Ruby Template" shortcode to display as the main blog posts for the archive, e.g: [Ruby_E_Template id="1"]', 'foxiz' ),
@@ -1585,12 +1591,31 @@ if ( ! function_exists( 'foxiz_register_options_archive' ) ) {
 					'indent' => true,
 				],
 				[
-					'id'       => $prefix . 'posts_per_page',
-					'title'    => esc_html__( 'Posts per Page', 'foxiz' ),
-					'subtitle' => esc_html__( 'Select posts per page for the archives. Leave this option blank to set the default.', 'foxiz' ),
-					'type'     => 'text',
-					'validate' => 'numeric',
-					'default'  => '',
+					'id'          => 'tag_posts_per_page',
+					'title'       => esc_html__( 'Tag - Posts per Page', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Input posts per page for the tag.', 'foxiz' ),
+					'description' => esc_html__( 'The posts per page of the archive will apply if it is empty.', 'foxiz' ),
+					'type'        => 'text',
+					'validate'    => 'numeric',
+					'default'     => '',
+				],
+				[
+					'id'          => 'tax_posts_per_page',
+					'title'       => esc_html__( 'Taxonomy - Posts per Page', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Input posts per page for the taxonomy.', 'foxiz' ),
+					'description' => esc_html__( 'The posts per page of the archive will apply if it is empty.', 'foxiz' ),
+					'type'        => 'text',
+					'validate'    => 'numeric',
+					'default'     => '',
+				],
+				[
+					'id'          => $prefix . 'posts_per_page',
+					'title'       => esc_html__( 'Archive - Posts per Page', 'foxiz' ),
+					'subtitle'    => esc_html__( 'Input posts per page for the archives. Leave this option blank to set the default.', 'foxiz' ),
+					'description' => esc_html__( 'Global settings in "Settings > Reading > Blog pages show at most" will apply if it is empty.', 'foxiz' ),
+					'type'        => 'text',
+					'validate'    => 'numeric',
+					'default'     => '',
 				],
 				[
 					'id'     => 'section_end_archive_posts_per_page',
@@ -1935,12 +1960,11 @@ if ( ! function_exists( 'foxiz_register_options_search' ) ) {
 		$prefix = 'search_';
 
 		return [
-			'id'         => 'foxiz_config_section_search',
-			'title'      => esc_html__( 'Search', 'foxiz' ),
-			'icon'       => 'el el-search',
-			'desc'       => esc_html__( 'The settings below apply to the search page.', 'foxiz' ),
-			'subsection' => true,
-			'fields'     => [
+			'id'     => 'foxiz_config_section_search',
+			'title'  => esc_html__( 'Search Page', 'foxiz' ),
+			'icon'   => 'el el-search',
+			'desc'   => esc_html__( 'The settings below apply to the search page.', 'foxiz' ),
+			'fields' => [
 				[
 					'id'     => 'section_start_search_filter',
 					'type'   => 'section',

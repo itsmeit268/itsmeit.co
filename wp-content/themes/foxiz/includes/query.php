@@ -2,11 +2,6 @@
 /** Don't load directly */
 defined( 'ABSPATH' ) || exit;
 
-/**
- * @param array  $data
- * @param string $paged
- * custom query for this theme
- */
 if ( ! function_exists( 'foxiz_query' ) ) {
 	function foxiz_query( $data = [], $paged = null ) {
 
@@ -22,8 +17,20 @@ if ( ! function_exists( 'foxiz_query' ) ) {
 
 			/** global query builder */
 			global $wp_query;
+			$_query = $wp_query;
 
-			return $wp_query;
+			if ( ! empty( $data['unique'] ) && ! empty( $GLOBALS['foxiz_queried_ids'] ) && is_array( $GLOBALS['foxiz_queried_ids'] ) ) {
+				$params                 = $_query->query_vars;
+				$params['post__not_in'] = (array) $GLOBALS['foxiz_queried_ids'];
+
+				/** get new WP_Query */
+				$_query = new WP_Query( $params );
+				$_query->set( 'foxiz_queried_ids', $GLOBALS['foxiz_queried_ids'] );
+			}
+
+			foxiz_add_queried_ids( $_query );
+
+			return $_query;
 		}
 
 		$data = shortcode_atts( [
@@ -44,7 +51,6 @@ if ( ! function_exists( 'foxiz_query' ) ) {
 			'post_not_in'         => '',
 			'tag_not_in'          => '',
 			's'                   => '',
-			'duplicate_allowed'   => '',
 			'tax_query'           => [],
 			'unique'              => '',
 			'ignore_sticky_posts' => 1,
@@ -77,11 +83,6 @@ if ( ! function_exists( 'foxiz_query' ) ) {
 			$params['post_type'] = 'post';
 		} else {
 			$params['post_type'] = $data['post_type'];
-		}
-
-		/** set foxiz_queried_ids */
-		if ( ! isset( $GLOBALS['foxiz_queried_ids'] ) ) {
-			$GLOBALS['foxiz_queried_ids'] = [];
 		}
 
 		$params['post_status']         = 'publish';
@@ -159,23 +160,15 @@ if ( ! function_exists( 'foxiz_query' ) ) {
 				$params['post__in'] = $data['post_in'];
 			}
 		} else {
-
 			$excluded_ids = [];
-
 			if ( ! empty( $data['post_not_in'] ) && is_string( $data['post_not_in'] ) ) {
 				$excluded_ids = explode( ',', $data['post_not_in'] );
 			} elseif ( is_array( $data['post_not_in'] ) ) {
 				$excluded_ids = $data['post_not_in'];
 			}
-
-			if ( count( $GLOBALS['foxiz_queried_ids'] ) && ! empty( $data['unique'] ) ) {
+			if ( isset( $GLOBALS['foxiz_queried_ids'] ) && count( $GLOBALS['foxiz_queried_ids'] ) && ! empty( $data['unique'] ) ) {
 				$excluded_ids = array_merge( $excluded_ids, $GLOBALS['foxiz_queried_ids'] );
 			}
-
-			if ( is_single() ) {
-				$excluded_ids[] = get_the_ID();
-			}
-
 			if ( is_array( $excluded_ids ) ) {
 				$params['post__not_in'] = $excluded_ids;
 			}
@@ -566,18 +559,11 @@ if ( ! function_exists( 'foxiz_query' ) ) {
 		}
 
 		$_query = new WP_Query( $params );
-
-		if ( count( $GLOBALS['foxiz_queried_ids'] ) ) {
+		if ( ! empty( $GLOBALS['foxiz_queried_ids'] ) && is_array( $GLOBALS['foxiz_queried_ids'] ) ) {
 			$_query->set( 'foxiz_queried_ids', $GLOBALS['foxiz_queried_ids'] );
 		}
 
-		if ( ! empty( $_query->posts ) && empty( $data['duplicate_allowed'] ) && empty( $GLOBALS['foxiz_no_unique'] ) ) {
-			$post_ids = wp_list_pluck( $_query->posts, 'ID' );
-			if ( is_array( $post_ids ) ) {
-				$GLOBALS['foxiz_queried_ids'] = array_unique( array_merge( $GLOBALS['foxiz_queried_ids'], $post_ids ) );
-			}
-		}
-
+		foxiz_add_queried_ids( $_query );
 		do_action( 'foxiz_after_query', $_query, $data );
 
 		return $_query;
@@ -607,10 +593,6 @@ if ( ! function_exists( 'foxiz_query_related' ) ) {
 
 		if ( empty( $data['related_id'] ) ) {
 			$data['related_id'] = get_the_ID();
-		}
-
-		if ( ! isset( $GLOBALS['foxiz_related_queried_ids'] ) ) {
-			$GLOBALS['foxiz_related_queried_ids'] = [];
 		}
 
 		$post_type = get_post_type( $data['related_id'] );
@@ -742,10 +724,9 @@ if ( ! function_exists( 'foxiz_query_related' ) ) {
 			} elseif ( is_array( $data['post_not_in'] ) ) {
 				$excluded_ids = $data['post_not_in'];
 			}
-			if ( count( $GLOBALS['foxiz_related_queried_ids'] ) ) {
-				$excluded_ids = array_merge( $excluded_ids, $GLOBALS['foxiz_related_queried_ids'] );
+			if ( isset( $GLOBALS['foxiz_queried_ids'] ) && count( $GLOBALS['foxiz_queried_ids'] ) ) {
+				$excluded_ids = array_merge( $excluded_ids, $GLOBALS['foxiz_queried_ids'] );
 			}
-
 			if ( is_array( $excluded_ids ) ) {
 				$params['post__not_in'] = $excluded_ids;
 			}
@@ -753,17 +734,14 @@ if ( ! function_exists( 'foxiz_query_related' ) ) {
 
 		$_query = new WP_Query( $params );
 
-		if ( ! empty( $_query->posts ) ) {
-			$post_ids = wp_list_pluck( $_query->posts, 'ID' );
-			if ( is_array( $post_ids ) ) {
-				$GLOBALS['foxiz_related_queried_ids'] = array_unique( array_merge( $GLOBALS['foxiz_related_queried_ids'], $post_ids ) );
-				$_query->set( 'related_excluded_ids', implode( ',', $post_ids ) );
-			}
+		if ( ! empty( $GLOBALS['foxiz_queried_ids'] ) && is_array( $GLOBALS['foxiz_queried_ids'] ) ) {
+			$_query->set( 'related_excluded_ids', $GLOBALS['foxiz_queried_ids'] );
 		}
-
 		$_query->set( 'content_source', 'related' );
 		$_query->set( 'related_id', $data['related_id'] );
 		$_query->set( 'related_total', $params['posts_per_page'] );
+
+		foxiz_add_queried_ids( $_query );
 
 		return $_query;
 	}
@@ -786,5 +764,21 @@ if ( ! function_exists( 'foxiz_personalize_query' ) ) {
 		}
 
 		return Foxiz_Personalize::get_instance()->recommended_query( $settings );
+	}
+}
+
+if ( ! function_exists( 'foxiz_add_queried_ids' ) ) {
+	function foxiz_add_queried_ids( $_query ) {
+
+		if ( ! isset( $GLOBALS['foxiz_queried_ids'] ) ) {
+			$GLOBALS['foxiz_queried_ids'] = [];
+		}
+
+		if ( ! empty( $_query->posts ) ) {
+			$post_ids = wp_list_pluck( $_query->posts, 'ID' );
+			if ( is_array( $post_ids ) ) {
+				$GLOBALS['foxiz_queried_ids'] = array_unique( array_merge( $GLOBALS['foxiz_queried_ids'], $post_ids ) );
+			}
+		}
 	}
 }

@@ -130,28 +130,28 @@ if ( ! class_exists( 'Foxiz_Fw_Instagram' ) ) {
 
 			if ( ! empty( $data_images['error'] ) ) :
 				if ( current_user_can( 'manage_options' ) ) :
-					echo '<div class="rb-error"><strong>' . esc_html__( 'Instagram Error: ', 'foxiz-core' ) . '</strong>' . esc_html( $data_images['error'] ) . '</div>';
+					echo '<div class="rb-error"><strong>' . esc_html__( 'Instagram Error: ', 'foxiz-core' ) . '</strong>' . foxiz_strip_tags( $data_images['error'] ) . '</div>';
 				endif;
 			else :
 				if ( ! empty( $instance['title'] ) ) {
-					echo $args['before_title'] . $instance['title'] . $args['after_title'];
+					echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 				} ?>
 				<div class="<?php echo join( ' ', $classes ); ?>">
 					<?php if ( ! empty( $instance['header_intro'] ) && ! $flag ) : ?>
 						<div class="grid-header">
-							<a href="<?php echo esc_url( $instance['url'] ); ?>" target="_blank"><?php echo wp_kses( $instance['header_intro'], 'foxiz' ); ?></a>
+							<a href="<?php echo esc_url( $instance['url'] ); ?>" target="_blank"><?php echo foxiz_strip_tags( $instance['header_intro'] ); ?></a>
 						</div>
 					<?php endif; ?>
-					<div class="grid-holder <?php echo esc_attr( $instance['total_cols'] ) ?>">
+					<div class="grid-holder <?php echo strip_tags( $instance['total_cols'] ) ?>">
 						<?php $data_images = array_slice( $data_images, 0, $instance['total_images'] );
 						foreach ( $data_images as $image ) :?>
 							<?php if ( $flag && ! empty( $instance['header_intro'] ) ) : ?>
 								<div class="grid-el intro-el">
 									<div class="instagram-box box-intro">
-										<a href="<?php echo esc_html( $instance['url'] ); ?>" target="_blank" rel="noopener nofollow"></a>
+										<a href="<?php echo esc_url( $instance['url'] ); ?>" target="_blank" rel="noopener nofollow"></a>
 										<div class="intro-inner">
 											<i class="rbi rbi-instagram" aria-hidden="true"></i>
-											<span class="intro-content"><?php echo html_entity_decode( $instance['header_intro'] ); ?></span>
+											<span class="intro-content"><?php foxiz_render_inline_html( $instance['header_intro'] ); ?></span>
 										</div>
 									</div>
 								</div>
@@ -159,28 +159,28 @@ if ( ! class_exists( 'Foxiz_Fw_Instagram' ) ) {
 							endif; ?>
 							<div class="grid-el">
 								<div class="instagram-box">
-									<a href="<?php echo esc_html( $image['link'] ); ?>" target="_blank" rel="noopener nofollow">
+									<a href="<?php echo esc_url( $image['link'] ); ?>" target="_blank" rel="noopener nofollow">
 										<?php
 										if ( $image['media'] === "VIDEO" && $image['media'] !== "IMAGE" ) : ?>
-											<img src="<?php echo esc_url( $image['thumbnail_url'] ); ?>" alt="<?php echo esc_attr( $image['caption'] ); ?>" loading="lazy" width="<?php if ( ! empty( $image_size[0] ) ) {
-												echo esc_attr( $image_size[0] );
+											<img src="<?php echo esc_url( $image['thumbnail_url'] ); ?>" alt="<?php echo strip_tags( $image['caption'] ); ?>" loading="lazy" width="<?php if ( ! empty( $image_size[0] ) ) {
+												echo strip_tags( $image_size[0] );
 											} ?>" height="<?php if ( ! empty( $image_size[1] ) ) {
-												echo esc_attr( $image_size[1] );
+												echo strip_tags( $image_size[1] );
 											} ?>">
 										<?php else : ?>
-											<img src="<?php echo esc_url( $image['thumbnail_src'] ); ?>" alt="<?php echo esc_attr( $image['caption'] ); ?>" loading="lazy" width="<?php if ( ! empty( $image_size[0] ) ) {
-												echo esc_attr( $image_size[0] );
+											<img src="<?php echo esc_url( $image['thumbnail_src'] ); ?>" alt="<?php echo strip_tags( $image['caption'] ); ?>" loading="lazy" width="<?php if ( ! empty( $image_size[0] ) ) {
+												echo strip_tags( $image_size[0] );
 											} ?>" height="<?php if ( ! empty( $image_size[1] ) ) {
-												echo esc_attr( $image_size[1] );
+												echo strip_tags( $image_size[1] );
 											} ?>">
 										<?php endif; ?>
 									</a>
 									<div class="box-content">
 										<?php if ( ! empty( $image['likes'] ) ) : ?>
-											<span class="likes"><i class="rbi rbi-heart" aria-hidden="true"></i><?php echo esc_html( $image['likes'] ); ?></span>
+											<span class="likes"><i class="rbi rbi-heart" aria-hidden="true"></i><?php foxiz_render_inline_html( $image['likes'] ); ?></span>
 										<?php endif;
 										if ( ! empty( $image['comments'] ) ) : ?>
-											<span class="comments"><i class="rbi rbi-comment" aria-hidden="true"></i><?php echo esc_html( $image['comments'] ); ?></span>
+											<span class="comments"><i class="rbi rbi-comment" aria-hidden="true"></i><?php foxiz_render_inline_html( $image['comments'] ); ?></span>
 										<?php endif; ?>
 									</div>
 								</div>
@@ -224,7 +224,7 @@ if ( ! class_exists( 'Foxiz_Fw_Instagram' ) ) {
 				if ( is_wp_error( $response ) || empty( $response['response']['code'] ) || 200 !== $response['response']['code'] ) {
 					$response = json_decode( wp_remote_retrieve_body( $response ) );
 					if ( ! empty( $response->error->message ) ) {
-						$data_images['error'] = esc_html( $response->error->message );
+						$data_images['error'] = foxiz_strip_tags( $response->error->message );
 					} else {
 						$data_images['error'] = esc_html__( 'Could not connect to Instagram API server.', 'foxiz-core' );
 					}
@@ -257,7 +257,7 @@ if ( ! class_exists( 'Foxiz_Fw_Instagram' ) ) {
 						}
 
 						if ( ! empty( $image->thumbnail_url ) ) {
-							$images_url = esc_html( $image->thumbnail_url );
+							$images_url = esc_url( $image->thumbnail_url );
 						}
 
 						if ( ! empty( $image->$caption ) ) {

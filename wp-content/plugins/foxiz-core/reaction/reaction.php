@@ -228,7 +228,7 @@ if ( ! class_exists( 'Ruby_Reaction', false ) ) {
 					$output .= '<div class="reaction" data-reaction="' . $reaction['id'] . '">';
 					$output .= '<span class="reaction-content">';
 					$output .= '<i class="reaction-icon">' . $this->get_svg( $reaction['icon'] ) . '</i>';
-					$output .= '<span class="reaction-title h6">' . esc_html( $reaction['title'] ) . '</span>';
+					$output .= '<span class="reaction-title h6">' . foxiz_strip_tags( $reaction['title'] ) . '</span>';
 					$output .= '</span>';
 					$output .= '<span class="reaction-count">';
 					if ( empty( $total[ $reaction['id'] ] ) ) {

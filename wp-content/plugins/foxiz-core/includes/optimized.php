@@ -284,11 +284,16 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 				];
 			}
 
-			$logo = foxiz_get_option( 'site_logo' );
+			$logo = foxiz_get_option( 'logo_organization' );
+			if ( empty( $logo['url'] ) ) {
+				$logo = foxiz_get_option( 'logo' );
+			}
+			if ( empty( $logo['url'] ) ) {
+				$logo = foxiz_get_option( 'retina_logo' );
+			}
 			if ( ! empty( $logo['url'] ) ) {
 				$json_ld['logo'] = $logo['url'];
 			}
-
 			$social = [
 				foxiz_get_option( 'facebook' ),
 				foxiz_get_option( 'twitter' ),
@@ -379,7 +384,10 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 
 		function get_publisher() {
 
-			$logo = foxiz_get_option( 'logo' );
+			$logo = foxiz_get_option( 'logo_organization' );
+			if ( empty( $logo['url'] ) ) {
+				$logo = foxiz_get_option( 'logo' );
+			}
 			if ( empty( $logo['url'] ) ) {
 				$logo = foxiz_get_option( 'retina_logo' );
 			}
@@ -751,19 +759,16 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 				if ( ! empty( $thumbnail_url ) ) {
 					return $thumbnail_url;
 				}
-			} elseif ( is_category() ) {
-
-				$data = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
-				if ( ! empty( $data['featured_image'][0] ) ) {
-					$thumbnail_url = wp_get_attachment_image_url( $data['featured_image'][0], 'full' );
-					if ( ! empty( $thumbnail_url ) ) {
-						return $thumbnail_url;
-					}
-				}
 			} elseif ( is_author() ) {
 				return get_avatar_url( get_queried_object_id(), [ 'size' => '999' ] );
 			} elseif ( is_home() || is_front_page() ) {
-				$image = foxiz_get_option( 'site_logo' );
+				$image = foxiz_get_option( 'logo_organization' );
+				if ( empty( $image['url'] ) ) {
+					$image = foxiz_get_option( 'logo' );
+				}
+				if ( empty( $logo['url'] ) ) {
+					$image = foxiz_get_option( 'retina_logo' );
+				}
 				if ( ! empty( $image['url'] ) ) {
 					return $image['url'];
 				}
@@ -771,6 +776,15 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 				$image = foxiz_get_option( 'page_404_featured' );
 				if ( ! empty( $image['url'] ) ) {
 					return $image['url'];
+				}
+			} elseif ( is_archive() ) {
+
+				$data = rb_get_term_meta( 'foxiz_category_meta', get_queried_object_id() );
+				if ( ! empty( $data['featured_image'][0] ) ) {
+					$thumbnail_url = wp_get_attachment_image_url( $data['featured_image'][0], 'full' );
+					if ( ! empty( $thumbnail_url ) ) {
+						return $thumbnail_url;
+					}
 				}
 			}
 
@@ -1027,7 +1041,7 @@ if ( ! class_exists( 'Foxiz_Optimized', false ) ) {
 		function preload_font_icon() {
 
 			if ( foxiz_get_option( 'preload_font_icon' ) && ! is_admin() ) {
-				echo '<link rel="preload" href="' . get_theme_file_uri( 'assets/fonts/icons.woff2?2.2.0' ) . '" as="font" type="font/woff2" crossorigin="anonymous"> ';
+				echo '<link rel="preload" href="' . get_theme_file_uri( 'assets/fonts/icons.woff2?2.3' ) . '" as="font" type="font/woff2" crossorigin="anonymous"> ';
 				if ( foxiz_get_option( 'font_awesome' ) ) {
 					echo '<link rel="preload" href="' . get_theme_file_uri( 'assets/fonts/fa-brands-400.woff2' ) . '" as="font" type="font/woff2" crossorigin="anonymous"> ';
 					echo '<link rel="preload" href="' . get_theme_file_uri( 'assets/fonts/fa-regular-400.woff2' ) . '" as="font" type="font/woff2" crossorigin="anonymous"> ';

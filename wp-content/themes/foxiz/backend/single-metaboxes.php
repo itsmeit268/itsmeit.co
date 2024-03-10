@@ -37,7 +37,7 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 		public function page_metaboxes() {
 
 			return [
-				'id'         => 'foxiz_page_settings',
+				'id'         => 'foxiz_page_options',
 				'title'      => esc_html__( 'Single Page Settings', 'foxiz' ),
 				'desc'       => esc_html__( 'The settings below will apply to the single page and Elementor pages. To config for the blog index page. Navigate to Theme Options > Blog & Archives > Blog Index', 'foxiz' ),
 				'context'    => 'normal',
@@ -198,6 +198,15 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'placeholder' => '[Ruby_E_Template id="1"]',
 								'default'     => '',
 							],
+							[
+								'id'          => 'mh_template',
+								'name'       => esc_html__( 'Mobile Header Template Shortcode', 'foxiz' ),
+								'desc'    => esc_html__( 'Input a Ruby Template shortcode to display as a header mobile for this page.', 'foxiz' ),
+								'info'        => esc_html__( 'This setting will override on the mobile header.', 'foxiz' ),
+								'type'        => 'textarea',
+								'placeholder' => '[Ruby_E_Template id="1"]',
+								'default'     => '',
+							],
 						],
 					],
 					[
@@ -237,6 +246,28 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 						'icon'   => 'dashicons-money-alt',
 						'fields' => [
 							[
+								'id'      => 'disable_top_ad',
+								'name'    => esc_html__( 'Top Site Ad', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable the top ad site for this page.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
+								'id'      => 'disable_header_ad',
+								'name'    => esc_html__( 'Header Advertising Widget Section', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable all widgets in the header advertising widget section (Appearance > Widgets) for this page.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
 								'id'      => 'alert_bar',
 								'name'    => esc_html__( 'Header Alert Bar', 'foxiz' ),
 								'desc'    => esc_html__( 'Enable or disable the alert bar below the header.', 'foxiz' ),
@@ -245,17 +276,6 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'options' => [
 									'default' => esc_html__( '- Default -', 'foxiz' ),
 									'1'       => esc_html__( 'Enable', 'foxiz' ),
-									'-1'      => esc_html__( 'Disable', 'foxiz' ),
-								],
-								'default' => 'default',
-							],
-							[
-								'id'      => 'disable_top_ad',
-								'name'    => esc_html__( 'Top Site Ad', 'foxiz' ),
-								'desc'    => esc_html__( 'Enable or disable the top ad site for this page.', 'foxiz' ),
-								'type'    => 'select',
-								'options' => [
-									'default' => esc_html__( '- Default -', 'foxiz' ),
 									'-1'      => esc_html__( 'Disable', 'foxiz' ),
 								],
 								'default' => 'default',
@@ -875,13 +895,48 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 					],
 					[
 						'id'     => 'section-widget',
-						'title'  => esc_html__( 'Content Widgets & Ads', 'foxiz' ),
-						'desc'   => esc_html__( 'Top and bottom content sections to show advertise.', 'foxiz' ),
+						'title'  => esc_html__( 'Widgets & Ads', 'foxiz' ),
+						'desc'   => esc_html__( 'Manage ad sections and top/bottom content widgets for this post.', 'foxiz' ),
 						'icon'   => 'dashicons-editor-insertmore',
 						'fields' => [
 							[
+								'id'      => 'disable_top_ad',
+								'name'    => esc_html__( 'Top Site Advert', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable the top ad site for this post.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
+								'id'      => 'disable_header_ad',
+								'name'    => esc_html__( 'Header Advertising Widget Section', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable all widgets in the header advertising widget section (Appearance > Widgets) for this post.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
+								'id'      => 'alert_bar',
+								'name'    => esc_html__( 'Header Alert Bar', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable the alert bar below the header.', 'foxiz' ),
+								'info'    => esc_html__( 'This setting will apply only to pre-defined header styles.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'1'       => esc_html__( 'Enable', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
 								'id'      => 'entry_top',
-								'name'    => esc_html__( 'Top Widgets Area', 'foxiz' ),
+								'name'    => esc_html__( 'Top Content -  Widgets Area', 'foxiz' ),
 								'desc'    => esc_html__( 'Show widgets at the top of the post content.', 'foxiz' ),
 								'info'    => esc_html__( 'Navigate to "Appearance > Widgets > Single Content - Top Area" to add your widgets.', 'foxiz' ),
 								'type'    => 'select',
@@ -893,7 +948,7 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 							],
 							[
 								'id'      => 'entry_bottom',
-								'name'    => esc_html__( 'Bottom Widgets Area', 'foxiz' ),
+								'name'    => esc_html__( 'Bottom Content - Widgets Area', 'foxiz' ),
 								'desc'    => esc_html__( 'Show widgets at the bottom of the post content.', 'foxiz' ),
 								'info'    => esc_html__( 'Navigate to "Appearance > Widgets > Single Content - Bottom Area" to add your widgets.', 'foxiz' ),
 								'type'    => 'select',
@@ -1191,7 +1246,7 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 							[
 								'id'      => 'header_style',
 								'name'    => esc_html__( 'Header Style', 'foxiz' ),
-								'desc'    => esc_html__( 'Select a site header for this post.', 'foxiz' ),
+								'desc'    => esc_html__( 'Select a site header style for this post.', 'foxiz' ),
 								'type'    => 'select',
 								'options' => foxiz_config_header_style( true, true ),
 								'default' => 'default',
@@ -1219,30 +1274,6 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'placeholder' => '[Ruby_E_Template id="1"]',
 								'type'        => 'textarea',
 								'default'     => '',
-							],
-							[
-								'id'      => 'alert_bar',
-								'name'    => esc_html__( 'Header Alert Bar', 'foxiz' ),
-								'desc'    => esc_html__( 'Enable or disable the alert bar below the header.', 'foxiz' ),
-								'info'    => esc_html__( 'This setting will apply only to pre-defined header styles.', 'foxiz' ),
-								'type'    => 'select',
-								'options' => [
-									'default' => esc_html__( '- Default -', 'foxiz' ),
-									'1'       => esc_html__( 'Enable', 'foxiz' ),
-									'-1'      => esc_html__( 'Disable', 'foxiz' ),
-								],
-								'default' => 'default',
-							],
-							[
-								'id'      => 'disable_top_ad',
-								'name'    => esc_html__( 'Top Site Advert', 'foxiz' ),
-								'desc'    => esc_html__( 'Enable or disable the top ad site for this post.', 'foxiz' ),
-								'type'    => 'select',
-								'options' => [
-									'default' => esc_html__( '- Default -', 'foxiz' ),
-									'-1'      => esc_html__( 'Disable', 'foxiz' ),
-								],
-								'default' => 'default',
 							],
 						],
 					],
@@ -1276,6 +1307,7 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 			if ( empty( $supported_post_types ) ) {
 				return [];
 			}
+
 			$configs = [
 				'id'         => 'foxiz_post_options',
 				'title'      => esc_html__( 'Single Post Type Settings', 'foxiz' ),
@@ -1657,13 +1689,48 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 					],
 					[
 						'id'     => 'section-widget',
-						'title'  => esc_html__( 'Content Widgets & Ads', 'foxiz' ),
-						'desc'   => esc_html__( 'Top and bottom content sections to show advertise.', 'foxiz' ),
+						'title'  => esc_html__( 'Widgets & Ads', 'foxiz' ),
+						'desc'   => esc_html__( 'Manage ad sections and top/bottom content widgets for this post.', 'foxiz' ),
 						'icon'   => 'dashicons-editor-insertmore',
 						'fields' => [
 							[
+								'id'      => 'disable_top_ad',
+								'name'    => esc_html__( 'Top Site Advert', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable the top ad site for this post.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
+								'id'      => 'disable_header_ad',
+								'name'    => esc_html__( 'Header Advertising Widget Section', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable all widgets in the header advertising widget section (Appearance > Widgets) for this post.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
+								'id'      => 'alert_bar',
+								'name'    => esc_html__( 'Header Alert Bar', 'foxiz' ),
+								'desc'    => esc_html__( 'Enable or disable the alert bar below the header.', 'foxiz' ),
+								'info'    => esc_html__( 'This setting will apply only to pre-defined header styles.', 'foxiz' ),
+								'type'    => 'select',
+								'options' => [
+									'default' => esc_html__( '- Default -', 'foxiz' ),
+									'1'       => esc_html__( 'Enable', 'foxiz' ),
+									'-1'      => esc_html__( 'Disable', 'foxiz' ),
+								],
+								'default' => 'default',
+							],
+							[
 								'id'      => 'entry_top',
-								'name'    => esc_html__( 'Top Widgets Area', 'foxiz' ),
+								'name'    => esc_html__( 'Top Content - Widgets Area', 'foxiz' ),
 								'desc'    => esc_html__( 'Show widgets at the top of the post content.', 'foxiz' ),
 								'info'    => esc_html__( 'Navigate to "Appearance > Widgets > Single Content - Top Area" to add your widgets.', 'foxiz' ),
 								'type'    => 'select',
@@ -1675,7 +1742,7 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 							],
 							[
 								'id'      => 'entry_bottom',
-								'name'    => esc_html__( 'Bottom Widgets Area', 'foxiz' ),
+								'name'    => esc_html__( 'Bottom Content - Widgets Area', 'foxiz' ),
 								'desc'    => esc_html__( 'Show widgets at the bottom of the post content.', 'foxiz' ),
 								'info'    => esc_html__( 'Navigate to "Appearance > Widgets > Single Content - Bottom Area" to add your widgets.', 'foxiz' ),
 								'type'    => 'select',
@@ -1882,7 +1949,7 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 							[
 								'id'      => 'header_style',
 								'name'    => esc_html__( 'Header Style', 'foxiz' ),
-								'desc'    => esc_html__( 'Select a site header for this post.', 'foxiz' ),
+								'desc'    => esc_html__( 'Select a site header style for this post.', 'foxiz' ),
 								'type'    => 'select',
 								'options' => foxiz_config_header_style( true, true ),
 								'default' => 'default',
@@ -1910,30 +1977,6 @@ if ( ! class_exists( 'Foxiz_Register_Metaboxes', false ) ) {
 								'placeholder' => '[Ruby_E_Template id="1"]',
 								'type'        => 'textarea',
 								'default'     => '',
-							],
-							[
-								'id'      => 'alert_bar',
-								'name'    => esc_html__( 'Header Alert Bar', 'foxiz' ),
-								'desc'    => esc_html__( 'Enable or disable the alert bar below the header.', 'foxiz' ),
-								'info'    => esc_html__( 'This setting will apply only to pre-defined header styles.', 'foxiz' ),
-								'type'    => 'select',
-								'options' => [
-									'default' => esc_html__( '- Default -', 'foxiz' ),
-									'1'       => esc_html__( 'Enable', 'foxiz' ),
-									'-1'      => esc_html__( 'Disable', 'foxiz' ),
-								],
-								'default' => 'default',
-							],
-							[
-								'id'      => 'disable_top_ad',
-								'name'    => esc_html__( 'Top Site Advert', 'foxiz' ),
-								'desc'    => esc_html__( 'Enable or disable the top ad site for this post.', 'foxiz' ),
-								'type'    => 'select',
-								'options' => [
-									'default' => esc_html__( '- Default -', 'foxiz' ),
-									'-1'      => esc_html__( 'Disable', 'foxiz' ),
-								],
-								'default' => 'default',
 							],
 						],
 					],

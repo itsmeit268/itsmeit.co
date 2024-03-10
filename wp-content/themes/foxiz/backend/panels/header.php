@@ -375,7 +375,7 @@ if ( ! function_exists( 'foxiz_register_options_header_mobile' ) ) {
 					'id'          => 'mh_template',
 					'type'        => 'textarea',
 					'rows'        => 2,
-					'title'       => esc_html__( 'Header Mobile Template Shortcode', 'foxiz' ),
+					'title'       => esc_html__( 'Mobile Header Template Shortcode', 'foxiz' ),
 					'subtitle'    => esc_html__( 'Input a Ruby Template shortcode to display as a header mobile.', 'foxiz' ),
 					'description' => esc_html__( 'This setting will override the above setting. Leave it blank to use the predefined mobile header. In AMP mode, it will fallback to predefined header layout due to limitations of AMP.', 'foxiz' ),
 					'placeholder' => '[Ruby_E_Template id="1"]',

@@ -47,7 +47,7 @@ class Breaking_News extends Widget_Base {
 		if ( foxiz_is_ruby_template() ) {
 			$this->start_controls_section(
 				'dynamic_info_section', [
-					'label' => esc_html__( 'Dynamic Query Info', 'foxiz-core' ),
+					'label' => esc_html__( 'Dynamic Query Tips', 'foxiz-core' ),
 					'tab'   => Controls_Manager::TAB_CONTENT,
 				]
 			);

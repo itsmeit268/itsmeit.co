@@ -31,7 +31,7 @@ if ( ! function_exists( 'rb_get_covid_data' ) ) {
 		if ( 'all' === $country ) {
 			$response = wp_remote_get( 'https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=true', $params );
 		} else {
-			$response = wp_remote_get( 'https://disease.sh/v3/covid-19/countries/' . esc_attr( $country ) . '?yesterday=true&strict=false', $params );
+			$response = wp_remote_get( 'https://disease.sh/v3/covid-19/countries/' . strip_tags( $country ) . '?yesterday=true&strict=false', $params );
 		}
 
 		if ( ! is_wp_error( $response ) && isset( $response['response']['code'] ) && 200 === $response['response']['code'] ) {
@@ -96,17 +96,17 @@ if ( ! function_exists( 'foxiz_render_covid_data' ) ) {
 		<div class="block-covid-data">
 			<div class="data-inner">
 				<?php if ( ! empty( $settings['country_name'] ) ) {
-					echo '<div class="country-name"><' . esc_attr( $settings['title_tag'] ) . '>' . esc_html( $settings['country_name'] ) . '</' . esc_attr( $settings['title_tag'] ) . '></div>';
+					echo '<div class="country-name"><' . strip_tags( $settings['title_tag'] ) . '>' . foxiz_strip_tags( $settings['country_name'] ) . '</' . strip_tags( $settings['title_tag'] ) . '></div>';
 				} ?>
 				<div class="data-item data-confirmed">
 					<p class="description-text">
-						<span class="data-item-icon"><?php foxiz_render_svg( 'chart' ); ?></span><?php echo esc_html( $settings['confirmed_label'] ); ?>
+						<span class="data-item-icon"><?php foxiz_render_svg( 'chart' ); ?></span><?php foxiz_render_inline_html( $settings['confirmed_label'] ); ?>
 					</p>
 					<p class="data-item-value h5"><?php echo foxiz_pretty_number( $data['confirmed'] ); ?></p>
 				</div>
 				<div class="data-item data-death">
 					<p class="description-text">
-						<span class="data-item-icon"><?php foxiz_render_svg( 'chart' ); ?></span><?php echo esc_html( $settings['death_label'] ); ?>
+						<span class="data-item-icon"><?php foxiz_render_svg( 'chart' ); ?></span><?php foxiz_render_inline_html( $settings['death_label'] ); ?>
 					</p>
 					<p class="data-item-value h5"><?php echo foxiz_pretty_number( $data['deaths'] ); ?></p>
 				</div>
@@ -138,24 +138,24 @@ if ( ! function_exists( 'foxiz_render_pricing_plan' ) ) {
 			$classes .= ' light-scheme';
 		}
 
-		$output .= '<div class="' . esc_attr( $classes ) . '"><div class="plan-inner">';
+		$output .= '<div class="' . strip_tags( $classes ) . '"><div class="plan-inner">';
 		$output .= '<div class="plan-header">';
 		if ( ! empty( $settings['title'] ) ) {
-			$output .= '<h2 class="plan-heading">' . wp_kses( $settings['title'], 'foxiz' ) . '</h2>';
+			$output .= '<h2 class="plan-heading">' . foxiz_strip_tags( $settings['title'] ) . '</h2>';
 		}
 		if ( ! empty( $settings['description'] ) ) {
-			$output .= '<p class="plan-description">' . wp_kses( $settings['description'], 'foxiz' ) . '</p>';
+			$output .= '<p class="plan-description">' . foxiz_strip_tags( $settings['description'] ) . '</p>';
 		}
 		$output .= '</div>';
 
 		if ( ! empty( $settings['price'] ) ) {
 			$output .= '<div class="plan-price-wrap h6">';
 			if ( ! empty( $settings['unit'] ) ) {
-				$output .= '<span class="plan-price-unit">' . esc_html( $settings['unit'] ) . '</span>';
+				$output .= '<span class="plan-price-unit">' . foxiz_strip_tags( $settings['unit'] ) . '</span>';
 			}
-			$output .= '<span class="plan-price">' . esc_html( $settings['price'] ) . '</span>';
+			$output .= '<span class="plan-price">' . foxiz_strip_tags( $settings['price'] ) . '</span>';
 			if ( ! empty( $settings['tenure'] ) ) {
-				$output .= '<span class="plan-tenure">' . esc_html( $settings['tenure'] ) . '</span>';
+				$output .= '<span class="plan-tenure">' . foxiz_strip_tags( $settings['tenure'] ) . '</span>';
 			}
 			$output .= '</div>';
 		}
@@ -164,7 +164,7 @@ if ( ! function_exists( 'foxiz_render_pricing_plan' ) ) {
 			$output .= '<div class="plan-features">';
 			foreach ( $settings['features'] as $feature ) {
 				if ( ! empty( $feature['feature'] ) ) {
-					$output .= '<span class="plan-feature">' . esc_html( $feature['feature'] ) . '</span>';
+					$output .= '<span class="plan-feature">' . foxiz_strip_tags( $feature['feature'] ) . '</span>';
 				}
 			}
 			$output .= '</div>';
@@ -173,7 +173,7 @@ if ( ! function_exists( 'foxiz_render_pricing_plan' ) ) {
 		if ( ! empty( $settings['shortcode'] ) ) {
 			$output .= do_shortcode( $settings['shortcode'] );
 		} elseif ( ! empty( $settings['register_button'] ) && class_exists( 'SwpmSettings' ) ) {
-			$output .= '<a class="button" href="' . SwpmSettings::get_instance()->get_value( 'registration-page-url' ) . '">' . esc_html( $settings['register_button'] ) . '</a>';
+			$output .= '<a class="button" href="' . SwpmSettings::get_instance()->get_value( 'registration-page-url' ) . '">' . foxiz_strip_tags( $settings['register_button'] ) . '</a>';
 		}
 		$output .= '</div>';
 

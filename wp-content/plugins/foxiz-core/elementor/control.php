@@ -142,7 +142,7 @@ class Options {
 		unset( $post_types['post'], $post_types['rb-etemplate'], $post_types['e-landing-page'], $post_types['elementor_library'] );
 
 		$list = [
-			'0' => esc_html__( '- Disable -', 'foxiz-core' ),
+			'0' => esc_html__( '- Default -', 'foxiz-core' ),
 		];
 
 		foreach ( $post_types as $post_type ) {
@@ -175,6 +175,16 @@ class Options {
 		}
 
 		return $list;
+	}
+
+	static function followed_dropdown() {
+
+		return [
+			'1'   => esc_html__( 'Categories', 'foxiz-core' ),
+			'2'   => esc_html__( 'Tags', 'foxiz-core' ),
+			'all' => esc_html__( 'All Taxonomies', 'foxiz-core' ),
+			'-1'  => esc_html__( 'Disable', 'foxiz-core' ),
+		];
 	}
 
 	/**
@@ -239,6 +249,7 @@ class Options {
 			'h6'   => esc_html__( 'H6', 'foxiz-core' ),
 			'p'    => esc_html__( 'p', 'foxiz-core' ),
 			'span' => esc_html__( 'span', 'foxiz-core' ),
+			'div'  => esc_html__( 'div', 'foxiz-core' ),
 		];
 
 		if ( ! $default ) {
@@ -722,6 +733,15 @@ class Options {
 		];
 	}
 
+	static function count_posts_dropdown( $default = true ) {
+
+		return [
+			'1'  => esc_html__( '- Enable -', 'foxiz-core' ),
+			'2'  => esc_html__( 'Include Children Taxonomies', 'foxiz-core' ),
+			'-1' => esc_html__( 'Disable', 'foxiz-core' ),
+		];
+	}
+
 	/** settings subtitle & description */
 	static function category_description() {
 
@@ -865,12 +885,12 @@ class Options {
 
 	static function meta_prefix_description() {
 
-		return esc_html__( 'Prefix & Suffix: You can add your prefix or suffix to a meta via the format: prefix {meta_key} suffix. Example: author, Categories: {category}, view', 'foxiz-core' );
+		return esc_html__( 'Prefix & Suffix: You can add a prefix or suffix to a meta using the following format: prefix {meta_key} suffix. For example: author, Categories: {category}, view. You can also allow inline HTML tags such as <i>, <span>, etc.', 'foxiz-core' );
 	}
 
 	static function meta_flex_description() {
 
-		return esc_html__( 'Taxonomy & Custom Field Meta: You can input "Taxonomy name/slug" or custom field ID (meta boxes) if you want to display custom taxonomy or custom field value.', 'foxiz-core' );
+		return esc_html__( 'Taxonomy & Custom Field: Input the "Taxonomy Key" or the "custom field ID" (meta boxes) to display the custom taxonomy or custom field value', 'foxiz-core' );
 	}
 
 	static function flex_1_structure_placeholder() {
@@ -1000,12 +1020,13 @@ class Options {
 
 	static function dynamic_query_info() {
 
-		return esc_html__( 'If you assign this template for category or archive. The dynamic query helps you to only filter posts that base on current category or author page it\'s display on.', 'foxiz-core' );
+		return esc_html__( 'If you assign this template to a category, author, tag, or taxonomy page, the dynamic query helps you create featured or additional sections. It filters posts based on the current page where it is displayed.', 'foxiz-core' );
+
 	}
 
 	static function dynamic_tag_info() {
 
-		return esc_html__( 'You can input "_dynamic_tag" into the "Tags Slug Filter" if you want to filter tags dynamically based on the current tag page.', 'foxiz-core' );
+		return esc_html__( 'You can input "{dynamic}" into the "Tags Slug Filter" or "Define Taxonomy" if you want to filter tags or taxonomy dynamically based on the current page.', 'foxiz-core' );
 	}
 
 	static function dynamic_render_info() {
@@ -1126,6 +1147,11 @@ class Options {
 	static function mobile_hide_meta_description() {
 
 		return esc_html__( 'Input the entry meta tags that you want to hide on mobile devices, separate by comma. e.g. avatar, author Keys include: [avatar, author, date, category, tag, view, comment, update, read, like, bookmark, custom]. If you want to re-enable all metas input "-1"', 'foxiz-core' );
+	}
+
+	static function bold_meta_color_description() {
+
+		return esc_html__( 'This setting applies to prominent metas, including author, category, and taxonomy. It also takes precedence over the icon color of taxonomy.', 'foxiz-core' );
 	}
 
 	static function slider_mode_description() {
@@ -1255,7 +1281,7 @@ class Options {
 
 	static function template_builder_available_info() {
 
-		return esc_html__( 'The "Query Settings" & "Unique Filter" will be not available in the "WP global query" mode.', 'foxiz-core' );
+		return esc_html__( 'The "Query Settings" will be not available in the "WP global query" mode.', 'foxiz-core' );
 	}
 
 	static function template_builder_pagination_info() {
@@ -1270,7 +1296,7 @@ class Options {
 
 	static function template_builder_posts_info() {
 
-		return esc_html__( '"Number of posts" in the frontend will be set in the Theme Options panel. Base on the section has been assigned this template shortcode.', 'foxiz-core' );
+		return esc_html__( '"Number of posts" in the frontend will be set in the Theme Options panel (Theme Options > Category, Tags & Archive > Posts per Page). Base on the page has been assigned this template shortcode.', 'foxiz-core' );
 	}
 
 	static function template_builder_total_posts_info() {
@@ -1285,7 +1311,7 @@ class Options {
 
 	static function template_pagination_description() {
 
-		return esc_html__( 'Some pagination types may not be available in some cases, depending on where you put this template. The theme will automatically return a appropriate setting.', 'foxiz-core' );
+		return esc_html__( 'Ajax pagination types may not be available in some cases (archive and taxonomy pages). depending on where you assigned this template. The theme will automatically return an appropriate setting.', 'foxiz-core' );
 	}
 
 	static function query_mode_description() {
@@ -1380,7 +1406,7 @@ class Options {
 
 	static function taxonomy_query_description() {
 
-		return esc_html__( 'Input the taxonomy slug you created via code or a 3rd party plugin. It is the string after "edit-tags.php?taxonomy=" when you are on the edit page of the taxonomy.', 'foxiz-core' );
+		return esc_html__( 'Input the taxonomy slug/name/key you created via code or a 3rd party plugin. It is the string after "...wp-admin/edit-tags.php?taxonomy=" when you are on the edit page of the taxonomy.', 'foxiz-core' );
 	}
 
 	static function post_type_description() {
@@ -1388,9 +1414,9 @@ class Options {
 		return esc_html__( 'Select a custom post type. Default is POST.', 'foxiz-core' );
 	}
 
-	static function tax_slugs_description() {
+	static function term_slugs_description() {
 
-		return esc_html__( 'Filter posts by multiple taxonomy slugs, separated by commas (e.g. tax1, tax2, tax3). Leave blank to disable.', 'foxiz-core' );
+		return esc_html__( 'Filter posts by multiple term slugs, separated by commas (e.g., termslug1, termslug2, termslug3). Please ensure the input term slugs belong to the "DEFINE TAXONOMY" above. Leave blank to disable the term slugs filter.', 'foxiz-core' );
 	}
 
 	static function display_mode_info() {
@@ -1398,14 +1424,29 @@ class Options {
 		return esc_html__( 'Ajax mode is compatible with cache plugins, while direct mode can improve user experience. However, if you enable direct mode, you will need to exclude this page contain the block from the cache.', 'foxiz-core' );
 	}
 
+	static function tax_name_description() {
+
+		return esc_html__( 'The taxonomy slug/name/key is the string after "...wp-admin/edit-tags.php?taxonomy=" when you are on the edit page of the taxonomy.', 'foxiz-core' );
+	}
+
+	static function tax_featured_info() {
+
+		return esc_html__( 'To set featured images for each category, tag or taxonomy, navigate to "Posts > Categories, Tags, or Your Taxonomies > Edit > Featured Images".', 'foxiz-core' );
+	}
+
 	static function display_mode_description() {
 
 		return esc_html__( 'Select a display mode.', 'foxiz-core' );
 	}
 
-	static function categories_followed_description() {
+	static function taxonomies_followed_description() {
 
-		return esc_html__( 'Show followed categories based on the visitor.', 'foxiz-core' );
+		return esc_html__( 'Show followed categories, post tags or custom taxonomies based on the visitor.', 'foxiz-core' );
+	}
+
+	static function tax_slug_followed_description() {
+
+		return esc_html__( 'Input the taxonomy slugs/names/keys separated by commas (e.g., category, post_tag, genre). This setting will take precedence over the above setting; Leave it blank to use the above setting.', 'foxiz-core' );
 	}
 
 	static function categories_display_mode_description() {
@@ -1418,8 +1459,18 @@ class Options {
 		return esc_html__( 'Select the source content for display.', 'foxiz-core' );
 	}
 
+	static function source_post_type_description() {
+
+		return esc_html__( 'Select a post type. The default is POST if "Recommended Based on User Followed" is selected, and ANY if for "User Saved" and "User Reading History".', 'foxiz-core' );
+	}
+
 	static function reading_history_info() {
 
 		return esc_html__( 'To utilize the user reading history query, Make sure to enable the Reading History option under "Theme Options > Personalized > Reading History"', 'foxiz-core' );
+	}
+
+	static function count_posts_description() {
+
+		return esc_html__( 'Toggle the display of total posts information.', 'foxiz-core' );
 	}
 }

@@ -3,15 +3,10 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_author_card_1' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_author_card_1( $settings = [] ) {
 
 		if ( empty( $settings['author'] ) ) {
-			return false;
+			return;
 		}
 		$author_id   = $settings['author'];
 		$length      = 9999;
@@ -20,7 +15,6 @@ if ( ! function_exists( 'foxiz_author_card_1' ) ) {
 		if ( ! empty( $settings['count_posts'] ) && '1' === (string) $settings['count_posts'] ) {
 			$total_posts = count_user_posts( $author_id );
 		}
-
 		if ( ! empty( $settings['description_length'] ) ) {
 			$length = absint( $settings['description_length'] );
 		}
@@ -32,7 +26,7 @@ if ( ! function_exists( 'foxiz_author_card_1' ) ) {
 					<a class="h4 nice-name" href="<?php echo get_author_posts_url( $author_id ); ?>"><?php the_author_meta( 'display_name', $author_id ); ?></a>
 					<?php if ( $total_posts > 0 ) : ?>
 						<span class="a-card-count is-meta"><?php
-							echo esc_html( $total_posts ) . ' ';
+							echo strip_tags( $total_posts ) . ' ';
 							if ( (string) $total_posts === '1' ) {
 								foxiz_html_e( 'Article', 'foxiz' );
 							} else {
@@ -58,15 +52,10 @@ if ( ! function_exists( 'foxiz_author_card_1' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_author_card_2' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_author_card_2( $settings = [] ) {
 
 		if ( empty( $settings['author'] ) ) {
-			return false;
+			return;
 		}
 		$author_id   = $settings['author'];
 		$length      = 9999;
@@ -75,7 +64,6 @@ if ( ! function_exists( 'foxiz_author_card_2' ) ) {
 		if ( ! empty( $settings['count_posts'] ) && '1' === (string) $settings['count_posts'] ) {
 			$total_posts = count_user_posts( $author_id );
 		}
-
 		if ( ! empty( $settings['description_length'] ) ) {
 			$length = absint( $settings['description_length'] );
 		}
@@ -94,7 +82,7 @@ if ( ! function_exists( 'foxiz_author_card_2' ) ) {
 					endif;
 					if ( $total_posts > 0 ) : ?>
 						<span class="a-card-count is-meta"><?php
-							echo esc_html( $total_posts ) . ' ';
+							echo strip_tags( $total_posts ) . ' ';
 							if ( (string) $total_posts === '1' ) {
 								foxiz_html_e( 'Article', 'foxiz' );
 							} else {

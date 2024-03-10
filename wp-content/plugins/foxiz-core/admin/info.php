@@ -2,10 +2,11 @@
 /** Don't load directly */
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'Foxiz_Update_Settings_Info' ) ) {
-	class Foxiz_Update_Settings_Info {
+if ( ! class_exists( 'Foxiz_Admin_Information' ) ) {
+	class Foxiz_Admin_Information {
 
 		private static $instance;
+		private $taxonomy;
 
 		public static function get_instance() {
 
@@ -16,10 +17,60 @@ if ( ! class_exists( 'Foxiz_Update_Settings_Info' ) ) {
 			return self::$instance;
 		}
 
+		function get_current_taxonomy() {
+
+			if ( wp_doing_ajax() ) {
+				if ( isset( $_POST['taxonomy'] ) && is_string( $_POST['taxonomy'] ) ) {
+					return sanitize_text_field( wp_unslash( $_POST['taxonomy'] ) );
+				}
+			} elseif ( isset( $_GET['taxonomy'] ) && is_string( $_GET['taxonomy'] ) ) {
+				return sanitize_text_field( wp_unslash( $_GET['taxonomy'] ) );
+			}
+
+			return null;
+		}
+
 		public function __construct() {
 
 			self::$instance = $this;
+
+			$this->taxonomy = $this->get_current_taxonomy();
+
 			add_action( 'admin_notices', [ $this, 'settings_warn' ], 20 );
+			if ( ! empty( $this->taxonomy ) ) {
+				add_filter( 'manage_edit-' . $this->taxonomy . '_columns', [ $this, 'add_columns' ] );
+				add_filter( 'manage_edit-' . $this->taxonomy . '_sortable_columns', [ $this, 'sortable_columns' ] );
+				add_filter( 'manage_' . $this->taxonomy . '_custom_column', [ $this, 'column_content' ], 10, 3 );
+			}
+		}
+
+		function add_columns( $columns ) {
+
+			$new_columns = [];
+			foreach ( $columns as $key => $value ) {
+				$new_columns[ $key ] = $value;
+				if ( $key === 'slug' ) {
+					$new_columns['term_id'] = 'Term ID';
+				}
+			}
+
+			return $new_columns;
+		}
+
+		public function sortable_columns( $sortable_columns ) {
+
+			$sortable_columns['term_id'] = 'term_id';
+
+			return $sortable_columns;
+		}
+
+		function column_content( $content, $column_name, $term_id ) {
+
+			if ( $column_name === 'term_id' ) {
+				return $term_id;
+			}
+
+			return $content;
 		}
 
 		public function settings_warn() {
@@ -110,9 +161,5 @@ if ( ! class_exists( 'Foxiz_Update_Settings_Info' ) ) {
 
 			return esc_html__( 'External link', 'foxiz' );
 		}
-
 	}
 }
-
-/** init */
-Foxiz_Update_Settings_Info::get_instance();

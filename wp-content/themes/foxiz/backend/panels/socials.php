@@ -164,6 +164,7 @@ if ( ! function_exists( 'foxiz_register_options_socials' ) ) {
 					'title'    => esc_html__( 'Whatsapp URL ', 'foxiz' ),
 					'subtitle' => esc_html__( 'Input your social profile URL.', 'foxiz' ),
 				],
+
 				[
 					'id'       => 'rss',
 					'type'     => 'text',

@@ -11,12 +11,13 @@ if ( ! function_exists( 'foxiz_get_list_small_1' ) ) {
 	 */
 	function foxiz_get_list_small_1( $settings = [], $_query = null ) {
 
-		$settings            = wp_parse_args( $settings, [
+		$settings = wp_parse_args( $settings, [
 			'uuid' => '',
 			'name' => 'list_small_1',
 		] );
+		$settings = foxiz_detect_dynamic_query( $settings );
+
 		$settings['classes'] = 'block-small block-list block-list-small-1';
-		$settings            = foxiz_detect_dynamic_query( $settings );
 
 		if ( empty( $settings['pagination'] ) ) {
 			$settings['no_found_rows'] = true;
@@ -28,7 +29,7 @@ if ( ! function_exists( 'foxiz_get_list_small_1' ) ) {
 		}
 
 		if ( ! empty( $settings['title_icon'] ) ) {
-			$settings['title_prefix'] = '<i class="' . esc_attr( $settings['title_icon'] ) . '" aria-hidden="true"></i>';
+			$settings['title_prefix'] = '<i class="' . strip_tags( $settings['title_icon'] ) . '" aria-hidden="true"></i>';
 		}
 
 		$min_posts = 1;

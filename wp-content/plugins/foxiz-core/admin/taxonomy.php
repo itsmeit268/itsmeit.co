@@ -729,11 +729,6 @@ if ( ! function_exists( 'rb_get_term_meta' ) ) {
 
 		// get meta fields from option table
 		$metas = get_metadata( 'term', $term_id, $key, true );
-		/** fallback */
-		if ( empty( $metas ) ) {
-			$metas = get_option( $key );
-			$metas = isset( $metas[ $term_id ] ) ? $metas[ $term_id ] : [];
-		}
 
 		if ( empty( $metas ) || ! is_array( $metas ) ) {
 			return [];

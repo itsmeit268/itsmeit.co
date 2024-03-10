@@ -285,24 +285,16 @@ if ( ! class_exists( 'Foxiz_Personalize', false ) ) {
 				return false;
 			}
 
-			if ( ! empty( $settings['posts_per_page'] ) ) {
-				$posts_per_page = $settings['posts_per_page'];
-			} else {
-				$posts_per_page = - 1;
-			}
+			$offset         = ! empty( $settings['offset'] ) ? absint( $settings['offset'] ) : 0;
+			$posts_per_page = ! empty( $settings['posts_per_page'] ) ? $settings['posts_per_page'] : - 1;
+			$post_type      = ! empty( $settings['post_type'] ) ? $settings['post_type'] : 'any';
 
-			if ( ! empty( $settings['offset'] ) ) {
-				$offset = absint( $settings['offset'] );
-			} else {
-				$offset = 0;
-			}
-
-			if ( ! empty( $settings['paged'] ) && ( $settings['paged'] > 1 ) ) {
-				$offset = $offset + ( absint( $settings['paged'] ) - 1 ) * absint( $settings['posts_per_page'] );
+			if ( ! empty( $settings['paged'] ) && ( $settings['paged'] > 1 ) && $posts_per_page > 0 ) {
+				$offset = $offset + ( absint( $settings['paged'] ) - 1 ) * $posts_per_page;
 			}
 
 			$_query = new WP_Query( [
-				'post_type'           => 'any',
+				'post_type'           => $post_type,
 				'post__in'            => $data,
 				'orderby'             => 'post__in',
 				'offset'              => $offset,
@@ -310,15 +302,8 @@ if ( ! class_exists( 'Foxiz_Personalize', false ) ) {
 				'ignore_sticky_posts' => 1,
 			] );
 
-			/** update if posts was deleted */
-			if ( isset( $GLOBALS['foxiz_queried_ids'] ) && ! empty( $_query->posts ) ) {
-				$post_ids = wp_list_pluck( $_query->posts, 'ID' );
-				if ( is_array( $post_ids ) ) {
-					$GLOBALS['foxiz_queried_ids'] = array_unique( array_merge( $GLOBALS['foxiz_queried_ids'], $post_ids ) );
-				}
-			}
-
 			if ( ! empty( $_query ) ) {
+				foxiz_add_queried_ids( $_query );
 				$_query->set( 'content_source', 'saved' );
 			}
 
@@ -332,87 +317,82 @@ if ( ! class_exists( 'Foxiz_Personalize', false ) ) {
 		 *
 		 * @return mixed|WP_Query|null
 		 */
+
+		public function recommended_fallback_m_popular( $settings = [] ) {
+
+			return foxiz_query( [
+				'post_type'      => $settings['post_type'],
+				'post_status'    => 'publish',
+				'posts_per_page' => $settings['posts_per_page'],
+				'offset'         => $settings['offset'],
+				'order'          => 'popular_m',
+				'post_not_in'    => $settings['post_not_in'],
+			], $settings['paged'] );
+		}
+
 		public function recommended_pre_query( $settings = [] ) {
 
-			if ( empty( $settings['paged'] ) ) {
-				$settings['paged'] = 0;
-			}
-
-			if ( ! empty( $settings['offset'] ) ) {
-				$offset = absint( $settings['offset'] );
-			} else {
-				$offset = 0;
-			}
-
-			if ( empty( $settings['posts_per_page'] ) ) {
-				$settings['posts_per_page'] = foxiz_get_option( 'recommended_posts_per_page', get_option( 'posts_per_page' ) );
-			}
+			$settings['paged']          = ! empty( $settings['paged'] ) ? absint( $settings['paged'] ) : 0;
+			$settings['offset']         = ! empty( $settings['offset'] ) ? absint( $settings['offset'] ) : 0;
+			$settings['posts_per_page'] = empty( $settings['posts_per_page'] ) ? foxiz_get_option( 'recommended_posts_per_page', get_option( 'posts_per_page' ) ) : absint( $settings['posts_per_page'] );
+			$settings['post_not_in']    = ! empty( $settings['post_not_in'] ) ? $settings['post_not_in'] : '';
+			$settings['post_type']      = ! empty( $settings['post_type'] ) ? $settings['post_type'] : 'post';
 
 			$categories = $this->get_categories_followed();
 			$writers    = $this->get_writers_followed();
 
 			if ( $this->is_empty( $categories ) && $this->is_empty( $writers ) ) {
-				return foxiz_query( [
-					'post_type'      => 'post',
-					'post_status'    => 'publish',
-					'posts_per_page' => $settings['posts_per_page'],
-					'offset'         => $offset,
-					'order'          => 'popular_m',
-					'post_not_in'    => ( ! empty( $settings['post_not_in'] ) ) ? $settings['post_not_in'] : '',
-				], $settings['paged'] );
+				return $this->recommended_fallback_m_popular( $settings );
 			}
 
 			if ( $this->is_empty( $categories ) ) {
 				return foxiz_query( [
-					'post_type'      => 'post',
+					'post_type'      => $settings['post_type'],
 					'post_status'    => 'publish',
 					'author_in'      => $writers,
 					'posts_per_page' => $settings['posts_per_page'],
-					'post_not_in'    => ( ! empty( $settings['post_not_in'] ) ) ? $settings['post_not_in'] : '',
-					'offset'         => $offset,
+					'post_not_in'    => $settings['post_not_in'],
+					'offset'         => $settings['offset'],
 					'order'          => 'date_post',
 				], $settings['paged'] );
-			}
-
-			if ( $this->is_empty( $writers ) ) {
-				return foxiz_query( [
-					'post_type'      => 'post',
-					'post_status'    => 'publish',
-					'categories'     => $categories,
-					'posts_per_page' => $settings['posts_per_page'],
-					'post_not_in'    => ( ! empty( $settings['post_not_in'] ) ) ? $settings['post_not_in'] : '',
-					'offset'         => $offset,
-					'order'          => 'date_post',
-				], $settings['paged'] );
-			}
-
-			$categories = implode( ',', $categories );
-			$writers    = implode( ',', $writers );
-
-			if ( ! empty( $settings['paged'] ) && ( $settings['paged'] > 1 ) ) {
-				$offset = $offset + ( absint( $settings['paged'] ) - 1 ) * absint( $settings['posts_per_page'] );
 			}
 
 			global $wpdb;
 
-			$data = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS wposts.ID FROM {$wpdb->posts} AS wposts
+			$categories = implode( ',', $categories );
+			$offset     = $settings['offset'];
+			if ( ! empty( $settings['paged'] ) && ( $settings['paged'] > 1 ) && $settings['posts_per_page'] > 0 ) {
+				$offset = $settings['offset'] + ( absint( $settings['paged'] ) - 1 ) * absint( $settings['posts_per_page'] );
+			}
+
+			if ( $this->is_empty( $writers ) ) {
+				$data = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS wposts.ID FROM {$wpdb->posts} AS wposts
+            LEFT JOIN {$wpdb->term_relationships} as wterm_relationships ON (wposts.ID = wterm_relationships.object_id)
+            WHERE wterm_relationships.term_taxonomy_id IN ({$categories}) 
+              AND wposts.post_type = '{$settings['post_type']}' AND wposts.post_status = 'publish' GROUP BY wposts.ID
+            ORDER BY wposts.post_date DESC LIMIT {$offset} , {$settings['posts_per_page']}" );
+			} else {
+				$writers = implode( ',', $writers );
+				$data    = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS wposts.ID FROM {$wpdb->posts} AS wposts
             LEFT JOIN {$wpdb->term_relationships} as wterm_relationships ON (wposts.ID = wterm_relationships.object_id)
             WHERE wterm_relationships.term_taxonomy_id IN ({$categories}) OR wposts.post_author IN ({$writers})
-            AND wposts.post_type = 'post' AND wposts.post_status = 'publish' GROUP BY wposts.ID
+            AND wposts.post_type = '{$settings['post_type']}' AND wposts.post_status = 'publish' GROUP BY wposts.ID
             ORDER BY wposts.post_date DESC LIMIT {$offset} , {$settings['posts_per_page']}" );
+			}
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
 				$found_posts   = (int) $wpdb->get_var( 'SELECT FOUND_ROWS();' );
 				$max_num_pages = ceil( $found_posts / $settings['posts_per_page'] );
 
 				$post_ins = wp_list_pluck( $data, 'ID' );
+
 				if ( ! empty( $settings['post_not_in'] ) ) {
 					$post_not_ins = explode( ',', $settings['post_not_in'] );
 					$post_ins     = array_diff( $post_ins, $post_not_ins );
 				}
 
 				$_query = new WP_Query( [
-						'post_type'      => 'post',
+						'post_type'      => $settings['post_type'],
 						'post_status'    => 'publish',
 						'no_found_row'   => true,
 						'post__in'       => $post_ins,
@@ -421,20 +401,14 @@ if ( ! class_exists( 'Foxiz_Personalize', false ) ) {
 					]
 				);
 
-				if ( isset( $GLOBALS['foxiz_queried_ids'] ) && ! empty( $_query->posts ) ) {
-					$post_ids = wp_list_pluck( $_query->posts, 'ID' );
-					if ( is_array( $post_ids ) ) {
-						$GLOBALS['foxiz_queried_ids'] = array_unique( array_merge( $GLOBALS['foxiz_queried_ids'], $post_ids ) );
-					}
-				}
-
+				foxiz_add_queried_ids( $_query );
 				$_query->found_posts   = $found_posts;
 				$_query->max_num_pages = $max_num_pages;
 
 				return $_query;
 			}
 
-			return null;
+			return $this->recommended_fallback_m_popular( $settings );
 		}
 
 		/**
@@ -495,24 +469,16 @@ if ( ! class_exists( 'Foxiz_Personalize', false ) ) {
 				return false;
 			}
 
-			if ( ! empty( $settings['posts_per_page'] ) ) {
-				$posts_per_page = $settings['posts_per_page'];
-			} else {
-				$posts_per_page = - 1;
-			}
+			$posts_per_page = ! empty( $settings['posts_per_page'] ) ? absint( $settings['posts_per_page'] ) : - 1;
+			$offset         = ! empty( $settings['offset'] ) ? absint( $settings['offset'] ) : 0;
+			$post_type      = ! empty( $settings['post_type'] ) ? $settings['post_type'] : 'any';
 
-			if ( ! empty( $settings['offset'] ) ) {
-				$offset = absint( $settings['offset'] );
-			} else {
-				$offset = 0;
-			}
-
-			if ( ! empty( $settings['paged'] ) && ( $settings['paged'] > 1 ) ) {
-				$offset = $offset + ( absint( $settings['paged'] ) - 1 ) * absint( $settings['posts_per_page'] );
+			if ( ! empty( $settings['paged'] ) && ( $settings['paged'] > 1 ) && $posts_per_page > 0 ) {
+				$offset = $offset + ( absint( $settings['paged'] ) - 1 ) * $posts_per_page;
 			}
 
 			$_query = new WP_Query( [
-				'post_type'           => 'any',
+				'post_type'           => $post_type,
 				'post__in'            => $data,
 				'orderby'             => 'post__in',
 				'offset'              => $offset,
@@ -520,14 +486,8 @@ if ( ! class_exists( 'Foxiz_Personalize', false ) ) {
 				'ignore_sticky_posts' => 1,
 			] );
 
-			if ( isset( $GLOBALS['foxiz_queried_ids'] ) && ! empty( $_query->posts ) ) {
-				$post_ids = wp_list_pluck( $_query->posts, 'ID' );
-				if ( is_array( $post_ids ) ) {
-					$GLOBALS['foxiz_queried_ids'] = array_unique( array_merge( $GLOBALS['foxiz_queried_ids'], $post_ids ) );
-				}
-			}
-
 			if ( ! empty( $_query ) ) {
+				foxiz_add_queried_ids( $_query );
 				$_query->set( 'content_source', 'history' );
 			}
 

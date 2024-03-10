@@ -54,6 +54,10 @@ if ( ! class_exists( 'Foxiz_W_Follower' ) ) {
 				'quora_count'      => '',
 				'truth_link'       => '',
 				'truth_count'      => '',
+				'threads_link'     => '',
+				'threads_count'    => '',
+				'rss_link'         => '',
+				'rss_count'        => '',
 				'font_size'        => '',
 				'columns'          => '',
 				'tablet_columns'   => '',
@@ -522,7 +526,6 @@ if ( ! class_exists( 'Foxiz_W_Follower' ) ) {
 				'placeholder' => 'https://truthsocial.com/...',
 				'value'       => $instance['truth_link'],
 			] );
-
 			foxiz_create_widget_text_field( [
 				'id'    => $this->get_field_id( 'truth_count' ),
 				'name'  => $this->get_field_name( 'truth_count' ),
@@ -530,8 +533,42 @@ if ( ! class_exists( 'Foxiz_W_Follower' ) ) {
 				'value' => $instance['truth_count'],
 			] );
 
-			echo '</div>';
+			foxiz_create_widget_heading_field( [
+				'id'    => $this->get_field_id( 'head_threads' ),
+				'name'  => $this->get_field_name( 'head_threads' ),
+				'title' => esc_html__( 'Treads', 'foxiz-core' ),
+			] );
 
+			foxiz_create_widget_text_field( [
+				'id'          => $this->get_field_id( 'threads_link' ),
+				'name'        => $this->get_field_name( 'threads_link' ),
+				'title'       => esc_html__( 'Threads URL', 'foxiz-core' ),
+				'placeholder' => 'https://www.threads.net/...',
+				'value'       => $instance['threads_link'],
+			] );
+			foxiz_create_widget_text_field( [
+				'id'    => $this->get_field_id( 'threads_count' ),
+				'name'  => $this->get_field_name( 'threads_count' ),
+				'title' => esc_html__( 'Followers Value', 'foxiz-core' ),
+				'value' => $instance['threads_count'],
+			] );
+			foxiz_create_widget_heading_field( [
+				'id'    => $this->get_field_id( 'head_rss' ),
+				'name'  => $this->get_field_name( 'head_rss' ),
+				'title' => esc_html__( 'Treads', 'foxiz-core' ),
+			] );
+			foxiz_create_widget_text_field( [
+				'id'    => $this->get_field_id( 'rss_link' ),
+				'name'  => $this->get_field_name( 'rss_link' ),
+				'title' => esc_html__( 'RSS Feed URL', 'foxiz-core' ),
+				'value' => $instance['rss_link'],
+			] );
+			foxiz_create_widget_text_field( [
+				'id'    => $this->get_field_id( 'rss_count' ),
+				'name'  => $this->get_field_name( 'rss_count' ),
+				'title' => esc_html__( 'Readers Value', 'foxiz-core' ),
+				'value' => $instance['rss_count'],
+			] );
 			foxiz_create_widget_heading_field( [
 				'id'    => $this->get_field_id( 'style_settings' ),
 				'name'  => $this->get_field_name( 'style_settings' ),
@@ -565,6 +602,7 @@ if ( ! class_exists( 'Foxiz_W_Follower' ) ) {
 				'description' => esc_html__( 'Input the number of columns for this widget on mobile.', 'foxiz-core' ),
 				'value'       => $instance['mobile_columns'],
 			] );
+			echo '</div>';
 		}
 
 		function widget( $args, $instance ) {
@@ -592,10 +630,9 @@ if ( ! class_exists( 'Foxiz_W_Follower' ) ) {
 			}
 
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . $instance['title'] . $args['after_title'];
+				echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 			}
 			echo rb_social_follower( $instance, $instance['style'] );
-
 			echo $args['after_widget'];
 		}
 	}

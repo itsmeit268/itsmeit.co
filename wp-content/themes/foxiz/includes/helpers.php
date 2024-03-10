@@ -106,23 +106,12 @@ if ( ! function_exists( 'foxiz_get_current_permalink' ) ) {
 	}
 }
 
-/**
- * @param        $id
- * @param string $taxonomy
- *
- * @return array|false|int|string|WP_Error|WP_Term|null
- */
 if ( ! function_exists( 'foxiz_get_term_link' ) ) {
-	function foxiz_get_term_link( $id, $taxonomy = '' ) {
+	function foxiz_get_term_link( $term, $taxonomy = '' ) {
 
-		if ( ! is_object( $id ) ) {
-			$id = (int) $id;
-		}
-
-		$link = get_term_link( $id, $taxonomy );
-
-		if ( is_wp_error( $link ) ) {
-			return '';
+		$link = get_term_link( $term, $taxonomy );
+		if ( empty( $link ) || is_wp_error( $link ) ) {
+			return '#';
 		}
 
 		return $link;
@@ -255,5 +244,18 @@ if ( ! function_exists( 'foxiz_convert_stats_array_to_object' ) ) {
 		}
 
 		return json_decode( $encoded_array );
+	}
+}
+
+if ( ! function_exists( 'foxiz_strip_tags' ) ) {
+	/**
+	 * @param        $content
+	 * @param string $allowed_tags
+	 *
+	 * @return string
+	 */
+	function foxiz_strip_tags( $content, $allowed_tags = '<h1><h2><h3><h4><h5><h6><strong><b><em><i><a><code><p><div><ol><ul><li><br><img>' ) {
+
+		return strip_tags( $content, $allowed_tags );
 	}
 }

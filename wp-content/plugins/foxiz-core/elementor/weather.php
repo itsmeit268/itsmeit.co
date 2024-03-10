@@ -10,7 +10,7 @@ use foxizElementorControl\Options;
 use function rb_weather_data;
 
 /**
- * Class Foxiz_Heading
+ * Class Block_Weather
  *
  * @package foxizElementor\Widgets
  */
@@ -170,9 +170,6 @@ class Block_Weather extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	/**
-	 * render layout
-	 */
 	protected function render() {
 
 		if ( function_exists( 'rb_weather_data' ) ) {

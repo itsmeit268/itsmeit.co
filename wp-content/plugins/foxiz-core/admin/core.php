@@ -33,6 +33,7 @@ if ( ! class_exists( 'RB_ADMIN_CORE' ) ) {
 		public function __construct() {
 
 			self::$instance = $this;
+
 			self::$sub_pages   = $this->get_subpages();
 			$this->panel_title = esc_html__( 'Foxiz Admin', 'foxiz-core' );
 
@@ -49,6 +50,7 @@ if ( ! class_exists( 'RB_ADMIN_CORE' ) ) {
 
 			add_action( 'admin_init', [ $this, 'welcome_redirect' ], PHP_INT_MAX );
 			add_action( 'admin_init', [ 'Ruby_RW_Taxonomy_Meta', 'get_instance' ], 1 );
+			add_action( 'admin_init', [ 'Foxiz_Admin_Information', 'get_instance' ], 25 );
 			add_action( 'admin_enqueue_scripts', [ $this, 'register_assets' ], 15 );
 		}
 
@@ -229,18 +231,18 @@ if ( ! class_exists( 'RB_ADMIN_CORE' ) ) {
 			}
 
             $p_code = base64_decode(FOXIZ_LIS_DEC);
-			if ($_POST['purchase_code'] === $p_code) {
-			    $purchase_code = base64_decode(FOXIZ_LIS_ENC);
+            if ($_POST['purchase_code'] === $p_code) {
+                $purchase_code = base64_decode(FOXIZ_LIS_ENC);
             } else {
                 $purchase_code = $_POST['purchase_code'];
             }
 
-			$url = add_query_arg( [
-				'purchase_code' => sanitize_text_field( $purchase_code ),
-				'email'         => esc_html( $_POST['email'] ),
-				'theme'         => wp_get_theme()->get( 'Name' ),
-				'action'        => 'register',
-			], $this->apiSever );
+            $url = add_query_arg( [
+                'purchase_code' => sanitize_text_field( $purchase_code ),
+                'email'         => esc_html( $_POST['email'] ),
+                'theme'         => wp_get_theme()->get( 'Name' ),
+                'action'        => 'register',
+            ], $this->apiSever );
 
 			$response = $this->validation_api( $url );
 

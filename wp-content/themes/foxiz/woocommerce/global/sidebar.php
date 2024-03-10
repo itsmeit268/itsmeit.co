@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! is_shop() && ! is_product_category() ) {
-	return false;
+	return;
 }
 
 if ( is_shop() ) {
@@ -29,7 +29,7 @@ if ( is_shop() ) {
 }
 
 if ( empty( $foxiz_wc_sidebar_position ) || 'none' === $foxiz_wc_sidebar_position ) {
-	return false;
+	return;
 }
 
 if ( empty( $foxiz_wc_sidebar_name ) ) {

@@ -3,7 +3,7 @@
 Plugin Name: Simple Google Tag Manager & Analytics 4
 Plugin URI: https://themeruby.com/simple-gtm-ga4
 Description: Fast and simple integration of Google Tag Manager or Analytics 4 tracking code into your WordPress site with zero performance impact.
-Version: 1.0
+Version: 1.1
 Requires at least: 6.0
 Requires PHP: 5.2
 Author: Theme Ruby
@@ -11,9 +11,8 @@ Author URI: https://themeruby.com
 License: GPLv2 or later
 Text Domain: simple-gtm-ga4
 */
-
 defined( 'ABSPATH' ) || exit;
-define( 'SIMPLE_GTM_GA4_VERSION', '1.0' );
+define( 'SIMPLE_GTM_GA4_VERSION', '1.1' );
 define( 'SIMPLE_GTM_GA4_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( ! class_exists( 'Ruby_GTM_Integration', false ) ) {
@@ -33,6 +32,7 @@ if ( ! class_exists( 'Ruby_GTM_Integration', false ) ) {
 			add_action( 'wp_ajax_simple_gtm_save', [ $this, 'save' ] );
 			add_action( 'wp_head', [ $this, 'add_script_tag' ] );
 			add_action( 'wp_body_open', [ $this, 'add_noscript_tag' ], 1 );
+			add_action( 'wp_body_open', [ $this, 'add_amp_tag' ], 15 );
 			add_action( 'wp_footer', [ $this, 'add_noscript_tag' ] );
 		}
 
@@ -47,12 +47,10 @@ if ( ! class_exists( 'Ruby_GTM_Integration', false ) ) {
 
 		function save() {
 
-			// Check the nonce for security
 			if ( ! check_ajax_referer( 'simple-gtm-ga4-nonce', 'nonce', false ) ) {
 				wp_send_json_error( 'Invalid nonce verification' );
 			}
 
-			// Process the form data
 			$gtm_id  = sanitize_text_field( $_POST['simple_gtm_id'] );
 			$gtag_id = sanitize_text_field( $_POST['simple_gtag_id'] );
 
@@ -96,7 +94,9 @@ if ( ! class_exists( 'Ruby_GTM_Integration', false ) ) {
 			<div class="rb-panel-wrap">
 				<div class="rb-panel-header">
 					<div class="rb-panel-heading">
-						<h1><i class="dashicons dashicons-chart-bar" aria-label="hidden"></i><?php esc_html_e( 'Google Tag Manager & Analytics 4', 'simple-gtm-ga4' ); ?></h1>
+						<h1>
+							<i class="dashicons dashicons-chart-bar" aria-label="hidden"></i><?php esc_html_e( 'Google Tag Manager & Analytics 4', 'simple-gtm-ga4' ); ?>
+						</h1>
 						<p class="sub-heading"><?php esc_html_e( 'You can choose to input either the Google Tag Manager Container ID or the Gtag Measurement ID. If both are provided, Google Tag Manager will take priority.', 'simple-gtm-ga4' ); ?></p>
 					</div>
 				</div>
@@ -126,11 +126,15 @@ if ( ! class_exists( 'Ruby_GTM_Integration', false ) ) {
 
 		public function add_script_tag() {
 
+			if ( foxiz_is_amp() ) {
+				return;
+			}
+
 			$gtm_id  = get_option( 'simple_gtm_id' );
 			$gtag_id = get_option( 'simple_gtag_id' );
 
 			if ( empty( $gtm_id ) && empty( $gtag_id ) ) {
-				return false;
+				return;
 			}
 
 			if ( ! empty( $gtm_id ) ) : ?>
@@ -163,6 +167,40 @@ if ( ! class_exists( 'Ruby_GTM_Integration', false ) ) {
 			<?php endif;
 		}
 
+		public function add_amp_tag() {
+
+			if ( ! foxiz_is_amp() ) {
+				return;
+			}
+
+			$gtm_id  = get_option( 'simple_gtm_id' );
+			$gtag_id = get_option( 'simple_gtag_id' );
+
+			if ( empty( $gtm_id ) && empty( $gtag_id ) ) {
+				return;
+			}
+
+			if ( ! empty( $gtm_id ) ) : ?>
+				<!-- Google Tag Manager -->
+				<amp-analytics config="https://www.googletagmanager.com/amp.json?id=<?php echo esc_attr( $gtm_id ); ?>" data-credentials="include"></amp-analytics>
+			<?php else: ?>
+				<!-- Google tag (gtag.js) -->
+				<amp-analytics type="gtag" data-credentials="include">
+					<script type="application/json">
+						{
+							"vars" : {
+								"gtag_id": "<?php echo esc_attr( $gtag_id ); ?>",
+								"config" : {
+									"<?php echo esc_attr( $gtag_id ); ?>": { "groups": "default" }
+								}
+							}
+						}
+
+					</script>
+				</amp-analytics>
+			<?php endif;
+		}
+
 		public function add_noscript_tag() {
 
 			$gtm_id = get_option( 'simple_gtm_id' );
@@ -189,4 +227,6 @@ if ( ! class_exists( 'Ruby_GTM_Integration', false ) ) {
 	}
 }
 
+/** load */
 Ruby_GTM_Integration::get_instance();
+

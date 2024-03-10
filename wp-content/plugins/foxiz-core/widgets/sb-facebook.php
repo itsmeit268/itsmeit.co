@@ -62,7 +62,7 @@ if ( ! class_exists( 'Foxiz_W_Facebook' ) ) {
 			echo $args['before_widget'];
 
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . esc_html( $instance['title'] ) . $args['after_title'];
+				echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 			}
 
 			if ( $instance['fanpage_name'] ) :

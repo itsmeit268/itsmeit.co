@@ -104,40 +104,40 @@ if ( ! class_exists( 'Foxiz_W_Instagram' ) ) {
 
 			if ( ! empty( $data_images['error'] ) ) :
 				if ( current_user_can( 'manage_options' ) ) :
-					echo '<div class="rb-error"><strong>' . esc_html__( 'Instagram Error: ', 'foxiz-core' ) . '</strong>' . esc_html( $data_images['error'] ) . '</div>';
+					echo '<div class="rb-error"><strong>' . esc_html__( 'Instagram Error: ', 'foxiz-core' ) . '</strong>' . foxiz_strip_tags( $data_images['error'] ) . '</div>';
 				endif;
 			else :
 				if ( ! empty( $instance['title'] ) ) {
-					echo $args['before_title'] . esc_html( $instance['title'] ) . $args['after_title'];
+					echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 				} ?>
 				<div class="sb-instagram-grid">
 					<?php $data_images = array_slice( $data_images, 0, $instance['total_images'] ); ?>
-					<div class="grid-holder <?php echo esc_attr( $instance['total_cols'] ) ?>">
+					<div class="grid-holder <?php echo strip_tags( $instance['total_cols'] ) ?>">
 						<?php foreach ( $data_images as $image ) : ?>
 							<div class="grid-el">
 								<?php if ( ! empty( $image['thumbnail_src'] ) ) :
 									$image_size = foxiz_get_asset_image( $image['thumbnail_src'] );
 									?>
 									<div class="instagram-box">
-										<a href="<?php echo esc_html( $image['link'] ); ?>" target="_blank" rel="noopener nofollow">
+										<a href="<?php echo esc_url( $image['link'] ); ?>" target="_blank" rel="noopener nofollow">
 											<?php if ( $image['media'] === "VIDEO" && $image['media'] !== "IMAGE" ) : ?>
 												<video>
 													<source src="<?php echo esc_url( $image['thumbnail_src'] ) ?>" type="video/mp4">
 												</video>
 											<?php else : ?>
-												<img loading="lazy" decoding="async" src="<?php echo esc_url( $image['thumbnail_src'] ); ?>" alt="<?php echo esc_attr( $image['caption'] ); ?>" width="<?php if ( ! empty( $image_size[0] ) ) {
-													echo esc_attr( $image_size[0] );
+												<img loading="lazy" decoding="async" src="<?php echo esc_url( $image['thumbnail_src'] ); ?>" alt="<?php echo strip_tags( $image['caption'] ); ?>" width="<?php if ( ! empty( $image_size[0] ) ) {
+													echo strip_tags( $image_size[0] );
 												} ?>" height="<?php if ( ! empty( $image_size[1] ) ) {
-													echo esc_attr( $image_size[1] );
+													echo strip_tags( $image_size[1] );
 												} ?>">
 											<?php endif; ?>
 										</a>
 										<div class="box-content">
 											<?php if ( ! empty( $image['likes'] ) ) : ?>
-												<span class="likes"><i class="rbi rbi-heart"></i><?php echo esc_html( $image['likes'] ); ?></span>
+												<span class="likes"><i class="rbi rbi-heart"></i><?php echo strip_tags( $image['likes'] ); ?></span>
 											<?php endif;
 											if ( ! empty( $image['comments'] ) ) : ?>
-												<span class="comments"><i class="rbi rbi-chat-bubble"></i><?php echo esc_html( $image['comments'] ); ?></span>
+												<span class="comments"><i class="rbi rbi-chat-bubble"></i><?php foxiz_render_inline_html( $image['comments'] ); ?></span>
 											<?php endif; ?>
 										</div>
 									</div>
@@ -147,15 +147,7 @@ if ( ! class_exists( 'Foxiz_W_Instagram' ) ) {
 					</div>
 					<?php if ( ! empty( $instance['footer_intro'] ) ) : ?>
 						<div class="grid-footer">
-							<a href="<?php echo esc_url( $instance['footer_url'] ); ?>" target="_blank" rel="noopener nofollow"><?php echo wp_kses( $instance['footer_intro'], [
-									'a'      => [
-										'href'  => [],
-										'title' => [],
-									],
-									'br'     => [],
-									'em'     => [],
-									'strong' => [],
-								] ); ?></a>
+							<a href="<?php echo esc_url( $instance['footer_url'] ); ?>" target="_blank" rel="noopener nofollow"><?php foxiz_render_inline_html( $instance['footer_intro'] ); ?></a>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -195,7 +187,7 @@ if ( ! class_exists( 'Foxiz_W_Instagram' ) ) {
 				if ( is_wp_error( $response ) || empty( $response['response']['code'] ) || 200 !== $response['response']['code'] ) {
 					$response = json_decode( wp_remote_retrieve_body( $response ) );
 					if ( ! empty( $response->error->message ) ) {
-						$data_images['error'] = esc_html( $response->error->message );
+						$data_images['error'] = foxiz_strip_tags( $response->error->message );
 					} else {
 						$data_images['error'] = esc_html__( 'Could not connect to Instagram API server.', 'foxiz-core' );
 					}

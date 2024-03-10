@@ -3,11 +3,6 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'foxiz_get_playlist' ) ) {
-	/**
-	 * @param array $settings
-	 *
-	 * @return false|string
-	 */
 	function foxiz_get_playlist( $settings = [] ) {
 
 		$settings = apply_filters( 'foxiz_playlist_thumbnails',
@@ -36,7 +31,7 @@ if ( ! function_exists( 'foxiz_get_playlist' ) ) {
 		ob_start();
 		foxiz_block_open_tag( $settings );
 		?>
-		<div class="block-inner yt-playlist" data-block="<?php echo esc_attr( $settings['uuid'] ); ?>" data-id="<?php echo esc_attr( $settings['videos'][0]['video_id'] ); ?>">
+		<div class="block-inner yt-playlist" data-block="<?php echo strip_tags( $settings['uuid'] ); ?>" data-id="<?php echo strip_tags( $settings['videos'][0]['video_id'] ); ?>">
 			<div class="yt-embed">
 				<div class="iframe-holder">
 					<div class="yt-player"></div>
@@ -48,24 +43,24 @@ if ( ! function_exists( 'foxiz_get_playlist' ) ) {
 						<div class="play-content">
 							<div class="play-index meta-text">
 								<span><?php foxiz_html_e( 'Now Playing', 'foxiz' ); ?></span>
-								<span class="index-info"><span class="video-index">1</span><?php echo esc_html( '/' . $total ); ?></span>
+								<span class="index-info"><span class="video-index">1</span><?php foxiz_render_inline_html( '/' . $total ); ?></span>
 							</div>
 							<?php if ( ! empty( $settings['videos'][0]['title'] ) ) : ?>
-								<span class="h4 play-title"><?php echo esc_html( $settings['videos'][0]['title'] ); ?></span>
+								<span class="h4 play-title"><?php foxiz_render_inline_html( $settings['videos'][0]['title'] ); ?></span>
 							<?php endif; ?>
 						</div>
 						<a class="yt-trigger" href="#"><span class="yt-trigger-icons"><?php foxiz_render_svg( 'play' ); ?><?php foxiz_render_svg( 'pause' ); ?></span></a>
 					</div>
 					<div class="plist-holder scroll-holder">
 						<?php foreach ( $settings['videos'] as $item ) : ?>
-							<a class="plist-item" href="#" data-id="<?php echo esc_html( $item['video_id'] ); ?>" data-index="<?php echo esc_attr( $index ); ?>">
-								<img class="plist-item-thumb" src="<?php echo esc_url( $item['image']['url'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>"/>
+							<a class="plist-item" href="#" data-id="<?php foxiz_render_inline_html( $item['video_id'] ); ?>" data-index="<?php echo strip_tags( $index ); ?>">
+								<img class="plist-item-thumb" src="<?php echo esc_url( $item['image']['url'] ); ?>" alt="<?php echo strip_tags( $item['title'] ); ?>"/>
 								<div class="plist-item-content">
 									<?php if ( ! empty( $item['title'] ) ) : ?>
-										<span class="h4 plist-item-title"><?php echo esc_html( $item['title'] ); ?></span>
+										<span class="h4 plist-item-title"><?php foxiz_render_inline_html( $item['title'] ); ?></span>
 									<?php endif;
 									if ( ! empty( $item['meta'] ) ) : ?>
-										<span class="plist-meta is-meta"><?php echo esc_html( $item['meta'] ); ?></span>
+										<span class="plist-meta is-meta"><?php foxiz_render_inline_html( $item['meta'] ); ?></span>
 									<?php endif; ?>
 								</div>
 							</a>

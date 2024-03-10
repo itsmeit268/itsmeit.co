@@ -1166,7 +1166,7 @@ if ( ! function_exists( 'foxiz_register_options_typo_heading' ) ) {
 					'color'          => false,
 					'text-transform' => true,
 					'letter-spacing' => true,
-					'line-height'    => false,
+					'line-height'    => true,
 					'font-weight'    => true,
 					'font-size'      => true,
 					'units'          => 'px',

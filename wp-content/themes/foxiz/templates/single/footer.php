@@ -32,7 +32,7 @@ if ( ! function_exists( 'foxiz_single_footer' ) ) {
 			if ( ! $_query->have_posts() ) {
 				return false;
 			} ?>
-			<aside class="<?php echo esc_attr( $related_classes ); ?>">
+			<aside class="<?php echo strip_tags( $related_classes ); ?>">
 				<?php
 				if ( 'rb_template' === $related_section && ! empty( $related_shortcode ) ) :
 					$GLOBALS['ruby_template_query'] = $_query;

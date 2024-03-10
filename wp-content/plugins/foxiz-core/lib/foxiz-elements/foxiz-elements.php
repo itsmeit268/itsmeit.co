@@ -107,7 +107,6 @@ if ( ! class_exists( 'Foxiz_Post_Elements', false ) ) {
 				mc4wp_register_integration( 'foxiz', 'Foxiz_MC4WP_Integration', true );
 			}
 		}
-
 	}
 }
 

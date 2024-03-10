@@ -116,34 +116,34 @@ if ( ! class_exists( 'Foxiz_W_Address' ) ) :
 
 			echo $args['before_widget'];
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . esc_html( $instance['title'] ) . $args['after_title'];
+				echo $args['before_title'] . foxiz_strip_tags( $instance['title'] ) . $args['after_title'];
 			}
 			if ( ! empty( $instance['address_title'] ) || ! empty( $instance['address'] ) || ! empty( $instance['phone_title'] ) || ! empty( $instance['phone'] ) || ! empty( $instance['tel'] ) || ! empty( $instance['email'] ) || ! empty( $instance['additional'] ) )  : ?>
 				<div class="address-info">
 					<?php
 					if ( ! empty( $instance['address_title'] ) ) : ?>
-						<h5 class="office-address-title h4"><?php echo esc_html( $instance['address_title'] ); ?></h5>
+						<h5 class="office-address-title h4"><?php foxiz_render_inline_html( $instance['address_title'] ); ?></h5>
 					<?php endif;
 					if ( ! empty( $instance['address'] ) ) : ?>
-						<div class="office-address"><?php foxiz_render_svg( 'placeholder', '', 'address' ) ?><?php echo html_entity_decode( esc_html( $instance['address'] ) ); ?></div>
+						<div class="office-address"><?php foxiz_render_svg( 'placeholder', '', 'address' ) ?><?php foxiz_render_inline_html( $instance['address'] ); ?></div>
 					<?php endif;
 					if ( ! empty( $instance['phone_title'] ) ) : ?>
-						<h5 class="phone-title h4"><?php echo esc_html( $instance['phone_title'] ); ?></h5>
+						<h5 class="phone-title h4"><?php foxiz_render_inline_html( $instance['phone_title'] ); ?></h5>
 					<?php endif;
 					if ( ! empty( $instance['phone'] ) ) : ?>
-						<div class="phone"><?php foxiz_render_svg( 'smartphone', '', 'address' ) ?><?php echo html_entity_decode( esc_html( $instance['phone'] ) ); ?></div>
+						<div class="phone"><?php foxiz_render_svg( 'smartphone', '', 'address' ) ?><?php foxiz_render_inline_html( $instance['phone'] ); ?></div>
 					<?php endif;
 					if ( ! empty( $instance['tel'] ) ) : ?>
-						<div class="tel"><?php foxiz_render_svg( 'telephone', '', 'address' ) ?><?php echo html_entity_decode( esc_html( $instance['tel'] ) ); ?></div>
+						<div class="tel"><?php foxiz_render_svg( 'telephone', '', 'address' ) ?><?php foxiz_render_inline_html( $instance['tel'] ); ?></div>
 					<?php endif;
 					if ( ! empty( $instance['email'] ) ) : ?>
-						<div class="email"><?php foxiz_render_svg( 'envelope', '', 'address' ) ?><?php echo html_entity_decode( esc_html( $instance['email'] ) ); ?></div>
+						<div class="email"><?php foxiz_render_svg( 'envelope', '', 'address' ) ?><?php foxiz_render_inline_html( $instance['email'] ); ?></div>
 					<?php endif;
 					if ( ! empty( $instance['additional_title'] ) ) : ?>
-						<h5 class="additional-title h4"><?php echo esc_html( $instance['additional_title'] ); ?></h5>
+						<h5 class="additional-title h4"><?php foxiz_render_inline_html( $instance['additional_title'] ); ?></h5>
 					<?php endif;
 					if ( ! empty( $instance['additional'] ) ) : ?>
-						<div class="additional"><?php echo html_entity_decode( esc_html( $instance['additional'] ) ); ?></div>
+						<div class="additional"><?php foxiz_render_inline_html( $instance['additional'] ); ?></div>
 					<?php endif; ?>
 				</div>
 			<?php endif;

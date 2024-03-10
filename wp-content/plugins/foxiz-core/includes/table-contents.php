@@ -161,7 +161,7 @@ if ( ! class_exists( 'Foxiz_Table_Contents', false ) ) {
 							$classname .= ' ' . $match[1];
 						}
 					}
-					array_push( $replace, '<h' . $value[2] . ' id="' . $this->generate_uid( $this->strip_all_tags_title( $value[0] ) ) . '" class="' . esc_attr( $classname ) . '">' . $this->remove_heading_tags( $value[0] ) . '</h' . $value[2] . '>' );
+					array_push( $replace, '<h' . $value[2] . ' id="' . $this->generate_uid( $this->strip_all_tags_title( $value[0] ) ) . '" class="' . strip_tags( $classname ) . '">' . $this->remove_heading_tags( $value[0] ) . '</h' . $value[2] . '>' );
 				}
 			}
 
@@ -228,7 +228,7 @@ if ( ! class_exists( 'Foxiz_Table_Contents', false ) ) {
 				$class_name .= ' no-numlist';
 			}
 
-			$output = '<div class="' . esc_attr( $class_name ) . '">';
+			$output = '<div class="' . strip_tags( $class_name ) . '">';
 			$output .= '<div class="toc-header">';
 			if ( ! empty( $this->settings['heading'] ) ) {
 				$output .= '<i class="rbi rbi-read"></i><span class="h3">' . esc_html( $this->settings['heading'] ) . '</span>';
@@ -256,7 +256,7 @@ if ( ! class_exists( 'Foxiz_Table_Contents', false ) ) {
 				if ( ! empty( $value['depth'] ) ) {
 					$class_name = 'no-link table-link-depth anchor-link h5 depth-' . $value['depth'];
 				}
-				$output .= '<a href="#' . $this->generate_uid( $this->strip_all_tags_title( $value[0] ) ) . '" class="' . esc_attr( $class_name ) . '" data-index="rb-heading-index-' . $index . '">';
+				$output .= '<a href="#' . $this->generate_uid( $this->strip_all_tags_title( $value[0] ) ) . '" class="' . strip_tags( $class_name ) . '" data-index="rb-heading-index-' . $index . '">';
 				$output .= $this->strip_all_tags_title( $value[0] );
 				$output .= '</a>';
 			}

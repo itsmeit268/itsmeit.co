@@ -9,11 +9,6 @@ use Elementor\Widget_Base;
 use foxizElementorControl\Options;
 use function foxiz_header_search_form;
 
-/**
- * Class Search_Category
- *
- * @package foxizElementor\Widgets
- */
 class Search_Category extends Widget_Base {
 
 	public function get_name() {
@@ -23,7 +18,7 @@ class Search_Category extends Widget_Base {
 
 	public function get_title() {
 
-		return esc_html__( 'Foxiz - Search Categories', 'foxiz-core' );
+		return esc_html__( 'Foxiz - Search Taxonomies', 'foxiz-core' );
 	}
 
 	public function get_icon() {
@@ -33,7 +28,18 @@ class Search_Category extends Widget_Base {
 
 	public function get_keywords() {
 
-		return [ 'foxiz', 'ruby', 'bookmark', 'follow', 'recommended', 'search', 'form', 'category' ];
+		return [
+			'foxiz',
+			'ruby',
+			'bookmark',
+			'follow',
+			'recommended',
+			'search',
+			'form',
+			'category',
+			'taxonomy',
+			'tag',
+		];
 	}
 
 	public function get_categories() {
@@ -50,11 +56,23 @@ class Search_Category extends Widget_Base {
 			]
 		);
 		$this->add_control(
+			'taxonomies',
+			[
+				'label'       => esc_html__( 'Search by Taxonomy Keys', 'foxiz-core' ),
+				'description' => esc_html__( 'The search only returns categories by default. Input the taxonomy slugs/names/keys separated by commas (e.g., category, post_tag, genre) to include additional taxonomies. Input "all" to show all taxonomies.', 'foxiz-core' ),
+				'type'        => Controls_Manager::TEXTAREA,
+				'placeholder' => 'category, post_tag, genre',
+				'ai'          => [ 'active' => false ],
+				'rows'        => 2,
+				'default'     => '',
+			]
+		);
+		$this->add_control(
 			'limit',
 			[
-				'label'       => esc_html__( 'Limit Categories', 'foxiz-core' ),
+				'label'       => esc_html__( 'Limit Taxonomies', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
-				'description' => esc_html__( 'Limit the number of categories (max is 6) displayed in live search results.', 'foxiz-core' ),
+				'description' => esc_html__( 'Limit the number of taxonomies displayed in the search results to a maximum of 6.', 'foxiz-core' ),
 			]
 		);
 		$this->add_control(
@@ -63,7 +81,7 @@ class Search_Category extends Widget_Base {
 				'label'       => esc_html__( 'Follow Button', 'foxiz-core' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => Options::switch_dropdown( false ),
-				'description' => esc_html__( 'Enable or disable follow button.', 'foxiz-core' ),
+				'description' => esc_html__( 'Enable or disable the follow button.', 'foxiz-core' ),
 				'default'     => '-1',
 			]
 		);
@@ -79,9 +97,10 @@ class Search_Category extends Widget_Base {
 			[
 				'label'       => esc_html__( 'Search Form Placeholder', 'foxiz-core' ),
 				'type'        => Controls_Manager::TEXTAREA,
+				'description' => esc_html__( 'Input custom placeholder for the search form.', 'foxiz-core' ),
+				'default'     => 'Search by Category..',
 				'ai'          => [ 'active' => false ],
 				'rows'        => 2,
-				'description' => esc_html__( 'Input custom placeholder for the search form.', 'foxiz-core' ),
 			]
 		);
 		$this->add_control(
@@ -251,6 +270,21 @@ class Search_Category extends Widget_Base {
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
+		$this->add_control(
+			'desc_source',
+			[
+				'label'       => esc_html__( 'Description', 'foxiz-core' ),
+				'description' => esc_html__( 'Select the source for the description. Use with caution as including total posts with children may impact hosting speed during live Ajax search.', 'foxiz-core' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => [
+					'desc' => esc_html__( 'Taxonomy Description', 'foxiz-core' ),
+					'0'    => esc_html__( 'Total Posts', 'foxiz-core' ),
+					'2'    => esc_html__( 'Total Posts Include Children', 'foxiz-core' ),
+					'none' => esc_html__( 'None', 'foxiz-core' ),
+				],
+				'default'     => '0',
+			]
+		);
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -259,9 +293,17 @@ class Search_Category extends Widget_Base {
 				'selector' => '{{WRAPPER}} .cbox-title',
 			]
 		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'label'    => esc_html__( 'Description Font', 'foxiz-core' ),
+				'name'     => 'desc_font',
+				'selector' => '{{WRAPPER}} .cbox-count',
+			]
+		);
 		$this->add_responsive_control(
 			'featured_width', [
-				'label'       => esc_html__( 'Image Width', 'foxiz-core' ),
+				'label'       => esc_html__( 'Featured Image Width', 'foxiz-core' ),
 				'type'        => Controls_Manager::NUMBER,
 				'description' => Options::featured_width_description(),
 				'selectors'   => [

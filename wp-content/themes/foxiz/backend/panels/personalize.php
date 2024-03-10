@@ -169,6 +169,13 @@ if ( ! function_exists( 'foxiz_register_options_bookmark_general' ) ) {
 					'default'  => false,
 				],
 				[
+					'id'       => 'follow_tag_header',
+					'type'     => 'switch',
+					'title'    => esc_html__( 'Follow in The Tag Header', 'foxiz' ),
+					'subtitle' => esc_html__( 'Display the the follow button in the header of the tag pages.', 'foxiz' ),
+					'default'  => false,
+				],
+				[
 					'id'       => 'follow_author_header',
 					'type'     => 'switch',
 					'title'    => esc_html__( 'Follow in The Author Header', 'foxiz' ),

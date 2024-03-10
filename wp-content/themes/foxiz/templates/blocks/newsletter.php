@@ -21,7 +21,7 @@ if ( ! function_exists( 'foxiz_get_newsletter' ) ) {
 		if ( empty( $settings['box_style'] ) ) {
 			$classes[] = 'is-box-shadow';
 		} else {
-			$classes[] = 'is-box-' . esc_attr( $settings['box_style'] );
+			$classes[] = 'is-box-' . $settings['box_style'];
 		}
 		if ( ! empty( $settings['color_scheme'] ) ) {
 			$classes[] = 'light-scheme';
@@ -30,7 +30,7 @@ if ( ! function_exists( 'foxiz_get_newsletter' ) ) {
 			$classes[] = $settings['classes'];
 		}
 
-		$output = '<div class="' . implode( ' ', $classes ) . '">';
+		$output = '<div class="' . join( ' ', $classes ) . '">';
 		$output .= '<div class="newsletter-inner">';
 
 		if ( ! empty( $settings['featured']['id'] ) ) {
@@ -56,11 +56,11 @@ if ( ! function_exists( 'foxiz_get_newsletter' ) ) {
 		if ( ! empty( $settings['title'] ) || ! empty( $settings['description'] ) ) {
 			$output .= '<div class="newsletter-content">';
 			if ( ! empty( $settings['title'] ) ) {
-				$output .= '<' . $settings['title_tag'] . ' class="newsletter-title">' . wp_kses( $settings['title'], 'foxiz' );
+				$output .= '<' . $settings['title_tag'] . ' class="newsletter-title">' . foxiz_strip_tags( $settings['title'] );
 				$output .= '</' . $settings['title_tag'] . '>';
 			}
 			if ( ! empty( $settings['description'] ) ) {
-				$output .= '<p class="newsletter-description">' . wp_kses( $settings['description'], 'foxiz' ) . '</p>';
+				$output .= '<p class="newsletter-description">' . foxiz_strip_tags( $settings['description'] ) . '</p>';
 			}
 			$output .= '</div>';
 		}

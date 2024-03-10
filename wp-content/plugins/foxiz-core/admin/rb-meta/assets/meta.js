@@ -397,7 +397,16 @@ var RB_META_BOXES = (function (Module, $) {
 
     Module.taxSelect = function () {
         setTimeout(function () {
-            $('.rb-tax-select').select2();
+            var $rbTaxSelect = $('.rb-tax-select');
+            if ($rbTaxSelect.length > 0) {
+                try {
+                    $rbTaxSelect.select2();
+                } catch (error) {
+                    $rbTaxSelect.select2({
+                        multiple: false
+                    });
+                }
+            }
         }, 300);
     }
 

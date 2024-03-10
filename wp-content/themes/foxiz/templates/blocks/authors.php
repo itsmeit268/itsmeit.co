@@ -20,7 +20,7 @@ if ( ! function_exists( 'foxiz_get_authors_1' ) ) {
 		if ( empty( $settings['box_style'] ) ) {
 			$settings['classes'] .= ' is-box-shadow';
 		} else {
-			$settings['classes'] .= ' is-box-' . esc_attr( $settings['box_style'] );
+			$settings['classes'] .= ' is-box-' . $settings['box_style'];
 		}
 		if ( empty( $settings['columns'] ) ) {
 			$settings['columns'] = 2;
@@ -65,7 +65,7 @@ if ( ! function_exists( 'foxiz_get_authors_2' ) ) {
 		if ( empty( $settings['box_style'] ) ) {
 			$settings['classes'] .= ' is-box-shadow';
 		} else {
-			$settings['classes'] .= ' is-box-' . esc_attr( $settings['box_style'] );
+			$settings['classes'] .= ' is-box-' . $settings['box_style'];
 		}
 		if ( empty( $settings['columns'] ) ) {
 			$settings['columns'] = 3;

@@ -667,43 +667,43 @@ if ( ! function_exists( 'foxiz_config_single_standard_layouts' ) ) {
 	function foxiz_config_single_standard_layouts( $default = true ) {
 
 		$settings = [
-			'default'    => [
+			'default'     => [
 				'img'   => foxiz_get_asset_image( 'default.png' ),
 				'title' => esc_html__( '- Default -', 'foxiz' ),
 			],
-			'standard_1' => [
+			'standard_1'  => [
 				'img'   => foxiz_get_asset_image( 'single-1.png' ),
 				'title' => esc_html__( 'Layout 1', 'foxiz' ),
 			],
-			'standard_2' => [
+			'standard_2'  => [
 				'img'   => foxiz_get_asset_image( 'single-2.png' ),
 				'title' => esc_html__( 'Layout 2', 'foxiz' ),
 			],
-			'standard_3' => [
+			'standard_3'  => [
 				'img'   => foxiz_get_asset_image( 'single-3.png' ),
 				'title' => esc_html__( 'Layout 3', 'foxiz' ),
 			],
-			'standard_4' => [
+			'standard_4'  => [
 				'img'   => foxiz_get_asset_image( 'single-4.png' ),
 				'title' => esc_html__( 'Layout 4', 'foxiz' ),
 			],
-			'standard_5' => [
+			'standard_5'  => [
 				'img'   => foxiz_get_asset_image( 'single-5.png' ),
 				'title' => esc_html__( 'Layout 5', 'foxiz' ),
 			],
-			'standard_6' => [
+			'standard_6'  => [
 				'img'   => foxiz_get_asset_image( 'single-6.png' ),
 				'title' => esc_html__( 'Layout 6', 'foxiz' ),
 			],
-			'standard_7' => [
+			'standard_7'  => [
 				'img'   => foxiz_get_asset_image( 'single-7.png' ),
 				'title' => esc_html__( 'Layout 7', 'foxiz' ),
 			],
-			'standard_8' => [
+			'standard_8'  => [
 				'img'   => foxiz_get_asset_image( 'single-8.png' ),
 				'title' => esc_html__( 'Layout 8', 'foxiz' ),
 			],
-			'standard_9' => [
+			'standard_9'  => [
 				'img'   => foxiz_get_asset_image( 'single-9.png' ),
 				'title' => esc_html__( 'Layout 9 (No Featured)', 'foxiz' ),
 			],

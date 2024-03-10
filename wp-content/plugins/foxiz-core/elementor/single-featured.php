@@ -248,8 +248,7 @@ class Single_Featured extends Widget_Base {
 	 */
 	protected function render() {
 
-		$settings = $this->get_settings();
-		foxiz_elementor_single_featured( $settings );
+		foxiz_elementor_single_featured( $this->get_settings() );
 	}
 
 }

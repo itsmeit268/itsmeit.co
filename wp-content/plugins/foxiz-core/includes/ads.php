@@ -4,10 +4,6 @@ defined( 'ABSPATH' ) || exit;
 
 add_action( 'wp_head', 'foxiz_auto_adsense', 99 );
 
-/**
- * @param $settings
- * render ad script
- */
 if ( ! function_exists( 'foxiz_get_adsense' ) ) {
 	function foxiz_get_adsense( $settings ) {
 
@@ -31,9 +27,9 @@ if ( ! function_exists( 'foxiz_get_adsense' ) ) {
 		}
 
 		ob_start(); ?>
-		<div class="<?php echo esc_attr( $classes ); ?>">
+		<div class="<?php echo strip_tags( $classes ); ?>">
 			<?php if ( ! empty( $settings['description'] ) ) : ?>
-				<span class="ad-description is-meta"><?php echo esc_html( $settings['description'] ); ?></span>
+				<span class="ad-description is-meta"><?php foxiz_render_inline_html( $settings['description'] ); ?></span>
 			<?php endif;
 			if ( ! empty( $spot['data_ad_slot'] ) && ! empty( $spot['data_ad_client'] ) && ! empty( $settings['size'] ) ) : ?>
 				<div class="ad-script is-adsense">
@@ -48,7 +44,7 @@ if ( ! function_exists( 'foxiz_get_adsense' ) ) {
                         }
 					</style>
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<ins class="adsbygoogle<?php echo ' res-' . trim( $settings['uuid'] ); ?>" style="display:inline-block" data-ad-client="<?php echo esc_attr( $spot['data_ad_client'] ); ?>" data-ad-slot="<?php echo esc_attr( $spot['data_ad_slot'] ); ?>"></ins>
+					<ins class="adsbygoogle<?php echo ' res-' . trim( $settings['uuid'] ); ?>" style="display:inline-block" data-ad-client="<?php echo strip_tags( $spot['data_ad_client'] ); ?>" data-ad-slot="<?php echo strip_tags( $spot['data_ad_slot'] ); ?>"></ins>
 					<script>
                         (adsbygoogle = window.adsbygoogle || []).push({});
 					</script>
@@ -197,9 +193,9 @@ if ( ! function_exists( 'foxiz_get_ad_image' ) ) {
 			$loading = '';
 		}
 
-		$output = '<div class="' . esc_attr( $classes ) . '">';
+		$output = '<div class="' . strip_tags( $classes ) . '">';
 		if ( ! empty( $settings['description'] ) ) {
-			$output .= '<span class="ad-description is-meta">' . esc_html( $settings['description'] ) . '</span>';
+			$output .= '<span class="ad-description is-meta">' . foxiz_strip_tags( $settings['description'] ) . '</span>';
 		}
 		$output .= '<div class="ad-image">';
 
@@ -207,20 +203,20 @@ if ( ! function_exists( 'foxiz_get_ad_image' ) ) {
 			$output .= '<a class="ad-destination" target="_blank" rel="noopener nofollow" href="' . esc_url( $settings['destination'] ) . '">';
 		}
 		if ( ! empty( $settings['dark_image']['url'] ) ) {
-			$output .= '<img ' . $loading . 'data-mode="default" src="' . esc_url( $settings['image']['url'] ) . '" alt="' . esc_attr( $settings['image']['alt'] ) . '"';
+			$output .= '<img ' . $loading . 'data-mode="default" src="' . esc_url( $settings['image']['url'] ) . '" alt="' . strip_tags( $settings['image']['alt'] ) . '"';
 			if ( ! empty( $size[0] ) && $size[1] ) {
-				$output .= ' width="' . esc_attr( $size[0] ) . '" height="' . esc_attr( $size[1] ) . '"';
+				$output .= ' width="' . strip_tags( $size[0] ) . '" height="' . strip_tags( $size[1] ) . '"';
 			}
 			$output .= '/>';
-			$output .= '<img ' . $loading . 'data-mode="dark" src="' . esc_url( $settings['dark_image']['url'] ) . '" alt="' . esc_attr( $settings['dark_image']['alt'] ) . '"';
+			$output .= '<img ' . $loading . 'data-mode="dark" src="' . esc_url( $settings['dark_image']['url'] ) . '" alt="' . strip_tags( $settings['dark_image']['alt'] ) . '"';
 			if ( ! empty( $size[0] ) && $size[1] ) {
-				$output .= ' width="' . esc_attr( $size[0] ) . '" height="' . esc_attr( $size[1] ) . '"';
+				$output .= ' width="' . strip_tags( $size[0] ) . '" height="' . strip_tags( $size[1] ) . '"';
 			}
 			$output .= '/>';
 		} else {
-			$output .= '<img ' . $loading . 'src="' . esc_url( $settings['image']['url'] ) . '" alt="' . esc_attr( $settings['image']['alt'] ) . '"';
+			$output .= '<img ' . $loading . 'src="' . esc_url( $settings['image']['url'] ) . '" alt="' . strip_tags( $settings['image']['alt'] ) . '"';
 			if ( ! empty( $size[0] ) && $size[1] ) {
-				$output .= ' width="' . esc_attr( $size[0] ) . '" height="' . esc_attr( $size[1] ) . '"';
+				$output .= ' width="' . strip_tags( $size[0] ) . '" height="' . strip_tags( $size[1] ) . '"';
 			}
 			$output .= '/>';
 		}
@@ -289,15 +285,10 @@ if ( ! function_exists( 'foxiz_get_auto_adsense' ) ) {
 }
 
 if ( ! function_exists( 'foxiz_amp_ad' ) ) {
-	/**
-	 * @param $settings
-	 *
-	 * @return false
-	 */
 	function foxiz_amp_ad( $settings ) {
 
 		if ( ! empty( $GLOBALS['foxiz_disallowed_ads'] ) || empty( $settings['type'] ) ) {
-			return false;
+			return;
 		}
 
 		if ( empty( $settings['classname'] ) ) {
@@ -306,7 +297,7 @@ if ( ! function_exists( 'foxiz_amp_ad' ) ) {
 
 		if ( '1' === (string) $settings['type'] ) {
 			if ( ! empty( $settings['client'] ) && ! empty ( $settings['slot'] ) ) {
-				echo '<div class="' . esc_attr( $settings['classname'] ) . '"><amp-ad ';
+				echo '<div class="' . strip_tags( $settings['classname'] ) . '"><amp-ad ';
 				if ( empty( $settings['size'] ) || '1' === (string) $settings['size'] ) {
 					echo 'layout="responsive" width="300" height="250"';
 				} else {
@@ -317,7 +308,7 @@ if ( ! function_exists( 'foxiz_amp_ad' ) ) {
 			}
 		} else {
 			if ( ! empty( $settings['custom'] ) ) {
-				echo '<div class="' . esc_attr( $settings['classname'] ) . '">' . html_entity_decode( $settings['custom'] ) . '</div>';
+				echo '<div class="' . strip_tags( $settings['classname'] ) . '">' . html_entity_decode( $settings['custom'] ) . '</div>';
 			}
 		}
 	}

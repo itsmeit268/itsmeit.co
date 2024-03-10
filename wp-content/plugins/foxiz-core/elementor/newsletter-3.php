@@ -141,14 +141,13 @@ class Newsletter_3 extends Widget_Base {
 			]
 		);
 		$this->end_controls_section();
-
 		$this->start_controls_section(
 			'featured_section', [
 				'label' => esc_html__( 'Image', 'foxiz-core' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
-		$this->add_control(
+		$this->add_responsive_control(
 			'feat_size',
 			[
 				'label'       => esc_html__( 'Image Width', 'foxiz-core' ),

@@ -466,9 +466,9 @@ if ( ! function_exists( 'foxiz_register_options_podcast_single' ) ) {
 					'type'        => 'textarea',
 					'rows'        => 2,
 					'title'       => esc_html__( 'or Custom Key Input', 'foxiz' ),
-					'subtitle'    => esc_html__( 'This setting is more flexible and allows you to show prefix, suffix, taxonomy, and custom field value. Leave it blank if you use the "Entry Meta Tags" setting.', 'foxiz' ),
+					'subtitle'    => esc_html__( 'This setting is more flexible and allows you to show prefix, suffix, Taxonomy, and custom field value by keys, default keys include: [avatar, author, date, category, tag, view, comment, update, read, like, bookmark, custom, duration, index].', 'foxiz' ),
+					'description' => esc_html__( 'Prefix & Suffix: You can add a prefix or suffix to a meta using the following format: prefix {meta_key} suffix. For example: author, Categories: {category}, view. You can also allow inline HTML tags such as <i>, <span>, etc.', 'foxiz' ),
 					'placeholder' => esc_html__( 'author, date', 'foxiz' ),
-					'description' => esc_html__( 'Keys include: [avatar, author, date, category, tag, view, comment, update, read, like, bookmark, custom, duration, index]', 'foxiz' ),
 				],
 				[
 					'id'       => 'single_podcast_meta_author_label',
@@ -864,10 +864,11 @@ if ( ! function_exists( 'foxiz_register_options_podcast_archive' ) ) {
 					'desc'  => esc_html__( 'As default, The grid 3 columns layout will be applied to the archives. You can build a template to assign for the archives in the settings below.', 'foxiz' ),
 				],
 				[
-					'id'     => 'section_start_podcast_archive_header',
-					'type'   => 'section',
-					'class'  => 'ruby-section-start',
-					'title'  => esc_html__( 'Archive Header', 'foxiz' ),
+					'id'    => 'section_start_podcast_archive_header',
+					'type'  => 'section',
+					'class' => 'ruby-section-start',
+					'title' => esc_html__( 'Archive Header', 'foxiz' ),
+
 					'indent' => true,
 				],
 				[
