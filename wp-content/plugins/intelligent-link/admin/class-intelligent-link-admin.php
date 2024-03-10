@@ -1102,7 +1102,7 @@ class Intelligent_Link_Admin {
 
         $field_list = ['file_name', 'link_no_login', 'link_is_login', 'size'];
         $settings = get_option('preplink_setting', array());
-        $total = (int) $settings['field_lists']? : 5;
+        $total = isset($settings['field_lists']) ? (int) $settings['field_lists'] : 5;
 
         for ($i = 1; $i <= $total; $i++) {
             foreach ($field_list as $field_name) {
