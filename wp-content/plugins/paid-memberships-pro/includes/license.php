@@ -32,49 +32,13 @@ define('PMPRO_LICENSE_SERVER', 'https://license.paidmembershipspro.com/v2/');
  * @param bool   $force If true, will check key against the PMPro server.
  * @return bool True if valid, false if not.
  */
-function pmpro_license_isValid($key = NULL, $type = NULL, $force = false) {
+function pmpro_license_isValid() {		
+	if( empty( $key ) ) {
+		$key = get_option("pmpro_license_key", "PMPro License Active");
+	}
+		
 	return true;
 }
-
-/*
-	Activation/Deactivation. Check keys once a month.
-*/
-//activation
-function pmpro_license_activation() {
-	pmpro_maybe_schedule_event( current_time( 'timestamp' ), 'monthly', 'pmpro_license_check_key' );
-}
-add_action( 'activate_paid-memberships-pro', 'pmpro_license_activation' );
-
-//deactivation
-function pmpro_license_deactivation() {
-	wp_clear_scheduled_hook( 'pmpro_license_check_key' );
-}
-add_action( 'deactivate_paid-memberships-pro', 'pmpro_license_deactivation' );
-
-/**
- * Check a key against the PMPro license server.
- * Runs via cron every month.
- * @param string          The key to check.
- * @return array|WP_Error Returns an array with the key and enddate
- *                        or WP_Error if invalid or there was an error.
- */
-function pmpro_license_check_key($key = NULL) {
-	global $pmpro_license_error;
-	// Get key from options if non passed in.
-	if( empty( $key ) ) {
-		$key = '9027acb4-3440-4369-f30f-9e789f98462a';
-	}
-    $timeout = apply_filters( 'pmpro_license_check_key_timeout', 5 );
-	$r = new stdClass();
-	$r->license = '9027acb4-3440-4369-f30f-9e789f98462a';
-	$r->enddate = strtotime( '+9 Year', current_time( 'timestamp' ) );
-	$enddate = strtotime( '+1 Year', current_time( 'timestamp' ) );
-	$license_check = array( 'license' => $r->license, 'enddate' => $enddate );
-	update_option( 'pmpro_license_check', $license_check, 'no' );
-	return $license_check;
-	
-}
-add_action('pmpro_license_check_key', 'pmpro_license_check_key');
 
 /**
  * Check if a license type is "premium"
@@ -82,9 +46,8 @@ add_action('pmpro_license_check_key', 'pmpro_license_check_key');
  * @param string $type The license type for an add on for license key.
  * @return bool True if the type is for a paid PMPro membership, false if not.
  */
-function pmpro_license_type_is_premium( $type ) {
-	$premium_types = pmpro_license_get_premium_types();
-	return in_array( strtolower( $type ), $premium_types, true );
+function pmpro_license_type_is_premium( $type ) {	
+	return true;
 }
 
 /**
@@ -93,5 +56,5 @@ function pmpro_license_type_is_premium( $type ) {
  * @return array Premium types.
  */
 function pmpro_license_get_premium_types() {
-	return array('builder');
+	return( 'builder' );
 }

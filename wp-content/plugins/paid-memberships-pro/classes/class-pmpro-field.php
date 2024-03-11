@@ -892,9 +892,13 @@ class PMPro_Field {
 			if ( ( ! empty( $this->preview ) ) && ! empty( $value ) && ! empty( $this->file['previewurl'] ) ) {
 				$filetype = wp_check_filetype( basename( $this->file['previewurl'] ), null );
 				if ( $filetype && 0 === strpos( $filetype['type'], 'image/' ) ) {
-					$r_end .= '<div class="pmprorh_file_preview"><img src="' . $this->file['previewurl'] . '" alt="' . basename($value) . '" /></div>';
+                    $r_end .= '<div class="pmprorh_file_preview"><img src="' . (is_admin() ? $this->file['previewurl'] : $this->file['fullurl']) . '" alt="' . basename($value) . '" /></div>';
 				}
-			}
+			} else {
+                $avatar_id = get_user_meta($current_user->ID, 'wp_user_avatar', true);
+                $avatar = !empty($avatar_id) ? wp_get_attachment_image_src($avatar_id, 'thumbnail')[0] : get_avatar_url($current_user->ID);
+                $r_end .= '<div class="pmprorh_file_preview"><img src="'.$avatar.'" alt="" /></div>';
+            }
 
 			//show name of existing file
 			if(!empty($value))

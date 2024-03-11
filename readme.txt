@@ -10,3 +10,4 @@
 9 - Fix header.php vi_VN
 10- Fix code wp-content/plugins/paid-memberships-pro/pages/invoice.php
 11- Fix code pmpro_account.php
+12- Fix $this->file['fullurl'] wp-content/plugins/paid-memberships-pro/classes/class-pmpro-field.php line 896

@@ -787,14 +787,156 @@ function pmpro_member_profile_edit_form() {
 			<?php
 			$user_fields = apply_filters( 'pmpro_member_profile_edit_user_object_fields',
 				array(
-					'first_name'	=> __( 'First Name', 'paid-memberships-pro' ),
-					'last_name'		=> __( 'Last Name', 'paid-memberships-pro' ),
+//					'first_name'	=> __( 'First Name', 'paid-memberships-pro' ),
+//					'last_name'		=> __( 'Last Name', 'paid-memberships-pro' ),
 					'display_name'	=> __( 'Display name publicly as', 'paid-memberships-pro' ),
 					'user_email'	=> __( 'Email', 'paid-memberships-pro' ),
 				)
 			);
 			?>
+            <style>
+                .pmpro_member_profile_edit_wrap {
+                    min-height: 500px;
+                    display: flex;
+                    height: auto;
+                }
+                .pmpro_checkout_box-checkout_boxes h2 {
+                    display: none;
+                }
+                #member-profile-edit,#user_avatar_div {
+                    position: relative;
+                    width: 100%;
+                }
+                .pmpro_checkout_box-user {
+                    position: absolute;
+                    width: 60%;
+                    top: 0;
+                    right: 0;
+                }
+                .pmpro_checkout_box-checkout_boxes {
+                    position: absolute;
+                    width: 25%;
+                    top: 0;
+                    left: 0;
+                    min-height: 300px;
+                }
+                .pmpro_submit {
+                    position: absolute;
+                    top: 420px;
+                }
+                input[name='user_avatar'] {
+                    position: absolute;
+                    top: 330px;
+                }
+                .pmprorh_file_preview {
+                    position: absolute;
+                    top: 0;
+                    width: 300px;
+                    height: 300px;
+                    border: 1px solid #e5d7d7;
+                    padding: 5px;
+                    border-radius: 5px;
+                }
+                .pmprorh_file_user_avatar_name {
+                    display: none;
+                }
+                .pmprorh_file_preview img {
+                    border-radius: 50%;
+                    width: 100%;
+                    height: 100%;
+                }
+                .pmprorh_delete_restore_file {
+                    position: absolute;
+                    top: 160px;
+                    right: -60px;
+                }
+                #user_avatar_div .lite {
+                    position: absolute;
+                    top: 305px;
+                }
+                #user_avatar_div >label {
+                    display: none;
+                }
 
+                #website_div {
+                    position: absolute;
+                    top: 130px;
+                }
+
+                #interest_div {
+                    position: absolute;
+                    top: 190px;
+                }
+
+                #location_div {
+                    position: absolute;
+                    top: 250px;
+                }
+
+                #user_bio_div > #user_bio{
+                    max-width: 100%;
+                }
+
+                #user_bio_div {
+                    position: absolute;
+                    top: 310px;
+                }
+
+                .display_name,.user_email,#website_div,#interest_div,#user_bio_div, #location_div {
+                    display: flex;
+                    width: 100%;
+                }
+
+                .display_name label,.user_email label,#website_div label,#interest_div label,#user_bio_div label,#location_div label{
+                    width: 25%;
+                }
+
+                p.lite {
+                    display: none;
+                }
+                .pmpro_checkout_box-user input {
+                    height: 40px;
+                    border: 1px solid #dbcece;
+                    border-radius: 10px;
+                    background: #fff;
+                }
+
+                .pmpro_checkout_box-user textarea {
+                    border: 1px solid #dbcece;
+                    border-radius: 10px;
+                    background: #fff;
+                    font-size: 15px !important;
+                }
+                .btn-pmpro_submit {
+                    display: flex;
+                    position: relative;
+                    height: 40px;
+                    white-space: nowrap;
+                }
+                .btn-pmpro_submit >input,.btn-pmpro_submit >a {
+                    width: 50% !important;
+                }
+                .pmpro_btn.pmpro_btn-submit {
+                    padding: 0 10px 0;
+                    font-size: 15px;
+                }
+                .btn-pmpro_submit >a {
+                    width: 50% !important;
+                    background: #0077c8;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    padding: 0 10px 0;
+                    color: #fff;
+                    align-items: center;
+                    font-weight: 600;
+                    border-radius: 5px;
+                    display: flex;
+                    font-size: 15px;
+                }
+                .pubic-user {
+                    padding: 5px 10px;
+                }
+            </style>
 			<div class="<?php echo pmpro_get_element_class( 'pmpro_checkout_box-user' ); ?>">
 				<div class="<?php echo pmpro_get_element_class( 'pmpro_member_profile_edit-fields' ); ?>">
 				<?php foreach ( $user_fields as $field_key => $label ) { ?>
@@ -823,10 +965,14 @@ function pmpro_member_profile_edit_form() {
 			?>
 			<input type="hidden" name="action" value="update-profile" />
 			<input type="hidden" name="user_id" value="<?php echo esc_attr( $current_user->ID ) ; ?>" />
+
 			<div class="<?php echo pmpro_get_element_class( 'pmpro_submit' ); ?>">
+                <a href="<?= get_bloginfo('url')?>/user/<?=$current_user->user_login?>" class="pubic-user" rel="nofollow">Public <i class="fa-solid fa-link" style="color: #565a5a;margin-right: 5px;"></i><?= get_bloginfo('url')?>/user/<?=$current_user->user_login?></a>
 				<hr />
-				<input type="submit" name="submit" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-submit', 'pmpro_btn-submit' ); ?>" value="<?php esc_attr_e( 'Update Profile', 'paid-memberships-pro' );?>" />
-				<input type="button" name="cancel" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-cancel', 'pmpro_btn-cancel' ); ?>" value="<?php esc_attr_e( 'Cancel', 'paid-memberships-pro' );?>" onclick="location.href='<?php echo pmpro_url( 'account'); ?>';" />
+				<div class="btn-pmpro_submit">
+                    <input type="submit" name="submit" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-submit', 'pmpro_btn-submit' ); ?>" value="<?php esc_attr_e( 'Update Profile', 'paid-memberships-pro' );?>" />
+                    <a href="https://itsmeit.co/my-account/profile.html?view=change-password" rel="nofollow">Change Password</a>
+                </div>
 			</div>
 		</form>
 	</div> <!-- end pmpro_member_profile_edit_wrap -->
@@ -949,8 +1095,10 @@ function pmpro_change_password_form() {
 			<input type="hidden" name="user_id" value="<?php echo esc_attr( $current_user->ID ); ?>" />
 			<div class="<?php echo pmpro_get_element_class( 'pmpro_submit' ); ?>">
 				<hr />
-				<input type="submit" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-submit', 'pmpro_btn-submit' ); ?>" value="<?php esc_attr_e('Change Password', 'paid-memberships-pro' );?>" />
-				<input type="button" name="cancel" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-cancel', 'pmpro_btn-cancel' ); ?>" value="<?php esc_attr_e('Cancel', 'paid-memberships-pro' );?>" onclick="location.href='<?php echo esc_url( pmpro_url( 'account') ); ?>';" />
+				<div class="btn-pmpro_submit">
+                    <input type="submit" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-submit', 'pmpro_btn-submit' ); ?>" value="<?php esc_attr_e('Change Password', 'paid-memberships-pro' );?>" />
+                    <a href="https://itsmeit.co/login.html?action=reset_pass" rel="nofollow">Lost your password?</a>
+                </div>
 			</div>
 		</form>
 	</div> <!-- end pmpro_change_password_wrap -->

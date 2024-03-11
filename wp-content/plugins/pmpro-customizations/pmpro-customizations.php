@@ -278,3 +278,151 @@ function approval_after_checkout($user_id, $morder) {
         wp_cache_clean_cache( 'wp-cache-', true );
     }
 }
+
+// Filter the saved or updated User Avatar meta field value and add the image to the Media Library.
+function my_updated_user_avatar_user_meta( $meta_id, $user_id, $meta_key, $meta_value ) {
+    // Change user_avatar to your Register Helper file upload name.
+    if ( 'user_avatar' === $meta_key ) {
+        $user_info     = get_userdata( $user_id );
+        $filename      = $meta_value['fullpath'];
+        $filetype      = wp_check_filetype( basename( $filename ), null );
+        $wp_upload_dir = wp_upload_dir();
+        $attachment    = array(
+            'post_mime_type' => $filetype['type'],
+            'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+            'post_status'    => 'inherit',
+        );
+        $attach_id     = wp_insert_attachment( $attachment, $filename );
+        // Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+        $attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
+        wp_update_attachment_metadata( $attach_id, $attach_data );
+        update_user_meta( $user_id, 'wp_user_avatar', $attach_id );
+    }
+}
+
+add_action( 'added_user_meta', 'my_updated_user_avatar_user_meta', 10, 4 );
+add_action( 'updated_user_meta', 'my_updated_user_avatar_user_meta', 10, 4 );
+
+// Filter the display of the the get_avatar function to use our local avatar.
+function my_user_avatar_filter( $avatar, $id_or_email, $size, $default, $alt ) {
+    $my_user = get_userdata( $id_or_email );
+    if ( ! empty( $my_user ) ) {
+        $avatar_id = get_user_meta( $my_user->ID, 'wp_user_avatar', true );
+        if ( ! empty( $avatar_id ) ) {
+            $avatar = wp_get_attachment_image_src( $avatar_id, array( $size, $size) );
+            $avatar = "<img alt='{$alt}' src='{$avatar[0]}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+        }
+    }
+    return $avatar;
+}
+add_filter( 'get_avatar', 'my_user_avatar_filter', 20, 5 );
+
+// Add the User Avatar field at checkout and on the profile edit forms.
+function my_pmprorh_init_user_avatar() {
+
+    if ( ! function_exists( 'pmprorh_add_registration_field' ) ) {
+        return false;
+    }
+
+    $avatas   = array();
+    $avatas[] = new PMProRH_Field(
+        'user_avatar',
+        'file',
+        array(
+            'label'     => '',
+            'hint'      => 'Recommended size is 500 x 500 px',
+            'profile'   => 'only',
+            'preview'   => true,
+            'addmember' => true,
+            'allow_delete' => false,
+        )
+    );
+
+    foreach ( $avatas as $avata ) {
+        pmprorh_add_registration_field('checkout_boxes', $avata);
+    }
+
+    $fields = array();
+
+    $fields[] = new PMProRH_Field(
+        'website',
+        'text',
+        array(
+            'label'         => 'Website',
+            'hint'          => '',
+            'profile'       => 'only',
+            'addmember'     => true,
+            'size' => '100'
+        )
+    );
+
+    $fields[] = new PMProRH_Field(
+        'interest',
+        'text',
+        array(
+            'label'         => 'Interest',
+            'hint'          => '',
+            'profile'       => 'only',
+            'addmember'     => true,
+            'size' => '100'
+        )
+    );
+
+    $fields[] = new PMProRH_Field(
+        'location',
+        'text',
+        array(
+            'label'         => 'Location',
+            'hint'          => '',
+            'profile'       => 'only',
+            'addmember'     => true,
+            'size' => '100'
+        )
+    );
+
+    $fields[] = new PMProRH_Field(
+        'user_bio',
+        'textarea',
+        array(
+            'label'         => 'Biography',
+            'hint'          => '',
+            'profile'       => 'only',
+            'addmember'     => true,
+            'rows'          => 4,
+            'html'          => true
+        )
+    );
+
+    foreach ( $fields as $field ) {
+        pmprorh_add_registration_field(
+            'user',
+            $field
+        );
+    }
+    return true;
+}
+
+add_action( 'init', 'my_pmprorh_init_user_avatar' );
+
+add_filter('template_include', 'intelldnt_link_template_include');
+
+function intelldnt_link_template_include($template) {
+    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    if (strpos($current_url, '/user/')) {
+        $template = dirname( __FILE__ ) . '/templates/user.php';;
+    }
+
+    return $template;
+}
+
+function get_username_from_url() {
+    if ( is_author() ) {
+        $username = get_query_var( 'author_name' );
+        if ( empty( $username ) ) {
+            $username = get_query_var( 'author' );
+        }
+        return $username;
+    }
+    return false;
+}
