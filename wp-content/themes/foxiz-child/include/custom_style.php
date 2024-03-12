@@ -38,4 +38,8 @@ function itsmeit_customstyle(){
             <?php
         }
     }
+    ?>
+
+    <?php
+
 }

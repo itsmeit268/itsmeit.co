@@ -795,147 +795,7 @@ function pmpro_member_profile_edit_form() {
 			);
 			?>
             <style>
-                .pmpro_member_profile_edit_wrap {
-                    min-height: 500px;
-                    display: flex;
-                    height: auto;
-                }
-                .pmpro_checkout_box-checkout_boxes h2 {
-                    display: none;
-                }
-                #member-profile-edit,#user_avatar_div {
-                    position: relative;
-                    width: 100%;
-                }
-                .pmpro_checkout_box-user {
-                    position: absolute;
-                    width: 60%;
-                    top: 0;
-                    right: 0;
-                }
-                .pmpro_checkout_box-checkout_boxes {
-                    position: absolute;
-                    width: 25%;
-                    top: 0;
-                    left: 0;
-                    min-height: 300px;
-                }
-                .pmpro_submit {
-                    position: absolute;
-                    top: 420px;
-                }
-                input[name='user_avatar'] {
-                    position: absolute;
-                    top: 330px;
-                }
-                .pmprorh_file_preview {
-                    position: absolute;
-                    top: 0;
-                    width: 300px;
-                    height: 300px;
-                    border: 1px solid #e5d7d7;
-                    padding: 5px;
-                    border-radius: 5px;
-                }
-                .pmprorh_file_user_avatar_name {
-                    display: none;
-                }
-                .pmprorh_file_preview img {
-                    border-radius: 50%;
-                    width: 100%;
-                    height: 100%;
-                }
-                .pmprorh_delete_restore_file {
-                    position: absolute;
-                    top: 160px;
-                    right: -60px;
-                }
-                #user_avatar_div .lite {
-                    position: absolute;
-                    top: 305px;
-                }
-                #user_avatar_div >label {
-                    display: none;
-                }
 
-                #website_div {
-                    position: absolute;
-                    top: 130px;
-                }
-
-                #interest_div {
-                    position: absolute;
-                    top: 190px;
-                }
-
-                #location_div {
-                    position: absolute;
-                    top: 250px;
-                }
-
-                #user_bio_div > #user_bio{
-                    max-width: 100%;
-                }
-
-                #user_bio_div {
-                    position: absolute;
-                    top: 310px;
-                }
-
-                .display_name,.user_email,#website_div,#interest_div,#user_bio_div, #location_div {
-                    display: flex;
-                    width: 100%;
-                }
-
-                .display_name label,.user_email label,#website_div label,#interest_div label,#user_bio_div label,#location_div label{
-                    width: 25%;
-                }
-
-                p.lite {
-                    display: none;
-                }
-                .pmpro_checkout_box-user input {
-                    height: 40px;
-                    border: 1px solid #dbcece;
-                    border-radius: 10px;
-                    background: #fff;
-                }
-
-                .pmpro_checkout_box-user textarea {
-                    border: 1px solid #dbcece;
-                    border-radius: 10px;
-                    background: #fff;
-                    font-size: 15px !important;
-                }
-                .btn-pmpro_submit {
-                    display: flex;
-                    position: relative;
-                    height: 40px;
-                    white-space: nowrap;
-                }
-                .btn-pmpro_submit >input,.btn-pmpro_submit >a {
-                    width: 50% !important;
-                }
-                .pmpro_btn.pmpro_btn-submit {
-                    padding: 0 10px 0;
-                    font-size: 15px;
-                }
-                .btn-pmpro_submit >a {
-                    width: 50% !important;
-                    background: #0077c8;
-                    margin-left: 10px;
-                    margin-right: 10px;
-                    padding: 0 10px 0;
-                    color: #fff;
-                    align-items: center;
-                    font-weight: 600;
-                    border-radius: 5px;
-                    display: flex;
-                    font-size: 15px;
-                }
-                .pubic-user {
-                    padding: 5px 10px;
-                }
             </style>
 			<div class="<?php echo pmpro_get_element_class( 'pmpro_checkout_box-user' ); ?>">
 				<div class="<?php echo pmpro_get_element_class( 'pmpro_member_profile_edit-fields' ); ?>">
@@ -967,10 +827,10 @@ function pmpro_member_profile_edit_form() {
 			<input type="hidden" name="user_id" value="<?php echo esc_attr( $current_user->ID ) ; ?>" />
 
 			<div class="<?php echo pmpro_get_element_class( 'pmpro_submit' ); ?>">
-                <a href="<?= get_bloginfo('url')?>/user/<?=$current_user->user_login?>" class="pubic-user" rel="nofollow">Public <i class="fa-solid fa-link" style="color: #565a5a;margin-right: 5px;"></i><?= get_bloginfo('url')?>/user/<?=$current_user->user_login?></a>
+                <a href="<?= get_bloginfo('url')?>/user/<?=$current_user->user_login?>" class="pubic-user" rel="nofollow"><i class="fa-solid fa-share" style="color: #565a5a;margin-right: 5px;"></i><?= get_bloginfo('url')?>/user/<?=$current_user->user_login?></a>
 				<hr />
 				<div class="btn-pmpro_submit">
-                    <input type="submit" name="submit" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-submit', 'pmpro_btn-submit' ); ?>" value="<?php esc_attr_e( 'Update Profile', 'paid-memberships-pro' );?>" />
+                    <input type="submit" name="submit" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-submit', 'pmpro_btn-submit' ); ?>" value="<?php esc_attr_e( 'Save Profile', 'paid-memberships-pro' );?>" />
                     <a href="https://itsmeit.co/my-account/profile.html?view=change-password" rel="nofollow">Change Password</a>
                 </div>
 			</div>
@@ -1074,19 +934,16 @@ function pmpro_change_password_form() {
 					<div class="<?php echo pmpro_get_element_class( 'pmpro_change_password-field pmpro_change_password-field-password_current', 'pmpro_change_password-field-password_current' ); ?>">
 						<label for="password_current"><?php esc_html_e( 'Current Password', 'paid-memberships-pro' ); ?></label></th>
 						<input type="password" name="password_current" id="password_current" value="" class="<?php echo pmpro_get_element_class( 'input', 'password_current' ); ?>" />
-						<span class="<?php echo pmpro_get_element_class( 'pmpro_asterisk' ); ?>"> <abbr title="<?php _e( 'Required Field', 'paid-memberships-pro' ); ?>">*</abbr></span>
 					</div> <!-- end pmpro_change_password-field-password_current -->
 					<div class="<?php echo pmpro_get_element_class( 'pmpro_change_password-field pmpro_change_password-field-pass1', 'pmpro_change_password-field-pass1' ); ?>">
 						<label for="pass1"><?php esc_html_e( 'New Password', 'paid-memberships-pro' ); ?></label></th>
 						<input type="password" name="pass1" id="pass1" value="" class="<?php echo pmpro_get_element_class( 'input pass1', 'pass1' ); ?>" autocomplete="off" />
-						<span class="<?php echo pmpro_get_element_class( 'pmpro_asterisk' ); ?>"> <abbr title="<?php _e( 'Required Field', 'paid-memberships-pro' ); ?>">*</abbr></span>
 						<div id="pass-strength-result" class="hide-if-no-js" aria-live="polite"><?php esc_html_e( 'Strength Indicator', 'paid-memberships-pro' ); ?></div>
 						<p class="<?php echo pmpro_get_element_class( 'lite' ); ?>"><?php echo wp_get_password_hint(); ?></p>
 					</div> <!-- end pmpro_change_password-field-pass1 -->
 					<div class="<?php echo pmpro_get_element_class( 'pmpro_change_password-field pmpro_change_password-field-pass2', 'pmpro_change_password-field-pass2' ); ?>">
 						<label for="pass2"><?php esc_html_e( 'Confirm New Password', 'paid-memberships-pro' ); ?></label></th>
 						<input type="password" name="pass2" id="pass2" value="" class="<?php echo pmpro_get_element_class( 'input', 'pass2' ); ?>" autocomplete="off" />
-						<span class="<?php echo pmpro_get_element_class( 'pmpro_asterisk' ); ?>"> <abbr title="<?php _e( 'Required Field', 'paid-memberships-pro' ); ?>">*</abbr></span>
 					</div> <!-- end pmpro_change_password-field-pass2 -->
 				</div> <!-- end pmpro_change_password-fields -->
 			</div> <!-- end pmpro_checkout_box-password -->

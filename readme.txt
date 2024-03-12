@@ -11,3 +11,6 @@
 10- Fix code wp-content/plugins/paid-memberships-pro/pages/invoice.php
 11- Fix code pmpro_account.php
 12- Fix $this->file['fullurl'] wp-content/plugins/paid-memberships-pro/classes/class-pmpro-field.php line 896
+
+
+find /var/www/vhosts/itsmeit.co/httpdocs/wp-content/uploads/pmpro-register-helper/* -type f   \( -regex '.*-[0-9]+x[0-9]+\.jpeg' -o -regex '.*-[0-9]+x[0-9]+\.jpeg.webp'   -o -regex '.*-[0-9]+x[0-9]+\.jpg' -o -regex '.*-[0-9]+x[0-9]+\.jpg.webp'   -o -regex '.*-[0-9]+x[0-9]+\.png' -o -regex '.*-[0-9]+x[0-9]+\.png.webp'   -o -regex '.*-[0-9]+x[0-9]+\.webp' -o -regex '.*-[0-9]+x[0-9]+\.avif'   -o -regex '.*-[0-9]+x[0-9]+\.avif.webp' \)   ! -name "*-150x150.jpeg" ! -name "*-150x150.jpeg.webp"   ! -name "*-150x150.jpg" ! -name "*-150x150.jpg.webp"   ! -name "*-150x150.png" ! -name "*-150x150.png.webp" -exec rm {} +

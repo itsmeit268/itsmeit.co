@@ -251,7 +251,8 @@ function member_script_callback() {
     $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     if (strpos($current_url, '/my-account/') !== false ||
         strpos($current_url, 'my-account.html') !== false ||
-        strpos($current_url, 'login.html') !== false
+        strpos($current_url, 'login.html') !== false ||
+        strpos($current_url, '/user/') !== false
     ) {
         wp_enqueue_style('member-style', plugin_dir_url(__FILE__). 'css/member-style.css', array(), FOXIZ_THEME_VERSION, 'all');
         wp_enqueue_script('member-checkout', plugin_dir_url(__FILE__). 'js/member-checkout.js', array('jquery'), FOXIZ_THEME_VERSION, true);
@@ -425,4 +426,56 @@ function get_username_from_url() {
         return $username;
     }
     return false;
+}
+
+add_action( 'pmpro_personal_options_update', 'save_user_fields_in_profile' );
+
+function save_user_fields_in_profile( $user_id ){
+    if ( !current_user_can( 'edit_user', $user_id ) )
+        return false;
+
+    $profile_fields = pmpro_get_user_fields_for_profile($user_id);
+
+    if(!empty($profile_fields)) {
+        foreach($profile_fields as $field) {
+            if( ! pmpro_is_field( $field ) ) {
+                continue;
+            }
+
+            $field_name = $field->name;
+
+            if (isset($_FILES[$field_name]['tmp_name']) && !empty($_FILES[$field_name]['tmp_name'])) {
+                $file_info = $_FILES[$field_name];
+                $allowed_image_formats = array('jpeg', 'jpg', 'png', 'gif', 'svg');
+                $file_extension = pathinfo($file_info['name'], PATHINFO_EXTENSION);
+
+                if (!in_array(strtolower($file_extension), $allowed_image_formats)) {
+                    echo '<p>Allow image formats <span style="color:red">(jpeg, jpg, png, gif, svg).</span></p>';
+                    call_user_func($field->save_function, $user_id, $field->name, array());
+                    update_user_meta($user_id, 'wp_user_avatar', null);
+                } else {
+                    $user = get_userdata($user_id);
+                    $upload_directory = wp_upload_dir();
+                    $target_directory = $upload_directory['basedir'] . '/pmpro-register-helper/' . $user->user_login . '/';
+                    $uploaded_file_name = pathinfo($file_info['name'], PATHINFO_FILENAME);
+
+                    $files = scandir($target_directory);
+
+                    $pattern = '/-\d+x\d+\.webp$|-\d+x\d+\.\w+$/';
+
+                    $filename = preg_replace($pattern, '', $uploaded_file_name);
+
+                    if (strpos($filename, ' ') !== false) {
+                        $filename = str_replace(' ', '-', $filename);
+                    }
+                    foreach ($files as $file) {
+                        if (strpos($file, $filename) === false) {
+                            @unlink($target_directory . $file);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return true;
 }
