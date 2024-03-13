@@ -8,13 +8,9 @@ Author: Paid Memberships Pro
 Author URI: https://www.paidmembershipspro.com
 */
 
-//Now start placing your customization code below this line
-
-// Disables the pmpro redirect to levels page when user tries to register
 add_filter( 'pmpro_login_redirect', '__return_false' );
 
 function pmpro_default_registration_level( $user_id ) {
-    // Give all members who register membership level 1
     pmpro_changeMembershipLevel( 1, $user_id );
 }
 
@@ -38,15 +34,15 @@ function get_user_id() {
     return $current_user_id ? : get_current_user_id();
 }
 
-
 function get_level_name(){
     $level_name = 'FREE';
-    if (user_point() > 50000 && user_point() < 100000) {
+    if (user_point() > 10 && user_point() < 50000) {
+        $level_name = 'GOLD';
+    } elseif (user_point() >= 50000 && user_point() < 100000) {
         $level_name = 'PREMIUM';
     } elseif(user_point() >= 100000) {
         $level_name = 'VIP';
     }
-
     return $level_name;
 }
 
@@ -55,43 +51,11 @@ function user_point() {
     return !empty($user_point) ? (int)$user_point: 1;
 }
 
-function vip_level() {
-    if (get_level_name() !== 'VIP') {
-        return false;
-    }
-    if (user_point() >= 100000) {
-        return false;
-    }
-    return true;
-}
-
-function premium_level() {
-    if (get_level_name() !== 'PREMIUM') {
-        return false;
-    }
-
-    return true;
-}
-
 function free_level() {
-    if (!vip_level() && !premium_level()) {
+    if (get_level_name() == 'FREE') {
         return true;
     }
     return false;
-}
-
-function member_level($post_id) {
-    $options = get_post_meta($post_id, 'member_level', true);
-    $member_level = json_decode($options, true);
-
-    $level_name = 'free';
-    if (is_array($member_level) && !empty($member_level)) {
-        foreach ($member_level as $level => $value) {
-            if ($value === 'on')
-                $level_name = $level;
-        }
-    }
-    return $level_name;
 }
 
 function is_allow_show_ads() {
@@ -105,17 +69,20 @@ function is_allow_show_ads() {
 
 function link_member_render($isMeta, $link_is_login, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id, $settings) {
     $user_point = user_point();
-    $file_point = get_post_meta($post_id, 'point_download', true);
-
+    $point = get_post_meta($post_id, 'point_download', true);
+    $file_point = !empty($point) ? (int) $point : 0;
     if (!$isMeta) : ?>
         <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
         if ($isMeta) list_member_link($post_id, $settings); ?>
     <?php else :
-        if (vip_level()): ?>
+        if (get_level_name() == 'VIP'):?>
             <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
             if ($isMeta) list_member_link($post_id, $settings); ?>
-        <?php elseif ($user_point < $file_point): ?>
-            <?php download_permission($post_id, $file_point); ?>
+        <?php elseif (get_level_name() !== 'VIP' && $user_point < $file_point): ?>
+            <?php download_permission($file_point); ?>
+        <?php elseif(get_level_name() !== 'VIP' && $user_point > $file_point): ?>
+            <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+            if ($isMeta) list_member_link($post_id, $settings); ?>
         <?php else: ?>
             <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
             if ($isMeta) list_member_link($post_id, $settings); ?>
@@ -144,10 +111,12 @@ function list_member_link($post_id, $settings) {
                     <?php
                     $file_name = $list_link[$file_name_key];
                     $size = $list_link[$size_key]; ?>
-                    <?php if (vip_level() || premium_level()) :?>
-                        <a href="javascript:void(0)" data-request="<?= esc_html(modify_list_href(base64_encode($list_link[$link_is_login_key])))?>" class="preplink-btn-link list-preplink-btn-link"><?= esc_html($file_name . ' ' . $size) ?></a>
+                    <?php if (get_level_name() == 'FREE') :?>
+                        <a href="javascript:void(0)" data-request="<?= esc_html(modify_list_href(base64_encode($list_link[$link_no_login_key])))?>"
+                           class="preplink-btn-link list-preplink-btn-link"><?= esc_html($file_name . ' ' . $size) ?></a>
                     <?php else: ?>
-                        <a href="javascript:void(0)" data-request="<?= esc_html(modify_list_href(base64_encode($list_link[$link_no_login_key])))?>" class="preplink-btn-link list-preplink-btn-link"><?= esc_html($file_name . ' ' . $size) ?></a>
+                        <a href="javascript:void(0)" data-request="<?= esc_html(modify_list_href(base64_encode($list_link[$link_is_login_key])))?>"
+                           class="preplink-btn-link list-preplink-btn-link"><?= esc_html($file_name . ' ' . $size) ?></a>
                     <?php endif;?>
                 <?php }
             } ?>
@@ -155,12 +124,17 @@ function list_member_link($post_id, $settings) {
     <?php }
 }
 
-function download_permission($post_id, $file_point) {
+function download_permission($file_point) {
     $current_language = pll_current_language();
+    $requireLevelText = ($current_language == 'en') ? 'You need' : 'Bạn cần';
     ?>
     <div class="not-vip-download" style="display: none">
-        <p class="require-level">Bạn cần <?= $file_point ?> điểm hoặc trở thành VIP để download file này,
-            <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm bào đây</a> để tìm hiểm thêm.</p>
+        <p class="require-level">
+            <?= $requireLevelText ?> <?= $file_point ?> <?= ($current_language == 'en') ? 'points or become a VIP member to download this file.' : 'điểm hoặc trở thành VIP' ?>
+            <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">
+                <?= ($current_language == 'en') ? 'Click here' : 'bấm bào đây' ?> to explore more.
+            </a>
+        </p>
     </div>
     <?php
 }
@@ -176,6 +150,27 @@ function member_script_callback() {
         wp_enqueue_style('member-style', plugin_dir_url(__FILE__). 'css/member-style.css', array(), FOXIZ_THEME_VERSION, 'all');
         wp_enqueue_script('member-checkout', plugin_dir_url(__FILE__). 'js/member-checkout.js', array('jquery'), FOXIZ_THEME_VERSION, true);
     }
+    wp_enqueue_script('update-point', plugin_dir_url(__FILE__). 'js/update-point.js', array('jquery'), FOXIZ_THEME_VERSION, true);
+    wp_localize_script('update-point', 'update_point', array(
+        '_ajax_url' => admin_url('admin-ajax.php')
+    ) );
+}
+
+add_action('wp_ajax_update_user_points', 'update_user_points_callback');
+add_action('wp_ajax_nopriv_update_user_points', 'update_user_points_callback');
+
+function update_user_points_callback() {
+    if (is_user_logged_in()) {
+        $user_id = get_current_user_id();
+        $point = '50';
+        $current_point = get_user_meta($user_id, 'wp_user_point', true);
+        if ($current_point) {
+            $point += $current_point;
+        }
+        update_user_meta($user_id, 'wp_user_point', $point);
+    }
+
+    wp_die();
 }
 
 add_filter('pmpro_has_membership_access_filter', 'custom_pmpro_login_redirect', 10, 4);
@@ -213,16 +208,6 @@ function point_calculation_after_checkout($user_id, $morder) {
         }
     }
 }
-
-//function after_login_redirect( $user_login, $user ) {
-//    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//    if (strpos($current_url, 'user-login.html?nsl_bypass_cache')) {
-//        wp_redirect( get_bloginfo('url') . '/my-account.html' );
-//        exit();
-//    }
-//}
-//add_action( 'wp_login', 'after_login_redirect', 10, 2 );
-
 
 function updated_user_avatar_user_meta( $meta_id, $user_id, $meta_key, $meta_value ) {
     if ( 'user_avatar' === $meta_key ) {
@@ -267,8 +252,7 @@ function user_avatar_filter( $avatar, $id_or_email, $size, $default, $alt ) {
 }
 add_filter( 'get_avatar', 'user_avatar_filter', 20, 5 );
 
-function pmprorh_init_user_avatar() {
-
+function pmprorh_init_user_profile() {
     if ( ! function_exists( 'pmprorh_add_registration_field' ) ) {
         return false;
     }
@@ -317,6 +301,20 @@ function pmprorh_init_user_avatar() {
         )
     );
 
+    if (is_admin()) {
+        $fields[] = new PMProRH_Field(
+            'wp_user_point',
+            'text',
+            array(
+                'label'         => 'User points',
+                'hint'          => '',
+                'profile'       => 'only',
+                'addmember'     => true,
+                'size' => '100'
+            )
+        );
+    }
+
     $fields[] = new PMProRH_Field(
         'location',
         'text',
@@ -348,16 +346,18 @@ function pmprorh_init_user_avatar() {
     return true;
 }
 
-add_action( 'init', 'pmprorh_init_user_avatar' );
+add_action( 'init', 'pmprorh_init_user_profile' );
 
 add_filter('template_include', 'intelldnt_link_template_include');
 
 function intelldnt_link_template_include($template) {
-    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    if (strpos($current_url, '/user/')) {
-        $template = dirname( __FILE__ ) . '/templates/user.php';;
+    $manager = current_user_can('manage_options');
+    if (!is_admin() && !$manager) {
+        $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        if (strpos($current_url, '/user/')) {
+            $template = dirname( __FILE__ ) . '/templates/user.php';;
+        }
     }
-
     return $template;
 }
 
@@ -420,3 +420,4 @@ function save_user_fields_in_profile( $user_id ){
     }
     return true;
 }
+

@@ -75,34 +75,35 @@ function pmpro_shortcode_account($atts, $content=null, $code="")
                                         <h3 class="bio"><?= !empty($interest)? $interest: '<a href="https://itsmeit.co/my-account/profile.html" rel="nofollow">Not provided yet</a>' ?></h3>
                                         <div class="other">
                                             <div class="other-content">
-                                                <i class="fa-solid fa-location-dot" style="color: #565a5a;margin-right: 5px;"></i>
+                                                <i class="fa-solid fa-location-dot" style="color: #565a5a;margin-right: 5px;margin-bottom: 4px;"></i>
                                                 <?php $r_location = !empty($location) ? 'https://www.google.com/maps/place/'.$location : 'https://itsmeit.co/my-account/profile.html'; ?>
                                                 <span><a href="<?= $r_location?>" rel="nofollow" target="_blank"><?= !empty($location) ? $location: 'Not provided yet' ?></a></span>
                                             </div>
                                             <div class="other-content">
-                                                <i class="fa-solid fa-link" style="color: #565a5a;margin-right: 5px;"></i>
+                                                <i class="fa-solid fa-link" style="color: #565a5a;margin-right: 5px;margin-bottom: 4px;"></i>
                                                 <?php $r_website = !empty($website) ? $website : 'https://itsmeit.co/my-account/profile.html'; ?>
                                                 <span><a href="<?= esc_url($r_website)?>" rel="nofollow" target="_blank"><?= !empty($website)? esc_url($website): 'Not provided yet'?></a></span>
                                             </div>
                                         </div>
                                         <div class="other">
                                             <div class="other-content">
-                                                <i class="fa-solid fa-user-group" style="color: #565a5a;margin-right: 5px;"></i>
+                                                <i class="fa-solid fa-user-group" style="color: #565a5a;margin-right: 5px;margin-bottom: 4px;"></i>
                                                 <?php
                                                 $level_name = get_level_name();
-                                                $colors = ['PREMIUM' => '#0b8311', 'VIP' => '#ff0000'];
-                                                $color = isset($colors[$level_name]) ? $colors[$level_name] : '#000000';
+                                                $colors = ['PREMIUM' => '#0b8311', 'VIP' => '#ff0000', 'GOLD' => '#ed8300'];
+                                                $color = isset($colors[$level_name]) ? $colors[$level_name] : '#00b38f';
                                                 ?>
-                                                <span>Level: <a href="https://itsmeit.co/my-account/levels.html" rel="nofollow"><strong style="color: <?= $color ?>"><?= $level_name ?></strong></a></span>
+                                                <span>Level: <a href="https://itsmeit.co/my-account/levels.html" rel="nofollow"><strong class="level-mb" style="color: <?= $color ?>"><?= $level_name ?></strong></a></span>
                                             </div>
                                             <div class="other-content">
-                                                <i class="fa-solid fa-star" style="color: #565a5a;margin-right: 5px;"></i>
-                                                <span>Point: <?= number_format($point, 0, ',', '.');?></span>
+                                                <i class="fa-solid fa-star" style="color: #ef6f15;margin-right: 5px;margin-bottom: 4px;"></i>
+                                                <span style="margin-right: 5px">Point:</span>
+                                                <a href="https://itsmeit.co/my-account/buy-points.html" rel="nofollow"><span class="point-number"><?= number_format($point?:0, 0, ',', '.');?></span></a>
                                             </div>
                                         </div>
                                         <div class="buttons">
                                             <div class="btn p-edit-profile"><a href="https://itsmeit.co/my-account/profile.html" rel="nofollow">Edit Profile</a></div>
-                                            <div class="btn follow"><a href="https://itsmeit.co/my-account/levels.html">My Memberships</a></div>
+                                            <div class="btn follow"><a href="https://itsmeit.co/my-account/buy-points.html" rel="nofollow">Buy Points</a></div>
                                         </div>
                                     </div>
                                     <div class="public-info">

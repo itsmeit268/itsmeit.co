@@ -37,9 +37,9 @@ add_filter('ilgl_prep_template_vars', 'ilgl_prep_template_vars');
 add_filter('intelligent_link_template', 'intelligent_link_template');
 add_filter('prep_display_mode', 'prep_display_mode');
 
-function link_field_meta_box_before ($post){ ?>
+function link_field_meta_box_before($post){ ?>
     <h2 class="list-h3-title">Point to download</h2>
-    <div class="member_level">
+    <div class="point_download">
         <?php $point = get_post_meta($post->ID, 'point_download', true); ?>
         <label for="point-to-download">Point:</label>
         <input type="number" id="point" name="point_download" placeholder="1000" min="0" max="50000" value="<?= esc_attr($point ? : false) ?>"/>

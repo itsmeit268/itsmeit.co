@@ -61,19 +61,18 @@
                 url: ims.ajax_url,
                 data: data,
                 success: function(response) {
-
-                    if (level_name.text() !== response.data.level) {
-                        level_name.text(' ('+response.data.level+')');
+                    const newLevel = response.data.level;
+                    if (level_name.text() !== ` (${newLevel})`) {
+                        level_name.text(` (${newLevel})`);
                     }
-                    if (response.data.level === 'FREE') {
-                        level_name.css('color', '#00b38f');
-                    }
-                    if (response.data.level === 'PREMIUM') {
-                        level_name.css('color', '#0c8b1d');
-                    }
-                    if (response.data.level === 'VIP') {
-                        level_name.css('color', '#ff0000');
-                    }
+                    const colorMap = {
+                        'FREE': '#00b38f',
+                        'PREMIUM': '#0c8b1d',
+                        'VIP': '#ff0000',
+                        'GOLD': '#ed8300'
+                    };
+                    const newColor = colorMap[newLevel] || '';
+                    level_name.css('color', newColor);
                 }
             });
         }
