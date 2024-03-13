@@ -64,6 +64,7 @@ function pmpro_shortcode_account($atts, $content=null, $code="")
                         $interest = get_user_meta($user->ID, 'interest', true);
                         $location = get_user_meta($user->ID, 'location', true);
                         $website = get_user_meta($user->ID, 'website', true);
+                        $point = get_user_meta($user->ID, 'wp_user_point', true);
                         ?>
                         <div class="card">
                             <div class="profile-content">
@@ -87,11 +88,16 @@ function pmpro_shortcode_account($atts, $content=null, $code="")
                                         <div class="other">
                                             <div class="other-content">
                                                 <i class="fa-solid fa-user-group" style="color: #565a5a;margin-right: 5px;"></i>
-                                                <span>Level: <a href="https://itsmeit.co/my-account/levels.html" rel="nofollow"><strong><?= get_level_name()?></strong></a></span>
+                                                <?php
+                                                $level_name = get_level_name();
+                                                $colors = ['PREMIUM' => '#0b8311', 'VIP' => '#ff0000'];
+                                                $color = isset($colors[$level_name]) ? $colors[$level_name] : '#000000';
+                                                ?>
+                                                <span>Level: <a href="https://itsmeit.co/my-account/levels.html" rel="nofollow"><strong style="color: <?= $color ?>"><?= $level_name ?></strong></a></span>
                                             </div>
                                             <div class="other-content">
                                                 <i class="fa-solid fa-star" style="color: #565a5a;margin-right: 5px;"></i>
-                                                <span>Point: 110000</span>
+                                                <span>Point: <?= number_format($point, 0, ',', '.');?></span>
                                             </div>
                                         </div>
                                         <div class="buttons">
@@ -99,7 +105,7 @@ function pmpro_shortcode_account($atts, $content=null, $code="")
                                             <div class="btn follow"><a href="https://itsmeit.co/my-account/levels.html">My Memberships</a></div>
                                         </div>
                                     </div>
-                                    <div class="public-info" style="position: absolute; bottom: 0; border: 1px solid #ddd5d5; border-radius: 5px; padding: 0 10px; background: #f5efef;">
+                                    <div class="public-info">
                                         <a href="<?= get_bloginfo('url')?>/user/<?=$current_user->user_login?>" class="pubic-user" rel="nofollow"><i class="fa-solid fa-share" style="color: #565a5a;margin-right: 5px;"></i><?= get_bloginfo('url')?>/user/<?=$current_user->user_login?></a>
                                     </div>
                                     <div class="r-content">

@@ -55,7 +55,9 @@
 .pmpro_invoice_wrap ul li,.pmpro_confirmation_wrap ul li {
     list-style-type: none;
 }
-
+.pmpro_change_password_wrap{
+    max-width: 355px;
+}
 .pmpro_box {
     margin-bottom: 20px;
     padding: 20px;
@@ -254,7 +256,7 @@ form.pmpro_form input[type=text],form.pmpro_form input[type=password] {
     left: 0;
     min-height: 300px;
 }
-.pmpro_submit {
+#member-profile-edit>.pmpro_submit {
     position: absolute;
     top: 420px;
 }
@@ -385,6 +387,24 @@ p.lite {
 .user_email > input{
     background: #dfdfdf !important;
 }
+.profile-content {
+    min-height: 250px;
+}
+.public-info {
+    position: absolute;
+    bottom: 0;
+    border: 1px solid #ddd5d5;
+    border-radius: 5px;
+    padding: 0 10px;
+    background: #f5efef;
+    left: 30px;
+    top: 200px;
+    height: 30px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
 @media (max-width: 750px) {
 
     .profile {

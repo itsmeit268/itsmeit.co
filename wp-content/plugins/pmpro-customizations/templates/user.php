@@ -12,6 +12,7 @@ if (!empty($user_name)) : ?>
         $interest = get_user_meta($user->ID, 'interest', true);
         $location = get_user_meta($user->ID, 'location', true);
         $website = get_user_meta($user->ID, 'website', true);
+        $point = get_user_meta($user->ID, 'wp_user_point', true);
     ?>
     <div class="card">
         <div class="profile-content">
@@ -39,7 +40,7 @@ if (!empty($user_name)) : ?>
                         </div>
                         <div class="other-content">
                             <i class="fa-solid fa-star" style="color: #565a5a;margin-right: 5px;"></i>
-                            <span>Point: 110000</span>
+                            <span>Point: <?= number_format($point?:0, 0, ',', '.');?></span>
                         </div>
                     </div>
                     <?php

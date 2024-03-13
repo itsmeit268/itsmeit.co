@@ -38,42 +38,27 @@ add_filter('intelligent_link_template', 'intelligent_link_template');
 add_filter('prep_display_mode', 'prep_display_mode');
 
 function link_field_meta_box_before ($post){ ?>
-    <h2 class="list-h3-title">Member Level</h2>
+    <h2 class="list-h3-title">Point to download</h2>
     <div class="member_level">
-        <?php
-        $member_options = get_post_meta($post->ID, 'member_level', true);
-        $member_level = json_decode($member_options, true);
-        ?>
-
-        <label for="member_level">Member Level:</label>
-        <select name="member_level" id="member_level">
-            <option value="free" <?php selected(($member_level['free'] ?? 'off'), 'on'); ?>>FREE Member</option>
-            <option value="vip" <?php selected(($member_level['vip'] ?? 'off'), 'on'); ?>>VIP Member</option>
-            <option value="premium" <?php selected(($member_level['premium'] ?? 'off'), 'on'); ?>>PREMIUM Member</option>
-        </select>
+        <?php $point = get_post_meta($post->ID, 'point_download', true); ?>
+        <label for="point-to-download">Point:</label>
+        <input type="number" id="point" name="point_download" placeholder="1000" min="0" max="50000" value="<?= esc_attr($point ? : false) ?>"/>
     </div>
 <?php }
 
 function intelligent_link_save_field_meta_box($post_id) {
-    if (isset($_POST['member_level'])) {
-        $selected_member_level = sanitize_text_field($_POST['member_level']);
-
-        if (in_array($selected_member_level, ['vip', 'premium', 'free'])) {
-            $member_level = array(
-                'vip'      => $selected_member_level === 'vip' ? 'on' : 'off',
-                'premium' => $selected_member_level === 'premium' ? 'on' : 'off',
-                'free'     => $selected_member_level === 'free' ? 'on' : 'off'
-            );
-            update_post_meta($post_id, 'member_level', json_encode($member_level));
-        }
+    if (isset($_POST['point_download'])) {
+        $point = intval(sanitize_text_field($_POST['point_download']));
+        $point = max(0, min($point, 50000));
+        update_post_meta($post_id, 'point_download', $point);
     }
 }
 
 function intelligent_link_delete_field_meta_box($post_id) {
     $post_type = get_post_type($post_id);
-    if (metadata_exists('post', $post_id, 'member_level') &&
+    if (metadata_exists('post', $post_id, 'point_download') &&
         in_array($post_type, array('post', 'product'))) {
-        delete_post_meta($post_id, 'member_level');
+        delete_post_meta($post_id, 'point_download');
     }
 }
 

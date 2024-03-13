@@ -954,7 +954,7 @@ function pmpro_change_password_form() {
 				<hr />
 				<div class="btn-pmpro_submit">
                     <input type="submit" class="<?php echo pmpro_get_element_class( 'pmpro_btn pmpro_btn-submit', 'pmpro_btn-submit' ); ?>" value="<?php esc_attr_e('Change Password', 'paid-memberships-pro' );?>" />
-                    <a href="https://itsmeit.co/login.html?action=reset_pass" rel="nofollow">Lost your password?</a>
+                    <a href="https://itsmeit.co/user-login.html?action=reset_pass" rel="nofollow">Lost your password?</a>
                 </div>
 			</div>
 		</form>

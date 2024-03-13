@@ -28,8 +28,7 @@ add_action('wp_ajax_show_level_callback', 'show_level_callback');
 add_action('wp_ajax_nopriv_show_level_callback', 'show_level_callback');
 
 function show_level_callback(){
-    $current_user = wp_get_current_user();
-    $response['level'] = isset($current_user->membership_level->name) ? $current_user->membership_level->name : 'FREE';
+    $response['level'] = get_level_name();
     wp_send_json_success($response);
     exit();
 }
@@ -39,75 +38,35 @@ function get_user_id() {
     return $current_user_id ? : get_current_user_id();
 }
 
-function last_member_order_success() {
-    global $wpdb;
-
-    $free_level = 1;
-    $table_name = $wpdb->prefix . 'pmpro_membership_orders';
-    // Lấy thông tin về đơn hàng mới nhất có trạng thái "success" và không phải là cấp độ "FREE"
-    $query = $wpdb->prepare(
-        "SELECT * FROM {$table_name} WHERE user_id = %d AND membership_id != %d AND status LIKE %s ORDER BY timestamp DESC LIMIT 1",
-        get_user_id(),
-        $free_level,
-        'success'
-    );
-    $order = $wpdb->get_row($query);
-    if (isset($order->status) && $order->status) {
-        return $order->status;
-    }
-
-    return false;
-}
 
 function get_level_name(){
-    $mylevels = pmpro_getMembershipLevelsForUser();
-
     $level_name = 'FREE';
-    if (is_array($mylevels) && !empty($mylevels)) {
-        foreach($mylevels as $level) {
-            $level_name = $level->name;
-        }
+    if (user_point() > 50000 && user_point() < 100000) {
+        $level_name = 'PREMIUM';
+    } elseif(user_point() >= 100000) {
+        $level_name = 'VIP';
     }
 
     return $level_name;
 }
 
-function get_account_status() {
-    $account_status = PMPro_Approvals::getUserApprovalStatus( get_user_id(), null, false ) ?? null;
-    return $account_status;
+function user_point() {
+    $user_point = get_user_meta(get_user_id(), 'wp_user_point', true);
+    return !empty($user_point) ? (int)$user_point: 1;
 }
 
 function vip_level() {
-    $order_success = last_member_order_success();
-
     if (get_level_name() !== 'VIP') {
         return false;
     }
-
-    if (isset($order_success) && $order_success !== "success") {
+    if (user_point() >= 100000) {
         return false;
     }
-
-    if (get_account_status() == 'Pending Approval for VIP' || get_account_status() == 'Đang chờ phê duyệt VIP') {
-        return false;
-    }
-
     return true;
 }
 
 function premium_level() {
-    $order_success = last_member_order_success();
-
     if (get_level_name() !== 'PREMIUM') {
-        return false;
-    }
-
-
-    if (isset($order_success) && $order_success !== "success") {
-        return false;
-    }
-
-    if (get_account_status() == 'Pending Approval for PREMIUM' || get_account_status() == 'Đang chờ phê duyệt PREMIUM') {
         return false;
     }
 
@@ -145,43 +104,30 @@ function is_allow_show_ads() {
 }
 
 function link_member_render($isMeta, $link_is_login, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id, $settings) {
-    $level = member_level($post_id);
+    $user_point = user_point();
+    $file_point = get_post_meta($post_id, 'point_download', true);
 
     if (!$isMeta) : ?>
-        <a href="javascript:void(0)" data-request="<?php echo $isMeta ? esc_html(modify_href(base64_encode($link_no_login))) : esc_html($prepLinkURL); ?>" class="preplink-btn-link" >
-            <?php echo $isMeta ? ($file_name.' '.$file_size) : $prepLinkText; ?>
-        </a>
-        <?php if ($isMeta) list_member_link($post_id, $settings); ?>
+        <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+        if ($isMeta) list_member_link($post_id, $settings); ?>
     <?php else :
         if (vip_level()): ?>
-            <a href="javascript:void(0)" data-request="<?php echo $isMeta ? esc_html(modify_href(base64_encode($link_is_login))) : esc_html($prepLinkURL); ?>" class="preplink-btn-link" >
-                <?php echo $isMeta ? ($file_name.' '.$file_size) : $prepLinkText; ?>
-            </a>
-            <?php if ($isMeta) list_member_link($post_id, $settings); ?>
-
-        <?php elseif (vip_level() && $level !== 'vip'): ?>
-            <?php account_status_render_html($post_id); ?>
-
-        <?php elseif (premium_level() && $level !== 'vip'): ?>
-            <a href="javascript:void(0)" data-request="<?php echo $isMeta ? esc_html(modify_href(base64_encode($link_is_login))) : esc_html($prepLinkURL); ?>" class="preplink-btn-link" >
-                <?php echo $isMeta ? ($file_name.' '.$file_size) : $prepLinkText; ?>
-            </a>
-            <?php if ($isMeta) list_member_link($post_id, $settings); ?>
-
-        <?php elseif (premium_level() && ($level === 'vip')): ?>
-            <?php account_status_render_html($post_id); ?>
-
-        <?php elseif (free_level() && ($level == 'premium' || $level == 'vip')): ?>
-            <?php account_status_render_html($post_id); ?>
-
+            <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+            if ($isMeta) list_member_link($post_id, $settings); ?>
+        <?php elseif ($user_point < $file_point): ?>
+            <?php download_permission($post_id, $file_point); ?>
         <?php else: ?>
-            <a href="javascript:void(0)" data-request="<?php echo $isMeta ? esc_html(modify_href(base64_encode($link_no_login))) : esc_html($prepLinkURL); ?>" class="preplink-btn-link" >
-                <?php echo $isMeta ? ($file_name.' '.$file_size) : $prepLinkText; ?>
-            </a>
-            <?php if ($isMeta) list_member_link($post_id, $settings); ?>
+            <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+            if ($isMeta) list_member_link($post_id, $settings); ?>
         <?php endif;
     endif;
 }
+
+function href_render($isMeta, $link, $prepLinkURL, $file_name, $file_size, $prepLinkText) { ?>
+    <a href="javascript:void(0)" data-request="<?php echo $isMeta ? esc_html(modify_href(base64_encode($link))) : esc_html($prepLinkURL); ?>" class="preplink-btn-link" >
+        <?php echo $isMeta ? ($file_name.' '.$file_size) : $prepLinkText; ?>
+    </a>
+<?php }
 
 function list_member_link($post_id, $settings) {
     $list_link = get_post_meta($post_id, 'link-download-metabox', true);
@@ -209,39 +155,12 @@ function list_member_link($post_id, $settings) {
     <?php }
 }
 
-function account_status_render_html($post_id) {
-    $account_status = get_account_status();
-    $level = member_level($post_id);
+function download_permission($post_id, $file_point) {
     $current_language = pll_current_language();
     ?>
     <div class="not-vip-download" style="display: none">
-        <?php if ($account_status == 'Pending Approval for VIP' || $account_status == 'Đang chờ phê duyệt VIP') : ?>
-            <?php if ($current_language === 'en') : ?>
-                <p class="require-level">Your account is <?= $account_status ?>, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to check the status.</p>
-            <?php else: ?>
-                <p class="require-level">Tài khoản của bạn đang chờ phê duyệt/thanh toán thành viên VIP, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm vào đây</a> để xem trạng thái.</p>
-            <?php endif;?>
-        <?php elseif ($account_status == 'Pending Approval for PREMIUM' || $account_status == 'Đang chờ phê duyệt PREMIUM') :?>
-            <?php if ($current_language === 'en') : ?>
-                <p class="require-level">Your account is <?= $account_status ?>, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to check the status.</p>
-            <?php else: ?>
-                <p class="require-level">Tài khoản của bạn đang chờ phê duyệt/thanh toán thành viên PREMIUM, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm vào đây</a> để xem trạng thái.</p>
-            <?php endif;?>
-        <?php else: ?>
-            <?php if ($level == 'vip') : ?>
-                <?php if ($current_language === 'en') : ?>
-                    <p class="require-level">You need to be a <strong style="color:#ff0000;font-weight: 600;">VIP</strong> member to download this file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to register.</p>
-                <?php else: ?>
-                    <p class="require-level">Bạn cần đăng ký gói thành viên <strong style="color:#ff0000;font-weight: 600;">VIP</strong> để download file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm bào đây</a> để đăng ký.</p>
-                <?php endif;?>
-            <?php elseif ($level == 'premium'): ?>
-                <?php if ($current_language === 'en') : ?>
-                    <p class="require-level">You need to purchase a <strong style="color:#ff3300;font-weight: 600;">PREMIUM</strong> membership to download this file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">click here</a> to register.</p>
-                <?php else: ?>
-                    <p class="require-level">Bạn cần đăng ký gói thành viên <strong style="color:#ff3300;font-weight: 600;">PREMIUM</strong> để download file, <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm bào đây</a> để đăng ký.</p>
-                <?php endif;?>
-            <?php endif;?>
-        <?php endif; ?>
+        <p class="require-level">Bạn cần <?= $file_point ?> điểm hoặc trở thành VIP để download file này,
+            <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">bấm bào đây</a> để tìm hiểm thêm.</p>
     </div>
     <?php
 }
@@ -251,7 +170,7 @@ function member_script_callback() {
     $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     if (strpos($current_url, '/my-account/') !== false ||
         strpos($current_url, 'my-account.html') !== false ||
-        strpos($current_url, 'login.html') !== false ||
+        strpos($current_url, 'user-login.html') !== false ||
         strpos($current_url, '/user/') !== false
     ) {
         wp_enqueue_style('member-style', plugin_dir_url(__FILE__). 'css/member-style.css', array(), FOXIZ_THEME_VERSION, 'all');
@@ -265,20 +184,45 @@ function custom_pmpro_login_redirect($has_access, $mypost, $myuser, $post_member
     if (strpos($current_url, '/my-account/') && !is_user_logged_in() ) {
         $_SESSION['redirect_to'] = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        wp_redirect(get_bloginfo('url').'/admin_ma2405');
+        wp_redirect(get_bloginfo('url').'/user-login.html');
         exit();
     }
 
     return $has_access;
 }
 
-add_action('pmpro_after_checkout', 'approval_after_checkout', 10, 2);
-function approval_after_checkout($user_id, $morder) {
+add_action('pmpro_after_checkout', 'point_calculation_after_checkout', 10, 2);
+function point_calculation_after_checkout($user_id, $morder) {
     if ($morder->status === 'success') {
-        PMPro_Approvals::approveMember( $user_id, $morder->membership_id, true );
-        wp_cache_clean_cache( 'wp-cache-', true );
+        $point_mappings = array(
+            '1.99' => '2000',
+            '4.99' => '5000',
+            '9.99' => '10000',
+            '19.99' => '20000',
+            '49.99' => '50000',
+            '99' => '100000'
+        );
+
+        if (isset($point_mappings[$morder->total])) {
+            $current_point = get_user_meta($user_id, 'wp_user_point', true);
+            if ($current_point) {
+                $point_mappings[$morder->total] += $current_point;
+            }
+            update_user_meta($user_id, 'wp_user_point', $point_mappings[$morder->total]);
+            pmpro_changeMembershipLevel( false, $user_id );
+        }
     }
 }
+
+//function after_login_redirect( $user_login, $user ) {
+//    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+//    if (strpos($current_url, 'user-login.html?nsl_bypass_cache')) {
+//        wp_redirect( get_bloginfo('url') . '/my-account.html' );
+//        exit();
+//    }
+//}
+//add_action( 'wp_login', 'after_login_redirect', 10, 2 );
+
 
 function updated_user_avatar_user_meta( $meta_id, $user_id, $meta_key, $meta_value ) {
     if ( 'user_avatar' === $meta_key ) {
@@ -308,21 +252,21 @@ function updated_user_avatar_user_meta( $meta_id, $user_id, $meta_key, $meta_val
 add_action( 'added_user_meta', 'updated_user_avatar_user_meta', 10, 4 );
 add_action( 'updated_user_meta', 'updated_user_avatar_user_meta', 10, 4 );
 
-// Filter the display of the the get_avatar function to use our local avatar.
 function user_avatar_filter( $avatar, $id_or_email, $size, $default, $alt ) {
     $my_user = get_userdata( $id_or_email );
     if ( ! empty( $my_user ) ) {
         $avatar_id = get_user_meta( $my_user->ID, 'wp_user_avatar', true );
         if ( ! empty( $avatar_id ) ) {
             $avatar = wp_get_attachment_image_src( $avatar_id, array( $size, $size) );
-            $avatar = "<img alt='{$alt}' src='{$avatar[0]}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+            if ( is_array( $avatar ) && isset( $avatar[0] ) ) {
+                $avatar = "<img alt='{$alt}' src='{$avatar[0]}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+            }
         }
     }
     return $avatar;
 }
 add_filter( 'get_avatar', 'user_avatar_filter', 20, 5 );
 
-// Add the User Avatar field at checkout and on the profile edit forms.
 function pmprorh_init_user_avatar() {
 
     if ( ! function_exists( 'pmprorh_add_registration_field' ) ) {
@@ -399,10 +343,7 @@ function pmprorh_init_user_avatar() {
     );
 
     foreach ( $fields as $field ) {
-        pmprorh_add_registration_field(
-            'user',
-            $field
-        );
+        pmprorh_add_registration_field('user', $field);
     }
     return true;
 }
