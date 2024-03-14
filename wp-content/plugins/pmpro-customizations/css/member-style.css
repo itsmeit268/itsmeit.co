@@ -404,7 +404,12 @@ p.lite {
     display: flex;
     align-items: center;
 }
-
+#member-profile-edit input {
+    border: 1px solid #d9cbcb;
+}
+#member-profile-edit input:focus, #member-profile-edit textarea:focus {
+    border: 1px solid #0c8630;
+}
 @media (max-width: 750px) {
 
     .profile {

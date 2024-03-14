@@ -25,7 +25,7 @@ if($pmpro_msg)
 <table id="pmpro_levels_table" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_table pmpro_checkout', 'pmpro_levels_table' ) ); ?>">
 <thead>
   <tr>
-	<th><?php esc_html_e('Level', 'paid-memberships-pro' );?></th>
+	<th><?php esc_html_e('Point', 'paid-memberships-pro' );?></th>
 	<th><?php esc_html_e('Price', 'paid-memberships-pro' );?></th>	
 	<th>&nbsp;</th>
   </tr>

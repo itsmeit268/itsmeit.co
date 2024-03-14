@@ -160,6 +160,10 @@ function member_script_callback() {
     wp_localize_script('update-point', 'update_point', array(
         '_ajax_url' => admin_url('admin-ajax.php')
     ) );
+
+    if (strpos($current_url, '/my-account/profile') !== false) {
+        wp_enqueue_script('validate-profile', plugin_dir_url(__FILE__). 'js/validate-profile.js', array('jquery'), FOXIZ_THEME_VERSION, true);
+    }
 }
 
 add_action('wp_ajax_update_user_points', 'update_user_points_callback');
@@ -341,7 +345,8 @@ function pmprorh_init_user_profile() {
             'profile'       => 'only',
             'addmember'     => true,
             'rows'          => 4,
-            'html'          => true
+            'html'          => true,
+            'maxlength'     => 200
         )
     );
 
