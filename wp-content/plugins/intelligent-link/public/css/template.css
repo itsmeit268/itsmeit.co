@@ -1,12 +1,14 @@
 .h-menu-links > a {
     color: inherit;
 }
+
 * a {
-    text-decoration:none;
+    text-decoration: none;
 }
+
 @media (min-width: 62rem) {
     body {
-        background-image: url('../images/clouds_bg_dw.svg' );
+        background-image: url('../images/clouds_bg_dw.svg');
         background-position: 50% 0;
         background-size: 316rem auto;
     }
@@ -31,7 +33,7 @@
     color: #1b96a5;
 }
 
-.section-newgames >.section-title {
+.section-newgames > .section-title {
     font-size: 2rem;
     margin-bottom: 1.5rem;
     line-height: 1.2;
@@ -115,7 +117,7 @@
     font-size: 18px;
 }
 
-.faq-title{
+.faq-title {
     margin-bottom: 15px;
 }
 
@@ -123,7 +125,7 @@
     color: #1479b3;
 }
 
-.igl-header,.igl-single-page {
+.igl-header, .igl-single-page {
     max-width: 890px;
     margin: 0 auto;
     overflow: hidden;
@@ -170,7 +172,8 @@
     margin-left: -30px;
     padding: 0 20px;
 }
-.igl-header,.igl-back {
+
+.igl-header, .igl-back {
     padding: 0 10px;
 }
 
@@ -356,7 +359,7 @@ textarea#comment {
     margin-bottom: 10px
 }
 
-.faq-download,.download-list{
+.faq-download, .download-list {
     margin: 25px 0;
 }
 
@@ -415,11 +418,13 @@ img {
 .clickable:hover {
     background: #2488c1
 }
-.prep-title,.post-date {
+
+.prep-title, .post-date {
     cursor: pointer;
     margin: 0;
     padding: 0;
 }
+
 .post-download {
     height: 100%;
     line-height: 24px;
@@ -474,6 +479,7 @@ img {
     top: -2px;
     font-weight: 700
 }
+
 .preplink-btn-link {
     background: #167ec1 !important;
     color: #fff;
@@ -490,7 +496,7 @@ img {
     font-weight: 700;
     cursor: pointer;
     outline: none;
-    text-decoration: none!important;
+    text-decoration: none !important;
     margin: 5px 0;
 }
 
@@ -529,7 +535,7 @@ img {
     max-height: 100%;
 }
 
-.faq-active>.accordion-title {
+.faq-active > .accordion-title {
     font-weight: 600;
     font-size: 16px;
 }
@@ -544,9 +550,10 @@ img {
     font-weight: 600;
 }
 
-.keyword-search a:hover,.session-end span:hover{
+.keyword-search a:hover, .session-end span:hover {
     color: orangered;
 }
+
 .featured-image {
     max-width: 100%;
     max-height: 450px;
@@ -557,6 +564,7 @@ img {
     width: 100%;
     height: auto;
 }
+
 .related_post {
     margin-bottom: 20px;
 }
@@ -634,6 +642,7 @@ img {
     .page_file-img {
         height: 100px;
     }
+
     .preplink-ads {
         padding: 0 !important;
         margin: 0
@@ -642,6 +651,7 @@ img {
     .keyword-search p {
         text-align: justify
     }
+
     .title.prep-title {
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -649,13 +659,45 @@ img {
         -webkit-line-clamp: 2;
         line-height: 24px;
     }
+
     .post-download {
         margin-top: 0;
     }
+
     .preplink-btn-link {
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: 100%;
         overflow: hidden;
     }
+}
+
+.white-popup {
+    position: relative;
+    background: #FFF;
+    padding: 20px;
+    width: auto;
+    max-width: 400px;
+    margin: 20px auto;
+    min-height: 100px;
+}
+
+#confirm {
+    position: absolute;
+    bottom: 10px;
+    left: 34%;
+    font-size: 16px;
+    background: #0086b3;
+    padding: 2px 15px;
+    color: #fff;
+}
+
+#cancel {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    font-size: 16px;
+    background: #0086b3;
+    padding: 2px 15px;
+    color: #fff;
 }

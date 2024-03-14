@@ -48,7 +48,7 @@ function get_level_name(){
 
 function user_point() {
     $user_point = get_user_meta(get_user_id(), 'wp_user_point', true);
-    return !empty($user_point) ? (int)$user_point: 1;
+    return !empty($user_point) ? (int)$user_point: 0;
 }
 
 function free_level() {
@@ -68,30 +68,32 @@ function is_allow_show_ads() {
 }
 
 function link_member_render($isMeta, $link_is_login, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id, $settings) {
-    $user_point = user_point();
     $point = get_post_meta($post_id, 'point_download', true);
     $file_point = !empty($point) ? (int) $point : 0;
     if (!$isMeta) : ?>
-        <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+        <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id);
         if ($isMeta) list_member_link($post_id, $settings); ?>
     <?php else :
         if (get_level_name() == 'VIP'):?>
-            <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+            <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id);
             if ($isMeta) list_member_link($post_id, $settings); ?>
-        <?php elseif (get_level_name() !== 'VIP' && $user_point < $file_point): ?>
+        <?php elseif (get_level_name() !== 'VIP' && user_point() < $file_point): ?>
             <?php download_permission($file_point); ?>
-        <?php elseif(get_level_name() !== 'VIP' && $user_point > $file_point): ?>
-            <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+        <?php elseif(get_level_name() !== 'VIP' && user_point() > $file_point):?>
+            <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id);
             if ($isMeta) list_member_link($post_id, $settings); ?>
         <?php else: ?>
-            <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText);
+            <?php href_render($isMeta, $link_no_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id);
             if ($isMeta) list_member_link($post_id, $settings); ?>
         <?php endif;
     endif;
 }
 
-function href_render($isMeta, $link, $prepLinkURL, $file_name, $file_size, $prepLinkText) { ?>
-    <a href="javascript:void(0)" data-request="<?php echo $isMeta ? esc_html(modify_href(base64_encode($link))) : esc_html($prepLinkURL); ?>" class="preplink-btn-link" >
+function href_render($isMeta, $link, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id) {
+    $point = get_post_meta($post_id, 'point_download', true);
+    $file_point = !empty($point) ? (int) $point : 0;?>
+    <a href="javascript:void(0)" data-request="<?php echo $isMeta ? esc_html(modify_href(base64_encode($link))) : esc_html($prepLinkURL); ?>"
+       class="preplink-btn-link" data-point="<?= $file_point?>">
         <?php echo $isMeta ? ($file_name.' '.$file_size) : $prepLinkText; ?>
     </a>
 <?php }
@@ -99,7 +101,10 @@ function href_render($isMeta, $link, $prepLinkURL, $file_name, $file_size, $prep
 function list_member_link($post_id, $settings) {
     $list_link = get_post_meta($post_id, 'link-download-metabox', true);
     $total = (int) $settings['field_lists']? : 5;
-    if (isset($list_link) && !empty($list_link) && is_array($list_link)) { ?>
+    if (isset($list_link) && !empty($list_link) && is_array($list_link)) {
+        $point = get_post_meta($post_id, 'point_download', true);
+        $file_point = !empty($point) ? (int) $point : 0;
+        ?>
         <div class="list-link-redirect" >
             <?php for ($i = 1; $i <= $total; $i++) {
                 $file_name_key = 'file_name-' . $i;
@@ -113,10 +118,10 @@ function list_member_link($post_id, $settings) {
                     $size = $list_link[$size_key]; ?>
                     <?php if (get_level_name() == 'FREE') :?>
                         <a href="javascript:void(0)" data-request="<?= esc_html(modify_list_href(base64_encode($list_link[$link_no_login_key])))?>"
-                           class="preplink-btn-link list-preplink-btn-link"><?= esc_html($file_name . ' ' . $size) ?></a>
+                           class="preplink-btn-link list-preplink-btn-link" data-point="<?= $file_point?>"><?= esc_html($file_name . ' ' . $size) ?></a>
                     <?php else: ?>
                         <a href="javascript:void(0)" data-request="<?= esc_html(modify_list_href(base64_encode($list_link[$link_is_login_key])))?>"
-                           class="preplink-btn-link list-preplink-btn-link"><?= esc_html($file_name . ' ' . $size) ?></a>
+                           class="preplink-btn-link list-preplink-btn-link" data-point="<?= $file_point?>"><?= esc_html($file_name . ' ' . $size) ?></a>
                     <?php endif;?>
                 <?php }
             } ?>
@@ -130,10 +135,11 @@ function download_permission($file_point) {
     ?>
     <div class="not-vip-download" style="display: none">
         <p class="require-level">
-            <?= $requireLevelText ?> <?= $file_point ?> <?= ($current_language == 'en') ? 'points or become a VIP member to download this file.' : 'điểm hoặc trở thành VIP' ?>
+            <?= $requireLevelText ?> <?= $file_point ?> <?= ($current_language == 'en') ? 'points to download this file.' : 'điểm để tải xuống tệp tin này.' ?>
             <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">
-                <?= ($current_language == 'en') ? 'Click here' : 'bấm bào đây' ?> to explore more.
+                <?= ($current_language == 'en') ? 'Click here' : 'bấm vào đây' ?>
             </a>
+            <?= ($current_language == 'en') ? 'to earn additional points.' : 'để kiếm thêm điểm.' ?>
         </p>
     </div>
     <?php
@@ -169,7 +175,6 @@ function update_user_points_callback() {
         }
         update_user_meta($user_id, 'wp_user_point', $point);
     }
-
     wp_die();
 }
 

@@ -57,7 +57,6 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
 } ?>
 
 <?php file_exists(get_template_directory() . '/header.php') ? get_header() : wp_head(); ?>
-
 <div class="igl-single-page" id="prep-request-page" data-request="<?= esc_attr($prep_request) ?>">
     <?= !empty($ads['ads_1']) && aicp_can_see_ads() && free_level() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-1">' . $ads['ads_1'] . '</div>' : '' ?>
     <?php render_back_icon($view_link); ?>

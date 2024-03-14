@@ -77,6 +77,10 @@ function ilgl_href_vars($href_vars) {
 }
 
 function ilgl_prep_template_vars($prep_template) {
+    $current_language = pll_current_language();
+    $prep_template['is_user_logged_in'] = is_user_logged_in();
+    $prep_template['_ajax_url'] = admin_url('admin-ajax.php');
+    $prep_template['_language'] = $current_language;
     return $prep_template;
 }
 
@@ -86,4 +90,52 @@ function intelligent_link_template($template) {
         return $custom_template;
     }
     return $template;
+}
+
+add_action('wp_ajax_update_point_download', 'update_point_download');
+add_action('wp_ajax_nopriv_update_point_download', 'update_point_download');
+
+function update_point_download() {
+    $response = [
+        'false' => __('An error occurred, please try again another time.', 'email-maketting')
+    ];
+
+    if (isset($_REQUEST['href']) && $_REQUEST['href']) {
+        $point = isset($_REQUEST['point'])? (int) $_REQUEST['point'] : 0;
+        $user_id = get_current_user_id();
+        $current_point = get_user_meta($user_id, 'wp_user_point', true);
+        $current_language = pll_current_language();
+        if (!empty($current_point)) {
+            $new_point = (int) $current_point - $point;
+
+            $user_email = get_userdata($user_id)->user_email;
+            $subject = ($current_language == 'en') ? 'Member Point Update Notification' : 'Thông báo cập nhật điểm thành viên';
+
+            $used_points = number_format($point, 0, ',', '.');
+            $remaining_points = number_format($new_point, 0, ',', '.');
+
+            $message_en = "You have just used {$used_points} points to download a file. Remaining points: {$remaining_points}<br>";
+            $message_vi = "Bạn vừa sử dụng {$used_points} điểm để tải xuống một tệp. Số điểm còn lại: {$remaining_points}<br>";
+
+            $message = ($current_language == 'en') ? $message_en : $message_vi;
+            $message .= ($current_language == 'en') ? 'Download link for the file: <a href="' . esc_url($_REQUEST['href']) . '">'
+                . $_REQUEST['title'] . '</a>' : 'Liên kết để tải xuống file: <a href="' . esc_url($_REQUEST['href']) . '">' . $_REQUEST['title'] . '</a>';
+
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+            wp_mail($user_email, $subject, $message, $headers);
+
+            update_user_meta($user_id, 'wp_user_point', $new_point);
+
+            $response = array(
+                'success' => __('Points redeemed successfully. Notification email has been sent.'),
+            );
+        } else {
+            $response = array(
+                'error' => __('Unable to redeem points. Please try again.'),
+            );
+        }
+    }
+
+    wp_send_json_success($response );
+    wp_die( );
 }
