@@ -1,5 +1,4 @@
 (function ($) {
-
     $(function () {
         $('#pmpro_paypalexpress_checkout br').remove();
         $('#pmpro_paypalexpress_checkout').wrap('<div id="question-container"></div>');
