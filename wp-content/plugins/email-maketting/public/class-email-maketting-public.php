@@ -327,36 +327,43 @@ class Email_Maketting_Public
                 );
             }
 
-            $current_date = current_time('mysql', 1);
-            $current_date_timestamp = strtotime($current_date);
+            $this->send_emails_in_batches($users, $post_id, $post_link, $related_html, $headers, $wpdb, $marketing_table);
+            wp_clear_scheduled_hook('send_email_after_save_post');
+        }
+    }
 
-            foreach ($users as $user) {
+    function send_emails_in_batches($users, $post_id, $post_link, $related_html, $headers, $wpdb, $marketing_table){
+        $batch_size = 1000;
+        $email_batches = array_chunk($users, $batch_size);
+
+        $current_date = current_time('mysql', 1);
+        $current_date_timestamp = strtotime($current_date);
+
+        foreach ($email_batches as $batch) {
+            foreach ($batch as $user) {
                 $last_sent_date = strtotime($user->is_sent_today);
                 if (date('Y-m-d', $last_sent_date) != date('Y-m-d', $current_date_timestamp)) {
                     $recipient_email = $user->email;
-                    $subject = '[New] ' . get_the_title($post_id );
-
-                    $html_content = $this->html_marketting_email($post_id, $post_link, $user->name, $recipient_email );
-                    $html_content = str_replace('{{related_title}}', __('YOU MIGHT ALSO LIKE'), $html_content );
-                    $html_content = str_replace('{{related_posts}}', $related_html, $html_content );
-                    $html_content = str_replace('{{email_customer}}', base64_encode($recipient_email), $html_content );
-
+                    $subject = '[New] ' . get_the_title($post_id);
+                    $html_content = $this->html_marketting_email($post_id, $post_link, $user->name, $recipient_email);
+                    $html_content = str_replace('{{related_title}}', __('YOU MIGHT ALSO LIKE'), $html_content);
+                    $html_content = str_replace('{{related_posts}}', $related_html, $html_content);
+                    $html_content = str_replace('{{email_customer}}', base64_encode($recipient_email), $html_content);
                     try {
-                        $is_sent = wp_mail($recipient_email, $subject, $html_content, $headers );
+                        $is_sent = wp_mail($recipient_email, $subject, $html_content, $headers);
                         if ($is_sent) {
                             $wpdb->update(
                                 $marketing_table,
-                                array('send_count' => $user->send_count + 1, 'is_sent_today' => $current_date),
-                                array('email' => $recipient_email),
+                                array('send_count' => $user->send_count + 1, 'is_sent_today' => current_time('mysql', 1)),
+                                array('email' => $recipient_email)
                             );
                         }
                     } catch (Exception $e) {
-                        error_log('Lỗi gửi email: ' . $e->getMessage() );
+                        error_log('Lỗi gửi email: ' . $e->getMessage());
                     }
                 }
             }
         }
-        wp_clear_scheduled_hook('send_email_after_save_post');
     }
 
     /**
