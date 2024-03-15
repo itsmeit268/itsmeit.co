@@ -3,7 +3,7 @@ Contributors:       mikeyott
 Tags:               solid, security, ithemes, log, cleaner
 Requires at least:  6.0
 Tested up to:       6.4
-Stable tag:         1.4.0
+Stable tag:         1.4.1
 
 Restores the ability to manually delete Solid Security logs from the database.
 
@@ -33,6 +33,10 @@ Note: This plugin comes with no warranty of any kind.
 Deactivate the plugin, delete if desired.
 
 == Changelog ==
+
+= 1.4.1 =
+
+* Fix: Navigation icon size on multi-site installations.
 
 = 1.4.0 =
 

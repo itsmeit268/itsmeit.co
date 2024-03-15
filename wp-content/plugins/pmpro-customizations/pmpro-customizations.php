@@ -65,7 +65,7 @@ function is_allow_show_ads() {
     if (!$manager && !in_array($_SERVER['REMOTE_ADDR'], $IP)) {
         return true;
     }
-    if (user_point() >= 50000) {
+    if (!$manager && user_point() >= 50000) {
         return true;
     }
 
@@ -367,8 +367,16 @@ add_filter('template_include', 'intelldnt_link_template_include');
 
 function intelldnt_link_template_include($template) {
     $manager = current_user_can('manage_options');
+    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+    if (strpos($current_url, '/user/itsmeit') !== false) {
+        return $template;
+    }
+    if ( strpos($current_url, '/user/loibv') !== false) {
+        return $template;
+    }
+
     if (!is_admin() && !$manager) {
-        $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         if (strpos($current_url, '/user/')) {
             $template = dirname( __FILE__ ) . '/templates/user.php';;
         }

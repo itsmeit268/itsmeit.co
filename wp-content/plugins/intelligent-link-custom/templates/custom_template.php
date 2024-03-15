@@ -84,16 +84,6 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                         <?= !empty($ads['ads_2']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-2">' . $ads['ads_2'] . '</div>' : '' ?>
                     <?php endif;?>
 
-                    <div class="keyword-search" style="padding: 20px 10px; border-radius: 5px;box-shadow: 0 0 5px #333; margin: 20px 5px;">
-                        <?php if ($current_language == 'en'): ?>
-                            <p></p>
-                        <?php else: ?>
-                            <h3 style="text-transform: uppercase;">Nếu bạn không thích quảng cáo?</h3>
-                            <p style="display: block; margin-top: 5px">– Chúng tôi cung cấp và chia sẻ mọi thứ một cách miễn phí và an toàn. Quảng cáo trên trang web được hiển thị để duy trì và phát triển trang web. Nếu bạn muốn tắt quảng cáo, vui lòng đăng ký tài khoản PREMIUM chỉ với 5$/3 tháng.</p>
-                            <p style="display: block; margin-top: 5px">– Hành động này cũng sẽ đóng góp vào sự phát triển của trang web và hỗ trợ đội ngũ của chúng tôi. Bạn cũng sẽ được hưởng nhiều quyền lợi từ gói thành viên, <a href="https://itsmeit.co/my-account/levels.html">bấm để xem chi tiết.</a></p>
-                        <?php endif;?>
-                    </div>
-
                     <?php if (!empty($endpoint_conf['ep_mode'])&& $endpoint_conf['ep_mode'] == 'default' && $isMeta): ?>
                         <div class="download-list">
                             <div class="download-item-box">

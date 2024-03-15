@@ -3,7 +3,7 @@
 Plugin Name:    Log cleaner for Solid Security
 Plugin URI:     https://wordpress.org/plugins/log-cleaner-for-solid-security/
 Description:    Delete Solid Security logs from the database.
-Version:        1.4.0
+Version:        1.4.1
 Author:         Rocket Apps
 Author URI:     https://rocketapps.com.au/
 License:        GPL2
