@@ -52,6 +52,9 @@
                         callbacks: {
                             open: function() {
                                 $('#confirm').on('click', function() {
+                                    $('.mfp-close').trigger('click');
+                                    window.location.href = _href;
+
                                     $.ajax({
                                         url: prep_template._ajax_url,
                                         type: 'post',
@@ -63,9 +66,13 @@
                                         },
                                         success: function (response) {
                                             if (response.success) {
-                                                window.location.href = _href;
+                                                $('.download-success').fadeIn(300);
+                                                $('.list-server-download').remove();
                                             }
-                                        }
+                                        },
+                                        error: function() {
+                                            $('.download-success').html('An error occurred, please try again another time.');
+                                        },
                                     });
                                 });
 

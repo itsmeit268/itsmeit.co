@@ -4,7 +4,7 @@
 
         function level_name(user_point){
             var level_name = 'FREE';
-            if (user_point > 10 && user_point < 50000) {
+            if (user_point > 999 && user_point < 50000) {
                 level_name = 'GOLD';
             } else if (user_point >= 50000 && user_point < 100000) {
                 level_name = 'PREMIUM';
@@ -48,6 +48,6 @@
             });
         }
 
-        setInterval(sendAjaxRequest, 5 * 60 * 1000);
+        // setInterval(sendAjaxRequest, 5 * 60 * 1000);
     });
 })(jQuery);

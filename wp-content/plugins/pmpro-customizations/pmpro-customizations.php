@@ -36,7 +36,7 @@ function get_user_id() {
 
 function get_level_name(){
     $level_name = 'FREE';
-    if (user_point() > 10 && user_point() < 50000) {
+    if (user_point() > 999 && user_point() < 50000) {
         $level_name = 'GOLD';
     } elseif (user_point() >= 50000 && user_point() < 100000) {
         $level_name = 'PREMIUM';
@@ -51,21 +51,23 @@ function user_point() {
     return !empty($user_point) ? (int)$user_point: 0;
 }
 
-function free_level() {
-    if (get_level_name() == 'FREE') {
-        return true;
-    }
-    return false;
-}
 
 function is_allow_show_ads() {
     $manager = current_user_can('manage_options');
     $IP = array('127.0.0.1', '127.0.1.1', 'localhost');
 
-    if (!$manager && !in_array($_SERVER['REMOTE_ADDR'], $IP)) {
+    if (!$manager && !in_array($_SERVER['REMOTE_ADDR'], $IP) && get_level_name() === 'FREE') {
         return true;
     }
-    if (!$manager && user_point() >= 50000) {
+
+    return false;
+}
+
+function is_allow_show_ads_dl() {
+    $manager = current_user_can('manage_options');
+    $IP = array('127.0.0.1', '127.0.1.1', 'localhost');
+
+    if (!$manager && !in_array($_SERVER['REMOTE_ADDR'], $IP) && user_point() <= 999) {
         return true;
     }
 
@@ -84,7 +86,7 @@ function link_member_render($isMeta, $link_is_login, $link_no_login, $prepLinkUR
             if ($isMeta) list_member_link($post_id, $settings); ?>
         <?php elseif (get_level_name() !== 'VIP' && user_point() < $file_point): ?>
             <?php download_permission($file_point); ?>
-        <?php elseif(get_level_name() !== 'VIP' && user_point() > $file_point):?>
+        <?php elseif(get_level_name() !== 'VIP' && user_point() >= $file_point):?>
             <?php href_render($isMeta, $link_is_login, $prepLinkURL, $file_name, $file_size, $prepLinkText, $post_id);
             if ($isMeta) list_member_link($post_id, $settings); ?>
         <?php else: ?>

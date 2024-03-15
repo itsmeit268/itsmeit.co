@@ -58,7 +58,7 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
 
 <?php file_exists(get_template_directory() . '/header.php') ? get_header() : wp_head(); ?>
 <div class="igl-single-page" id="prep-request-page" data-request="<?= esc_attr($prep_request) ?>">
-    <?= !empty($ads['ads_1']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-1">' . $ads['ads_1'] . '</div>' : '' ?>
+    <?= !empty($ads['ads_1']) && aicp_can_see_ads() && is_allow_show_ads_dl() ? '<div class="preplink-ads preplink-ads-1">' . $ads['ads_1'] . '</div>' : '' ?>
     <?php render_back_icon($view_link); ?>
     <header class="igl-header">
         <h1 class="s-title">
@@ -73,7 +73,7 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                         <p><?= __('Your session has ended, please click', 'intelligent-link')?>&nbsp;<a class="session-end" href="<?= $view_link ?>"><span><?= __('here', 'intelligent-link')?></span></a>&nbsp;<?= __('and do it again.', 'intelligent-link')?></p>
                         <p><?= __('If the issue persists, please try clearing cookies or attempting with a different browser.', 'intelligent-link') ?></p>
                     </div>
-                    <?= !empty($ads['ads_7']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-2">' . $ads['ads_7'] . '</div>' : '' ?>
+                    <?= !empty($ads['ads_7']) && aicp_can_see_ads() && is_allow_show_ads_dl() ? '<div class="preplink-ads preplink-ads-2">' . $ads['ads_7'] . '</div>' : '' ?>
                 <?php else: ?>
                     <?php if ($post_image && $isMeta && has_post_thumbnail()) : ?>
                         <div class="ilgl-feat-outer">
@@ -81,7 +81,7 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                                 <img src="<?= get_the_post_thumbnail_url($post_id, 'full'); ?>" class="prep-thumbnail" alt="<?= $post_title ?>" title="<?= $post_title ?>">
                             </div>
                         </div>
-                        <?= !empty($ads['ads_2']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-2">' . $ads['ads_2'] . '</div>' : '' ?>
+                        <?= !empty($ads['ads_2']) && aicp_can_see_ads() && is_allow_show_ads_dl() ? '<div class="preplink-ads preplink-ads-2">' . $ads['ads_2'] . '</div>' : '' ?>
                     <?php endif;?>
 
                     <?php if (!empty($endpoint_conf['ep_mode'])&& $endpoint_conf['ep_mode'] == 'default' && $isMeta): ?>
@@ -124,6 +124,13 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                         </span>
                         </div>
 
+                        <p class="download-success" style="color: rgb(36, 110, 17); padding: 5px 10px; border: 1px solid #dcdde7; border-radius: 5px; margin-bottom: 20px;display: none">
+                            <?php if ($current_language === 'en') : ?>
+                                You have successfully redeemed points. The file has been downloaded. Please check your email (including both your inbox and spam folder) for further information.
+                            <?php else: ?>
+                                Bạn vừa đổi điểm thành công, tệp tin đã được tải xuống, vui lòng kiểm tra email (bao gồm cả hộp thư đến hoặc các hộp thư spam) để nhận thêm thông tin.
+                            <?php endif;?>
+                        </p>
                         <div class="list-file-hide list-server-download" style="display: none">
                             <div class="ilgl-file-timer-btn">
                                 <?php link_member_render($isMeta, $link_is_login, $link_no_login, $prep_request, $file_name, $file_size, $prep_title, $post_id, $meta_attr); ?>
@@ -145,7 +152,7 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                         </div>
                     <?php endif;?>
 
-                    <?= !empty($ads['ads_3']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-3">' . $ads['ads_3'] . '</div>' : '' ?>
+                    <?= !empty($ads['ads_3']) && aicp_can_see_ads() && is_allow_show_ads_dl() ? '<div class="preplink-ads preplink-ads-3">' . $ads['ads_3'] . '</div>' : '' ?>
 
                     <?php $faq_conf = get_option('preplink_faq', []);if (!empty($faq_conf['faq_enabled']) && $faq_conf['faq_enabled'] == 1) : ?>
                         <?php if ($current_language === 'en') : ?>
@@ -246,7 +253,7 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                         </script>
                         <?php endif;?>
 
-                        <?= !empty($ads['ads_4']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-4">' . $ads['ads_4'] . '</div>' : '' ?>
+                        <?= !empty($ads['ads_4']) && aicp_can_see_ads() && is_allow_show_ads_dl() ? '<div class="preplink-ads preplink-ads-4">' . $ads['ads_4'] . '</div>' : '' ?>
                     <?php endif; ?>
 
                     <div class="keyword-search">
@@ -258,11 +265,11 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                         </p>
                     </div>
 
-                    <?= !empty($ads['ads_5']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-5">' . $ads['ads_5'] . '</div>' : '' ?>
+                    <?= !empty($ads['ads_5']) && aicp_can_see_ads() && is_allow_show_ads_dl() ? '<div class="preplink-ads preplink-ads-5">' . $ads['ads_5'] . '</div>' : '' ?>
 
                     <?php if ($isMeta && !empty($endpoint_conf['preplink_related_post']) && $endpoint_conf['preplink_related_post'] == 1): ?>
                         <?php ep_related_post($settings, $post_id) ?>
-                        <?= !empty($ads['ads_6']) && aicp_can_see_ads() && is_allow_show_ads() ? '<div class="preplink-ads preplink-ads-6">' . $ads['ads_6'] . '</div>' : '' ?>
+                        <?= !empty($ads['ads_6']) && aicp_can_see_ads() && is_allow_show_ads_dl() ? '<div class="preplink-ads preplink-ads-6">' . $ads['ads_6'] . '</div>' : '' ?>
                     <?php endif; ?>
 
                     <?php if (file_exists(get_template_directory() . '/comments.php') && !empty($endpoint_conf['preplink_comment']) && (int)$endpoint_conf['preplink_comment'] == 1 && $isMeta) { ?>
