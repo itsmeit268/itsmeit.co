@@ -124,7 +124,7 @@
 				<tr>
 					<th><?php esc_html_e('Date', 'paid-memberships-pro' ); ?></th>
 					<th><?php esc_html_e('Invoice #', 'paid-memberships-pro' ); ?></th>
-					<th><?php esc_html_e('Level', 'paid-memberships-pro' ); ?></th>
+					<th><?php esc_html_e('Point', 'paid-memberships-pro' ); ?></th>
 					<th><?php esc_html_e('Total Billed', 'paid-memberships-pro' ); ?></th>
 				</tr>
 			</thead>

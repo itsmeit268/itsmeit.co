@@ -346,7 +346,7 @@ function pmprorh_init_user_profile() {
             'addmember'     => true,
             'rows'          => 4,
             'html'          => true,
-            'maxlength'     => 200
+            'maxlength'     => 350
         )
     );
 

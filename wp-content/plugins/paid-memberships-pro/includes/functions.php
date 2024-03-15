@@ -334,7 +334,7 @@ function pmpro_isLevelExpiringSoon( &$level ) {
 function pmpro_getLevelCost( &$level, $tags = true, $short = false ) {
 	// initial payment
 	if ( ! $short ) {
-		$r = sprintf( __( 'The price for membership is <strong>%s</strong> now', 'paid-memberships-pro' ), pmpro_formatPrice( $level->initial_payment ) );
+		$r = sprintf( __( 'The price for point <strong>%s</strong> now', 'paid-memberships-pro' ), pmpro_formatPrice( $level->initial_payment ) );
 	} else {
 		if ( pmpro_isLevelFree( $level ) ) {
 			$r = '<strong>' . __('Free', 'paid-memberships-pro' ) . '</strong>';

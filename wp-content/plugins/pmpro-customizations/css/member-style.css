@@ -214,9 +214,10 @@ td.pmpro_account-membership-levelname{
     font-size: 18px;
     font-weight: 600;
 }
-#loginform input[type=text],#loginform input[type=password],form.pmpro_form input[type=text],form.pmpro_form input[type=submit]{
+#loginform input[type=text],#loginform input[type=password],
+form.pmpro_form input[type=text],form.pmpro_form input[type=submit]{
     width: 100%;
-    max-width: 100% !important;
+    max-width: 100%;
 }
 form.pmpro_form input[type=text],form.pmpro_form input[type=password] {
     width: 100%;
@@ -409,6 +410,20 @@ p.lite {
 }
 #member-profile-edit input:focus, #member-profile-edit textarea:focus {
     border: 1px solid #0c8630;
+}
+.pmpro_btn-submit-checkout {
+    max-width: 150px !important;
+    text-align: left;
+    float: left;
+}
+.pmpro_level_description_text a {
+    color: #0D6EB7;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pmpro_level_description_text a:hover {
+    color: #30a006;
 }
 @media (max-width: 750px) {
 

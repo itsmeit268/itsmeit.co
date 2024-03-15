@@ -10,10 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-01-10T22:22:13+00:00\n"
-"PO-Revision-Date: 2024-03-14 06:19+0000\n"
+"PO-Revision-Date: 2024-03-14 06:20+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: paid-memberships-pro\n"
-"\n"
 "Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Loco-Version: 2.6.6; wp-6.4.3"
@@ -940,7 +939,7 @@ msgstr ""
 #: pages/cancel.php:73 pages/invoice.php:127 pages/levels.php:28
 #: shortcodes/pmpro_account.php:55 shortcodes/pmpro_account.php:259
 msgid "Level"
-msgstr ""
+msgstr "Point"
 
 #: adminpages/dashboard.php:233 adminpages/reports/logins.php:202
 #: classes/class-pmpro-admin-activity-email.php:119

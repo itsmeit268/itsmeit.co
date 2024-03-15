@@ -26,8 +26,8 @@ if($pmpro_msg)
 <thead>
   <tr>
 	<th><?php esc_html_e('Point', 'paid-memberships-pro' );?></th>
-	<th><?php esc_html_e('Price', 'paid-memberships-pro' );?></th>	
-	<th>&nbsp;</th>
+	<th><?php esc_html_e('Price', 'paid-memberships-pro' );?></th>
+    <th style="text-align: center"><?php esc_html_e('Action', 'paid-memberships-pro' );?></th>
   </tr>
 </thead>
 <tbody>
