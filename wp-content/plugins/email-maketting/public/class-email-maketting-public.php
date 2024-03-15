@@ -138,26 +138,6 @@ class Email_Maketting_Public
         return 0;
     }
 
-    function get_category_by_product_id($product_id) {
-        $taxonomy = 'product_cat';
-
-        $categories = wp_get_post_terms($product_id, $taxonomy);
-
-        if ($categories && !is_wp_error($categories)) {
-            $highest_category_id = null;
-            foreach ($categories as $category) {
-                if (!$highest_category_id || $category->parent == 0) {
-                    $highest_category_id = $category->term_id;
-                }
-            }
-            if ($highest_category_id) {
-                return $highest_category_id;
-            }
-        }
-
-        return 0;
-    }
-
 
     function check_is_product(){
         return (class_exists('WooCommerce', false) && is_singular('product'));
@@ -190,9 +170,6 @@ class Email_Maketting_Public
              );
 
             $category_id = $this->get_category_by_post_id(get_the_ID());
-            if ($this->check_is_product()) {
-                $category_id = $this->get_category_by_product_id(get_the_ID());
-            }
 
             if (empty($exist_link)) {
                 $data = array(
@@ -312,117 +289,117 @@ class Email_Maketting_Public
         global $wpdb;
         $table_name = $wpdb->prefix . 'email_marketing';
 
-        if ($this->table_exists($table_name)) {
-            $post_link = get_permalink($post_id );
+        if (!$this->table_exists($table_name)) {
+            return;
+        }
+
+        $post_link = get_permalink($post_id );
+        $query = $wpdb->prepare(
+            "SELECT * FROM $table_name WHERE link = %s AND allow = 1",
+            $post_link
+        );
+
+        if ($status == 'publish_all') {
+            $category_id = $this->get_category_by_post_id($post_id);
             $query = $wpdb->prepare(
-                "SELECT * FROM $table_name WHERE link = %s AND allow = 1",
-                $post_link
+                "SELECT DISTINCT name, email FROM $table_name WHERE allow = 1 AND category_id = %d",
+                $category_id
+            );
+        }
+
+        $users = $wpdb->get_results($query);
+        if (!empty($users)) {
+            $headers = array(
+                'Content-Type: text/html; charset=UTF-8',
+                'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>'
             );
 
-            if ($status == 'publish_all') {
-                $category_id = $this->get_category_by_post_id($post_id);
-                if ($post_type === 'product') {
-                    $category_id = $this->get_category_by_product_id($post_id);
-                }
-                $query = $wpdb->prepare(
-                    "SELECT DISTINCT name, email FROM $table_name WHERE allow = 1 AND category_id = %d",
-                    $category_id
+            $relateds = get_posts(
+                array(
+                    'post_type' => 'post',
+                    'posts_per_page' => 5,
+                    'post__not_in' => array($post_id),
+                    'orderby' => 'rand',
+                    'category__in' => wp_get_post_categories($post_id)
+                ) );
+
+            $related_html = '';
+
+            foreach ($relateds as $related) {
+                $related_post_id = $related->ID;
+                $related_html .= $this->render_related_html(
+                    $post_type,
+                    get_permalink($related_post_id),
+                    get_the_post_thumbnail_url($related_post_id, 'thumbnail'),
+                    get_the_title($related_post_id),
+                    get_the_excerpt($related_post_id)
                 );
             }
 
-            $users = $wpdb->get_results($query);
-            if (!empty($users)) {
-                $headers = array(
-                    'Content-Type: text/html; charset=UTF-8',
-                    'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>'
-                 );
+            foreach ($users as $user) {
+                $recipient_email = $user->email;
+                $subject = '[New] ' . get_the_title($post_id );
 
-                $relateds = get_posts(
-                    array(
-                        'post_type' => 'post',
-                        'posts_per_page' => 5,
-                        'post__not_in' => array($post_id),
-                        'orderby' => 'rand',
-                        'category__in' => wp_get_post_categories($post_id)
-                    ) );
+                $html_content = $this->html_marketting_email($post_type, $post_id, $post_link, $user->name, $recipient_email );
+                $html_content = str_replace('{{related_title}}', __('YOU MIGHT ALSO LIKE'), $html_content );
+                $html_content = str_replace('{{related_posts}}', $related_html, $html_content );
+                $html_content = str_replace('{{email_customer}}', base64_encode($recipient_email), $html_content );
 
-                $related_html = '';
+                try {
+                    $is_sent = wp_mail($recipient_email, $subject, $html_content, $headers );
 
-                if ($post_type === 'product') {
-                    $relateds = $this->get_related_products($post_id);
-                }
-
-                foreach ($relateds as $related) {
-                    // Lấy giá gốc của sản phẩm
-                    if ($post_type === 'product') {
-                        $product = wc_get_product($related->ID);
-                        $regular_price = $product->get_regular_price();
-                        $sale_price = $product->get_sale_price();
-                    } else {
-                        $regular_price = '';
-                        $sale_price = '';
+                    if ($is_sent) {
+                        $wpdb->update(
+                            $table_name,
+                            array('send_count' => $user->send_count + 1),
+                            array('email' => $recipient_email)
+                        );
                     }
-
-                    $related_post_id = $related->ID;
-                    $related_html .= $this->render_related_html(
-                        $post_type,
-                        $regular_price,
-                        $sale_price,
-                        get_permalink($related_post_id),
-                        get_the_post_thumbnail_url($related_post_id, 'thumbnail'),
-                        get_the_title($related_post_id),
-                        get_the_excerpt($related_post_id)
-                     );
-                }
-
-                foreach ($users as $user) {
-                    $recipient_email = $user->email;
-                    $subject = '[New] ' . get_the_title($post_id );
-
-                    $html_content = $this->html_marketting_email($post_type, $post_id, $post_link, $user->name, $recipient_email );
-                    $html_content = str_replace('{{related_title}}', __('YOU MIGHT ALSO LIKE'), $html_content );
-                    $html_content = str_replace('{{related_posts}}', $related_html, $html_content );
-                    $html_content = str_replace('{{email_customer}}', base64_encode($recipient_email), $html_content );
-
-                    try {
-                        $is_sent = wp_mail($recipient_email, $subject, $html_content, $headers );
-
-                        if ($is_sent) {
-                            $wpdb->update(
-                                $table_name,
-                                array('send_count' => $user->send_count + 1),
-                                array('email' => $recipient_email)
-                             );
-                        }
-                    } catch (Exception $e) {
-                        error_log('Lỗi gửi email: ' . $e->getMessage() );
-                    }
+                } catch (Exception $e) {
+                    error_log('Lỗi gửi email: ' . $e->getMessage() );
                 }
             }
         }
     }
 
-    function get_related_products($product_id) {
-        $related_products = array();
-        $product_categories = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'ids'));
-        if ($product_categories && !is_wp_error($product_categories)) {
-            $args = array(
-                'post_type' => 'product',
-                'posts_per_page' => 5,
-                'post__not_in' => array($product_id),
-                'orderby' => 'rand',
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'product_cat',
-                        'field' => 'term_id',
-                        'terms' => $product_categories,
-                    ),
-                ),
-            );
-            $related_products = get_posts($args);
-        }
-
-        return $related_products;
+    /**
+     * @param $post_url
+     * @param $thumbnail
+     * @param $title
+     * @param $description
+     * @return string
+     */
+    function render_related_html($post_type,$post_url, $thumbnail, $title, $description){
+        $des_post = '<table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="font-size: 14px;">
+                                <p style="color: #ced4d9; font-size: 14px; line-height: 15px; max-height: 30px; margin-right: 10px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                    '.$description.'
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    ';
+        $html = '<tr>
+                    <td align="center" style="padding: 0;font-family: Arial, sans-serif;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td class="image" style="padding: 0 0 0 10px; width: 30%;">
+                                    <a style="color: #333;text-decoration: none;" href="' . $post_url . '">
+                                        <img style="width: 90%;height: 82px; object-fit: cover;padding-top:13px" src="' . $thumbnail . '" alt="' . $title . '">
+                                    </a>
+                                </td>
+                                <td style="color: #333;text-align: left;padding: 0; width: 70%;padding-right: 10px;">
+                                    <h2 style="font-size: 15px; font-weight: 400;">
+                                        <a style="color: #fff;text-decoration: none;" href="' . $post_url . '">' . $title . '</a>
+                                    </h2>
+                                     '.$des_post.'
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>';
+        return $html;
     }
 
     /**
@@ -438,58 +415,6 @@ class Email_Maketting_Public
         }
 
         return false;
-    }
-
-    /**
-     * @param $post_url
-     * @param $thumbnail
-     * @param $title
-     * @param $description
-     * @return string
-     */
-    function render_related_html($post_type, $regular_price, $sale_price ,$post_url, $thumbnail, $title, $description){
-        $des_post = '<table style="width: 100%; border-collapse: collapse;">
-                        <tr>
-                            <td style="font-size: 14px;">
-                                <p style="color: #ced4d9; line-height: 15px; max-height: 30px;; overflow: hidden;">
-                                    '.$description.'
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                    ';
-        if ($post_type === 'product') {
-            $des_product = '<p style="color: #ced4d9; font-weight: 600;font-size: 14px">';
-            $des_product .= 'Price: ' . wc_price($regular_price);
-            if ($sale_price) {
-                $des_product .= '<p style="color: #eb1900; font-weight: 600;font-size: 14px">';
-                $des_product .= 'Sales: ' . wc_price($sale_price);
-                $des_product .= '</p>';
-            }
-            $des_product .= '</p>';
-            $des_post = $des_product;
-        }
-
-        $html = '<tr>
-                    <td class="v-container-padding-padding custom-td" align="center" style="padding: 0;font-family: Arial, sans-serif;">
-                        <table style="width: 100%;">
-                            <tr>
-                                <td class="image" style="padding: 0 0 0 10px; width: 30%;">
-                                    <a style="color: #333;text-decoration: none;" href="' . $post_url . '">
-                                        <img style="width: 90%;height: 82px; object-fit: cover;padding-top:13px" src="' . $thumbnail . '" alt="' . $title . '">
-                                    </a>
-                                </td>
-                                <td class="title_description" style="color: #333;text-align: left;padding: 0; width: 70%;">
-                                    <h2 style="font-size: 15px; font-weight: 400;overflow: hidden; overflow: hidden;line-height: 1.2em; max-height: 2.4em;">
-                                        <a style="color: #fff;text-decoration: none;" href="' . $post_url . '">' . $title . '</a>
-                                    </h2>
-                                     '.$des_post.'
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>';
-        return $html;
     }
 
     function unsubscribe_function(){
@@ -581,7 +506,7 @@ class Email_Maketting_Public
                             array('allow' => 1),
                             array('email' => $email)
                          );
-                        $response = ['message' => __('You have subscribed to receive new posts from ', 'email-maketting') . get_bloginfo('name')];
+                        $response = ['message' => __('You have subscribed to receive new posts from ', 'email-maketting') . 'ItsmeIT'];
                     } elseif ($query_subscribe_email !== null && $query_marketing_email === null) {
                         $response = ['message' => __('You have previously registered, please check your email and verify.', 'email-maketting' )];
                     }

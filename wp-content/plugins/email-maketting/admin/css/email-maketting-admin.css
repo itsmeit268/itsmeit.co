@@ -37,3 +37,6 @@
     cursor: pointer;
     font-size: 16px;
 }
+tr td.link.column-link {
+    border: none !important;
+}

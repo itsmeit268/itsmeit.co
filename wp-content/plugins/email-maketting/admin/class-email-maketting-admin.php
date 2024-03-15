@@ -32,8 +32,6 @@ class Email_Maketting_Admin {
 
     public function add_plugin_action_link($links){
         $setting_link = '<a href="' . esc_url(get_admin_url()) . 'admin.php?page=email-maketting-settings">' . __('Settings', 'Email Maketting') . '</a>';
-        $donate_link = '<a href="//itsmeit.co/donate.html" title="' . __('Donate', 'email-maketting') . '" target="_blank" style="font-weight:bold">' . __('Donate', 'email-maketting') . '</a>';
-        array_unshift($links, $donate_link);
         array_unshift($links, $setting_link);
         return $links;
     }

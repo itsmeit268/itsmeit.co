@@ -108,7 +108,7 @@ class Email_Maketting_Admin_User_Table extends WP_List_Table {
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'email_marketing';
-        $data = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
+        $data = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC", ARRAY_A);
         return $data;
     }
 
