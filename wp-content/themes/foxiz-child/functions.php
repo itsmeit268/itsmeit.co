@@ -32,7 +32,6 @@ function redirect_user_not_admin() {
     if (!is_user_logged_in()) {
         return;
     }
-
     $manager = current_user_can('manage_options');
     $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 

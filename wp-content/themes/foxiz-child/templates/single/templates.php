@@ -407,12 +407,8 @@ if ( ! function_exists( 'foxiz_single_header_meta' ) ) {
 				} ?>
                 <div class="smeta-sec">
 					<?php if ( foxiz_get_option( $prefix . '_updated_meta' ) ) :
-						$format = foxiz_get_option( $prefix . '_update_format' );
-                        $current_language = pll_current_language();
-						if ( empty( $format ) ) {
-							$format = 'Y/m/d \a\t g:i A';
-						}
-                        if ($current_language === 'vi') {
+                        $format = 'Y/m/d \a\t g:i A';
+                        if (pll_current_language() === 'vi') {
                             $format = 'd/m/Y \l\ú\c\ g:i A';
                         }
 						?>

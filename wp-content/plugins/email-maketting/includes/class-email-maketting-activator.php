@@ -36,7 +36,6 @@ class Email_Maketting_Activator {
                 PRIMARY KEY (id)
             ) $charset_collate";
 
-
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
         }
@@ -72,6 +71,12 @@ class Email_Maketting_Activator {
 
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
+        }
+
+        $field_exists = $wpdb->get_var("SHOW COLUMNS FROM $marketing_table LIKE 'is_sent_today'");
+
+        if (!$field_exists) {
+            $wpdb->query("ALTER TABLE $marketing_table ADD COLUMN is_sent_today DATETIME NOT NULL");
         }
 	}
 

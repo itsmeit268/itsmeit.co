@@ -42,9 +42,10 @@ class Email_Maketting_Public
             add_shortcode('contact_shortcode', array($this, 'contact_shortcode_function') );
 
             add_action( 'before_delete_post', array($this,'delete_post_id_email_marketting') );
-            add_action( 'transition_post_status', array($this, 'check_post_public_or_update'), 10, 3  );
-
             add_action( 'wp_footer', array($this, 'ajax_loader') );
+
+            add_action( 'transition_post_status', array($this, 'check_post_public_or_update'), 10, 3  );
+//            add_action( 'send_email_after_save_post', array($this, 'send_email_maketting_callback'), 10, 3  );
         }
     }
 
@@ -144,7 +145,6 @@ class Email_Maketting_Public
     }
 
     function save_email_marketing_data(){
-
         if (!is_admin() && !is_front_page() && is_singular('post') && is_user_logged_in() || $this->check_is_product()) {
             global $wpdb;
             $table_name = $wpdb->prefix . 'email_marketing';
@@ -206,15 +206,13 @@ class Email_Maketting_Public
         }
     }
 
-    function html_marketting_email($post_type, $post_id, $post_link, $name, $email){
+    function html_marketting_email($post_id, $post_link, $name, $email){
         $template_path = WP_PLUGIN_DIR . '/email-maketting/public/template/marketing_email.html';
         $template_content = file_get_contents($template_path );
 
         $description = get_the_excerpt($post_id);
         $description_html = '<p style="line-height: 140%; padding:0 8px;text-align: center">'.$description.'</p>';
-        if ($post_type === 'product') {
-            $description_html = '<p style="line-height: 140%; padding:0 8px;text-align: left">'.$description.'</p>';
-        }
+
         $template_content = str_replace('{{name}}', $name, $template_content );
         $template_content = str_replace('{{email}}', $email, $template_content );
         $template_content = str_replace('{{post_link}}', $post_link, $template_content );
@@ -270,7 +268,7 @@ class Email_Maketting_Public
             return;
         }
 
-        if (($post->post_type !== 'post' || $post->post_type !== 'product') && $post->post_status !== 'publish') {
+        if ($post->post_type !== 'post' && $post->post_status !== 'publish') {
             return;
         }
 
@@ -278,33 +276,29 @@ class Email_Maketting_Public
             return;
         }
 
-        if ($old_status !== 'publish' && $new_status === 'publish' ) {
-            $this->send_email_maketting_callback('publish_all', $post->ID, $post->post_type );
-        } else if ($old_status === 'publish' && $new_status === 'publish' ) {
-            $this->send_email_maketting_callback('update_one', $post->ID, $post->post_type );
-        }
+        $this->send_email_maketting_callback('update_one', $post->ID);
+
+//        if ($old_status !== 'publish' && $new_status === 'publish' ) {
+//            wp_schedule_single_event( time() + 100, 'send_email_after_save_post', array('publish_all', $post->ID));
+//        } else if ($old_status === 'publish' && $new_status === 'publish' ) {
+//            wp_schedule_single_event( time() + 100, 'send_email_after_save_post', array('update_one', $post->ID));
+//        }
     }
 
-    function send_email_maketting_callback($status, $post_id, $post_type){
+    function send_email_maketting_callback($status, $post_id){
         global $wpdb;
-        $table_name = $wpdb->prefix . 'email_marketing';
+        $marketing_table = $wpdb->prefix . 'email_marketing';
 
-        if (!$this->table_exists($table_name)) {
+        if (!$this->table_exists($marketing_table)) {
             return;
         }
 
         $post_link = get_permalink($post_id );
-        $query = $wpdb->prepare(
-            "SELECT * FROM $table_name WHERE link = %s AND allow = 1",
-            $post_link
-        );
+        $query = $wpdb->prepare("SELECT * FROM $marketing_table WHERE link = %s AND allow = 1", $post_link);
 
         if ($status == 'publish_all') {
             $category_id = $this->get_category_by_post_id($post_id);
-            $query = $wpdb->prepare(
-                "SELECT DISTINCT name, email FROM $table_name WHERE allow = 1 AND category_id = %d",
-                $category_id
-            );
+            $query = $wpdb->prepare("SELECT DISTINCT name, email FROM $marketing_table WHERE allow = 1 AND category_id = %d", $category_id);
         }
 
         $users = $wpdb->get_results($query);
@@ -328,7 +322,6 @@ class Email_Maketting_Public
             foreach ($relateds as $related) {
                 $related_post_id = $related->ID;
                 $related_html .= $this->render_related_html(
-                    $post_type,
                     get_permalink($related_post_id),
                     get_the_post_thumbnail_url($related_post_id, 'thumbnail'),
                     get_the_title($related_post_id),
@@ -336,30 +329,36 @@ class Email_Maketting_Public
                 );
             }
 
+            $current_date = current_time('mysql', 1);
+            $current_date_timestamp = strtotime($current_date);
+
             foreach ($users as $user) {
-                $recipient_email = $user->email;
-                $subject = '[New] ' . get_the_title($post_id );
+                $last_sent_date = strtotime($user->is_sent_today);
+                if (date('Y-m-d', $last_sent_date) != date('Y-m-d', $current_date_timestamp)) {
+                    $recipient_email = $user->email;
+                    $subject = '[New] ' . get_the_title($post_id );
 
-                $html_content = $this->html_marketting_email($post_type, $post_id, $post_link, $user->name, $recipient_email );
-                $html_content = str_replace('{{related_title}}', __('YOU MIGHT ALSO LIKE'), $html_content );
-                $html_content = str_replace('{{related_posts}}', $related_html, $html_content );
-                $html_content = str_replace('{{email_customer}}', base64_encode($recipient_email), $html_content );
+                    $html_content = $this->html_marketting_email($post_id, $post_link, $user->name, $recipient_email );
+                    $html_content = str_replace('{{related_title}}', __('YOU MIGHT ALSO LIKE'), $html_content );
+                    $html_content = str_replace('{{related_posts}}', $related_html, $html_content );
+                    $html_content = str_replace('{{email_customer}}', base64_encode($recipient_email), $html_content );
 
-                try {
-                    $is_sent = wp_mail($recipient_email, $subject, $html_content, $headers );
-
-                    if ($is_sent) {
-                        $wpdb->update(
-                            $table_name,
-                            array('send_count' => $user->send_count + 1),
-                            array('email' => $recipient_email)
-                        );
+                    try {
+                        $is_sent = wp_mail($recipient_email, $subject, $html_content, $headers );
+                        if ($is_sent) {
+                            $wpdb->update(
+                                $marketing_table,
+                                array('send_count' => $user->send_count + 1, 'is_sent_today' => $current_date),
+                                array('email' => $recipient_email),
+                            );
+                        }
+                    } catch (Exception $e) {
+                        error_log('Lỗi gửi email: ' . $e->getMessage() );
                     }
-                } catch (Exception $e) {
-                    error_log('Lỗi gửi email: ' . $e->getMessage() );
                 }
             }
         }
+        wp_clear_scheduled_hook('send_email_after_save_post');
     }
 
     /**
@@ -369,7 +368,7 @@ class Email_Maketting_Public
      * @param $description
      * @return string
      */
-    function render_related_html($post_type,$post_url, $thumbnail, $title, $description){
+    function render_related_html($post_url, $thumbnail, $title, $description){
         $des_post = '<table style="width: 100%; border-collapse: collapse;">
                         <tr>
                             <td style="font-size: 14px;">
@@ -462,7 +461,6 @@ class Email_Maketting_Public
             if ($this->table_exists($subscribe_table) && $this->table_exists($marketting_table)) {
                 $email = sanitize_email($_REQUEST['email'] );
                 if (is_email($email)) {
-
                     $query_subscribe_email = $this->_query_data_by_email($wpdb, $subscribe_table, '*', $email );
                     $query_marketing_email = $this->_query_data_by_email($wpdb, $marketting_table, '*', $email );
 
