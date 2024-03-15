@@ -45,7 +45,7 @@ class Email_Maketting_Public
             add_action( 'wp_footer', array($this, 'ajax_loader') );
 
             add_action( 'transition_post_status', array($this, 'check_post_public_or_update'), 10, 3  );
-//            add_action( 'send_email_after_save_post', array($this, 'send_email_maketting_callback'), 10, 3  );
+            add_action( 'send_email_after_save_post', array($this, 'send_email_maketting_callback'), 10, 3  );
         }
     }
 
@@ -276,13 +276,11 @@ class Email_Maketting_Public
             return;
         }
 
-        $this->send_email_maketting_callback('update_one', $post->ID);
-
-//        if ($old_status !== 'publish' && $new_status === 'publish' ) {
-//            wp_schedule_single_event( time() + 100, 'send_email_after_save_post', array('publish_all', $post->ID));
-//        } else if ($old_status === 'publish' && $new_status === 'publish' ) {
-//            wp_schedule_single_event( time() + 100, 'send_email_after_save_post', array('update_one', $post->ID));
-//        }
+        if ($old_status !== 'publish' && $new_status === 'publish' ) {
+            wp_schedule_single_event( time() + 100, 'send_email_after_save_post', array('publish_all', $post->ID));
+        } else if ($old_status === 'publish' && $new_status === 'publish' ) {
+            wp_schedule_single_event( time() + 100, 'send_email_after_save_post', array('update_one', $post->ID));
+        }
     }
 
     function send_email_maketting_callback($status, $post_id){
