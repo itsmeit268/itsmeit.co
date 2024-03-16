@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <?php
-$user_name = get_username_from_url();
+$user_name = get_username_from_url(get_current_url());
 $user = get_user_by('login', $user_name);
 
 if (!empty($user_name)) : ?>

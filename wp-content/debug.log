@@ -1,0 +1,36 @@
+[16-Mar-2024 04:49:59 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 04:49:59 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function get_username_from_url(), 0 passed in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php on line 57 and exactly 1 expected in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php:397
+Stack trace:
+#0 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php(57): get_username_from_url()
+#1 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php(39): user_point()
+#2 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/templates/user.php(41): get_level_name()
+#3 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/template-loader.php(106): include('...')
+#4 /var/www/vhosts/itsmeit.co/httpdocs/wp-blog-header.php(19): require_once('...')
+#5 /var/www/vhosts/itsmeit.co/httpdocs/index.php(17): require('...')
+#6 {main}
+  thrown in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php on line 397
+[16-Mar-2024 04:50:04 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function get_username_from_url(), 0 passed in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php on line 57 and exactly 1 expected in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php:397
+Stack trace:
+#0 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php(57): get_username_from_url()
+#1 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php(39): user_point()
+#2 /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/templates/user.php(41): get_level_name()
+#3 /var/www/vhosts/itsmeit.co/httpdocs/wp-includes/template-loader.php(106): include('...')
+#4 /var/www/vhosts/itsmeit.co/httpdocs/wp-blog-header.php(19): require_once('...')
+#5 /var/www/vhosts/itsmeit.co/httpdocs/index.php(17): require('...')
+#6 {main}
+  thrown in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/plugins/pmpro-customizations/pmpro-customizations.php on line 397
+[16-Mar-2024 04:50:58 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 04:51:00 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 04:52:11 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 04:53:06 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 04:53:17 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:03:32 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:04:18 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:05:24 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:06:26 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:08:21 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:09:20 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:10:04 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:11:20 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:12:20 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7
+[16-Mar-2024 06:13:22 UTC] PHP Warning:  Cannot modify header information - headers already sent in /var/www/vhosts/itsmeit.co/httpdocs/wp-content/themes/foxiz-child/include/ezoic_cookie.php on line 7

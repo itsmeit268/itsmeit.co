@@ -54,7 +54,7 @@ function user_point() {
         $url_parts = explode('/user/', $current_url);
         $username = isset($url_parts[1]) ? $url_parts[1] : '';
         if (username_exists($username) && !empty($username)) {
-            $user_id = get_user_by('login', get_username_from_url())->ID;
+            $user_id = get_user_by('login', get_username_from_url($current_url))->ID;
         }
     }
 
@@ -376,37 +376,38 @@ function pmprorh_init_user_profile() {
 
 add_action( 'init', 'pmprorh_init_user_profile' );
 
+function get_current_url() {
+    return 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+
 add_filter('template_include', 'intelldnt_link_template_include');
 
 function intelldnt_link_template_include($template) {
-    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    if (strpos($current_url, '/user/itsmeit') !== false || strpos($current_url, '/user/loibv') !== false) {
-        return $template;
-    }
+    $current_url = get_current_url();
     if (strpos($current_url, '/user/') !== false) {
-        $url_parts = explode('/user/', $current_url);
-        $username = isset($url_parts[1]) ? $url_parts[1] : '';
-        if (username_exists($username) && !empty($username) && $username !== 'itsmeit' && $username !== 'loibv') {
+        $user_name = get_username_from_url($current_url);
+        if ($user_name !== 'itsmeit' && $user_name !== 'loibv') {
             $template = dirname(__FILE__) . '/templates/user.php';
-        } else {
-            wp_redirect(get_bloginfo('url').'/404.html');
         }
     }
-
     return $template;
 }
 
+function get_username_from_url($url) {
+    if (strpos($url, '/user/') !== false) {
+        $url_parts = explode('/user/', $url);
+        $username = isset($url_parts[1]) ? $url_parts[1] : '';
 
-function get_username_from_url() {
-    if ( is_author() ) {
-        $username = get_query_var( 'author_name' );
-        if ( empty( $username ) ) {
-            $username = get_query_var( 'author' );
+        if (!empty($username) && username_exists($username)) {
+            return $username;
+        } else {
+            wp_redirect(get_bloginfo('url') . '/404.html');
+            exit;
         }
-        return $username;
     }
     return false;
 }
+
 
 add_action( 'pmpro_personal_options_update', 'save_user_fields_in_profile' );
 
