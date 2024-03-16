@@ -36,18 +36,29 @@ function get_user_id() {
 
 function get_level_name(){
     $level_name = 'FREE';
-    if (user_point() > 999 && user_point() < 50000) {
+    $user_point = user_point();
+    if ($user_point > 999 && $user_point < 50000) {
         $level_name = 'GOLD';
-    } elseif (user_point() >= 50000 && user_point() < 100000) {
+    } elseif ($user_point >= 50000 && $user_point < 100000) {
         $level_name = 'PREMIUM';
-    } elseif(user_point() >= 100000) {
+    } elseif($user_point >= 100000) {
         $level_name = 'VIP';
     }
     return $level_name;
 }
 
 function user_point() {
-    $user_point = get_user_meta(get_user_id(), 'wp_user_point', true);
+    $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $user_id = get_user_id();
+    if (strpos($current_url, '/user/') !== false) {
+        $url_parts = explode('/user/', $current_url);
+        $username = isset($url_parts[1]) ? $url_parts[1] : '';
+        if (username_exists($username) && !empty($username)) {
+            $user_id = get_user_by('login', get_username_from_url())->ID;
+        }
+    }
+
+    $user_point = get_user_meta($user_id, 'wp_user_point', true);
     return !empty($user_point) ? (int)$user_point: 0;
 }
 
@@ -368,23 +379,23 @@ add_action( 'init', 'pmprorh_init_user_profile' );
 add_filter('template_include', 'intelldnt_link_template_include');
 
 function intelldnt_link_template_include($template) {
-    $manager = current_user_can('manage_options');
     $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-    if (strpos($current_url, '/user/itsmeit') !== false) {
+    if (strpos($current_url, '/user/itsmeit') !== false || strpos($current_url, '/user/loibv') !== false) {
         return $template;
     }
-    if ( strpos($current_url, '/user/loibv') !== false) {
-        return $template;
-    }
-
-    if (!is_admin() && !$manager) {
-        if (strpos($current_url, '/user/')) {
-            $template = dirname( __FILE__ ) . '/templates/user.php';;
+    if (strpos($current_url, '/user/') !== false) {
+        $url_parts = explode('/user/', $current_url);
+        $username = isset($url_parts[1]) ? $url_parts[1] : '';
+        if (username_exists($username) && !empty($username) && $username !== 'itsmeit' && $username !== 'loibv') {
+            $template = dirname(__FILE__) . '/templates/user.php';
+        } else {
+            wp_redirect(get_bloginfo('url').'/404.html');
         }
     }
+
     return $template;
 }
+
 
 function get_username_from_url() {
     if ( is_author() ) {

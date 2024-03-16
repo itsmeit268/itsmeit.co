@@ -15,10 +15,10 @@ call_user_func( function () {
 		$plugins = get_option( 'active_plugins', [] );
 	}
 
-	if ( ! is_array( $plugins ) || ! in_array( 'ithemes-security-pro/ithemes-security-pro.php', $plugins, true ) ) {
+	if ( ! is_array( $plugins ) || ! in_array( 'better-wp-security/better-wp-security.php', $plugins, true ) ) {
 		return;
 	}
 
 	define( 'ITSEC_LOAD_EARLY', true );
-	include_once WP_CONTENT_DIR . '/plugins/ithemes-security-pro/ithemes-security-pro.php';
+	include_once WP_CONTENT_DIR . '/plugins/better-wp-security/better-wp-security.php';
 } );

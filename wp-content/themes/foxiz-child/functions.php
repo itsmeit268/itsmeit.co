@@ -59,3 +59,40 @@ add_filter('rest_authentication_errors', function($result) {
 
     return $result;
 });
+
+add_action('wp_login', 'send_admin_login_email', 10, 2);
+
+function send_admin_login_email($user_login, $user) {
+    if (user_can($user, 'manage_options')) {
+        $admin_email = get_option('admin_email');
+        $user_ip = $_SERVER['REMOTE_ADDR'];
+        $user_browser = $_SERVER['HTTP_USER_AGENT'];
+
+        $subject = 'Thông báo: Admin đăng nhập vào trang web';
+        $message = 'Admin ' . $user_login . ' đã đăng nhập vào trang web vào lúc ' . date('Y-m-d H:i:s') . '. Địa chỉ IP: ' . $user_ip . '. Trình duyệt: ' . $user_browser;
+        wp_mail($admin_email, $subject, $message);
+    }
+}
+
+//Disable the new user notification sent to the site admin
+function disable_new_user_notifications() {
+    //Remove original use created emails
+    remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
+    remove_action( 'edit_user_created_user', 'wp_send_new_user_notifications', 10, 2 );
+
+    //Add new function to take over email creation
+    add_action( 'register_new_user', 'send_new_email_notifications' );
+    add_action( 'edit_user_created_user', 'send_new_email_notifications', 10, 2 );
+}
+function send_new_email_notifications( $user_id, $notify = 'user' ) {
+    if ( empty($notify) || $notify == 'admin' ) {
+        return;
+    } elseif( $notify == 'both' ){
+        $notify = 'user';
+    }
+
+    $blogname = 'ItsmeIT';
+    $subject = sprintf( '[%s] New User Registration', $blogname );
+    wp_new_user_notification( $user_id, $notify, $subject );
+}
+add_action( 'init', 'disable_new_user_notifications' );

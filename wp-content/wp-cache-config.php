@@ -24,7 +24,7 @@ $ossdlcdn = 0;
 // Array of files that have 'wp-' but should still be cached
 $cache_acceptable_files = array ( 0 => 'wp-comments-popup.php', 1 => 'wp-links-opml.php', 2 => 'wp-locations.php', 3 => 'user.php', 4 => 'custom_template.php', );
 
-$cache_rejected_uri = array ( 0 => 'wp-.*\\.php', 1 => 'index\\.php', 2 => '/my-account', 3 => '/1', 4 => '/user/', );
+$cache_rejected_uri = array ( 0 => 'wp-.*\\.php', 1 => 'index\\.php', 2 => '/my-account', 3 => '/1', 4 => '/2', 5 => '/user/', );
 $cache_rejected_user_agent = array();
 
 $cache_rebuild_files = 1;
