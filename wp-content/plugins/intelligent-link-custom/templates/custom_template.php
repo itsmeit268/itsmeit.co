@@ -112,7 +112,6 @@ add_action( 'wp_enqueue_scripts', 'remove_enlighterjs_script', 10 );
                                 </div>
                             </div>
                         </div>
-
                         <div class="endpoint-progress" id="endpoint-progress" style="display:none;">
                             <p class="counter">0%</p>
                             <div class="bar"></div>

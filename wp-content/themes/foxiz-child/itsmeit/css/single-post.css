@@ -238,15 +238,16 @@ div.enlighter-code>div.enlighter>div::before {
     padding-left: 22px !important
 }
 
-.link-download-file > a, .link-download-file > strong > a {
-    color: #00659f !important;
-    font-weight: bold;
+#link-download-file .post-progress:hover {
+    color: #085789;
 }
-
-.link-download-file > a:hover, .link-download-file > strong > a:hover {
-    color: red !important
+.text-complete {
+    color: #fff;
+    padding: 0 10px;
 }
-
+.text-complete:hover {
+    color: #e7dede;
+}
 .ftwp-heading {
     margin: 15px 0
 }
@@ -459,9 +460,7 @@ span.wpcf7-form-control-wrap {
 .wpcf7-spinner, span[data-name="email-44-newsletter"] > .wpcf7-not-valid-tip {
     display: none !important
 }
-ol.link-download-file > li {
-    display: none;
-}
+
 .kk-star-ratings{
     margin-top: -7px !important;
 }
