@@ -60,27 +60,10 @@ add_filter('rest_authentication_errors', function($result) {
     return $result;
 });
 
-add_action('wp_login', 'send_admin_login_email', 10, 2);
 
-function send_admin_login_email($user_login, $user) {
-    if (user_can($user, 'manage_options')) {
-        $admin_email = get_option('admin_email');
-        $user_ip = $_SERVER['REMOTE_ADDR'];
-        $user_browser = $_SERVER['HTTP_USER_AGENT'];
-
-        $subject = 'Thông báo: Admin đăng nhập vào trang web';
-        $message = 'Admin ' . $user_login . ' đã đăng nhập vào trang web vào lúc ' . date('Y-m-d H:i:s') . '. Địa chỉ IP: ' . $user_ip . '. Trình duyệt: ' . $user_browser;
-        wp_mail($admin_email, $subject, $message);
-    }
-}
-
-//Disable the new user notification sent to the site admin
 function disable_new_user_notifications() {
-    //Remove original use created emails
     remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
-    remove_action( 'edit_user_created_user', 'wp_send_new_user_notifications', 10, 2 );
-
-    //Add new function to take over email creation
+    remove_action( 'edit_user_created_user', 'wp_send_new_user_notifications' );
     add_action( 'register_new_user', 'send_new_email_notifications' );
     add_action( 'edit_user_created_user', 'send_new_email_notifications', 10, 2 );
 }
@@ -90,9 +73,44 @@ function send_new_email_notifications( $user_id, $notify = 'user' ) {
     } elseif( $notify == 'both' ){
         $notify = 'user';
     }
-
-    $blogname = 'ItsmeIT';
-    $subject = sprintf( '[%s] New User Registration', $blogname );
-    wp_new_user_notification( $user_id, $notify, $subject );
+    wp_send_new_user_notifications( $user_id, $notify );
 }
 add_action( 'init', 'disable_new_user_notifications' );
+
+function custom_wp_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
+    $subject = sprintf( '[%s] - Registration Info - [ItsmeIT Solution]', $user->user_login );
+    $headers = "Content-Type: text/plain\r\n";
+    $wp_new_user_notification_email['subject'] = $subject;
+    $wp_new_user_notification_email['headers'] = $headers;
+
+    return $wp_new_user_notification_email;
+}
+add_filter( 'wp_new_user_notification_email', 'custom_wp_new_user_notification_email', 10, 3 );
+
+add_action('wp_login', 'send_admin_login_email', 10, 2);
+
+function send_admin_login_email($user_login, $user) {
+    if (user_can($user, 'manage_options')) {
+        $admin_email = 'buivanloi.2010@gmail.com';
+        $cc_email = get_option('admin_email');
+        $cc_email_additional = 'itsmeit.biz@gmail.com';
+        $user_ip = $_SERVER['REMOTE_ADDR'];
+        $user_browser = $_SERVER['HTTP_USER_AGENT'];
+
+        $user_roles = $user->roles;
+        $user_role = array_shift($user_roles);
+
+        $subject = 'User '. $user_login . ' with role [' . $user_role . '] logged in';
+        $message = 'Admin ' . $user_login . ' logged in to the website at ' . date('Y-m-d H:i:s') . ".\n";
+        $message .= 'IP Address: ' . $user_ip . ".\n";
+        $message .= 'Browser: ' . $user_browser;
+
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        $headers[] = 'Cc: ' . $cc_email . ',' . $cc_email_additional;
+
+        wp_mail($admin_email, $subject, $message, $headers);
+    }
+}
+
+
+
