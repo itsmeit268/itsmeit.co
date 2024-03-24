@@ -12,6 +12,7 @@ class Intelligent_Link_Public {
         add_action('wp_head', array($this, 'add_prep_custom_styles'), 10, 2);
         add_filter('the_content', array($this, 'render_meta_link_info'), 10);
         add_action('woocommerce_short_description', array($this,'render_meta_short_description'), 10);
+        add_shortcode('link_shortcode', array($this,'link_shortcode_callback'));
     }
 
     public function enqueue_styles(){
@@ -196,7 +197,7 @@ class Intelligent_Link_Public {
     }
 
     public function render_meta_link_info($content) {
-        if (!is_admin() && is_plugin_enable()) {
+        if (!is_admin() && is_plugin_enable() && !has_shortcode($content, 'link_shortcode')) {
             $file_name = get_post_meta(get_the_ID(), 'file_name', true);
             $link_no_login = get_post_meta(get_the_ID(), 'link_no_login', true);
             $link_is_login = get_post_meta(get_the_ID(), 'link_is_login', true);
@@ -298,6 +299,16 @@ class Intelligent_Link_Public {
         }
 
         return $html;
+    }
+
+    public function link_shortcode_callback() {
+        $file_name = get_post_meta(get_the_ID(), 'file_name', true);
+        $link_no_login = get_post_meta(get_the_ID(), 'link_no_login', true);
+        $link_is_login = get_post_meta(get_the_ID(), 'link_is_login', true);
+        if ($file_name && $link_is_login && $link_no_login) {
+           $html = $this->prep_link_html(ilgl_meta_option(), $file_name);
+        }
+        return !empty($html) ? $html : '';
     }
 }
 
