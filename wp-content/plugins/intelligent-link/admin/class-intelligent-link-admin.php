@@ -383,21 +383,6 @@ class Intelligent_Link_Admin {
             'preplink_meta_attr_section');
 
         add_settings_field(
-            'meta_elm_option',
-            __('Render Element', 'intelligent-link'),
-            array($this, 'meta_elm_option'),
-            'preplink_meta_attr',
-            'preplink_meta_attr_section',
-            array(
-                'div'    => __('div', 'intelligent-link'),
-                'h2'  => __('h2', 'intelligent-link'),
-                'h3'  => __('h3', 'intelligent-link'),
-                'h4'  => __('h4', 'intelligent-link'),
-                'h5'  => __('h5', 'intelligent-link'),
-            )
-        );
-
-        add_settings_field(
             'product_elm_option',
             __('Display position on product page.', 'intelligent-link'),
             array($this, 'product_elm_option'),
@@ -667,19 +652,6 @@ class Intelligent_Link_Admin {
         $html .= '</select>';
         echo $html;
     }
-
-    public function meta_elm_option() {
-        $meta_attr = get_option('meta_attr', []); ?>
-        <select name="meta_attr[elm]">
-            <option value="div" <?= isset($meta_attr['elm']) && $meta_attr['elm'] === 'div' ? 'selected' : '' ?>>div</option>
-            <option value="h2" <?= isset($meta_attr['elm']) && $meta_attr['elm'] === 'h2' ? 'selected' : '' ?>>h2</option>
-            <option value="h3" <?= (!isset($meta_attr['elm']) || $meta_attr['elm'] === 'h3') ? 'selected' : '' ?>>h3</option>
-            <option value="h4" <?= isset($meta_attr['elm']) && $meta_attr['elm'] === 'h4' ? 'selected' : '' ?>>h4</option>
-            <option value="h5" <?= isset($meta_attr['elm']) && $meta_attr['elm'] === 'h5' ? 'selected' : '' ?>>h5</option>
-        </select>
-        <input type="text" name="meta_attr[pre_fix]" placeholder="Link download:" value="<?= esc_attr(!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : '') ?>"/>
-    <?php }
-
 
     public function product_elm_option() {
         $meta_attr = get_option('meta_attr', []); ?>
@@ -974,6 +946,24 @@ class Intelligent_Link_Admin {
 
         <?php do_action('link_field_meta_box_before', $post); ?>
 
+        <h2 class="list-h3-title">Render Element</h2>
+        <div class="render_element" style="display: flex; width: 100%">
+            <?php
+            $elm = get_post_meta($post->ID, 'render_element', true);
+            $wrap_element = !empty($elm['wrap_element']) ? $elm['wrap_element'] : 'h3';
+            $pre_fix = !empty($elm['pre_fix']) ? $elm['pre_fix'] : '';
+            ?>
+            <label for="wrap_element" style="width: 20%; display: flex; align-items: center;">Wrap:</label>
+            <select id="wrap_element" name="wrap_element" style="width: 10%">
+                <option value="div" <?php selected($wrap_element, 'div'); ?>>div</option>
+                <option value="h2" <?php selected($wrap_element, 'h2'); ?>>h2</option>
+                <option value="h3" <?php selected($wrap_element, 'h3'); ?>>h3</option>
+                <option value="h4" <?php selected($wrap_element, 'h4'); ?>>h4</option>
+                <option value="h5" <?php selected($wrap_element, 'h5'); ?>>h5</option>
+            </select>
+            <input type="text" id="pre_fix" name="pre_fix" placeholder="Link download: " style="width: 70%" value="<?= $pre_fix ?>"/>
+        </div>
+
         <h2 class="list-h3-title">Link Details</h2>
         <div class="app-fields">
             <?php
@@ -1080,6 +1070,16 @@ class Intelligent_Link_Admin {
             return;
         }
 
+        if (isset($_POST['wrap_element']) || isset($_POST['pre_fix'])) {
+            $wrap_element = !empty($_POST['wrap_element']) ? $_POST['wrap_element'] : 'h3';
+            $pre_fix = !empty($_POST['pre_fix']) ? $_POST['pre_fix'] : '';
+            $data = array(
+                'wrap_element' => sanitize_text_field($wrap_element),
+                'pre_fix' => sanitize_text_field($pre_fix)
+            );
+            update_post_meta($post_id, 'render_element', $data);
+        }
+
         $fields = array(
             'file_name',
             'file_size',
@@ -1141,6 +1141,7 @@ class Intelligent_Link_Admin {
         }
         
         delete_post_meta($post_id, 'link-download-metabox');
+        delete_post_meta($post_id, 'render_element');
         do_action('intelligent_link_delete_field_meta_box', $post_id);
     }
 }

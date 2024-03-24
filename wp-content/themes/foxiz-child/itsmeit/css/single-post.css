@@ -243,7 +243,6 @@ div.enlighter-code>div.enlighter>div::before {
 }
 .text-complete {
     color: #fff;
-    padding: 0 10px;
 }
 .text-complete:hover {
     color: #e7dede;

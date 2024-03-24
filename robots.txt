@@ -1,0 +1,21 @@
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /parsonsmaize/
+Disallow: /porpoiseant/
+Disallow: /ezais/
+Disallow: /beardeddragon/
+Disallow: /detroitchicago/
+Disallow: /tardisrocinante/
+Disallow: /admin_ma2405/
+Disallow: /admin_ma2405
+Disallow: /login.html
+Disallow: /files/
+Disallow: /?s=
+Disallow: /p=*
+Disallow: /?p=*
+Disallow: /?action=
+Disallow: /search/
+Disallow: /*redirect_to=*
+Disallow: /wp-content/uploads/*/nsl_avatars/
+
+Sitemap: https://itsmeit.co/sitemap_index.xml

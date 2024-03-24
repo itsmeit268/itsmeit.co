@@ -154,7 +154,7 @@ function download_permission($file_point) {
     <div class="not-vip-download" style="display: none">
         <p class="require-level">
             <?= $requireLevelText ?> <?= $file_point ?> <?= ($current_language == 'en') ? 'points to download this file.' : 'điểm để tải xuống tệp tin này.' ?>
-            <a class="require-vip-download" href="<?= pmpro_url('levels'); ?>">
+            <a class="require-vip-download" href="https://itsmeit.co/my-account/levels.html">
                 <?= ($current_language == 'en') ? 'Click here' : 'bấm vào đây' ?>
             </a>
             <?= ($current_language == 'en') ? 'to earn additional points.' : 'để kiếm thêm điểm.' ?>

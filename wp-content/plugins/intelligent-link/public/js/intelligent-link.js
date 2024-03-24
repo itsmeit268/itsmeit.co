@@ -320,6 +320,10 @@
                         $elm.html('<strong class="post-progress" style="background-color:#018f06">' + progress_html + '</strong>');
                     }
 
+                    if ($elm.parents('#link-download-file').length) {
+                        $elm.parents('#link-download-file').find('.text-complete').css('padding', '0 10px');
+                    }
+
                     parent.removeAttr('style');
 
                     if (is_meta.length && meta_attr.auto_direct === '1') {

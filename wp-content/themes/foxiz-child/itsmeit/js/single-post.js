@@ -174,5 +174,6 @@
         _fixElmEnlighterTheme_and_ads();
         _remove_adstera_mb();
         _magnificPopup('#ftwp-postcontent', 'figure.wp-block-image img,.aligncenter img');
+        _magnificPopup('.entry-content', 'figure.wp-block-image img,.aligncenter img');
     });
 })(jQuery);

@@ -40,3 +40,6 @@
 tr td.link.column-link {
     border: none !important;
 }
+ul.wp-block-list {
+    margin-bottom: 25px;
+}

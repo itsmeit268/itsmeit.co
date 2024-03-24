@@ -184,7 +184,6 @@ class Intelligent_Link_Public {
         $file_name = get_post_meta(get_the_ID(), 'file_name', true);
         $link_no_login = get_post_meta(get_the_ID(), 'link_no_login', true);
         $link_is_login = get_post_meta(get_the_ID(), 'link_is_login', true);
-
         if ($file_name && $link_is_login && $link_no_login && is_plugin_enable()) {
             $after_description = isset(ilgl_meta_option()['product_elm'])? ilgl_meta_option()['product_elm'] == 'after_short_description': '';
             $html = $this->prep_link_html(ilgl_meta_option(), $file_name);
@@ -229,8 +228,11 @@ class Intelligent_Link_Public {
         if (isset($advertising['ads_7']) && !empty($advertising['ads_7'])) {
             $html = '<div class="preplink-ads preplink-ads-7 advertising-adsterra"><p style="margin-left: 10px;">– Advertising –</p>'.$advertising['ads_7'].'</div>';
         }
+        $element = get_post_meta(get_the_ID(), 'render_element', true);
+        $wrap = !empty($element['wrap_element']) ? $element['wrap_element'] : 'h3';
+        $pre_fix = !empty($element['pre_fix']) ? $element['pre_fix'] .'&nbsp;' : 'Link download: ';
 
-        $html .= '<' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . ' id="igl-download-now" class="igl-download-now"><b class="b-h-down">' . (!empty($meta_attr['pre_fix']) ? $meta_attr['pre_fix'] : '') . '</b>';
+        $html .= '<' . $wrap . ' id="igl-download-now" class="igl-download-now"><b class="b-h-down">' . $pre_fix . '</b>';
 
         if (is_user_logged_in()) {
             $display_mode = 'progress';
@@ -243,7 +245,7 @@ class Intelligent_Link_Public {
             $html .= '<span class="prep-request" data-id="' . $blog_url . '"><strong class="link-countdown">' . $file_name . '</strong></span></span>';
         }
 
-        $html .= '</' . (!empty($meta_attr['elm']) ? $meta_attr['elm'] : 'h3') . '>';
+        $html .= '</' . $wrap . '>';
 
         if (is_allow_show_ads() && aicp_can_see_ads()) {
             $html .= '
